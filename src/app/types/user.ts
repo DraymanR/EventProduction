@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface User {
     userId: number;
     firstName: string;
@@ -8,7 +10,7 @@ export interface User {
     title: 'supplier' | 'consumer'; // Enum values
     phone: string;
     language: 'Hebrew'| 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian' 
-    addressId: string;
+    addressId: Types.ObjectId;
   }
   
   export interface Address {
@@ -19,11 +21,11 @@ export interface User {
   }
   
   export interface Supplier {
-    userId: number;
+    userId: Types.ObjectId;
     sartingPrice: number;
     topPrice: number;
-    eventList: Event[];
-    recommendation: Recommendation[];
+    eventList: Types.ObjectId[];
+    recommendation: Types.ObjectId[];
     range: number;
     emptyDate: Date[];
     images: string[];
@@ -33,15 +35,15 @@ export interface User {
   export interface Event {
     status: 'waiting' | 'inProcess' | 'done'; // Enum values
     date: Date;
-    consumeId: number;
+    consumeId: Types.ObjectId;
     eventCategory: 'barmitzva' | 'wedding' | 'breit' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';  // Enum values
-    addressId: number;
+    addressId: Types.ObjectId;
   }
   
   export interface ConsumerEvent {
-    supplierIdArr: number[];
+    supplierIdArr: Types.ObjectId[];
     albom: string[];
-    eventId: number;
+    eventId: Types.ObjectId;
     budget: number;
     reminders: string[];
     recommendations: Recommendation[];

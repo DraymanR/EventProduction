@@ -16,24 +16,25 @@ const recommendationSchema = new Schema<Recommendation>({
 const eventSchema = new Schema<Event>({
   status: { type: String, enum: ['waiting', 'inProcess', 'done'], required: true },
   date: { type: Date, required: true },
-  consumeId: { type: Number, required: true },
+  consumeId: {type: Schema.Types.ObjectId, ref: 'users' , required: true }, //
   eventCategory: { type: String, enum: ['barmitzva' , 'wedding' , 'breit' , 'bat mitzva' , 'engagement' , 'birthday' , 'family party' , 'other'], required: true },
-  addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
+  addressId: { type: Schema.Types.ObjectId, ref: 'addresses', required: true }, //
 });
 
 const supplierSchema = new Schema<Supplier>({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
   sartingPrice: { type: Number, required: true },
   topPrice: { type: Number, required: true },
-  eventList: [{ type: Schema.Types.ObjectId, ref: 'Event' }], //arry of
-  recommendation: [recommendationSchema],
+  eventList: [{ type: Schema.Types.ObjectId, ref: 'events',require: true }],
+  recommendation: [{ type: Schema.Types.ObjectId, ref: 'recommendations' , require: false }],
   range: { type: Number, required: true },
-  emptyDate: { type: Date, required: true },
-  images: [{ type: String }],
+  emptyDate: { type: [Date], required: true },
+  images: [{ type: [String] , require: true}],
+  description: [{type: String , require: false}],
 });
 
 const userSchema = new Schema<User>({
-  userId: { type: Number, required: true },
+  userId: { type: Number, required: true , unique: true},
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   userName: { type: String, required: true },
@@ -41,14 +42,14 @@ const userSchema = new Schema<User>({
   password: { type: String, required: true },
   title: { type: String, enum: ['supplier', 'consumer'], required: true },
   phone: { type: String, required: true },
-  language: { type: String, required: true },
-  address: addressSchema,
+  language: { type: String, enum: ['Hebrew', 'English' , 'French' , 'Yiddish' , 'Spanish' , 'Russian'] , required: true },
+  addressId: { type: Schema.Types.ObjectId , require: true},
 });
 
 const consumerEventSchema = new Schema<ConsumerEvent>({
-  supplierIdArr: [{ type: Number, required: true }],
+  supplierIdArr: [{ type: Schema.Types.ObjectId, required: true }],
   albom: [{ type: String, required: true }],
-  eventId: { type: Number, required: true },
+  eventId: { type: Schema.Types.ObjectId, required: true },
   budget: { type: Number, required: true },
   reminders: [{ type: String }],
   recommendations: [recommendationSchema],
