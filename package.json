@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "mongoos": "^0.0.1-security",
     "mongoose": "^8.8.2",
     "next": "13.5.7",
-    "react": "^18",
-    "react-dom": "^18"
+    "next-auth": "^4.24.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "20.17.7",
