@@ -10,6 +10,7 @@ export interface User {
   language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
   addressId: ObjectId; // reference to Address
   description: string;
+  postArr: ObjectId[];
 }
 
 export interface Auth {
@@ -20,17 +21,17 @@ export interface Auth {
 
 }
 export interface Supplier {
-  userName: string; 
+  userName: string;
   startingPrice: number;
   topPrice: number;
-  supplierPostArr: ObjectId[];
+
   range: number; // maximum distance they will serve
 
 }
 
 export interface Consumer {
-  userName: string; 
-  consumerPostArr: ObjectId[]; // array of ConsumerPost ObjectIds
+  userName: string;
+
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
   likedPeople: string[]; // array of Usernames
 }
@@ -46,19 +47,16 @@ export interface Address {
 export interface Post {
   createDate: Date;
   userName: string;
-  album: string[]; 
+  album: string[];
   title: string;
   description: string;
-  recommendations: ObjectId[]; 
+  recommendations: ObjectId[];
+  postId: ObjectId;
 }
 
-export interface SupplierPost {
-  postId:ObjectId;
-  description: string;
- 
-}
+
 export interface ConsumerPost {
-  postId:ObjectId;
+
   eventCategory: 'barmitzva' | 'wedding' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';
   supplierNameArr: string[];
   budget: number;
