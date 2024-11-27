@@ -63,31 +63,31 @@
 //         );
 //     }
 // }
-
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { UserModel, AuthModel, AddressModel } from '@/app/lib/models/user'; // הוספת מודל לכתובת
-import connectDb from '@/app/lib/db/connectDb'; // חיבור למסד נתונים
+import { UserModel, AuthModel, AddressModel, SupplierModel, ConsumerModel } from '@/app/lib/models/user'; // כולל את המודלים החדשים
+import connectDb from '@/app/lib/db/connectDb'; 
 
 export async function POST(req: Request) {
     try {
-        const { userId, firstName, lastName, userName, email, password, title, phone, language, address } = await req.json();
+        const {  firstName, lastName, userName, email, password, title, phone, language, address, description ,topPrice,startingPrice} = await req.json();
 
         // בדיקה אם כל השדות נמסרו
-        if (!userId || !firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address) {
+        if (  !firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
                 { status: 400 }
             );
         }
 
-      
-        const salt = await bcrypt.genSalt(10); 
-        const hashedPassword = await bcrypt.hash(password, salt); 
+        // הצפנת הסיסמה
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
+        // חיבור למסד הנתונים
         await connectDb();
 
-      
+        // יצירת משתמש חדש באוטנטיקציה
         const newAuth = new AuthModel({
             email,
             password: hashedPassword,
@@ -95,19 +95,16 @@ export async function POST(req: Request) {
 
         await newAuth.save();
 
+     
         const updatedAddress = {
             userName,
             ...address // השתמש בשדות שהגיעו מהבקשה
-          
         };
-
-        // יצירת כתובת חדשה
         const newAddress = new AddressModel(updatedAddress);
         await newAddress.save();
 
         // יצירת משתמש חדש עם הכתובת החדשה
         const newUser = new UserModel({
-            userId,
             firstName,
             lastName,
             userName,
@@ -115,12 +112,32 @@ export async function POST(req: Request) {
             title,
             phone,
             language,
-            address: newAddress._id, // הוספת ה-ObjectId של הכתובת
+            addressId: newAddress._id, // הוספת ה-ObjectId של הכתובת
+            description, // הוספת תיאור למשתמש
+            postArr: [], // הוספת מערך הפוסטים (אם יש)
         });
 
         await newUser.save();
 
-        // החזרת תשובה חיובית
+        // במקרה של "supplier" או "consumer", יצירת רשומה מתאימה למודל
+        if (title === 'supplier') {
+            const newSupplier = new SupplierModel({
+                userName,
+                startingPrice:startingPrice|| 0, // ניתן להוסיף שדות נוספים אם דרושים
+                topPrice:topPrice|| 0,
+                range: 0
+            });
+            await newSupplier.save();
+        } else if (title === 'consumer') {
+            const newConsumer = new ConsumerModel({
+                userName,
+                likedPostsArr: [], 
+                likedPeople: []
+            });
+            await newConsumer.save();
+        }
+
+
         return NextResponse.json(
             { message: 'User created successfully', newUser },
             { status: 201 }

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { User, Address, Supplier, Recommendation,Post,ConsumerPost, Auth, ,Consumer} from '@/app/types/user';
+import { User, Address, Supplier, Recommendation,Post,ConsumerPost, Auth,Consumer} from '@/app/types/user';
 
 
 const userSchema = new Schema<User>({
