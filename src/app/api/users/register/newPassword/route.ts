@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
         await connectDb();
 
-        // חיפוש המשתמש לפי המייל
+       
         const user = await AuthModel.findOne({ email });
 
         if (!user) {
@@ -26,7 +26,6 @@ export async function POST(req: Request) {
             );
         }
 
-        // בדיקת תקפות ה-OTP
         if (user.otp != otp || new Date() > user.otpExpiration) {
             return NextResponse.json(
                 { error: 'Invalid or expired OTP' },
@@ -34,12 +33,11 @@ export async function POST(req: Request) {
             );
         }
 
-        // הצפנת הסיסמה החדשה
+       
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-        // עדכון הסיסמה בבסיס הנתונים
         user.password = hashedPassword;
-        user.otp = null; // נמחק את ה-OTP לאחר ששונתה הסיסמה
+        user.otp = null; 
         user.otpExpiration = null;
         await user.save();
 
