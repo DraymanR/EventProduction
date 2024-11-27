@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer'; // לשליחת המייל
+import nodemailer from 'nodemailer'; 
 import crypto from 'crypto';
 import { UserModel, AuthModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
@@ -38,9 +38,9 @@ export async function POST(req: Request) {
             service: 'gmail', 
             auth: {
                 user: "eventnorepley@gmail.com", 
-                pass: 'sczv wrfg vgpt esas', //
+                pass: 'sczv wrfg vgpt esas', 
             },tls: {
-                rejectUnauthorized: false // עקיפת שגיאת ה-SSL
+                rejectUnauthorized: false 
             } 
            
         });
