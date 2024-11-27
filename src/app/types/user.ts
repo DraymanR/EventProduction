@@ -1,14 +1,17 @@
+import { ObjectId } from "mongoose";
+
 export interface User {
-  userId: number;
   firstName: string;
   lastName: string;
-  userName: string;
-  email: string;
-  title: 'supplier' | 'consumer';
+  userName: string; // unique
+  email: string; // unique
+  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
   phone: string;
-  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian'
-  addressId: string;
+  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  addressId: ObjectId; // reference to Address
+  description: string;
 }
+
 export interface Auth {
   email: string,
   password: string,
@@ -16,45 +19,53 @@ export interface Auth {
   otpExpiration: Date,
 
 }
+export interface Supplier {
+  userName: string; 
+  startingPrice: number;
+  topPrice: number;
+  supplierPostArr: ObjectId[];
+  range: number; // maximum distance they will serve
+
+}
+
+export interface Consumer {
+  userName: string; 
+  consumerPostArr: ObjectId[]; // array of ConsumerPost ObjectIds
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[]; // array of Usernames
+}
 
 export interface Address {
+  userName: string;
   zipCode: string;
   city: string;
   street: string;
   building: number;
-  userId: number
 }
 
-export interface Supplier {
-  userId: number;
-  sartingPrice: number;
-  topPrice: number;
-  eventList: Event[];
-  recommendation: Recommendation[];
-  range: number;
-  emptyDate: Date[];
-  images: string[];
+export interface Post {
+  createDate: Date;
+  userName: string;
+  album: string[]; 
+  title: string;
   description: string;
+  recommendations: ObjectId[]; 
 }
 
-export interface Event {
-  status: 'waiting' | 'inProcess' | 'done'; // Enum values
-  date: Date;
-  consumeId: number;
-  eventCategory: 'barmitzva' | 'wedding' | 'breit' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';  // Enum values
-  addressId: number;
+export interface SupplierPost {
+  postId:ObjectId;
+  description: string;
+ 
 }
-
-export interface ConsumerEvent {
-  supplierIdArr: number[];
-  albom: string[];
-  eventId: number;
+export interface ConsumerPost {
+  postId:ObjectId;
+  eventCategory: 'barmitzva' | 'wedding' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';
+  supplierNameArr: string[];
   budget: number;
-  reminders: string[];
-  recommendations: Recommendation[];
 }
 
 export interface Recommendation {
+  userName: string; // reference to User
   text: string;
-  rate: number; // 1-5 rating in the model
+  rate: number; // rating 1-5
 }
