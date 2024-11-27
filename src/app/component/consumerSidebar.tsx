@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import profileImage from '@/app/assets/images/defaltConsumerProfile.png';
+import Link from 'next/link';
 
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -24,6 +25,7 @@ const ConsumerNavbar: React.FC = () => {
           className="rounded-full border"
         />
         <p className="mt-2 text-center font-medium text-red-400">הפרופיל שלי</p>
+        <Link href="/" className="text-red-300 underline">יציאה</Link>
       </div>
 
       {/* לינקים בתפריט - יפתחו רק אם isOpen === true */}
@@ -37,6 +39,8 @@ const ConsumerNavbar: React.FC = () => {
           </a>
           <a href="/pages/consumer-account/reminders" className="block text-gray-600 hover:text-red-400">
             התזכורות שלי
+          </a><a href="/pages/consumer-account/message-box" className="block text-gray-600 hover:text-red-400">
+            תיבת הודעות
           </a>
         </div>
       )}
