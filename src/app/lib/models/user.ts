@@ -55,11 +55,11 @@ const consumerSchema = new Schema<Consumer>({
 const postSchema = new Schema<Post>({
   userName: { type: String, ref: 'User', required: true }, 
   createDate: { type: Date, required: true },
-  album: [{ type: String, required: true }], // תמונות או אלבום
+  album: [{ type: String, required: true }], 
   title: { type: String, required: true },
   description: { type: String, required: true },
   recommendations: [{ type: Schema.Types.ObjectId, ref: 'Recommendation' }],
-  postId: { type: Schema.Types.ObjectId, ref: 'ConsumerPost', required: true } 
+  postId: { type: Schema.Types.ObjectId, ref: 'ConsumerPost' } 
 });
 
 
