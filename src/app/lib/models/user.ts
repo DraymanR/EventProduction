@@ -33,6 +33,7 @@ const addressSchema = new Schema<Address>({
 });
 
 const authSchema = new Schema<Auth>({
+  userName: { type: String,ref: 'User', required: true }, 
   email: { type: String, ref: 'User', required: true },
   password: { type: String, required: true },
   otp: { type: String, default: null,},
