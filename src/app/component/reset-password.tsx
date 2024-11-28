@@ -2,14 +2,15 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import useModalStore from '@/app/store/modelStore';
 
-const ResetPassword: React.FC = () => {
+const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showPassword, setshowPassword] = useState(false);
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
-
+    const closeModal = useModalStore((state) => state.closeModal);
     const router = useRouter();
 
     const handlePasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,6 +26,8 @@ const ResetPassword: React.FC = () => {
 
             // לאחר שינוי הסיסמה נוכל להפנות את המשתמש למסך התחברות
             router.push('/pages/consumer-account');
+            closeModal()
+
         } catch (error) {
             console.error('Error during password reset:', error);
             setErrorMessage('הייתה שגיאה בשינוי הסיסמה');
@@ -42,7 +45,7 @@ const ResetPassword: React.FC = () => {
                     <input
                         id="newPassword"
                         name="newPassword"
-                        type={showPassword?"text":"password"}
+                        type={showPassword ? "text" : "password"}
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         required
@@ -62,13 +65,13 @@ const ResetPassword: React.FC = () => {
                     <input
                         id="confirmPassword"
                         name="confirmPassword"
-                        type={showconfirmPassword?"text":"password"}
+                        type={showconfirmPassword ? "text" : "password"}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="w-full px-3 py-2 border rounded-md"
                     />
-                     <button
+                    <button
                         type="button"
                         onClick={() => { setshowconfirmPassword(!showconfirmPassword) }}
                         className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">

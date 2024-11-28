@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import profileImage from '@/app/assets/images/defaltConsumerProfile.png';
+import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Link from 'next/link';
 
 const ConsumerNavbar: React.FC = () => {
@@ -14,7 +14,7 @@ const ConsumerNavbar: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-[64px] right-0 w-64 bg-gray-100 shadow-lg border h-auto">
+    <div className="fixed top-[100px] right-0 w-64 bg-gray-100 shadow-lg border h-auto">
       {/* תמונת הפרופיל */}
       <div className="p-4 flex flex-col items-center cursor-pointer" onClick={toggleNavbar}>
         <Image
@@ -24,7 +24,6 @@ const ConsumerNavbar: React.FC = () => {
           height={80}
           className="rounded-full border"
         />
-        <p className="mt-2 text-center font-medium text-red-400">הפרופיל שלי</p>
         <Link href="/" className="text-red-300 underline">יציאה</Link>
       </div>
 

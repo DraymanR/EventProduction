@@ -1,7 +1,8 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./component/navbar";
-
+import TimerComponent from "./component/timerComponent";
 
 
 export const metadata: Metadata = {
@@ -14,10 +15,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body>
         <Navbar></Navbar>
+        <TimerComponent></TimerComponent>
         {children}
       </body>
     </html>

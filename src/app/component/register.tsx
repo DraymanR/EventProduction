@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import useModalStore from '../store/modelStore';
 
 interface FormData {
     firstName: string;
@@ -65,6 +66,7 @@ const Register: React.FC = () => {
     const [showPassword, setshowPassword] = useState(false);
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
+    const closeModal = useModalStore((state) => state.closeModal);
 
 
     const handleInputChange = (
@@ -128,6 +130,7 @@ const Register: React.FC = () => {
 
             // // רישום הצליח, הפנה לדף הכניסה או לדשבורד
             router.push('/pages/consumer-account');
+            closeModal()
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -418,13 +421,6 @@ const Register: React.FC = () => {
                 </button>
             </form>
             {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-            <p className="text-center mt-4">
-                כבר יש לך חשבון?{' '}
-                <a href="/pages/login" className="text-blue-500 underline">
-                    התחבר כאן
-                </a>
-            </p>
-
         </div>
     );
 };
