@@ -1,6 +1,8 @@
 import { ObjectId } from "mongoose";
+import { UploadApiResponse } from 'cloudinary';
 
 export interface User {
+  _id:  ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
@@ -67,3 +69,5 @@ export interface Recommendation {
   text: string;
   rate: number; // rating 1-5
 }
+
+
