@@ -1,76 +1,69 @@
-import { Types } from "mongoose";
+import { ObjectId } from "mongoose";
 
 export interface User {
-  _id?: string; // `_id` is optional to avoid TypeScript errors
-  userId: number;
   firstName: string;
   lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  title: 'supplier' | 'consumer';
+  userName: string; // unique
+  email: string; // unique
+  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
   phone: string;
   language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
-  addressId: string;
+  addressId: ObjectId; // reference to Address
+  description: string;
+  postArr: ObjectId[];
 }
 
+export interface Auth {
+  email: string,
+  password: string,
+  otp: String,
+  otpExpiration: Date,
+
+}
+export interface Supplier {
+  userName: string;
+  startingPrice: number;
+  topPrice: number;
+
+  range: number; // maximum distance they will serve
+
+}
+
+export interface Consumer {
+  userName: string;
+
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[]; // array of Usernames
+}
 
 export interface Address {
+  userName: string;
   zipCode: string;
   city: string;
   street: string;
   building: number;
 }
 
-export interface Supplier {
-  userId: Types.ObjectId;
-  sartingPrice: number;
-  topPrice: number;
-  eventList: Types.ObjectId[];
-  recommendation: Types.ObjectId[];
-  range: number;
-  emptyDate: Date[];
-  images: string[];
+export interface Post {
+  createDate: Date;
+  userName: string;
+  album: string[];
+  title: string;
   description: string;
+  recommendations: ObjectId[];
+  postId: ObjectId;
 }
 
-export interface Event {
-  status: 'waiting' | 'inProcess' | 'done'; // Enum values
-  date: Date;
-  consumeId: Types.ObjectId;
-  eventCategory: 'barmitzva' | 'wedding' | 'breit' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';  // Enum values
-  addressId: Types.ObjectId;
-}
 
-export interface ConsumerEvent {
-  supplierIdArr: Types.ObjectId[];
-  albom: string[];
-  eventId: Types.ObjectId;
+export interface ConsumerPost {
+
+  eventCategory: 'barmitzva' | 'wedding' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';
+  supplierNameArr: string[];
   budget: number;
-  reminders: string[];
-  recommendations: Recommendation[];
 }
 
 export interface Recommendation {
+  userName: string; // reference to User
   text: string;
-  rate: number; // 1-5 rating in the model
+  rate: number; // rating 1-5
 }
-
-export interface Pagination {
-  total: number;
-  page: number;
-  pages: number;
-  limit: number;
-}
-
-export interface UsersResponse {
-  users: User[];
-  pagination: {
-    total: number;
-    page: number;
-    pages: number;
-    limit: number;
-  };
-}
-
-
