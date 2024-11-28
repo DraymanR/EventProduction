@@ -39,10 +39,9 @@ export async function POST(req: Request) {
                 { status: 401 }
             );
         }
-
-
+ 
         const payload = { userName: user.userName, email: user.email }; 
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '5h' }); 
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
 
        
         return NextResponse.json(

@@ -9,6 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const verifyToken = (token: string): string | JwtPayload => {
     try {
         return jwt.verify(token, JWT_SECRET);
+
     } catch (error) {
         throw new Error('Invalid token');
     }
@@ -30,6 +31,7 @@ export async function POST(req: Request) {
 
 
         const decoded = verifyToken(token);
+        console.log(decoded);
 
        
         if (typeof decoded !== 'object' || !('userName' in decoded)) {
