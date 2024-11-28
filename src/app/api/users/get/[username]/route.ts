@@ -109,7 +109,6 @@ import connectDb from '@/app/lib/db/connectDb';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-
 const verifyToken = (token: string): string | JwtPayload => {
     try {
         return jwt.verify(token, JWT_SECRET);
@@ -120,7 +119,6 @@ const verifyToken = (token: string): string | JwtPayload => {
 
 export async function GET(req: Request) {
     try {
-       
         await connectDb();
 
         const { searchParams } = new URL(req.url);
@@ -133,7 +131,6 @@ export async function GET(req: Request) {
             );
         }
 
-       
         const token = req.headers.get('Authorization')?.split(' ')[1];
 
         if (!token) {
@@ -143,7 +140,6 @@ export async function GET(req: Request) {
             );
         }
 
-      
         const decoded = verifyToken(token);
 
         if (typeof decoded !== 'object' || !('userName' in decoded)) {
@@ -156,15 +152,21 @@ export async function GET(req: Request) {
         const decodedUserName = decoded.userName;
 
         const user = await UserModel.findOne({ userName: userNameFromQuery })
-            .populate('addressId')
-            .populate({
-                path: 'postArr',
-                populate: {
-                    path: 'recommendations',
+        .populate('addressId') 
+        .populate({
+            path: 'postArr', 
+            populate: [
+                {
+                    path: 'recommendations', 
                     model: 'Recommendation',
                 },
-            })
-            .lean<User>(); 
+                {
+                    path: 'postId', 
+                    model: 'ConsumerPost',
+                }
+            ]
+        })
+        .lean<User>(); 
 
         if (!user) {
             return NextResponse.json(
@@ -174,22 +176,24 @@ export async function GET(req: Request) {
         }
 
         let userDetails;
+        let consumerDetails;
         if (user.title === 'supplier') {
             userDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
         } else if (user.title === 'consumer') {
-            userDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
+       
+            consumerDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
         }
 
-        
+      
         if (user.userName !== decodedUserName) {
             const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
-
 
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
                     user: filteredUser,
                     userDetails: userDetails,
+                    consumerDetails: consumerDetails, 
                 },
                 { status: 200 }
             );
@@ -200,6 +204,7 @@ export async function GET(req: Request) {
                 message: 'User retrieved successfully',
                 user: user,
                 userDetails: userDetails,
+                consumerDetails: consumerDetails, 
             },
             { status: 200 }
         );
