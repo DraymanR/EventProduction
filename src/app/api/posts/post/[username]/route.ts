@@ -1,15 +1,50 @@
 import { NextResponse } from 'next/server';
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { UserModel, PostModel, ConsumerPostModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+
+const verifyToken = (token: string): string | JwtPayload => {
+    try {
+        return jwt.verify(token, JWT_SECRET);
+    } catch (error) {
+        throw new Error('Invalid token');
+    }
+};
 
 export async function POST(req: Request) {
     try {
         await connectDb();
 
+
+        const token = req.headers.get('Authorization')?.split(' ')[1]; 
+
+        if (!token) {
+            return NextResponse.json(
+                { error: 'Missing token' },
+                { status: 401 }
+            );
+        }
+
+
+        const decoded = verifyToken(token);
+
+       
+        if (typeof decoded !== 'object' || !('userName' in decoded)) {
+            return NextResponse.json(
+                { error: 'Invalid token structure' },
+                { status: 401 }
+            );
+        }
+
+        const decodedUserName = decoded.userName;
+
+
         const { searchParams } = new URL(req.url);
         const userName = searchParams.get('username');
-        console.log(userName);
-        // בדיקה אם username נמסר
+   
         if (!userName) {
             return NextResponse.json(
                 { error: 'Missing username' },
@@ -17,7 +52,14 @@ export async function POST(req: Request) {
             );
         }
 
-        // חיפוש המשתמש לפי userName
+        if (decodedUserName !== userName) {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 403 }
+            );
+        }
+
+      
         const user = await UserModel.findOne({ userName });
         if (!user) {
             return NextResponse.json(
@@ -26,17 +68,18 @@ export async function POST(req: Request) {
             );
         }
 
-        // קריאת גוף הבקשה
+     
         const body = await req.json();
         const { title, description, album, recommendations, eventCategory, budget, supplierNameArr } = body;
 
-        // בדיקת תקינות נתונים
+     
         if (!title || !description) {
             return NextResponse.json(
                 { error: 'Missing or invalid post data' },
                 { status: 400 }
             );
         }
+        
         let newPost;
 
         if (user.title === 'consumer') {
@@ -47,7 +90,7 @@ export async function POST(req: Request) {
                 );
             }
 
-            // יצירת פוסט לצרכן
+          
             const consumerPost = new ConsumerPostModel({
                 eventCategory,
                 supplierNameArr,
@@ -55,7 +98,6 @@ export async function POST(req: Request) {
             });
 
             await consumerPost.save();
-
 
             newPost = new PostModel({
                 userName: user.userName,
@@ -66,11 +108,7 @@ export async function POST(req: Request) {
                 recommendations: recommendations || [],
                 postId: consumerPost._id,
             });
-
-
-
-        }
-        else {
+        } else {
             newPost = new PostModel({
                 userName: user.userName,
                 createDate: new Date(),
@@ -78,15 +116,13 @@ export async function POST(req: Request) {
                 title,
                 description,
                 recommendations: recommendations || [],
-
             });
-
-
-
         }
+
         await newPost.save();
         user.postArr.push(newPost._id);
         await user.save();
+
         return NextResponse.json(
             {
                 message: 'Post added successfully',
