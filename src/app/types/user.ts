@@ -16,6 +16,7 @@ export interface User {
 }
 
 export interface Auth {
+  userName:string,
   email: string,
   password: string,
   otp: String,
