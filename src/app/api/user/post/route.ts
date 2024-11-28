@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '@/app/lib/db/connectDb';
+import connectDb from '@/app/lib/db/connectDb';
 import { UserModel } from '@/app/lib/models/user';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await dbConnect(); // Ensure the database connection
+  await connectDb(); 
 
   if (req.method === 'POST') {
     try {

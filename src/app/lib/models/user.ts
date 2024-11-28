@@ -16,9 +16,9 @@ const recommendationSchema = new Schema<Recommendation>({
 const eventSchema = new Schema<Event>({
   status: { type: String, enum: ['waiting', 'inProcess', 'done'], required: true },
   date: { type: Date, required: true },
-  consumeId: {type: Schema.Types.ObjectId, ref: 'users' , required: true }, //
+  consumeId: {type: Schema.Types.ObjectId, ref: 'users' , required: true }, 
   eventCategory: { type: String, enum: ['barmitzva' , 'wedding' , 'breit' , 'bat mitzva' , 'engagement' , 'birthday' , 'family party' , 'other'], required: true },
-  addressId: { type: Schema.Types.ObjectId, ref: 'addresses', required: true }, //
+  addressId: { type: Schema.Types.ObjectId, ref: 'addresses', required: true }, 
 });
 
 const supplierSchema = new Schema<Supplier>({
@@ -43,7 +43,7 @@ const userSchema = new Schema<User>({
   title: { type: String, enum: ['supplier', 'consumer'], required: true },
   phone: { type: String, required: true },
   language: { type: String, enum: ['Hebrew', 'English' , 'French' , 'Yiddish' , 'Spanish' , 'Russian'] , required: true },
-  addressId: { type: Schema.Types.ObjectId , require: true},
+  addressId: [{ type: Schema.Types.ObjectId , ref: 'adresses' , require: true}],
 });
 
 const consumerEventSchema = new Schema<ConsumerEvent>({
