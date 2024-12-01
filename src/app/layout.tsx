@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   
   return (
-    <html lang="en">
+    <html lang="en" dir="rtl">
       <body>
         <Navbar></Navbar>
         <TimerComponent></TimerComponent>

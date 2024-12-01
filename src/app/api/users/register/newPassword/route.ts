@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { AuthModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(req: Request) {
     try {
@@ -16,7 +19,6 @@ export async function POST(req: Request) {
 
         await connectDb();
 
-       
         const user = await AuthModel.findOne({ email });
 
         if (!user) {
@@ -33,16 +35,18 @@ export async function POST(req: Request) {
             );
         }
 
-       
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         user.password = hashedPassword;
-        user.otp = null; 
+        user.otp = null;
         user.otpExpiration = null;
         await user.save();
 
+        const payload = { userName: user.userName, email: user.email };
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+
         return NextResponse.json(
-            { message: 'Password successfully updated' },
+            { message: 'Password successfully updated', token },
             { status: 200 }
         );
     } catch (error) {
@@ -53,5 +57,3 @@ export async function POST(req: Request) {
         );
     }
 }
-
-

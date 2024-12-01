@@ -216,6 +216,7 @@ const Login: React.FC = () => {
                         {!isEnterCode && (
                             <div className="text-center space-y-2 text-red-400">
                                 <p>
+                                    אין לך חשבון?{' '}
                                     <button
                                         type="button"
                                         onClick={() => setIsRegister(true)} // לוחץ על כפתור זה יעביר לשלב הרשמה
@@ -223,10 +224,9 @@ const Login: React.FC = () => {
                                     >
                                         הירשם כאן
                                     </button>
-                                    {' '}?אין לך חשבון
                                 </p>
                                 <p>
-
+                                    שכחת סיסמה?{' '}
                                     <button
                                         type="button"
                                         onClick={() => setIsEnterCode(true)} // לוחץ על כפתור זה יעביר לשלב איפוס סיסמה
@@ -234,7 +234,6 @@ const Login: React.FC = () => {
                                     >
                                         איפוס סיסמה
                                     </button>
-                                    {' '}?שכחת סיסמה
 
                                 </p>
                             </div>
