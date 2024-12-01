@@ -8,7 +8,7 @@ const PopUpWindow = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+       <div className="bg-white p-6 rounded-lg shadow-lg w-[90vh]">{/* w-full"> */}
         <button
           className="text-red-500 hover:text-gray-800"
           onClick={closeModal}
