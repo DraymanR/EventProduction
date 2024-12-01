@@ -1,4 +1,5 @@
-const saveImageUrlToDatabase = async (imageUrl: string) => {
+ 
+ const saveImageUrlToDatabase = async (imageUrl: string) => {
     try {
       const response = await fetch('/api/save-image', {
         method: 'POST',
@@ -17,3 +18,5 @@ const saveImageUrlToDatabase = async (imageUrl: string) => {
       console.error('Error saving image URL:', error);
     }
   };
+
+  export default saveImageUrlToDatabase;

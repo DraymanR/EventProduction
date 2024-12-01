@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import connectDb from '@/app/lib/db/connectDb';
 import jwt, { JwtPayload } from 'jsonwebtoken';
@@ -14,75 +13,65 @@ const verifyToken = (token: string): string | JwtPayload => {
     }
 };
 
-export default async function handler(req: NextRequest, res: NextResponse) {
-    if (req.method === 'POST') {
-        try {
+export async function POST(req: NextRequest) {
+    try {
+        await connectDb();
 
-            await connectDb();
+        console.log('inside the POST save-image function , still did nothing :)')
 
-            const token = req.headers.get('Authorization')?.split(' ')[1];
+        const token = req.headers.get('Authorization')?.split(' ')[1];
 
-            if (!token) {
-                return NextResponse.json(
-                    { error: 'Missing token' },
-                    { status: 401 }
-                );
-            }
-
-            const decoded = verifyToken(token);
-
-
-            if (typeof decoded !== 'object' || !('userName' in decoded)) {
-                return NextResponse.json(
-                    { error: 'Invalid token structure' },
-                    { status: 401 }
-                );
-            };
-
-            const decodedUserName = decoded.userName;
-
-            const body = await req.json();
-            const { imageUrl, postId } = body;
-
-            
-            const post = await PostModel.findById(postId);
-            if (!post) {
-                return NextResponse.json(
-                    { error: 'Post not found' },
-                    { status: 404 }
-                );
-            }
-
-            const newImg = new ImgModel({
-                imageUrl: imageUrl
-            });
-
-            await newImg.save();
-
-            post.album.push(newImg.imgUrl);
-            await post.save()
-
+        if (!token) {
             return NextResponse.json(
-                {
-                    message: 'Image URL saved successfully',
-                    newImg,
-                },
-                { status: 201 }
-            )
-        } catch (error) {
-
-            console.error('Error saving image URL:', error);
-            return NextResponse.json(
-                { error: 'Error saving image URL' },
-                { status: 500 }
+                { error: 'Missing token' },
+                { status: 401 }
             );
-
         }
-    } else {
-        return NextResponse.json(
-            { error: 'Method not allowed' },
-            { status: 405 }
-        )
 
+        const decoded = verifyToken(token);
+
+        if (typeof decoded !== 'object' || !('userName' in decoded)) {
+            return NextResponse.json(
+                { error: 'Invalid token structure' },
+                { status: 401 }
+            );
+        }
+
+        const decodedUserName = decoded.userName;
+
+        const body = await req.json();
+        const { imageUrl, postId } = body;
+        console.log(`this is my imageUrl that come from the claudinery: ${imageUrl}`)
+
+        const post = await PostModel.findById(postId);
+        if (!post) {
+            return NextResponse.json(
+                { error: 'Post not found' },
+                { status: 404 }
+            );
+        }
+
+        const newImg = new ImgModel({
+            imageUrl: imageUrl,
+        });
+
+        await newImg.save();
+
+        post.album.push(newImg.imgUrl);
+        await post.save();
+
+        return NextResponse.json(
+            {
+                message: 'Image URL saved successfully',
+                newImg,
+            },
+            { status: 201 }
+        );
+    } catch (error) {
+        console.error('Error saving image URL:', error);
+        return NextResponse.json(
+            { error: 'Error saving image URL' },
+            { status: 500 }
+        );
     }
 }
