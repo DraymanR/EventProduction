@@ -1,54 +1,69 @@
+import { ObjectId } from "mongoose";
+
 export interface User {
-    userId: number;
-    firstName: string;
-    lastName: string;
-    userName: string;
-    email: string;
-    password: string;
-    title: 'supplier' | 'consumer'; // Enum values
-    phone: string;
-    language: 'Hebrew'| 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian' 
-    addressId: string;
-  }
-  
-  export interface Address {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  }
-  
-  export interface Supplier {
-    userId: number;
-    sartingPrice: number;
-    topPrice: number;
-    eventList: Event[];
-    recommendation: Recommendation[];
-    range: number;
-    emptyDate: Date[];
-    images: string[];
-    description: string;
-  }
-  
-  export interface Event {
-    status: 'waiting' | 'inProcess' | 'done'; // Enum values
-    date: Date;
-    consumeId: number;
-    eventCategory: 'barmitzva' | 'wedding' | 'breit' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';  // Enum values
-    addressId: number;
-  }
-  
-  export interface ConsumerEvent {
-    supplierIdArr: number[];
-    albom: string[];
-    eventId: number;
-    budget: number;
-    reminders: string[];
-    recommendations: Recommendation[];
-  }
-  
-  export interface Recommendation {
-    text: string;
-    rate: number; // 1-5 rating in the model
-  }
-  
+  firstName: string;
+  lastName: string;
+  userName: string; // unique
+  email: string; // unique
+  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
+  phone: string;
+  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  addressId: ObjectId; // reference to Address
+  description: string;
+  postArr: ObjectId[];
+}
+
+export interface Auth {
+  email: string,
+  password: string,
+  otp: String,
+  otpExpiration: Date,
+
+}
+export interface Supplier {
+  userName: string;
+  startingPrice: number;
+  topPrice: number;
+
+  range: number; // maximum distance they will serve
+
+}
+
+export interface Consumer {
+  userName: string;
+
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[]; // array of Usernames
+}
+
+export interface Address {
+  userName: string;
+  zipCode: string;
+  city: string;
+  street: string;
+  building: number;
+}
+
+export interface Post {
+  createDate: Date;
+  userName: string;
+  album: string[];
+  title: string;
+  description: string;
+  recommendations: ObjectId[];
+  postId: ObjectId;
+}
+
+
+export interface ConsumerPost {
+
+  eventCategory: 'barmitzva' | 'wedding' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';
+  supplierNameArr: string[];
+  budget: number;
+}
+
+export interface Recommendation {
+  userName: string; // reference to User
+  text: string;
+  rate: number; // rating 1-5
+}

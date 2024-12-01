@@ -6,6 +6,13 @@ import { useRouter } from 'next/navigation';
 import ResetPassword from './reset-password';
 import Register from './register';
 import useModalStore from '@/app/store/modelStore';
+import { singIn } from '../services/user/registerUser';
+import axios, { AxiosError } from 'axios';
+import googleImage from '@/app/assets/images/google.png';
+import Image from 'next/image';
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { IoEyeOffOutline } from 'react-icons/io5';
+
 
 const Login: React.FC = () => {
     const [isEnterCode, setIsEnterCode] = useState(false); //  אם אנחנו בשלב הזנת קוד
@@ -33,20 +40,21 @@ const Login: React.FC = () => {
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const { email, password } = e.currentTarget.elements as any;
+        const { userName, email, password } = e.currentTarget.elements as any;
 
         try {
-            console.log("await signIn('credentials', ...)");
-            console.log(email.value, password.value);
-
+            console.log(userName.value, email.value, password.value);
+            const result = await singIn(email.value, userName.value, password.value);
+            console.log('User registered successfully:', result);
             router.push('/pages/consumer-account');
             closeModal()
-            // await signIn('credentials', {
-            //     email: email.value,
-            //     password: password.value,
-            //     redirect: false,
-            // });
         } catch (error) {
+            if (axios.isAxiosError(error)) {
+                // אם זה שגיאה של Axios
+                setErrorMessage(`Error: ${error.message}`);
+            } else {
+                setErrorMessage('error: !!!!!!!!!!')
+            }
             console.error('Login failed:', error);
         }
     };
@@ -88,57 +96,82 @@ const Login: React.FC = () => {
                     {/* <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-lg"> */}
                     <h2 className="text-red-400 text-2xl font-bold text-center mb-6">התחבר לחשבון שלך</h2>
                     <div className="space-y-4">
-                        {/* Google Sign-In */}
-                        <button
-                            onClick={handleGoogleSignIn}
-                            className="w-full bg-yellow-300  py-2 px-4 rounded-md hover:bg-yellow-400 transition"
-                        >
-                            התחבר עם Google
-                        </button>
-
                         {!isEnterCode ? (
-                            // Existing User Login
-                            <form onSubmit={handleLogin} className="space-y-4">
-                                <div>
-                                    <label htmlFor="email" className="block font-medium">
-                                        אימייל
-                                    </label>
-                                    <input
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        required
-                                        className="w-full px-3 py-2 border rounded-md"
-                                    />
-                                </div>
-                                <div className="relative">
-                                    <label htmlFor="password" className="block font-medium">
-                                        סיסמה
-                                    </label>
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        // value={password}
-                                        // onChange={}
-                                        required
-                                        className="w-full px-3 py-2 border rounded-md"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => { setshowPassword(!showPassword) }}
-                                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                                        {showPassword ? 'הסתר' : 'הצג'} {/* טקסט הכפתור משתנה לפי המצב */}
-                                    </button>
-                                </div>
-
+                            <div>
+                                {/* Google Sign-In */}
+                                <h2 className="text-red-400 text-m  text-center mb-6"> ————— google התחבר באמצעות —————</h2>
                                 <button
-                                    type="submit"
-                                    className="w-full bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-600 transition"
+                                    onClick={handleGoogleSignIn}
+                                    className="w-full bg-yellow-100 py-2 px-4 border rounded-lg shadow-lg hover:bg-yellow-200 transition flex items-center justify-center gap-2"
                                 >
-                                    התחבר
+                                    <Image
+                                        src={googleImage}
+                                        alt="תמונת פרופיל"
+                                        width={20}
+                                        height={20}
+                                        className="rounded-full border object-cover"
+                                    />
+                                    Google
                                 </button>
-                            </form>
+                                <br></br>
+                                {/* // Existing User Login */}
+                                <form onSubmit={handleLogin} className="space-y-4">
+                                    <h2 className="text-red-400 text-m  text-center mb-6">——  התחבר באמצעות שם משתמש וסיסמא ——</h2>
+
+                                    <div>
+                                        <label htmlFor="userName" className="block font-medium text-center">
+                                            שם משתמש
+                                        </label>
+                                        <input
+                                            id="userName"
+                                            name="userName"
+                                            type="text"
+                                            required
+                                            className="w-full px-3 py-2 border rounded-md"
+                                        />
+                                    </div> <div>
+                                        <label htmlFor="email" className="block font-medium text-center">
+                                            אימייל
+                                        </label>
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            required
+                                            className="w-full px-3 py-2 border rounded-md"
+                                        />
+                                    </div>
+                                    <div className="relative">
+                                        <label htmlFor="password" className="block font-medium text-center">
+                                            סיסמה
+                                        </label>
+                                        <input
+                                            id="password"
+                                            name="password"
+                                            type={showPassword ? 'text' : 'password'}
+                                            required
+                                            className="w-full px-3 py-2 border rounded-md"
+                                            onPaste={(e) => e.preventDefault()} // מניעת הדבקה
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setshowPassword(!showPassword)}
+                                            className="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500"
+                                        >
+                                            {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />}
+                                        </button>
+                                    </div>
+
+
+                                    {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+                                    <button
+                                        type="submit"
+                                        className="w-full bg-red-400 text-white py-2 px-4 border rounded-lg shadow-lg hover:bg-red-600 transition"
+                                    >
+                                        התחבר
+                                    </button>
+                                </form>
+                            </div>
 
 
                         ) : (
@@ -181,7 +214,7 @@ const Login: React.FC = () => {
 
                         {/* Link to Registration and Password Recovery */}
                         {!isEnterCode && (
-                            <div className="text-center space-y-2">
+                            <div className="text-center space-y-2 text-red-400">
                                 <p>
                                     <button
                                         type="button"
