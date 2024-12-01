@@ -19,8 +19,7 @@ export async function POST(req: Request) {
     try {
         await connectDb();
 
-
-        const token = req.headers.get('Authorization')?.split(' ')[1]; 
+        const token = req.headers.get('Authorization')?.split(' ')[1];
 
         if (!token) {
             return NextResponse.json(
@@ -29,11 +28,8 @@ export async function POST(req: Request) {
             );
         }
 
-
         const decoded = verifyToken(token);
-        console.log(decoded);
 
-       
         if (typeof decoded !== 'object' || !('userName' in decoded)) {
             return NextResponse.json(
                 { error: 'Invalid token structure' },
@@ -43,10 +39,9 @@ export async function POST(req: Request) {
 
         const decodedUserName = decoded.userName;
 
-
         const { searchParams } = new URL(req.url);
         const userName = searchParams.get('username');
-   
+
         if (!userName) {
             return NextResponse.json(
                 { error: 'Missing username' },
@@ -61,7 +56,6 @@ export async function POST(req: Request) {
             );
         }
 
-      
         const user = await UserModel.findOne({ userName });
         if (!user) {
             return NextResponse.json(
@@ -70,18 +64,16 @@ export async function POST(req: Request) {
             );
         }
 
-     
         const body = await req.json();
-        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr } = body;
+        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr, imageUrl } = body;
 
-     
-        if (!title || !description) {
+        if (!title || !description || !imageUrl) {
             return NextResponse.json(
                 { error: 'Missing or invalid post data' },
                 { status: 400 }
             );
         }
-        
+
         let newPost;
 
         if (user.title === 'consumer') {
@@ -92,7 +84,6 @@ export async function POST(req: Request) {
                 );
             }
 
-          
             const consumerPost = new ConsumerPostModel({
                 eventCategory,
                 supplierNameArr,
@@ -107,6 +98,7 @@ export async function POST(req: Request) {
                 album,
                 title,
                 description,
+                imageUrl, 
                 recommendations: recommendations || [],
                 postId: consumerPost._id,
             });
@@ -117,6 +109,7 @@ export async function POST(req: Request) {
                 album,
                 title,
                 description,
+                imageUrl, 
                 recommendations: recommendations || [],
             });
         }
