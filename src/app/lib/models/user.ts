@@ -103,7 +103,7 @@ postSchema.index({ userName: 'text' });
 postSchema.index({ 'consumerPost.eventCategory': 'text' });  // אם יש צורך לחפש גם בקטגוריית האירוע
 
 // סנכרון אינדקסים
-PostModel.syncIndexes();
+// PostModel.syncIndexes();
 
 export { 
   AddressModel, 

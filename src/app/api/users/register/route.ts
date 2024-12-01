@@ -97,13 +97,11 @@ export async function POST(req: Request) {
         const payload = { userName: user.userName, email: user.email }; 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
 
-        // יצירת עוגיות עם הטוקן
         const response = NextResponse.json(
             { message: 'Login successful' },
             { status: 200 }
         );
 
-        // הגדרת העוגיה עם הטוקן
         response.cookies.set('token', token, {
             httpOnly: true, // מונע גישה לעוגיה מהלקוח (JavaScript)
             secure: process.env.NODE_ENV === 'production', // מאובטח רק ב-production
@@ -111,7 +109,6 @@ export async function POST(req: Request) {
             path: '/', // העוגיה תהיה זמינה בכל האפליקציה
         });
 
-        // החזרת העוגיה יחד עם התגובה
         return response;
 
     } catch (error) {

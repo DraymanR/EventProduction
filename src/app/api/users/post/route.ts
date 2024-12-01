@@ -88,6 +88,9 @@
 //         );
 //     }
 // }
+
+
+
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -160,29 +163,29 @@ export async function POST(req: Request) {
             await newConsumer.save();
         }
 
-        // יצירת טוקן JWT
+       
         const payload = { userName: newUser.userName, email: newUser.email }; 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
 
-        // יצירת עוגיות
+     
         const response = NextResponse.json(
-            { message: 'User created successfully' },  // שלח רק את ההודעה על הצלחה
+            { message: 'User created successfully' }, 
             { status: 201 }
         );
 
-        // הגדרת העוגיות: שם משתמש וטוקן
+    
         response.cookies.set('userName', newUser.userName, { 
             httpOnly: true, 
             secure: process.env.NODE_ENV === 'production', 
             maxAge: 86400, 
-            path: '/' // Make sure the cookie is available across the app
+            path: '/' 
         });
 
         response.cookies.set('token', token, { 
             httpOnly: true, 
             secure: process.env.NODE_ENV === 'production', 
             maxAge: 86400, 
-            path: '/' // Ensure it's accessible across the app
+            path: '/' 
         });
 
         // החזרת התשובה עם העוגיות
