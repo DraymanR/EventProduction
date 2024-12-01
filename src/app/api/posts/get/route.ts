@@ -7,18 +7,36 @@
 //     try {
 //         await connectDb();
 
-      
 //         const { searchParams } = new URL(req.url);
 //         const page = parseInt(searchParams.get('page') || '1', 10);
-//         const limit = parseInt(searchParams.get('limit') || '10', 10); 
+//         const limit = parseInt(searchParams.get('limit') || '10', 10);
 
-    
 //         const skip = (page - 1) * limit;
 
-       
-//         const posts = await PostModel.find()
-//             .skip(skip) 
-//             .limit(limit) 
+//         const title = searchParams.get('title');
+//         const username = searchParams.get('username');
+//         const eventCategory = searchParams.get('eventCategory');
+
+//         let query: any = {};
+
+//         if (title) {
+//             query.title = { $regex: title, $options: 'i' }; 
+//         }
+
+//         if (username) {
+//             query.userName = { $regex: username, $options: 'i' }; 
+//         }
+
+//         if (eventCategory) {
+//             query.eventCategory = { $regex: eventCategory, $options: 'i' }; 
+//         }
+
+//         console.log('Query:', query);  // הדפסת השאילתה
+
+//         // חיפוש הפוסטים על פי השאילתה עם הגבלת תוצאות לפי עמוד
+//         const posts = await PostModel.find(query)
+//             .skip(skip)  // דילוג על הפוסטים לפי העמוד הנוכחי
+//             .limit(limit)  // הגבלת מספר הפוסטים לעמוד
 //             .populate({
 //                 path: 'recommendations',
 //                 model: 'Recommendation',
@@ -27,10 +45,12 @@
 //                 path: 'postId',
 //                 model: 'ConsumerPost',
 //             })
-//             .lean();
+//             .lean();  // שימוש ב-lean כדי למנוע יצירת אובייקטים של Mongoose
 
-//         const totalPosts = await PostModel.countDocuments();
+//         // חישוב סך כל הפוסטים שמחפשים
+//         const totalPosts = await PostModel.countDocuments(query);
 
+//         // החזרת תוצאות
 //         return NextResponse.json(
 //             {
 //                 message: 'Posts retrieved successfully',
@@ -49,6 +69,7 @@
 //         );
 //     }
 // }
+
 import { NextResponse } from 'next/server';
 import { PostModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb';
@@ -60,39 +81,45 @@ export async function GET(req: Request) {
         const { searchParams } = new URL(req.url);
         const page = parseInt(searchParams.get('page') || '1', 10);
         const limit = parseInt(searchParams.get('limit') || '10', 10);
-
         const skip = (page - 1) * limit;
 
         const title = searchParams.get('title');
         const username = searchParams.get('username');
-        const type = searchParams.get('type');
         const eventCategory = searchParams.get('eventCategory');
+        const startDate = searchParams.get('startDate');
+        const endDate = searchParams.get('endDate');
 
         let query: any = {};
 
-        // בדיקה אם יש פרמטרים להציב בשאילתה
+    
         if (title) {
-            query.title = { $regex: title, $options: 'i' }; // חיפוש רג'קס בכותרת
+            query.title = { $regex: title, $options: 'i' }; 
         }
 
         if (username) {
-            query.userName = { $regex: username, $options: 'i' }; // חיפוש לפי שם משתמש
-        }
-
-        if (type) {
-            query.type = type; // חיפוש לפי סוג
+            query.userName = { $regex: username, $options: 'i' }; 
         }
 
         if (eventCategory) {
-            query.eventCategory = { $regex: eventCategory, $options: 'i' }; // חיפוש לפי קטגוריית אירוע
+            query.eventCategory = { $regex: eventCategory, $options: 'i' }; 
         }
 
-        console.log('Query:', query);  // הדפסת השאילתה
+        if (startDate) {
+            query.createDate = { $gte: new Date(startDate) };
+        }
 
-        // חיפוש הפוסטים על פי השאילתה עם הגבלת תוצאות לפי עמוד
+        if (endDate) {
+            query.createDate = { 
+                ...query.createDate, 
+                $lte: new Date(endDate) 
+            };
+        }
+
+        console.log('Query:', query); 
+
         const posts = await PostModel.find(query)
-            .skip(skip)  // דילוג על הפוסטים לפי העמוד הנוכחי
-            .limit(limit)  // הגבלת מספר הפוסטים לעמוד
+            .skip(skip)  
+            .limit(limit) 
             .populate({
                 path: 'recommendations',
                 model: 'Recommendation',
@@ -101,9 +128,8 @@ export async function GET(req: Request) {
                 path: 'postId',
                 model: 'ConsumerPost',
             })
-            .lean();  // שימוש ב-lean כדי למנוע יצירת אובייקטים של Mongoose
+            .lean(); 
 
-        // חישוב סך כל הפוסטים שמחפשים
         const totalPosts = await PostModel.countDocuments(query);
 
         // החזרת תוצאות
