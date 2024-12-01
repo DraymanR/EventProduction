@@ -102,116 +102,78 @@
 //     }
 // }import { NextResponse } from 'next/server';
 import { NextResponse } from 'next/server';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { UserModel, ConsumerModel, SupplierModel } from '@/app/lib/models/user';
-import { User } from '@/app/types/user';
+import { PostModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-const verifyToken = (token: string): string | JwtPayload => {
-    try {
-        return jwt.verify(token, JWT_SECRET);
-    } catch (error) {
-        throw new Error('Invalid token');
-    }
-};
 
 export async function GET(req: Request) {
     try {
         await connectDb();
-
+        
         const { searchParams } = new URL(req.url);
-        const userNameFromQuery = searchParams.get('username');
+        const page = parseInt(searchParams.get('page') || '1', 10);
+        const limit = parseInt(searchParams.get('limit') || '10', 10);
 
-        if (!userNameFromQuery) {
-            return NextResponse.json(
-                { error: 'Missing username' },
-                { status: 400 }
-            );
+        const skip = (page - 1) * limit;
+
+        const title = searchParams.get('title');
+        const userName = searchParams.get('userName');
+        const type = searchParams.get('type');
+        const eventCategory = searchParams.get('eventCategory');
+
+        let query: any = {};
+
+        // חיפוש טקסטואלי חכם בכותרת עם רג'קס
+        if (title) {
+            query.title = { $regex: title, $options: 'i' }; // חיפוש רג'קס רגיש לאותיות גדולות וקטנות
         }
 
-        const token = req.headers.get('Authorization')?.split(' ')[1];
-
-        if (!token) {
-            return NextResponse.json(
-                { error: 'Missing token' },
-                { status: 401 }
-            );
+        // הוספת חיפושים לפי שדות נוספים
+        if (userName) {
+            query.userName = { $regex: userName, $options: 'i' }; 
         }
 
-        const decoded = verifyToken(token);
-
-        if (typeof decoded !== 'object' || !('userName' in decoded)) {
-            return NextResponse.json(
-                { error: 'Invalid token structure' },
-                { status: 401 }
-            );
+        if (type) {
+            query.type = type; 
         }
 
-        const decodedUserName = decoded.userName;
-
-        const user = await UserModel.findOne({ userName: userNameFromQuery })
-        .populate('addressId') 
-        .populate({
-            path: 'postArr', 
-            populate: [
-                {
-                    path: 'recommendations', 
-                    model: 'Recommendation',
-                },
-                {
-                    path: 'postId', 
-                    model: 'ConsumerPost',
-                }
-            ]
-        })
-        .lean<User>(); 
-
-        if (!user) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 }
-            );
+        if (eventCategory) {
+            query.eventCategory = { $regex: eventCategory, $options: 'i' }; 
         }
 
-        let userDetails;
-        let consumerDetails;
-        if (user.title === 'supplier') {
-            userDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
-        } else if (user.title === 'consumer') {
-       
-            consumerDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
-        }
+        console.log('Query:', query);
 
-      
-        if (user.userName !== decodedUserName) {
-            const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
+        // חיפוש בפוסטים עם השאילתה שהכנו
+        const posts = await PostModel.find(query)
+            .skip(skip)
+            .limit(limit)
+            .populate({
+                path: 'recommendations',
+                model: 'Recommendation',
+            })
+            .populate({
+                path: 'postId',
+                model: 'ConsumerPost',
+            })
+            .lean();
 
-            return NextResponse.json(
-                {
-                    message: 'User retrieved successfully',
-                    user: filteredUser,
-                    userDetails: userDetails,
-                    consumerDetails: consumerDetails, 
-                },
-                { status: 200 }
-            );
-        }
+        console.log('Posts found:', posts);
+
+        const totalPosts = await PostModel.countDocuments(query);
 
         return NextResponse.json(
             {
-                message: 'User retrieved successfully',
-                user: user,
-                userDetails: userDetails,
-                consumerDetails: consumerDetails, 
+                message: 'Posts retrieved successfully',
+                posts: posts,
+                totalPosts: totalPosts, 
+                totalPages: Math.ceil(totalPosts / limit), 
+                currentPage: page,
             },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error retrieving user:', error);
+        console.error('Error retrieving posts:', error);
         return NextResponse.json(
-            { error: 'Error retrieving user' },
+            { error: 'Error retrieving posts' },
             { status: 500 }
         );
     }
