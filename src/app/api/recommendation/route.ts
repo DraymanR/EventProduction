@@ -13,7 +13,7 @@ const verifyToken = (token: string): string | JwtPayload => {
     }
 };
 
-export async function POST(req: Request) {
+export default async function POST(req: Request) {
     try {
         await connectDb();
 

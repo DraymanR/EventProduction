@@ -6,7 +6,7 @@ export interface User {
   firstName: string;
   lastName: string;
   userName: string; // unique
-  email: string; // unique
+  email: string;    // unique
   title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
   phone: string;
   language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
@@ -57,6 +57,9 @@ export interface Post {
   postId: ObjectId;
 }
 
+export interface Img {
+  imgUrl : string
+}
 
 export interface ConsumerPost {
 
