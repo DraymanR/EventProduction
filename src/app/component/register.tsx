@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useModalStore from '../store/modelStore';
+import { IoEyeOffOutline } from 'react-icons/io5';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
 
 interface FormData {
     firstName: string;
@@ -211,12 +213,18 @@ const Register: React.FC = () => {
                         required
                         minLength={6}
                         className="w-full px-3 py-2 border rounded-md"
+                        onPaste={(e) => e.preventDefault()} // מניעת הדבקה
+                        onCopy={(e) => e.preventDefault()} // מניעת העתקה
+                        onCut={(e) => e.preventDefault()}  // מניעת גזירה
                     />
                     <button
                         type="button"
                         onClick={() => { setshowPassword(!showPassword) }}
-                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                        {showPassword ? 'הסתר' : 'הצג'} {/* טקסט הכפתור משתנה לפי המצב */}
+                        // className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+                        className="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
+
+                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
+
                     </button>
                 </div>
                 <div className="relative">
@@ -231,12 +239,17 @@ const Register: React.FC = () => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="w-full px-3 py-2 border rounded-md"
+                        onPaste={(e) => e.preventDefault()} // מניעת הדבקה
+                        onCopy={(e) => e.preventDefault()} // מניעת העתקה
+                        onCut={(e) => e.preventDefault()}  // מניעת גזירה
                     />
                     <button
                         type="button"
                         onClick={() => { setshowconfirmPassword(!showconfirmPassword) }}
-                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                        {showconfirmPassword ? 'הסתר' : 'הצג'} {/* טקסט הכפתור משתנה לפי המצב */}
+                        // className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+                        className="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
+
+                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
                     </button>
                 </div>
                 <div>
