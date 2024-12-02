@@ -19,29 +19,38 @@ export async function POST(req: NextRequest) {
 
         console.log('inside the POST save-image function , still did nothing :)')
 
-        const token = req.headers.get('Authorization')?.split(' ')[1];
+        // const token = req.headers.get('Authorization')?.split(' ')[1];
 
-        if (!token) {
-            return NextResponse.json(
-                { error: 'Missing token' },
-                { status: 401 }
-            );
-        }
+        // if (!token) {
+        //     return NextResponse.json(
+        //         { error: 'Missing token' },
+        //         { status: 401 }
+        //     );
+        // }
 
-        const decoded = verifyToken(token);
+        // const decoded = verifyToken(token);
 
-        if (typeof decoded !== 'object' || !('userName' in decoded)) {
-            return NextResponse.json(
-                { error: 'Invalid token structure' },
-                { status: 401 }
-            );
-        }
+        // if (typeof decoded !== 'object' || !('userName' in decoded)) {
+        //     return NextResponse.json(
+        //         { error: 'Invalid token structure' },
+        //         { status: 401 }
+        //     );
+        // }
 
-        const decodedUserName = decoded.userName;
+        // const decodedUserName = decoded.userName;
 
         const body = await req.json();
         const { imageUrl, postId } = body;
+
         console.log(`this is my imageUrl that come from the claudinery: ${imageUrl}`)
+
+
+        if (!postId || !imageUrl) {
+            return NextResponse.json(
+                { error: 'postId or imageUrl not found' },
+                { status: 404 }
+            );
+        }
 
         const post = await PostModel.findById(postId);
         if (!post) {
@@ -52,7 +61,7 @@ export async function POST(req: NextRequest) {
         }
 
         const newImg = new ImgModel({
-            imageUrl: imageUrl,
+            imgUrl: imageUrl,
         });
 
         await newImg.save();

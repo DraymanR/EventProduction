@@ -2,7 +2,6 @@ import connectDb from '@/app/lib/db/connectDb';
 import { UserModel } from '@/app/lib/models/user';
 import { User } from '@/app/types/user';
 
-
 async function getUsers(): Promise<User[]> {
   try {
     await connectDb();

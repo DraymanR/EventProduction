@@ -87,7 +87,7 @@ const ConsumerModel = mongoose.models.Consumer || mongoose.model<Consumer>('Cons
 const PostModel = mongoose.models.Post || mongoose.model<Post>('Post', postSchema);
 const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<ConsumerPost>('ConsumerPost', consumerPostSchema);
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
-const ImgModel = mongoose.models.Img || mongoose.model<Img>('Image', ImgSchema);
+const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 
 export {
   AddressModel,
