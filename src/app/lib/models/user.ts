@@ -101,7 +101,9 @@ postSchema.index({ title: 'text' });
 postSchema.index({ description: 'text' });
 postSchema.index({ userName: 'text' });
 postSchema.index({ 'consumerPost.eventCategory': 'text' });  // אם יש צורך לחפש גם בקטגוריית האירוע
-
+userSchema.index({ 'addressId.city': 'text' });  // אינדקס על שדה העיר
+userSchema.index({ title: 'text' });  // אינדקס על שדה הכותרת
+userSchema.index({ language: 1 });  // אינדקס על שדה השפה
 // סנכרון אינדקסים
 // PostModel.syncIndexes();
 

@@ -66,6 +66,9 @@ export async function GET(req: NextRequest) {
                     path: 'recommendations',
                     model: 'Recommendation',
                 },
+            }) .populate({
+                path: 'postId',
+                model: 'ConsumerPost',
             })
             .lean<User>();
 
