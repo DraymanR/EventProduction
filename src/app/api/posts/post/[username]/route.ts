@@ -181,14 +181,14 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        if (typeof decoded !== 'object' || !('userName' in decoded)) {
+        if (typeof decoded !== 'object' || !('username' in decoded)) {
             return NextResponse.json(
                 { error: 'Invalid token structure' },
                 { status: 401 }
             );
         }
 
-        const decodedUserName = decoded.userName;
+        const decodedUserName = decoded.username;
 
         const { searchParams } = new URL(req.url);
         const userName = searchParams.get('username');

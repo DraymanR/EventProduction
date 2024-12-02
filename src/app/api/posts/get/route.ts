@@ -132,7 +132,7 @@ export async function GET(req: Request) {
 
         const totalPosts = await PostModel.countDocuments(query);
 
-        // החזרת תוצאות
+      
         return NextResponse.json(
             {
                 message: 'Posts retrieved successfully',
