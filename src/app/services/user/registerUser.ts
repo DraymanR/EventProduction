@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const singIn = async (email: string, userName: string, password: string) => {
 
-  const data = { email: email, password: password, username: userName }
+  const data = { email: email, password: password, userName: userName }
   try {
     console.log("data", data);
 
@@ -39,17 +39,19 @@ export const addUser = async (data: UserFormData) => {
   }
 };
 
-export const getMyDetails = async (username: string) => {
+export const getMyDetails = async () => {
   try {
 
-    // const myUserNAme = localStorage.getItem("")
-    const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${username}`, {
+    const myUserName = decodeURIComponent(document.cookie.split('=')[1])
+    console.log(myUserName);
+    
+    const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${myUserName}`, {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    console.log('User :', response.data);
+    console.log('User :', response.data.user);
     return response.data
   } catch (error) {
     console.error('Error registering user:', error);
@@ -57,4 +59,20 @@ export const getMyDetails = async (username: string) => {
   }
 };
 
-// checkAuth();
+
+export const logout = async () => {
+  try {
+    const response = await axios.post('http://localhost:3000/api/users/logout', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+
+    // החזרת התשובה מהשרת
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error; // טיפול בשגיאות
+  }
+};
