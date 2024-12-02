@@ -12,6 +12,7 @@ import googleImage from '@/app/assets/images/google.png';
 import Image from 'next/image';
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoEyeOffOutline } from 'react-icons/io5';
+import useMyUser from '../store/users';
 
 
 const Login: React.FC = () => {
@@ -22,6 +23,8 @@ const Login: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showPassword, setshowPassword] = useState(false);
     const closeModal = useModalStore((state) => state.closeModal);
+    const setMyUserName = useMyUser((state) => state.setUserName);
+    const myUserName = useMyUser((state) => state.userName);
 
     const router = useRouter();
 
@@ -46,6 +49,9 @@ const Login: React.FC = () => {
             console.log(userName.value, email.value, password.value);
             const result = await singIn(email.value, userName.value, password.value);
             console.log('User registered successfully:', result);
+            setMyUserName(userName.value)
+            console.log(myUserName);
+            
             router.push('/pages/consumer-account');
             closeModal()
         } catch (error) {
