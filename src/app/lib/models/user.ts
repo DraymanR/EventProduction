@@ -20,7 +20,8 @@ const userSchema = new Schema<User>({
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true }, 
   description: { type: String, required: true },
-  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+
 });
 
 // הסכמה למודל כתובת
