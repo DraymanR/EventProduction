@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
-import jwt,{JwtPayload} from 'jsonwebtoken';
-import { UserModel, PostModel, RecommendationModel } from '@/app/lib/models/user';
+
+import { NextResponse,NextRequest } from 'next/server';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import {  PostModel, RecommendationModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -13,23 +14,26 @@ const verifyToken = (token: string): string | JwtPayload => {
     }
 };
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
     try {
         await connectDb();
 
       
-        const token = req.headers.get('Authorization')?.split(' ')[1]; 
+     
+        const tokenCookie = req.cookies.get('token'); 
+        const token = tokenCookie ? tokenCookie.value : null;  
+
+    
 
         if (!token) {
             return NextResponse.json(
-                { error: 'Missing token' },
+                { error: 'Missing token in cookies' },
                 { status: 401 }
             );
         }
 
         const decoded = verifyToken(token);
 
-     
         if (typeof decoded !== 'object' || !('userName' in decoded)) {
             return NextResponse.json(
                 { error: 'Invalid token structure' },
@@ -39,18 +43,18 @@ export async function POST(req: Request) {
 
         const decodedUserName = decoded.userName;
 
-   
+        
         const body = await req.json();
         const { postId, text, rate } = body;
 
         if (!postId || !text || !rate) {
             return NextResponse.json(
-                { error: 'Missing postId, text or rate' },
+                { error: 'Missing postId, text, or rate' },
                 { status: 400 }
             );
         }
 
-     
+       
         const post = await PostModel.findById(postId);
         if (!post) {
             return NextResponse.json(
@@ -59,7 +63,7 @@ export async function POST(req: Request) {
             );
         }
 
-     
+    
         const recommendation = new RecommendationModel({
             userName: decodedUserName,
             text,
@@ -68,7 +72,6 @@ export async function POST(req: Request) {
 
         await recommendation.save();
 
-      
         post.recommendations.push(recommendation._id);
         await post.save();
 
