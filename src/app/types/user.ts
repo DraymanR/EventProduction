@@ -6,14 +6,15 @@ export interface User {
   firstName: string;
   lastName: string;
   userName: string; // unique
-  email: string;    // unique
-  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
+  email: string; // unique
+  title: ('supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string)[]; // מערך של טיטלים
   phone: string;
-  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  language: ('Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian' | string)[]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
-  postArr: ObjectId[];
+  postArr: ObjectId[]; // מערך של פוסטים
 }
+
 
 export interface Auth {
   userName:string,

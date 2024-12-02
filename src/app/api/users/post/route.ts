@@ -1,4 +1,5 @@
 
+
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -6,25 +7,24 @@ import { UserModel, AuthModel, AddressModel, SupplierModel, ConsumerModel } from
 import connectDb from '@/app/lib/db/connectDb'; 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
+
 export async function POST(req: Request) {
     try {
-        const { firstName, lastName, userName, email, password, title, phone, language, address, description ,topPrice,startingPrice} = await req.json();
+        const { firstName, lastName, userName, email, password, title, phone, language, address, description, topPrice, startingPrice } = await req.json();
 
-        if (  !firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
+        
+        if (!firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
                 { status: 400 }
             );
         }
 
-        
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        
         await connectDb();
 
-       
         const newAuth = new AuthModel({
             userName,
             email,
@@ -72,14 +72,34 @@ export async function POST(req: Request) {
             await newConsumer.save();
         }
 
-        
+       
         const payload = { userName: newUser.userName, email: newUser.email }; 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
- 
-        return NextResponse.json(
-            { message: 'User created successfully', newUser, token },
+
+     
+        const response = NextResponse.json(
+            { message: 'User created successfully' }, 
             { status: 201 }
         );
+
+    
+        response.cookies.set('userName', newUser.userName, { 
+            httpOnly: false, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 86400, 
+            path: '/' 
+        });
+
+        response.cookies.set('token', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 86400, 
+            path: '/' 
+        });
+
+        
+        return response;
+
     } catch (error) {
         console.error('Error creating user:', error);
         return NextResponse.json(
