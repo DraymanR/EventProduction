@@ -8,13 +8,13 @@ const userSchema = new Schema<User>({
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   title: { 
-    type: String, 
-    enum: ['supplier',  'consumer',  'Makeup artist', 'photographer', 'sound engineer', 'event designer', 'orchestra', 'singer'], 
+    type: [String], // מערך של טיטלים
+    enum: ['supplier', 'consumer', 'Makeup artist', 'photographer', 'sound engineer', 'event designer', 'orchestra', 'singer'],
     required: true 
   },
   phone: { type: String, required: true },
   language: { 
-    type: String, 
+    type: [String], 
     enum: ['Hebrew', 'English', 'French', 'Yiddish', 'Spanish', 'Russian'], 
     required: true 
   },
