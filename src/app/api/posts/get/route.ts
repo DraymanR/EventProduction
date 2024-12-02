@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import { PostModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb';
@@ -7,17 +6,47 @@ export async function GET(req: Request) {
     try {
         await connectDb();
 
-      
         const { searchParams } = new URL(req.url);
         const page = parseInt(searchParams.get('page') || '1', 10);
-        const limit = parseInt(searchParams.get('limit') || '10', 10); 
-
-    
+        const limit = parseInt(searchParams.get('limit') || '10', 10);
         const skip = (page - 1) * limit;
 
-       
-        const posts = await PostModel.find()
-            .skip(skip) 
+        const title = searchParams.get('title');
+        const username = searchParams.get('username');
+        const eventCategory = searchParams.get('eventCategory');
+        const startDate = searchParams.get('startDate');
+        const endDate = searchParams.get('endDate');
+
+        let query: any = {};
+
+    
+        if (title) {
+            query.title = { $regex: title, $options: 'i' }; 
+        }
+
+        if (username) {
+            query.userName = { $regex: username, $options: 'i' }; 
+        }
+
+        if (eventCategory) {
+            query.eventCategory = { $regex: eventCategory, $options: 'i' }; 
+        }
+
+        if (startDate) {
+            query.createDate = { $gte: new Date(startDate) };
+        }
+
+        if (endDate) {
+            query.createDate = { 
+                ...query.createDate, 
+                $lte: new Date(endDate) 
+            };
+        }
+
+        console.log('Query:', query); 
+
+        const posts = await PostModel.find(query)
+            .skip(skip)  
             .limit(limit) 
             .populate({
                 path: 'recommendations',
@@ -27,10 +56,11 @@ export async function GET(req: Request) {
                 path: 'postId',
                 model: 'ConsumerPost',
             })
-            .lean();
+            .lean(); 
 
-        const totalPosts = await PostModel.countDocuments();
+        const totalPosts = await PostModel.countDocuments(query);
 
+      
         return NextResponse.json(
             {
                 message: 'Posts retrieved successfully',
