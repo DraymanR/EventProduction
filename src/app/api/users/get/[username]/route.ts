@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
         let userDetails;
         if (user.title === 'supplier') {
             userDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
-        } else if (user.title === 'consumer'&&user.userName !== decodedUserName) {
+        } else if (user.title === 'consumer'&&user.userName === decodedUserName) {
             userDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
         }
 
