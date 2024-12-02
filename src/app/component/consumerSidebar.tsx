@@ -4,13 +4,23 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Link from 'next/link';
+import { logout } from '../services/user/registerUser';
+import { useRouter } from 'next/navigation';
+
+
 
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const router = useRouter();
 
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
+  };
+  const exite = async () => {
+    await logout()
+    router.push('/');
+
   };
 
   return (
@@ -24,7 +34,14 @@ const ConsumerNavbar: React.FC = () => {
           height={80}
           className="rounded-full border"
         />
-        <Link href="/" className="text-red-300 underline">יציאה</Link>
+        <button
+          type="button"
+          onClick={() => exite()} // לוחץ על כפתור זה יעביר לשלב איפוס סיסמה
+          className="text-red-300 underline bg-transparent border-none cursor-pointer"
+        >
+          יציאה
+        </button>
+        {/* <Link href="/" className="text-red-300 underline">יציאה</Link> */}
       </div>
 
       {/* לינקים בתפריט - יפתחו רק אם isOpen === true */}
