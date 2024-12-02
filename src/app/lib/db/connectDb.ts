@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 const connectDb = async (): Promise<void> => {
   console.log('inside the connectDB function , still did nothing :)')
    try{
