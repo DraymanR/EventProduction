@@ -65,11 +65,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(req: Request) {
     try {
-        const { email, password } = await req.json(); 
+        const { email, password,userName } = await req.json(); 
 
-        if (!email || !password) {
+        if (!email || !password||!userName) {
             return NextResponse.json(
-                { error: 'Email and password are required' },
+                { error: 'Email, username and password are required' },
                 { status: 400 }
             );
         }
@@ -97,21 +97,25 @@ export async function POST(req: Request) {
         const payload = { userName: user.userName, email: user.email }; 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
 
-        // יצירת עוגיות עם הטוקן
         const response = NextResponse.json(
             { message: 'Login successful' },
             { status: 200 }
         );
 
-        // הגדרת העוגיה עם הטוקן
+        response.cookies.set('userName', userName, {
+            httpOnly: false, // מונע גישה לעוגיה מהלקוח (JavaScript)
+            secure: process.env.NODE_ENV === 'production', // מאובטח רק ב-production
+            maxAge: 86400, // 24 שעות
+            path: '/', // העוגיה תהיה זמינה בכל האפליקציה
+        });
         response.cookies.set('token', token, {
             httpOnly: true, // מונע גישה לעוגיה מהלקוח (JavaScript)
             secure: process.env.NODE_ENV === 'production', // מאובטח רק ב-production
             maxAge: 86400, // 24 שעות
             path: '/', // העוגיה תהיה זמינה בכל האפליקציה
         });
+     
 
-        // החזרת העוגיה יחד עם התגובה
         return response;
 
     } catch (error) {

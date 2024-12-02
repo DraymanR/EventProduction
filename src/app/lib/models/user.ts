@@ -34,7 +34,7 @@ const addressSchema = new Schema<Address>({
 
 // הסכמה למודל הזדהות (Auth)
 const authSchema = new Schema<Auth>({
-  userName: { type: String, ref: 'User', required: true }, 
+  // userName: { type: String, ref: 'User', required: true }, 
   email: { type: String, ref: 'User', required: true },
   password: { type: String, required: true },
   otp: { type: String, default: null },
@@ -103,7 +103,7 @@ postSchema.index({ userName: 'text' });
 postSchema.index({ 'consumerPost.eventCategory': 'text' });  // אם יש צורך לחפש גם בקטגוריית האירוע
 
 // סנכרון אינדקסים
-PostModel.syncIndexes();
+// PostModel.syncIndexes();
 
 export { 
   AddressModel, 
