@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
         }
 
       
-        const tokenCookie = req.cookies.get('token');  
+        const tokenCookie = req.cookies.get('token'); 
         const token = tokenCookie ? tokenCookie.value : null;  
 
         if (!token) {
@@ -66,9 +66,6 @@ export async function GET(req: NextRequest) {
                     path: 'recommendations',
                     model: 'Recommendation',
                 },
-            }) .populate({
-                path: 'postId',
-                model: 'ConsumerPost',
             })
             .lean<User>();
 
@@ -82,7 +79,7 @@ export async function GET(req: NextRequest) {
         let userDetails;
         if (user.title === 'supplier') {
             userDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
-        } else if (user.title === 'consumer') {
+        } else if (user.title === 'consumer'&&user.userName !== decodedUserName) {
             userDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
         }
 

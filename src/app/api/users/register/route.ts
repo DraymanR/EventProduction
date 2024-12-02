@@ -94,7 +94,7 @@ export async function POST(req: Request) {
             );
         }
 
-        const payload = { userName: user.userName, email: user.email }; 
+        const payload = { userName: userName, email: user.email }; 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
 
         const response = NextResponse.json(
@@ -102,17 +102,19 @@ export async function POST(req: Request) {
             { status: 200 }
         );
 
-        response.cookies.set('userName', userName, {
-            httpOnly: false, // מונע גישה לעוגיה מהלקוח (JavaScript)
-            secure: process.env.NODE_ENV === 'production', // מאובטח רק ב-production
-            maxAge: 86400, // 24 שעות
-            path: '/', // העוגיה תהיה זמינה בכל האפליקציה
+        
+        response.cookies.set('userName', userName, { 
+            httpOnly: false, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 86400, 
+            path: '/' 
         });
-        response.cookies.set('token', token, {
-            httpOnly: true, // מונע גישה לעוגיה מהלקוח (JavaScript)
-            secure: process.env.NODE_ENV === 'production', // מאובטח רק ב-production
-            maxAge: 86400, // 24 שעות
-            path: '/', // העוגיה תהיה זמינה בכל האפליקציה
+
+        response.cookies.set('token', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 86400, 
+            path: '/' 
         });
      
 
