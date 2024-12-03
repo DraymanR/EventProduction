@@ -1,31 +1,71 @@
-import { NextResponse } from 'next/server';
-import { UserModel, AddressModel, SupplierModel, ConsumerModel, PostModel, RecommendationModel } from '@/app/lib/models/user';
-import { User } from '@/app/types/user';
+
+import { NextResponse, NextRequest } from 'next/server'; 
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { UserModel, ConsumerModel, SupplierModel } from '@/app/lib/models/user';
+import { User,Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
 
-export async function GET(req: Request) {
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+const verifyToken = (token: string): string | JwtPayload => {
+    try {
+        return jwt.verify(token, JWT_SECRET);
+    } catch (error) {
+        throw new Error('Invalid token');
+    }
+};
+
+export async function GET(req: NextRequest) {  
+ 
     try {
         await connectDb();
 
         const { searchParams } = new URL(req.url);
-        const userName = searchParams.get('username');
+        const userNameFromQuery = searchParams.get('username');
 
-        // בדיקה אם username נמסר
-        if (!userName) {
+        if (!userNameFromQuery) {
             return NextResponse.json(
                 { error: 'Missing username' },
                 { status: 400 }
             );
         }
 
-        // חיפוש המשתמש לפי username כולל כתובת, פוסטים והמלצות
-        const user = await UserModel.findOne({ userName })
-            .populate('addressId') // שליפה של כתובת
+      
+        const tokenCookie = req.cookies.get('token'); 
+        const token = tokenCookie ? tokenCookie.value : null;  
+
+        if (!token) {
+            return NextResponse.json(
+                { error: 'Missing token' },
+                { status: 401 }
+            );
+        }
+
+        let decoded;
+        try {
+            decoded = verifyToken(token);
+        } catch (error) {
+            return NextResponse.json(
+                { error: 'Invalid token' },
+                { status: 401 }
+            );
+        }
+
+        if (typeof decoded !== 'object' || !('userName' in decoded)) {
+            return NextResponse.json(
+                { error: 'Invalid token structure' },
+                { status: 401 }
+            );
+        }
+
+        const decodedUserName = decoded.userName;
+        const user = await UserModel.findOne({ userName: userNameFromQuery })
+            .populate('addressId')
             .populate({
-                path: 'postArr', // שליפה של פוסטים
+                path: 'postArr',
                 populate: {
-                    path: 'recommendations', // שליפה של המלצות בכל פוסט
-                    model: 'Recommendation', // שימוש במודל ההמלצות
+                    path: 'recommendations',
+                    model: 'Recommendation',
                 },
             })
             .lean<User>();
@@ -37,27 +77,45 @@ export async function GET(req: Request) {
             );
         }
 
-        let userDetailes;
-        // בדיקה אם המשתמש הוא "supplier" או "consumer" והוספת מידע רלוונטי
-        if (user.title === 'supplier') {
-            userDetailes = await SupplierModel.findOne({ userName }).lean();
-        } else if (user.title === 'consumer') {
-            userDetailes = await ConsumerModel.findOne({ userName }).lean();
+        let consumerDetails,supplierDetails;
+
+        if (user.title.includes("consumer")) {
+          
+            consumerDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
+          }
+        if (user.title.some(title => Object.values(Title).includes(title as Title))){
+       
+            supplierDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
+          } else
+          
+          
+
+
+        if (user.userName !== decodedUserName) {
+            const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
+            return NextResponse.json(
+                {
+                    message: 'User retrieved successfully',
+                    user: filteredUser,
+                    supplierDetails: supplierDetails,
+                    consumerDetails:consumerDetails
+                },
+                { status: 200 }
+            );
         }
 
-        // החזרת פרטי המשתמש כולל פוסטים והמלצות
         return NextResponse.json(
             {
                 message: 'User retrieved successfully',
                 user: user,
-                userDetailes: userDetailes,
+                supplierDetails: supplierDetails,
+                consumerDetails:consumerDetails
             },
             { status: 200 }
         );
     } catch (error) {
-        console.error('Error retrieving user:', error);
         return NextResponse.json(
-            { error: 'Error retrieving user' },
+            { error: error || 'Internal Server Error' },
             { status: 500 }
         );
     }
