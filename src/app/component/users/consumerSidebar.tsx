@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Link from 'next/link';
-import { logout } from '../services/user/registerUser';
+import { logout } from '../../services/user/registerUser';
 import { useRouter } from 'next/navigation';
 
 

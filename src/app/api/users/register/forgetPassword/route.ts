@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer'; 
+import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import { UserModel, AuthModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
@@ -35,16 +35,16 @@ export async function POST(req: Request) {
         user.otpExpiration = otpExpiration;
         await user.save();
         const transporter = nodemailer.createTransport({
-            service: 'gmail', 
+            service: 'gmail',
             auth: {
-                user: "eventnorepley@gmail.com", 
-                pass: 'sczv wrfg vgpt esas', 
-            },tls: {
-                rejectUnauthorized: false 
-            } 
-           
+                user: "eventnorepley@gmail.com",
+                pass: 'sczv wrfg vgpt esas',
+            }, tls: {
+                rejectUnauthorized: false
+            }
+
         });
-    
+
 
 
         const mailOptions = {
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json(
-            { message: 'OTP sent to email' },
+            { message: 'OTP sent to email', OTP: otp },
             { status: 200 }
         );
     } catch (error) {

@@ -44,7 +44,7 @@ export const getMyDetails = async () => {
 
     const myUserName = decodeURIComponent(document.cookie.split('=')[1])
     console.log(myUserName);
-    
+
     const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${myUserName}`, {
       withCredentials: true,
       headers: {
@@ -59,6 +59,24 @@ export const getMyDetails = async () => {
   }
 };
 
+export const forgetPassword = async (data: string) => {
+  try {
+    const email = { 'email': data }
+    const response = await axios.post('http://localhost:3000/api/users/register/forgetPassword', email, {
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+
+    // החזרת התשובה מהשרת
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error; // טיפול בשגיאות
+  }
+};
 
 export const logout = async () => {
   try {

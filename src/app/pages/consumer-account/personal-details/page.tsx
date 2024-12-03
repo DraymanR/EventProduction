@@ -1,6 +1,6 @@
 'use client'
 
-import ShowUserPersonalDetails from "@/app/component/showUserPersonalDetails";
+import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
 import { getMyDetails } from "@/app/services/user/registerUser";
 import useMyUser from "@/app/store/users";
 import { UserFormData } from "@/app/types/user";

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import PopUpWindow from "./pop-upWindow";
-import Login from "./login";
+import Login from "./users/register/login";
 import useModalStore from "@/app/store/modelStore";
 
 const TimerComponent = () => {

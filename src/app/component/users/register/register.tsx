@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useModalStore from '../store/modelStore';
+import useModalStore from '../../../store/modelStore';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { UserFormData } from '@/app/types/user';
-import { addUser } from '../services/user/registerUser';
+import { addUser } from '../../../services/user/registerUser';
 
 
-const Register: React.FC = () => {
+const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [formData, setFormData] = useState<UserFormData>({
         firstName: '',
         lastName: '',
@@ -447,6 +447,16 @@ const Register: React.FC = () => {
                         {isSubmitting ? 'נרשם...' : 'הירשם'}
                     </button>
                 </form>
+                <p className="text-center mt-4">
+                    <button
+                        type="button"
+                        onClick={onBack} // לוחץ על כפתור זה יעביר לשלב התחברות עם סיסמה
+                        className="text-blue-500 underline bg-transparent border-none cursor-pointer"
+                    >
+                        התחבר כאן
+                    </button>
+                    כבר יש לך חשבון?{' '}
+                </p>
             </div>
         </div>
     );
