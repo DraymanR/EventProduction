@@ -1,3 +1,4 @@
+"use client"
 import AddPost from '@/app/component/AddPost'
 import React from 'react'
 
