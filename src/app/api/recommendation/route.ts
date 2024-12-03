@@ -14,11 +14,7 @@ const verifyToken = (token: string): string | JwtPayload => {
     }
 };
 
-<<<<<<< HEAD
-export default async function POST(req: Request) {
-=======
 export async function POST(req: NextRequest) {
->>>>>>> origin/shoshana
     try {
         await connectDb();
 
