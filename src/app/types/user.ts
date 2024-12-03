@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
 export interface User {
+  
   _id:  ObjectId;
   firstName: string;
   lastName: string;
@@ -17,6 +18,7 @@ export interface User {
 
 
 export interface Auth {
+  
   userName:string,
   email: string,
   password: string,
@@ -37,7 +39,7 @@ export interface Consumer {
   userName: string;
 
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[]; // array of Usernames
+  likedPeople: string[];     // array of Usernames
 }
 
 export interface Address {
