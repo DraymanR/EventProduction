@@ -17,12 +17,10 @@ export async function POST(req: NextRequest) {
     try {
         await connectDb();
 
-<<<<<<< HEAD
-        const token = req.headers.get('Authorization')?.split(' ')[1];
-=======
+
         const tokenCookie = req.cookies.get('token'); 
         const token = tokenCookie ? tokenCookie.value : null;  
->>>>>>> origin/shoshana
+
 
         if (!token) {
             return NextResponse.json(
@@ -31,9 +29,7 @@ export async function POST(req: NextRequest) {
             );
         }
 
-<<<<<<< HEAD
-        const decoded = verifyToken(token);
-=======
+
         let decoded;
         try {
             decoded = verifyToken(token);
@@ -43,7 +39,7 @@ export async function POST(req: NextRequest) {
                 { status: 401 }
             );
         }
->>>>>>> origin/shoshana
+
 
         if (typeof decoded !== 'object' || !('userName' in decoded)) {
             return NextResponse.json(
@@ -82,11 +78,8 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const { title, description, album, recommendations, eventCategory, budget, supplierNameArr, imageUrl } = body;
 
-<<<<<<< HEAD
-        if (!title || !description || !imageUrl) {
-=======
         if (!title || !description) {
->>>>>>> origin/shoshana
+
             return NextResponse.json(
                 { error: 'Missing or invalid post data' },
                 { status: 400 }
