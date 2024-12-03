@@ -10,21 +10,30 @@ interface PostEventProps {
 
 const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
   const [comments, setComments] = useState<Recommendation[]>(() => {
-    const storedComments = localStorage.getItem("comments");
-    return storedComments ? JSON.parse(storedComments) : recommendations;
+    if (typeof window !== "undefined") {  // בדיקה אם ה-window זמין
+      const storedComments = localStorage.getItem("comments");
+      return storedComments ? JSON.parse(storedComments) : recommendations;
+    } else {
+      return recommendations;
+    }
   });
+
   const [newComment, setNewComment] = useState<string>("");
   const [newRate, setNewRate] = useState<number>(0);
   const [images, setImages] = useState<string[]>(post.album || []);
 
   // שמירת תגובות ב-localStorage
   useEffect(() => {
-    localStorage.setItem("comments", JSON.stringify(comments));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("comments", JSON.stringify(comments));
+    }
   }, [comments]);
 
   // שמירת תמונות ב-localStorage
   useEffect(() => {
-    localStorage.setItem("images", JSON.stringify(images));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("images", JSON.stringify(images));
+    }
   }, [images]);
 
   const handleAddComment = () => {

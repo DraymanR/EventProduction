@@ -1,28 +1,25 @@
 "use client";
-
+import React from "react";
+import { Post, Recommendation } from "../../types/user"; // ייבוא הממשקים
 import PostEvent from "@/app/component/PostEvent";
 
-const page = () => {
-  const post = {
-    createDate: new Date(),
-    userName: "אסתר כהן",
-    album: ["https://www.google.com/imgres?q=%D7%AA%D7%9E%D7%95%D7%A0%D7%95%D7%AA%20%D7%9C%D7%97%D7%AA%D7%95%D7%A0%D7%94%20%D7%9C%D7%94%D7%95%D7%A8%D7%93%D7%94&imgurl=https%3A%2F%2Fysp-shop.co.il%2Fwp-content%2Fuploads%2F2024%2F05%2FM06.jpg&imgrefurl=https%3A%2F%2Fysp-shop.co.il%2Fproduct%2F%25D7%2594%25D7%2596%25D7%259E%25D7%25A0%25D7%2594-%25D7%259C%25D7%2597%25D7%25AA%25D7%2595%25D7%25A0%25D7%2594-006%2F&docid=wNrAg8SipK5hVM&tbnid=YdKjPnN-tF8EzM&vet=12ahUKEwia-8CY3P6JAxWyVaQEHZNaJW4QM3oECEAQAA..i&w=600&h=600&hcb=2&ved=2ahUKEwia-8CY3P6JAxWyVaQEHZNaJW4QM3oECEAQAA", "https://www.shutterstock.com/image-photo/wedding-rings-on-bouquet-white-roses-2448348549"],
+const Page: React.FC = () => {
+  const post: Post = {
+    postId: 1, // הוספת postId
     title: "חתונת הכסף של ההורים היקרים שלי",
-    description: "מצורף פה תמונות של אירוע חתונת הכסף שחגגנו להורים היקרים שלנו...",
-    recommendations: [],
-    postId: "123456" as any,
+    userName: "Esther Cohen",
+    createDate: new Date(),
+    description: "מצורפות כאן תמונות מאירוע חתונת הכסף שחגגנו להורינו היקרים. מצדיעה למפיקה ג.ל.מעצבת האולם ולקייטרינג המדהים של בן אפשטיין. אתם מוזמנים לצפות ולהגיב.",
+    album: [], // אפשר להוסיף כאן קישורים לתמונות בתחילה אם יש לך
+    recommendations: [] // הוספת recommendations
   };
-
-  const recommendations = [
-    { userName: "משתמש1", text: "היה אירוע מהמם!", rate: 5},
-    { userName: "משתמש2", text: "נהניתי מכל רגע!", rate: 5 },
-  ];
 
   return (
     <div>
-      <PostEvent post={post} recommendations={recommendations} />
+      <h1>Event Page</h1>
+      <PostEvent post={post} recommendations={post.recommendations} />
     </div>
   );
 };
 
-export default page;
+export default Page;
