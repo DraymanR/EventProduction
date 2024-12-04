@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/shoshana
 import { NextResponse } from 'next/server';
 import { UserModel } from '@/app/lib/models/user';  
 import connectDb from '@/app/lib/db/connectDb';
@@ -64,8 +61,5 @@ export async function GET(req: Request) {
             { status: 500 }
         );
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/shoshana
+
