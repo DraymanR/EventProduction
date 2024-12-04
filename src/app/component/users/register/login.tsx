@@ -276,7 +276,7 @@ import LoginWithPassword from '@/app/component/users/register/loginWithPassword'
 import EnterCodeFromEmail from '@/app/component/users/enterCodeFromEmail';
 import { forgetPassword } from '@/app/services/user/registerUser';
 import Register from './register';
-import ResetPassword from './resetPassword';
+import ResetPassword from '@/app/component/users/register/newPassword';
 
 
 const Login: React.FC = () => {

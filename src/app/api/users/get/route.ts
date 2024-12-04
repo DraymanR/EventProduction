@@ -17,20 +17,19 @@ export async function GET(req: Request) {
 
         let query: any = {};
 
-        // אם יש ערך בשדה העיר, הוסף אותו לשאילתא
         if (city) {
-            query['addressId.city'] = { $regex: city, $options: 'i' };  // חיפוש בעיר
+            query['addressId.city'] = { $regex: city, $options: 'i' }; 
         }
 
-        // אם יש ערך בשדה הכותרת, הוסף אותו לשאילתא
         if (title) {
-            query.title = { $regex: title, $options: 'i' };  // חיפוש בכותרת
+            query.title = { $elemMatch: { $regex: title, $options: 'i' } };
         }
-
-        // אם יש ערך בשדה השפה, הוסף אותו לשאילתא
+        
         if (language) {
-            query.language = { $regex: language, $options: 'i' };  // חיפוש בשפה
+            query.language = { $elemMatch: { $regex: language, $options: 'i' } };
         }
+        
+        
 
         console.log('Query:', query);
 

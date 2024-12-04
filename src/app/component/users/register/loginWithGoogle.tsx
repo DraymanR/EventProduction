@@ -20,7 +20,7 @@ function LoginWithGoogle() {
 
     return (
         <div>
-            < h2 className="text-red-400 text-m  text-center mb-6" > ————— google התחבר באמצעות —————</h2 >
+            < h2 className="text-red-400 text-m  text-center mb-6" > —————  התחבר באמצעות google —————</h2 >
             <button
                 onClick={handleGoogleSignIn}
                 className="w-full bg-yellow-100 py-2 px-4 border rounded-lg shadow-lg hover:bg-yellow-200 transition flex items-center justify-center gap-2"
