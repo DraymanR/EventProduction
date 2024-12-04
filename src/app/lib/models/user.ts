@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer, Img } from '@/app/types/user';
+
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory} from '@/app/types/user';
 
 
 // הסכמה למודל משתמש
@@ -11,13 +12,13 @@ const userSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
   title: { 
     type: [String], // מערך של טיטלים
-    enum: ['supplier', 'consumer', 'Makeup artist', 'photographer', 'sound engineer', 'event designer', 'orchestra', 'singer'],
+    enum: Object.values(Title)||"consumer",
     required: true 
   },
   phone: { type: String, required: true },
   language: { 
     type: [String], 
-    enum: ['Hebrew', 'English', 'French', 'Yiddish', 'Spanish', 'Russian'], 
+    enum: Object.values(Language), 
     required: true 
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
@@ -75,10 +76,11 @@ const postSchema = new Schema<Post>({
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
-  eventCategory: {
-    type: String,
-    enum: ['barmitzva', 'wedding', 'bat mitzva', 'engagement', 'birthday', 'family party', 'other'],
-    required: true
+
+  eventCategory: { 
+    type: String, 
+    enum: Object.values(EventCategory), 
+    required: true 
   },
   supplierNameArr: [{ type: String, required: true }], // רשימת ספקים
   budget: { type: Number, required: true },

@@ -2,6 +2,7 @@ import { NextResponse,NextRequest } from 'next/server';
 import { UserModel, AddressModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { User } from '@/app/types/user';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const verifyToken = (token: string): string | JwtPayload => {
@@ -11,19 +12,18 @@ const verifyToken = (token: string): string | JwtPayload => {
         throw new Error('Invalid token');
     }
 };
+
 export async function PUT(req: NextRequest) {
     try {
-        const { firstName, lastName, address,description } = await req.json();
+        const { firstName, lastName, address, description, title, language } = await req.json();
 
-       
-        if (!firstName && !lastName && !address) {
+        if (!firstName && !lastName && !address && !title && !language) {
             return NextResponse.json(
                 { error: 'Missing fields to update' },
                 { status: 400 }
             );
         }
 
-      
         await connectDb();
 
         const tokenCookie = req.cookies.get('token'); 
@@ -56,7 +56,7 @@ export async function PUT(req: NextRequest) {
         const decodedUserName = decoded.userName;
       
         // חיפוש המשתמש
-        const user = await UserModel.findOne({ userName: decodedUserName }).lean();
+        const user = await UserModel.findOne({ userName: decodedUserName }).populate('addressId').lean<User>();
 
         if (!user) {
             return NextResponse.json(
@@ -72,33 +72,43 @@ export async function PUT(req: NextRequest) {
         if (lastName) updateFields.lastName = lastName;
         if (description) updateFields.description = description;
         
-        // אם יש כתובת חדשה, נעדכן רק את השדות שהמשתמש ביקש לשנות
+        // עדכון כתובת אם נשלחה
         if (address) {
             const addressUpdateFields: any = {};
 
-            // עדכון העיר אם נשלחה
             if (address.city) addressUpdateFields.city = address.city;
-
-            // עדכון הרחוב אם נשלח
             if (address.street) addressUpdateFields.street = address.street;
-
-            // עדכון הקוד הדואר אם נשלח
             if (address.zipCode) addressUpdateFields.zipCode = address.zipCode;
-
-            // עדכון הבניין אם נשלח
             if (address.building) addressUpdateFields.building = address.building;
 
-            // אם יש שדות לעדכון, נעדכן את הכתובת
             if (Object.keys(addressUpdateFields).length > 0) {
-                const updatedAddress = await AddressModel.findByIdAndUpdate(user.addressId, addressUpdateFields, { new: true });
+                const updatedAddress = await AddressModel.findOneAndUpdate({userName:decodedUserName}, addressUpdateFields, { new: true });
                 if (updatedAddress) {
                     updateFields.addressId = updatedAddress._id;
                 }
             }
         }
 
-        // עדכון המשתמש
-        const updatedUser = await UserModel.findByIdAndUpdate(user._id, updateFields, { new: true });
+        // אם נשלחו טיטלים חדשים, נוסיף אותם
+        if (title) {
+            if (Array.isArray(title)) {
+                updateFields.title = title; // אם נשלח מערך חדש של טיטלים, נעדכן את המערך
+            } else if (!user.title.includes(title)) {
+                updateFields.title = [...user.title, title]; // אם לא קיים כבר, נוסיף טיטל חדש
+            }
+        }
+
+        // אם נשלחו שפות חדשות, נוסיף אותן
+        if (language) {
+            if (Array.isArray(language)) {
+                updateFields.language = language; // אם נשלח מערך חדש של שפות, נעדכן את המערך
+            } else if (!user.language.includes(language)) {
+                updateFields.language = [...user.language, language]; // אם לא קיימת כבר, נוסיף שפה חדשה
+            }
+        }
+
+        // עדכון המשתמש במסד הנתונים
+        const updatedUser = await UserModel.findOneAndUpdate({userName:decodedUserName}, updateFields, { new: true });
 
         if (!updatedUser) {
             return NextResponse.json(

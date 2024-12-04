@@ -1,6 +1,38 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
+export enum Title {
+  Supplier = 'supplier',
+  MakeupArtist = 'Makeup artist',
+  Photographer = 'photographer',
+  SoundEngineer = 'sound engineer',
+  EventDesigner = 'event designer',
+  Orchestra = 'orchestra',
+  Singer = 'singer',
+  // תוסיפי עוד טייטלים לפי הצורך
+}
+
+export enum Language {
+  Hebrew = 'Hebrew',
+  English = 'English',
+  French = 'French',
+  Yiddish = 'Yiddish',
+  Spanish = 'Spanish',
+  Russian = 'Russian',
+  // תוסיפי עוד שפות לפי הצורך
+}
+
+export enum EventCategory {
+  Barmitzva = 'barmitzva',
+  Wedding = 'wedding',
+  BatMitzva = 'bat mitzva',
+  Engagement = 'engagement',
+  Birthday = 'birthday',
+  FamilyParty = 'family party',
+  Other = 'other',
+}
+
+
 export interface User {
   
   _id:  ObjectId;
@@ -8,14 +40,13 @@ export interface User {
   lastName: string;
   userName: string; // unique
   email: string; // unique
-  title: ('supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string)[]; // מערך של טיטלים
+  title:(Title | "consumer")[]; // מערך של טיטלים
   phone: string;
-  language: ('Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian' | string)[]; // מערך של שפות
+  language: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
   postArr: ObjectId[]; // מערך של פוסטים
 }
-
 
 export interface Auth {
   
@@ -66,7 +97,7 @@ export interface Img {
 
 export interface ConsumerPost {
 
-  eventCategory: 'barmitzva' | 'wedding' | 'bat mitzva' | 'engagement' | 'birthday' | 'family party' | 'other';
+  eventCategory: EventCategory;
   supplierNameArr: string[];
   budget: number;
 }
