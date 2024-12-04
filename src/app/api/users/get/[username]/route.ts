@@ -2,7 +2,7 @@
 import { NextResponse, NextRequest } from 'next/server'; 
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { UserModel, ConsumerModel, SupplierModel } from '@/app/lib/models/user';
-import { User } from '@/app/types/user';
+import { User,Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -16,6 +16,7 @@ const verifyToken = (token: string): string | JwtPayload => {
 };
 
 export async function GET(req: NextRequest) {  
+ 
     try {
         await connectDb();
 
@@ -76,12 +77,19 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        let userDetails;
-        if (user.title === 'supplier') {
-            userDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
-        } else if (user.title === 'consumer'&&user.userName !== decodedUserName) {
-            userDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
-        }
+        let consumerDetails,supplierDetails;
+
+        if (user.title.includes("consumer")) {
+          
+            consumerDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
+          }
+        if (user.title.some(title => Object.values(Title).includes(title as Title))){
+       
+            supplierDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
+          } else
+          
+          
+
 
         if (user.userName !== decodedUserName) {
             const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
@@ -89,7 +97,8 @@ export async function GET(req: NextRequest) {
                 {
                     message: 'User retrieved successfully',
                     user: filteredUser,
-                    userDetails: userDetails,
+                    supplierDetails: supplierDetails,
+                    consumerDetails:consumerDetails
                 },
                 { status: 200 }
             );
@@ -99,7 +108,8 @@ export async function GET(req: NextRequest) {
             {
                 message: 'User retrieved successfully',
                 user: user,
-                userDetails: userDetails,
+                supplierDetails: supplierDetails,
+                consumerDetails:consumerDetails
             },
             { status: 200 }
         );

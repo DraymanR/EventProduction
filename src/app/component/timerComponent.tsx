@@ -7,10 +7,11 @@ import useModalStore from "@/app/store/modelStore";
 
 const TimerComponent = () => {
     const openModal = useModalStore((state) => state.openModal);
+    const isModalOpen = useModalStore((state) => state.isModalOpen);
     const myUserName = decodeURIComponent(document.cookie)
     useEffect(() => {
 
-        if (!myUserName) {
+        if (!myUserName && !isModalOpen) {
             openModal(); // הצגת המודל בתחילת השימוש
         }
 

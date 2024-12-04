@@ -435,6 +435,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     )}
                     <br></br>
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+                    <br></br>
                     <button
                         type="submit"
                         disabled={isSubmitting}
@@ -443,9 +444,9 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             : 'bg-red-400 hover:bg-red-600'
                             }`}
                     >
-                        <br></br>
                         {isSubmitting ? 'נרשם...' : 'הירשם'}
                     </button>
+                    <br></br>
                 </form>
                 <p className="text-center mt-4">
                     <button

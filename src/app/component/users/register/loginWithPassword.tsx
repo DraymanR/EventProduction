@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useModalStore from '@/app/store/modelStore';
-import useMyUser from '@/app/store/users';
+// import useMyUser from '@/app/store/users';
 import { singIn } from '@/app/services/user/registerUser';
 import LoginWithGoogle from '@/app/component/users/register/loginWithGoogle';
 import axios from 'axios';
@@ -10,7 +10,7 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
-    const setMyUserName = useMyUser((state) => state.setUserName);
+    // const setMyUserName = useMyUser((state) => state.setUserName);
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +20,7 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
         try {
             const result = await singIn(email.value, userName.value, password.value);
             console.log(result);
-            setMyUserName(userName.value);
+            // setMyUserName(userName.value);
             router.push('/pages/consumer-account');
             closeModal();
         } catch (error) {
@@ -57,7 +57,7 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                     <input id="password" name="password" type="password" required className="w-full px-3 py-2 border rounded-md" />
                 </div>
                 {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-                <button type="submit" className="w-full bg-red-400 text-white py-2 px-4 rounded-lg shadow-lg">התחבר</button>
+                <button type="submit" className="w-full bg-red-300 text-white py-2 px-4 rounded-lg shadow-lg  hover:bg-red-400 ">התחבר</button>
                 <LoginWithGoogle></LoginWithGoogle>
 
             </form>
@@ -71,7 +71,7 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                     איפוס סיסמה
                 </button>
             </p>
-            <p>
+            <p className='text-center'>
                 אין לך חשבון?{' '}
                 <button
                     type="button"

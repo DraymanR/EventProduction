@@ -1,8 +1,8 @@
 'use client'
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
-import { getMyDetails } from "@/app/services/user/registerUser";
-import useMyUser from "@/app/store/users";
+import { getMyDetails } from "@/app/services/user/getDetails";
+// import useMyUser from "@/app/store/users";
 import { UserFormData } from "@/app/types/user";
 import { useEffect, useState } from "react";
 
@@ -49,7 +49,6 @@ const Home: React.FC = () => {
                 console.log(userData);
                 
                 setMyDetails(userData); // מעדכן את המצב
-                console.log(MyDetails, "llllll")
             } catch (error) {
                 console.error(error);
             }
