@@ -283,19 +283,23 @@ const Login: React.FC = () => {
     const [currentStep, setCurrentStep] = useState<'LoginWithPassword' | 'newPassword' | 'EnterCodeFromEmail' | 'newUser'>('LoginWithPassword');
     const [errorMessage, setErrorMessage] = useState('');
     const [codeFromEmail, setCodeFromEmail] = useState('');
+    const [userEmail, setUserFromEmail] = useState('');
 
 
     const handleForgetPassword = async (email: string) => {
-        setErrorMessage('');
+        // setErrorMessage('');
         try {
             const result = await forgetPassword(email);
-            setCodeFromEmail(result.OTP);
+            setUserFromEmail(email)
+            console.log(result);
+            // setCodeFromEmail(result.OTP);
+            setErrorMessage('');
+            setCurrentStep('EnterCodeFromEmail');
         } catch (error) {
             setErrorMessage('Failed to send the code.');
             console.error(error);
 
         }
-        setCurrentStep('EnterCodeFromEmail');
     };
 
     return (
@@ -304,10 +308,10 @@ const Login: React.FC = () => {
                 <LoginWithPassword onForgetPassword={handleForgetPassword} onNewUser={() => { setErrorMessage(''); setCurrentStep('newUser') }} />
             )}
             {currentStep == 'EnterCodeFromEmail' && (
-                <EnterCodeFromEmail codeFromEmail={codeFromEmail} onBack={(currentStep:'LoginWithPassword'|'newPassword') => { setErrorMessage(''); setCurrentStep(currentStep) }} />
+                <EnterCodeFromEmail onBack={(currentStep: 'LoginWithPassword' | 'newPassword', myCodeFromEmail: string) => { setCodeFromEmail(myCodeFromEmail); setErrorMessage(''); setCurrentStep(currentStep) }} />
             )}
             {currentStep == 'newPassword' && (
-                <ResetPassword />
+                <ResetPassword otp={codeFromEmail} email={userEmail} />
             )}
             {currentStep === 'newUser' && (
                 <Register onBack={() => { setErrorMessage(''); setCurrentStep('LoginWithPassword') }} />

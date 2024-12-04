@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import useModalStore from '@/app/store/modelStore';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import { newPassword } from '@/app/services/user/registerUser';
 
-const ResetPassword = () => {
-    const [newPassword, setNewPassword] = useState('');
+const ResetPassword:React.FC<{ otp: string; email: string }> = ({otp, email}) => {
+    const [myNewPassword, setMyNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [showPassword, setshowPassword] = useState(false);
@@ -17,15 +18,17 @@ const ResetPassword = () => {
 
     const handlePasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (newPassword !== confirmPassword) {
+        if (myNewPassword !== confirmPassword) {
             setErrorMessage('הסיסמאות אינן תואמות');
             return;
         }
 
         try {
             // כאן נבצע את קריאת ה-API לשינוי הסיסמה
-            console.log('סיסמה חדשה:', newPassword);
-
+            console.log('סיסמה חדשה:', myNewPassword);
+            const result = await newPassword(email, otp, myNewPassword)
+            console.log(result);
+            
             // לאחר שינוי הסיסמה נוכל להפנות את המשתמש למסך התחברות
             router.push('/pages/consumer-account');
             closeModal()
@@ -48,8 +51,8 @@ const ResetPassword = () => {
                         id="newPassword"
                         name="newPassword"
                         type={showPassword ? "text" : "password"}
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
+                        value={myNewPassword}
+                        onChange={(e) => setMyNewPassword(e.target.value)}
                         required
                         className="w-full px-3 py-2 border rounded-md"
                         onPaste={(e) => e.preventDefault()} // מניעת הדבקה
@@ -59,8 +62,7 @@ const ResetPassword = () => {
                     <button
                         type="button"
                         onClick={() => { setshowPassword(!showPassword) }}
-                        // className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                        className="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
+                        className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
 
                         {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
                     </button>
@@ -84,8 +86,7 @@ const ResetPassword = () => {
                     <button
                         type="button"
                         onClick={() => { setshowconfirmPassword(!showconfirmPassword) }}
-                        // className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                        className="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
+                        className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
                         {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
                     </button>
                 </div>
