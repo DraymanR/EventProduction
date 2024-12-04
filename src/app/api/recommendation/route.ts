@@ -14,7 +14,9 @@ const verifyToken = (token: string): string | JwtPayload => {
     }
 };
 
+
 export async function POST(req: NextRequest) {
+
     try {
         await connectDb();
 
