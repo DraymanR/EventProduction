@@ -15,7 +15,17 @@ const verifyToken = (token: string): string | JwtPayload => {
 
 export async function POST(req: NextRequest) {  
     try {
+        const body = await req.json();
+        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr } = body;
+
+        if (!title || !description) {
+            return NextResponse.json(
+                { error: 'Missing or invalid post data' },
+                { status: 400 }
+            );
+        }
         await connectDb();
+
 
         const tokenCookie = req.cookies.get('token'); 
         const token = tokenCookie ? tokenCookie.value : null;  
@@ -71,15 +81,7 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const body = await req.json();
-        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr } = body;
-
-        if (!title || !description) {
-            return NextResponse.json(
-                { error: 'Missing or invalid post data' },
-                { status: 400 }
-            );
-        }
+      
 
         let newPost;
 

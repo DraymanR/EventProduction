@@ -12,7 +12,7 @@ const ResetPassword = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [showPassword, setshowPassword] = useState(false);
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
-    const closeModal = useModalStore((state) => state.closeModal);
+    const closeModal = useModalStore((state: { closeModal: any; }) => state.closeModal);
     const router = useRouter();
 
     const handlePasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
