@@ -73,10 +73,10 @@ export async function POST(req: Request) {
                 { status: 400 }
             );
         }
-
+        const normalizedEmail = email.toLowerCase();
         await connectDb();
 
-        const user = await AuthModel.findOne({ email ,userName});
+        const user = await AuthModel.findOne({ email:normalizedEmail ,userName});
 
         if (!user) {
             return NextResponse.json(
@@ -94,7 +94,7 @@ export async function POST(req: Request) {
             );
         }
 
-        const payload = { userName: userName, email: user.email }; 
+        const payload = { userName: user.userName, email: normalizedEmail }; 
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
 
         const response = NextResponse.json(

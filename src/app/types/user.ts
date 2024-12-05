@@ -35,9 +35,9 @@ export interface User {
   lastName: string;
   userName: string; // unique
   email: string; // unique
-  title:(Title | "consumer")[]; // מערך של טיטלים
+  titles:(Title | "consumer")[]; // מערך של טיטלים
   phone: string;
-  language: [Language]; // מערך של שפות
+  languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
   postArr: ObjectId[]; // מערך של פוסטים
@@ -55,9 +55,7 @@ export interface Supplier {
   userName: string;
   startingPrice: number;
   topPrice: number;
-
   range: number; // maximum distance they will serve
-
 }
 
 export interface Consumer {

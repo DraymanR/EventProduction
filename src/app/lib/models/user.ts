@@ -7,13 +7,13 @@ const userSchema = new Schema<User>({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  title: { 
+  titles: { 
     type: [String], // מערך של טיטלים
     enum: Object.values(Title)||"consumer",
     required: true 
   },
   phone: { type: String, required: true },
-  language: { 
+  languages: { 
     type: [String], 
     enum: Object.values(Language), 
     required: true 
