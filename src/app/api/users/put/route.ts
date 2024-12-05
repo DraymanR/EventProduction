@@ -92,18 +92,21 @@ export async function PUT(req: NextRequest) {
         // אם נשלחו טיטלים חדשים, נוסיף אותם
         if (title) {
             if (Array.isArray(title)) {
-                updateFields.title = title; // אם נשלח מערך חדש של טיטלים, נעדכן את המערך
-            } else if (!user.title.includes(title)) {
-                updateFields.title = [...user.title, title]; // אם לא קיים כבר, נוסיף טיטל חדש
+                updateFields.titles = title; 
+            } else if (!user.titles.includes(title)) {
+
+                updateFields.titles = [...user.titles, title];
+              
             }
+            
         }
 
         // אם נשלחו שפות חדשות, נוסיף אותן
         if (language) {
             if (Array.isArray(language)) {
                 updateFields.language = language; // אם נשלח מערך חדש של שפות, נעדכן את המערך
-            } else if (!user.language.includes(language)) {
-                updateFields.language = [...user.language, language]; // אם לא קיימת כבר, נוסיף שפה חדשה
+            } else if (!user.languages.includes(language)) {
+                updateFields.language = [...user.languages, language]; // אם לא קיימת כבר, נוסיף שפה חדשה
             }
         }
 

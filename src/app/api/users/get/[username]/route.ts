@@ -79,11 +79,11 @@ export async function GET(req: NextRequest) {
 
         let consumerDetails,supplierDetails;
 
-        if (user.title.includes("consumer")) {
+        if (user.titles.includes("consumer")) {
           
             consumerDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
           }
-        if (user.title.some(title => Object.values(Title).includes(title as Title))){
+        if (user.titles.some(title => Object.values(Title).includes(title as Title))){
        
             supplierDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
           } else
