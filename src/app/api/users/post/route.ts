@@ -22,12 +22,13 @@ export async function POST(req: Request) {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
+        const normalizedEmail = email.toLowerCase();
+       
         await connectDb();
 
         const newAuth = new AuthModel({
             userName,
-            email,
+            email:normalizedEmail,
             password: hashedPassword,
         });
 
@@ -44,10 +45,10 @@ export async function POST(req: Request) {
             firstName,
             lastName,
             userName,
-            email,
-            title:title,
+            email:normalizedEmail,
+            titles:title,
             phone,
-            language:language,
+            languages:language,
             addressId: newAddress._id,
             description, 
             postArr: [], 
