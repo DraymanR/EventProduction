@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useModalStore from '@/app/store/modelStore';
-// import useMyUser from '@/app/store/users';
 import { singIn } from '@/app/services/user/registerUser';
 import LoginWithGoogle from '@/app/component/users/register/loginWithGoogle';
 import axios from 'axios';
+import { IoEyeOffOutline } from 'react-icons/io5';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
 
 const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; onNewUser: () => void }> = ({ onForgetPassword, onNewUser: onNewUser }) => {
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const closeModal = useModalStore((state) => state.closeModal);
-    // const setMyUserName = useMyUser((state) => state.setUserName);
+    const closeModal = useModalStore((state) => state.closeModal)
+    const [showPassword, setshowPassword] = useState(false);
+
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,7 +22,6 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
         try {
             const result = await singIn(email.value, userName.value, password.value);
             console.log(result);
-            // setMyUserName(userName.value);
             router.push('/pages/consumer-account');
             closeModal();
         } catch (error) {
@@ -52,9 +53,28 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div>
-                    <label htmlFor="password" className="block font-medium">סיסמה</label>
-                    <input id="password" name="password" type="password" required className="w-full px-3 py-2 border rounded-md" />
+                <div className="relative">
+                    <label htmlFor="password" className="block font-medium">
+                        סיסמה
+                    </label>
+                    <button
+                        type="button"
+                        onClick={() => { setshowPassword(!showPassword) }}
+                        className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
+
+                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
+                    </button>
+                    <input
+                        id="password"
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        required
+                        className="w-full px-3 py-2 border rounded-md"
+                        onPaste={(e) => e.preventDefault()} // מניעת הדבקה
+                        onCopy={(e) => e.preventDefault()} // מניעת העתקה
+                        onCut={(e) => e.preventDefault()}  // מניעת גזירה
+                    />
+
                 </div>
                 {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
                 <button type="submit" className="w-full bg-red-300 text-white py-2 px-4 rounded-lg shadow-lg  hover:bg-red-400 ">התחבר</button>
