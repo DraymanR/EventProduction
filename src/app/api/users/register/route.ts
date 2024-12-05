@@ -76,7 +76,7 @@ export async function POST(req: Request) {
 
         await connectDb();
 
-        const user = await AuthModel.findOne({ email });
+        const user = await AuthModel.findOne({ email ,userName});
 
         if (!user) {
             return NextResponse.json(
