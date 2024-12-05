@@ -59,6 +59,30 @@ export const forgetPassword = async (data: string) => {
     throw error; // טיפול בשגיאות
   }
 };
+export const newPassword = async (email: string, otp: string, newPassword: string) => {
+  try {
+    const data = {
+      "email": email,
+      "otp": otp,
+      "newPassword": newPassword
+    }
+    console.log(data);
+    
+    const response = await axios.post('http://localhost:3000/api/users/register/newPassword', data, {
+      // withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+
+    // החזרת התשובה מהשרת
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error; // טיפול בשגיאות
+  }
+};
 
 export const logout = async () => {
   try {
