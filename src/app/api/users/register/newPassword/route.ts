@@ -52,7 +52,11 @@ export async function POST(req: Request) {
 
      
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-
+        // console.log('Old Password:', authRecord.password);
+        authRecord.password = hashedPassword;
+        // console.log('New Password:', authRecord.password);
+        // await authRecord.save();
+        // console.log('Password updated successfully');
         
         authRecord.password = hashedPassword;
         authRecord.otp = null;

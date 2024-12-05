@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
-import {  ConsumerModel } from '@/app/lib/models/user'; 
+import {  ConsumerModel,PostModel,UserModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb'; 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
@@ -41,27 +41,36 @@ export async function PUT(req: NextRequest) {
      
         await connectDb();
 
-        const existingConsumer = await ConsumerModel.findOne({ userName: decodedUserName });
+        let existingConsumer = await ConsumerModel.findOne({ userName: decodedUserName });
+
 
         if (!existingConsumer) {
+            const user = await UserModel.findOne({ userName: decodedUserName });
+            if(user&&user.titles.includes('consumer')){
+                 existingConsumer = new ConsumerModel({
+                    userName: decodedUserName,
+                    likedPostsArr: [],
+                    likedPeople: []
+                });
+            }else{
             return NextResponse.json(
                 { error: 'Consumer not found' },
                 { status: 404 }
-            );
+            );}
         }
-
+        
  
         if (favoritePostID) {
-          
-                if (!existingConsumer.likedPostsArr.includes(favoritePostID)) {
+            const existingPost = await PostModel.findById(favoritePostID);
+                if (!existingConsumer.likedPostsArr.includes(favoritePostID)&&existingPost) {
                     existingConsumer.likedPostsArr.push(favoritePostID);
                 }
         }
 
         
         if (favoriteUserName) {
-           
-                if (!existingConsumer.likedPeople.includes(favoriteUserName)) {
+            const existingUser = await UserModel.findOne({ userName: decodedUserName });
+                if (!existingConsumer.likedPeople.includes(favoriteUserName)&&existingUser) {
                     existingConsumer.likedPeople.push(favoriteUserName); 
                 }
           
