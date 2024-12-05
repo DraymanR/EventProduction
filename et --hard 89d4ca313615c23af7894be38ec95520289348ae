@@ -1,0 +1,255 @@
+[33mcommit 89d4ca313615c23af7894be38ec95520289348ae[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mshoshana[m[33m, [m[1;31morigin/backend[m[33m, [m[1;32mbackend[m[33m)[m
+Merge: c07a3b2 4237abb
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Tue Dec 3 11:43:34 2024 +0200
+
+    Resolved merge conflicts
+
+[33mcommit c07a3b26fecea737345f6e343e02d22564246925[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Tue Dec 3 11:38:45 2024 +0200
+
+    merge backend
+
+[33mcommit 4237abbd4ba91568bbaabd98df183c02a6bce662[m[33m ([m[1;31morigin/shoshana[m[33m)[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 15:34:34 2024 +0200
+
+    fix get all serach lang title
+
+[33mcommit 57b64557c4e868083afe2472bba884141715b386[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 15:31:40 2024 +0200
+
+    fixsing get with title arr and ENUM
+
+[33mcommit 0400321d55997cc41fca928eef1809737047ebe3[m
+Merge: 3d59b8f 9bd5cbd
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Mon Dec 2 15:23:53 2024 +0200
+
+    reslove merge shoshana into backend
+
+[33mcommit 3d59b8fecd3a33d8d24ca4d842e6f01d5dfe3479[m[33m ([m[1;31morigin/sari[m[33m)[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Mon Dec 2 14:45:29 2024 +0200
+
+    finish all the claudinery library & connect claudinery to mongodb
+
+[33mcommit 9bd5cbd80abb1213d19870bd084538ee0411bdf6[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 14:34:02 2024 +0200
+
+    add arr to title,lang
+
+[33mcommit e4e6bbdd40c47424916ed5e5cd3ef3fc364b0f8d[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 14:21:54 2024 +0200
+
+    update user
+
+[33mcommit aa3b856c813d98d5a265a8f0130820d3e24d34a5[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 14:01:47 2024 +0200
+
+    add consumer faverites
+
+[33mcommit aa331945dd12f35f3c324d370755053dd9dd6684[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 13:49:36 2024 +0200
+
+    fix get user
+
+[33mcommit 82f99a2ba2a99b52c93c7df4a9a29cc4d27289f1[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 12:29:45 2024 +0200
+
+    get all users
+
+[33mcommit 3afad742dc12f7228c84fd66af956c0dc5b11fe4[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 11:21:25 2024 +0200
+
+    fixsing cookie
+
+[33mcommit 26536d2b032f00142eeb40ced4b8427c339b5d2c[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Mon Dec 2 10:37:24 2024 +0200
+
+    username httponly
+
+[33mcommit a8c4d68209d3838265e094aaac9d9e1ecc42caec[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Sun Dec 1 16:39:02 2024 +0200
+
+     add the claudinery conection to the full post api operation
+
+[33mcommit a28696c617bc55bcbc22f7e6659a7de279f45240[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Sun Dec 1 15:28:06 2024 +0200
+
+    date search
+
+[33mcommit 0608b42f53cf81b32e0dc82553e8db0cf0a4c10f[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Sun Dec 1 15:13:41 2024 +0200
+
+    FIX 2
+
+[33mcommit 74c3204b82e62a1281feb8c7f2e77b813215447d[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Sun Dec 1 14:43:58 2024 +0200
+
+    cookies login fix
+
+[33mcommit 21d9623bb10d91573a0c402a30ef02976ea01172[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Sun Dec 1 14:13:59 2024 +0200
+
+    add the conect between claudinery and mongoDB
+
+[33mcommit f1280fade720796b992cb68345de7480193d468e[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Sun Dec 1 12:06:28 2024 +0200
+
+    cookies login
+
+[33mcommit 17a7c366c304be5a88be6e915fdbb8ec5211166b[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Sun Dec 1 11:53:41 2024 +0200
+
+    cookies
+
+[33mcommit ddb9d272d607a200eb1293a96ce3a0bd1a5b9702[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Thu Nov 28 16:38:38 2024 +0200
+
+    add the started next code
+
+[33mcommit ef94b66391cf73306c1eeaaba34ea3adbc5e97d1[m
+Merge: 55ec2dd 6801084
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Thu Nov 28 15:16:14 2024 +0200
+
+    Merge branch 'shoshana' of https://github.com/DraymanR/EventProduction into sari
+
+[33mcommit 55ec2dd19b1e6b814aa32f46f98b8c1ee055b2ca[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Thu Nov 28 15:12:03 2024 +0200
+
+    add the claudinery library
+
+[33mcommit 680108476cc77fa6e71092af9328ab15782708db[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Thu Nov 28 14:52:32 2024 +0200
+
+    get all posts
+
+[33mcommit 3126b8fbb47e53c7bb77c7319b56fd661ee19152[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Thu Nov 28 14:35:36 2024 +0200
+
+    fix get user
+
+[33mcommit ae5011002e6f8269beaf2e016bc0d085723dde03[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Thu Nov 28 14:08:53 2024 +0200
+
+    get user
+
+[33mcommit 090c86c8f93113e46c51bc126347686ac321d535[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Thu Nov 28 12:04:53 2024 +0200
+
+    recommendation
+
+[33mcommit 2cc0ae9288c1451e519e87a80e2224007d006abb[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Thu Nov 28 10:43:50 2024 +0200
+
+    token
+
+[33mcommit ff43b451b88860230dd3d273a2f6670be565f385[m
+Merge: de88ab1 33f49f0
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Thu Nov 28 10:26:54 2024 +0200
+
+    Merge branch 'main' of https://github.com/DraymanR/EventProduction into sari
+
+[33mcommit de88ab1bd2da239410493c548936e3e40523d4c8[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Thu Nov 28 10:22:55 2024 +0200
+
+    Save local changes before pulling main
+
+[33mcommit 33f49f0b5846f62e7276c05f1a2ddb2abb8e3f72[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Thu Nov 28 10:09:52 2024 +0200
+
+    push shoshana to the main to update the types
+
+[33mcommit 555cf40ecf3b5a99070121ff44dfdcdef84ef438[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Wed Nov 27 15:21:32 2024 +0200
+
+    post post
+
+[33mcommit 158f3775dc2893b6f50b80f107e872ba279c32c8[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Wed Nov 27 13:38:20 2024 +0200
+
+    post user
+
+[33mcommit 783b230ceb117a5da1bf467b7b3b9a8a259cc7a3[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Wed Nov 27 13:22:48 2024 +0200
+
+    new model
+
+[33mcommit 2cc2892672da4c212f9a1860a750a35c92a48283[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Wed Nov 27 13:10:09 2024 +0200
+
+    new model
+
+[33mcommit c8c0cd4d95bdb08d00e340fdc3148553048b4f26[m[33m ([m[1;32mmain[m[33m)[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Wed Nov 27 09:07:19 2024 +0200
+
+    server users
+
+[33mcommit e5208de23ae41315823b10d8c31b379424385fa8[m
+Author: shoshana <shoshgrilak@gmail.com>
+Date:   Tue Nov 26 14:23:06 2024 +0200
+
+    server users
+
+[33mcommit d1e1a851e0f9175d09a8c3ed557ef3c6ad2f9aa3[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Tue Nov 26 12:42:01 2024 +0200
+
+    add finall models and types
+
+[33mcommit 9854fbbdbab5b294f17afeb8cef6e878d0662dad[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Mon Nov 25 13:12:38 2024 +0200
+
+    add files to see the project strucrure
+
+[33mcommit cc7d4f58af270639c649a3f007bf6520049dd864[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Mon Nov 25 12:51:23 2024 +0200
+
+    add the conection to the database
+
+[33mcommit 1371f75b495b5a486eb799e5a09ac4cead107028[m
+Author: SariGefner <saragefner8008@gmail.com>
+Date:   Mon Nov 25 12:04:30 2024 +0200
+
+    add the empty structure of the project
+
+[33mcommit 7d45067225b9fde8f36de9dc6ea76feeff5e8da9[m
+Author: DraymanR <dr0548424205@gmail.com>
+Date:   Mon Nov 25 09:08:22 2024 +0200
+
+    Initial commit from Create Next App

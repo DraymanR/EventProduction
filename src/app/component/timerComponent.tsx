@@ -6,8 +6,8 @@ import Login from "./users/register/login";
 import useModalStore from "@/app/store/modelStore";
 
 const TimerComponent = () => {
-    const openModal = useModalStore((state) => state.openModal);
-    const isModalOpen = useModalStore((state) => state.isModalOpen);
+    const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
+    const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
     const myUserName = decodeURIComponent(document.cookie)
     useEffect(() => {
 
@@ -35,3 +35,25 @@ const TimerComponent = () => {
 };
 
 export default TimerComponent;
+// import { useEffect, useState } from 'react';
+
+// const TimerComponent = () => {
+//   const [myUserName, setMyUserName] = useState<string | null>(null);
+
+//   useEffect(() => {
+//     // ודא שהקוד ירוץ רק בצד הלקוח
+//     if (typeof document !== "undefined") {
+//       const userNameFromCookie = decodeURIComponent(document.cookie);
+//       setMyUserName(userNameFromCookie);
+//     }
+//   }, []);  // ריצה פעם אחת, לאחר שהקומפוננטה נטענה
+
+//   return (
+//     <div>
+//       {/* מציג את שם המשתמש */}
+//       {myUserName && <p>Welcome, {myUserName}</p>}
+//     </div>
+//   );
+// };
+
+// export default TimerComponent;
