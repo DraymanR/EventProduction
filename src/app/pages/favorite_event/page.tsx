@@ -7,22 +7,22 @@ import { BrowserRouter } from "react-router-dom";
 
 const mockFavoritePosts: Post[] = [
     {
-      postId: "1" as any,
       createDate: new Date(),
       userName: "משתמש 1",
       album: ["https://via.placeholder.com/150"],
       title: "אירוע לדוגמה 1",
       description: "תיאור של אירוע לדוגמה 1",
       recommendations: [],
+      postId: "1" as any
     },
     {
-      postId: "2" as any,
       createDate: new Date(),
       userName: "משתמש 2",
       album: ["https://via.placeholder.com/150"],
       title: "אירוע לדוגמה 2",
       description: "תיאור של אירוע לדוגמה 2",
       recommendations: [],
+      postId: "2" as any
     },
   ];
   
