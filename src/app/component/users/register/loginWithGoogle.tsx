@@ -9,7 +9,7 @@ function LoginWithGoogle() {
     const handleGoogleSignIn = async () => {
         try {
             console.log("await signIn('google')");
-            router.push('/pages/consumer-account');
+            router.push('/pages/user-account');
             // closeModal()
 
             // await signIn('google'); // מחייב הגדרה של ספק Google ב-next-auth
