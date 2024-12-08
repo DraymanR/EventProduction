@@ -1,4 +1,6 @@
 import { ObjectId } from "mongoose";
+import { UploadApiResponse } from 'cloudinary';
+
 export enum Title {
   Supplier = 'supplier',
   MakeupArtist = 'Makeup artist',
@@ -30,7 +32,10 @@ export enum EventCategory {
   Other = 'other',
 }
 
+
 export interface User {
+  
+  _id:  ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
@@ -44,7 +49,7 @@ export interface User {
 }
 
 export interface Auth {
-  userName: string,
+  userName:string,
   email: string,
   password: string,
   otp: String,
@@ -61,7 +66,7 @@ export interface Supplier {
 export interface Consumer {
   userName: string;
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[]; // array of Usernames
+  likedPeople: string[];     // array of Usernames
 }
 
 export interface Address {
@@ -82,6 +87,9 @@ export interface Post {
   postId: ObjectId;
 }
 
+export interface Img {
+  imgUrl : string
+}
 
 export interface ConsumerPost {
   eventCategory: EventCategory;
@@ -93,31 +101,4 @@ export interface Recommendation {
   userName: string; // reference to User
   text: string;
   rate: number; // rating 1-5
-}
-export interface UserFormData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  titles:(Title | "consumer")[];
-  phone: string;
-  description: string,
-  languages: [Language]; 
-  address: {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  };
-  supplierDetails?: {
-    startingPrice: number;
-    topPrice: number;
-    eventList: string[];
-    recommendation: string[];
-    range: number;
-    emptyDate: string[];
-    images: string[];
-    description: string;
-  };
 }

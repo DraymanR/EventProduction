@@ -95,8 +95,18 @@ import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 import { PostModel, RecommendationModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
 
-// תפקוד POST
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+const verifyToken = (token: string): string | JwtPayload => {
+    try {
+        return jwt.verify(token, JWT_SECRET);
+    } catch (error) {
+        throw new Error('Invalid token');
+    }
+};
+
 export async function POST(req: NextRequest) {
+
     try {
         await connectDb();
 
