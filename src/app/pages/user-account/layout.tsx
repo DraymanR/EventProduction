@@ -1,5 +1,5 @@
 
-import ConsumerSidebar from '@/app/component/users/consumerSidebar';
+import ConsumerSidebar from '@/app/component/users/userSidebar';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

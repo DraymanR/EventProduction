@@ -20,9 +20,11 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
         const { userName, email, password } = e.currentTarget.elements as any;
 
         try {
+            console.log(userName, email, password);
+            
             const result = await singIn(email.value, userName.value, password.value);
             console.log(result);
-            router.push('/pages/consumer-account');
+            router.push('/pages/user-account');
             closeModal();
         } catch (error) {
             if (axios.isAxiosError(error)) {
