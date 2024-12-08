@@ -405,14 +405,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         </>
                     )}
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-                    {/* {error && <div><p className="text-red-500 text-center mb-4">{error}</p><br></br></div>} */}
-                    {/* <div className="flex items-center justify-center"> */}
-                    {/* <div className="flex items-center justify-center h-screen bg-gray-100"> */}
                     <div className="col-span-2 flex justify-center">
-                        {/* <button className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg shadow-md hover:bg-blue-600">
-                            הרשמה
-                        </button> */}
-
                         <button
                             type="submit"
                             disabled={isSubmitting}
