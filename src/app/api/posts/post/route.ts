@@ -178,7 +178,7 @@ export async function POST(req: NextRequest) {
         }
 
         let newPost;
-        if (type==="consumer") {
+        if (foundUser.titles.includes("consumer")&&type==="consumer") {
             if (!supplierNameArr || !Array.isArray(supplierNameArr)) {
                 return NextResponse.json(
                     { error: 'Missing supplier name array for consumer post' },
