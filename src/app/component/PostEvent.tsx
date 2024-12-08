@@ -2,14 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { Post, Recommendation } from "../types/user"; // ייבוא הממשקים
 import "./PostEvent.css";
+import { ObjectId } from "mongoose";
 
 interface PostEventProps {
   post: Post;
-  recommendations: Recommendation[];
+  recommendations: ObjectId[];
+  // recommendations: Recommendation[];
 }
 
 const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
+
   const [comments, setComments] = useState<Recommendation[]>(() => {
+
     if (typeof window !== "undefined") {  // בדיקה אם ה-window זמין
       const storedComments = localStorage.getItem("comments");
       return storedComments ? JSON.parse(storedComments) : recommendations;
