@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server';
 import { PostModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb';

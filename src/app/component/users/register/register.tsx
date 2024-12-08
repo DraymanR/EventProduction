@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import useModalStore from '../../../store/modelStore';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import { UserFormData } from '@/app/types/user';
+import { UserFormData ,Language,Title} from '@/app/types/user';
 import { addUser } from '../../../services/user/registerUser';
 
 
@@ -16,10 +16,10 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         userName: '',
         email: '',
         password: '',
-        title: 'consumer',
+        titles: ['consumer'],
         phone: '',
         description: '',
-        language: 'Hebrew',
+        languages: [Language.Hebrew],
         address: {
             zipCode: '',
             city: '',
@@ -96,7 +96,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             const result = await addUser(formData)
             console.log(result);
             // // רישום הצליח, הפנה לדף הכניסה או לדשבורד
-            formData.title === 'consumer' ? router.push('/pages/consumer-account') : router.push('/pages/supplier-account')
+            formData.titles.includes('consumer' )  ? router.push('/pages/consumer-account') : router.push('/pages/supplier-account')
             closeModal()
         } catch (err: any) {
             setError(err.message);
@@ -224,8 +224,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         <select
                             id="title"
                             name="title"
-                            // value={(formData as any)[title]}
-                            value={formData.title}
+                            value={'consumer'}
                             onChange={handleInputChange}
                             required
                             className="w-full px-3 py-2 border rounded-md"
@@ -271,7 +270,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         <select
                             id="language"
                             name="language"
-                            value={formData.language}
+                            value={Language.Hebrew}
                             onChange={handleInputChange}
                             required
                             className="w-full px-3 py-2 border rounded-md"
@@ -348,7 +347,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             className="w-full px-3 py-2 border rounded-md"
                         />
                     </div>
-                    {formData.title !== 'consumer' && (
+                    {formData.titles.includes( 'consumer') && (
                         <>
                             <h3 className="text-xl font-bold mt-4">פרטי ספק</h3>
                             <br></br>
@@ -359,8 +358,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                 <select
                                     id="title"
                                     name="title"
-                                    // value={(formData as any)[title]}
-                                    value={formData.title}
+                                    value={'consumer'}
                                     onChange={handleInputChange}
                                     required
                                     className="w-full px-3 py-2 border rounded-md"
