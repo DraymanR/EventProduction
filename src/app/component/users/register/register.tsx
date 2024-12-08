@@ -106,7 +106,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     };
 
     return (
-        <div className="w-[80vh] mx-auto mt-10 max-h-[80vh] overflow-y-auto p-6 border rounded-lg shadow-lg">
+        <div className="text-center w-[80vh] mx-auto mb-10 max-h-[80vh] p-6 ">
             <h2 className="text-red-400 text-2xl font-bold text-center mb-6">צור חשבון חדש</h2>
             <div >
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4" >
@@ -286,12 +286,13 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     </div>
 
                     {/* Address Details */}
-                    <br></br>
                     <h5 className="text-l font-bold mt-4">כתובת</h5>
+                    <br></br>
+
                     <div className="border p-2 rounded" >
 
                         <label htmlFor="zipCode" className="block font-medium">
-                            zipCode
+                            מיקוד
                         </label>
                         <input
                             id="zipCode"
@@ -349,8 +350,8 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     </div>
                     {formData.title !== 'consumer' && (
                         <>
-                            <br></br>
                             <h3 className="text-xl font-bold mt-4">פרטי ספק</h3>
+                            <br></br>
                             <div className=" border p-2 rounded" >
                                 <label htmlFor="title" className="block font-medium">
                                     המקצוע שלי
@@ -401,49 +402,29 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                     className="w-full px-3 py-2 border rounded-md"
                                 />
                             </div>
-                            <div className="border p-2 rounded" >
-
-                                <label htmlFor="range" className="block font-medium">
-                                    range
-                                </label>
-                                <input
-                                    id="range"
-                                    name="supplierDetails.range"
-                                    type="range"
-                                    value={formData.supplierDetails?.range || ''}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="w-full px-3 py-2 border rounded-md"
-                                />
-                            </div>
-                            <div className="border p-2 rounded" >
-                                <label htmlFor="description" className="block font-medium">
-                                    תיאור
-                                </label>
-                                <input
-                                    id="description"
-                                    name="supplierDetails.description"
-                                    type="text"
-                                    value={formData.supplierDetails?.description || ''}
-                                    onChange={handleInputChange}
-                                    className="w-full px-3 py-2 border rounded-md"
-                                />
-                            </div>
                         </>
                     )}
-                    <br></br>
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-                    <br></br>
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`w-full py-2 px-4 rounded-md text-white transition ${isSubmitting
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-red-400 hover:bg-red-600'
-                            }`}
-                    >
-                        {isSubmitting ? 'נרשם...' : 'הירשם'}
-                    </button>
+                    {/* {error && <div><p className="text-red-500 text-center mb-4">{error}</p><br></br></div>} */}
+                    {/* <div className="flex items-center justify-center"> */}
+                    {/* <div className="flex items-center justify-center h-screen bg-gray-100"> */}
+                    <div className="col-span-2 flex justify-center">
+                        {/* <button className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg shadow-md hover:bg-blue-600">
+                            הרשמה
+                        </button> */}
+
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className={`w-full py-2 px-4 rounded-md text-white transition ${isSubmitting
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-red-400 hover:bg-red-600'
+                                }`}
+                        >
+                            {isSubmitting ? 'נרשם...' : 'הירשם'}
+                        </button>
+                    </div>
+
                     <br></br>
                 </form>
                 <p className="text-center mt-4">
@@ -456,6 +437,8 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     </button>
                     כבר יש לך חשבון?{' '}
                 </p>
+                <br></br>
+
             </div>
         </div>
     );
