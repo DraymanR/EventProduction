@@ -9,7 +9,7 @@ const userSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
   titles: { 
     type: [String], // מערך של טיטלים
-    enum: Object.values(Title)||"consumer",
+    enum: [...Object.values(Title), "consumer"], 
     required: true 
   },
   phone: { type: String, required: true },
