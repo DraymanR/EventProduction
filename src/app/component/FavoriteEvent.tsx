@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Post } from "../types/user";
 import "./FavoriteEvent.css";
 
-// interface FavoriteEventProps {
-//   favoritePosts: Post[];
-// }
+interface FavoriteEventProps {
+  favoritePosts: Post[];
+}
 
-const FavoriteEvent: React.FC<Post[]> = (favoritePosts) => {
+const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
   const navigate = useNavigate();
 
   const handlePostClick = (post: Post) => {

@@ -135,7 +135,7 @@ const AddPost: React.FC = () => {
           onChange={handleImageUpload}
         />
       </label>
-      <div className="image-preview">
+      {/* <div className="image-preview">
         {album.map((image, index) => (
           <img
             key={index}
@@ -144,7 +144,7 @@ const AddPost: React.FC = () => {
             className="preview-image"
           />
         ))}
-      </div>
+      </div> */}
 
       <label>
         <input
