@@ -96,7 +96,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             const result = await addUser(formData)
             console.log(result);
             // // רישום הצליח, הפנה לדף הכניסה או לדשבורד
-            formData.title === 'consumer' ? router.push('/pages/consumer-account') : router.push('/pages/supplier-account')
+            formData.title === 'consumer' ? router.push('/pages/user-account') : router.push('/pages/supplier-account')
             closeModal()
         } catch (err: any) {
             setError(err.message);
