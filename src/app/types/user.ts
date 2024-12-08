@@ -84,7 +84,6 @@ export interface Post {
 
 
 export interface ConsumerPost {
-
   eventCategory: EventCategory;
   supplierNameArr: string[];
   budget: number;
@@ -101,11 +100,10 @@ export interface UserFormData {
   userName: string;
   email: string;
   password: string;
-  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
-  // title: 'supplier' | 'consumer';
+  titles:(Title | "consumer")[];
   phone: string;
   description: string,
-  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  languages: [Language]; 
   address: {
     zipCode: string;
     city: string;
