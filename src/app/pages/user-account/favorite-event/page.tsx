@@ -3,7 +3,13 @@
 import React from "react";
 import FavoriteEvent from "@/app/component/FavoriteEvent";
 import { Post } from "@/app/types/user";
-import { BrowserRouter } from "react-router-dom";
+// import { BrowserRouter } from "react-router-dom";
+import dynamic from 'next/dynamic';
+
+// טוען את BrowserRouter רק בצד הלקוח
+const BrowserRouter = dynamic(() => import('react-router-dom').then(mod => mod.BrowserRouter), {
+  ssr: false,  // מבטל את העיבוד בצד השרת
+});
 
 const mockFavoritePosts: Post[] = [
     {

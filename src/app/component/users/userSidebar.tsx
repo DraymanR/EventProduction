@@ -47,15 +47,19 @@ const ConsumerNavbar: React.FC = () => {
       {/* לינקים בתפריט - יפתחו רק אם isOpen === true */}
       {isOpen && (
         <div className="flex-1 flex flex-col justify-center items-center space-y-4">
-          <a href="/pages/consumer-account/personal-details" className="block text-gray-600 hover:text-red-400">
+          <a href="/pages/user-account/personal-details" className="block text-gray-600 hover:text-red-400">
             פרטים אישיים
           </a>
-          <a href="/pages/consumer-account/events" className="block text-gray-600 hover:text-red-400">
+          <a href="/pages/user-account/my-events" className="block text-gray-600 hover:text-red-400">
             האירועים שלי
           </a>
-          <a href="/pages/consumer-account/reminders" className="block text-gray-600 hover:text-red-400">
+          <a href="/pages/user-account/favorite-event" className="block text-gray-600 hover:text-red-400">
+            האירועים שאהבתי
+          </a>
+          <a href="/pages/user-account/reminders" className="block text-gray-600 hover:text-red-400">
             התזכורות שלי
-          </a><a href="/pages/consumer-account/message-box" className="block text-gray-600 hover:text-red-400">
+          </a>
+          <a href="/pages/user-account/message-box" className="block text-gray-600 hover:text-red-400">
             תיבת הודעות
           </a>
         </div>
