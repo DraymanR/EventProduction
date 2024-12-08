@@ -19,7 +19,6 @@ export async function GET(req: Request) {
 
         let query: any = {};
 
-    
         if (title) {
             query.title = { $regex: title, $options: 'i' }; 
         }
@@ -60,7 +59,6 @@ export async function GET(req: Request) {
 
         const totalPosts = await PostModel.countDocuments(query);
 
-      
         return NextResponse.json(
             {
                 message: 'Posts retrieved successfully',

@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const getMyDetails = async () => {
     try {
-
-        const myUserName = decodeURIComponent(document.cookie.split('=')[1])
+        if (typeof window !== 'undefined') {
+        const myUserName =await decodeURIComponent(document.cookie.split('=')[1])
         console.log(myUserName);
 
         const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${myUserName}`, {
@@ -13,7 +13,7 @@ export const getMyDetails = async () => {
             },
         });
         console.log('User :', response.data.user);
-        return response.data
+        return response.data }
     } catch (error) {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
