@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Post, Recommendation } from "@/app/types/user"; // ייבוא הממשקים
-import PostEvent from "@/app/component/PostEvent";
+import PostEvent from "@/app/component/postes/PostEvent";
 import mongoose from "mongoose";
 
 const Page: React.FC = () => {

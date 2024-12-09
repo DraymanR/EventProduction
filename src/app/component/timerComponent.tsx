@@ -28,7 +28,7 @@ const TimerComponent = () => {
         }, 120000); // 2 דקות
 
         return () => clearInterval(intervalId); // ניקוי ה-timer בזמן הסרת הקומפוננטה
-    }, [isModalOpen, openModal]);
+    }, []);
 
     if (!isClient) {
         return null; // מחזיר null או קומפוננטה אחרת בזמן שהדף נטען בצד השרת

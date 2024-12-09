@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import FavoriteEvent from "@/app/component/FavoriteEvent";
+import FavoriteEvent from "@/app/component/postes/FavoriteEvent";
 import { Post } from "@/app/types/user";
 // import { BrowserRouter } from "react-router-dom";
 import dynamic from 'next/dynamic';
