@@ -1,6 +1,42 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
+<<<<<<< Updated upstream
+=======
+export enum Title {
+  Consumer = 'consumer',
+  Supplier = 'supplier',
+  MakeupArtist = 'Makeup artist',
+  Photographer = 'photographer',
+  SoundEngineer = 'sound engineer',
+  EventDesigner = 'event designer',
+  Orchestra = 'orchestra',
+  Singer = 'singer',
+  // תוסיפי עוד טייטלים לפי הצורך
+}
+
+export enum Language {
+  Hebrew = 'Hebrew',
+  English = 'English',
+  French = 'French',
+  Yiddish = 'Yiddish',
+  Spanish = 'Spanish',
+  Russian = 'Russian',
+  // תוסיפי עוד שפות לפי הצורך
+}
+
+export enum EventCategory {
+  Barmitzva = 'barmitzva',
+  Wedding = 'wedding',
+  BatMitzva = 'bat mitzva',
+  Engagement = 'engagement',
+  Birthday = 'birthday',
+  FamilyParty = 'family party',
+  Other = 'other',
+}
+
+
+>>>>>>> Stashed changes
 export interface User {
   _id:  ObjectId;
   firstName: string;
@@ -9,7 +45,13 @@ export interface User {
   email: string;    // unique
   title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
   phone: string;
+<<<<<<< Updated upstream
   language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+=======
+  // language: Language[]; // מערך של שפות
+  // i change the name to userLanguage because it "מילה שמורה"
+  userLanguages: Language[];
+>>>>>>> Stashed changes
   addressId: ObjectId; // reference to Address
   description: string;
   postArr: ObjectId[];

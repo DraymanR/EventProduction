@@ -1,6 +1,12 @@
+
 import mongoose, { Schema, Document } from 'mongoose';
+<<<<<<< Updated upstream
 import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer, Img } from '@/app/types/user';
 
+=======
+
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory , Img} from '@/app/types/user';
+>>>>>>> Stashed changes
 
 const userSchema = new Schema<User>({
   _id: { type: Schema.Types.ObjectId },
@@ -13,14 +19,22 @@ const userSchema = new Schema<User>({
     enum: ['supplier', 'consumer', 'Makeup artist', 'photographer', 'sound engineer', 'event designer', 'orchestra', 'singer',],
     required: true
   },
+<<<<<<< Updated upstream
   phone: { type: String, required: true },
   language: {
     type: String,
     enum: ['Hebrew', 'English', 'French', 'Yiddish', 'Spanish', 'Russian'],
     required: true
+=======
+  phone: { type: String },
+  userLanguages: { 
+    type: [String], 
+    enum: Object.values(Language)||"Hebrew", 
+    required: true 
+>>>>>>> Stashed changes
   },
-  addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
-  description: { type: String, required: true },
+  addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
+  description: { type: String },
   postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
 });
 
@@ -98,4 +112,9 @@ export {
   ConsumerPostModel,
   RecommendationModel,
   ImgModel
+<<<<<<< Updated upstream
 };
+=======
+
+};
+>>>>>>> Stashed changes
