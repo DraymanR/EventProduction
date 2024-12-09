@@ -13,9 +13,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionWrapper session={session}>
-          {children}
-        </SessionWrapper>
+        {/* <SessionWrapper session={session}>
+        </SessionWrapper> */}
+        {children}
+
       </body>
     </html>
   )

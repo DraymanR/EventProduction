@@ -1,6 +1,6 @@
 'use client'
 
-import FavoriteEvent from "@/app/component/FavoriteEvent";
+import FavoriteEvent from "@/app/component/users/FavoriteEvent";
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
 import { getMyEvents } from "@/app/services/post/post";
 import { Post, UserFormData } from "@/app/types/user";
