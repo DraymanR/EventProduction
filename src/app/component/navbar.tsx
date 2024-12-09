@@ -7,7 +7,7 @@ const Navbar = () => {
     const openModal = useModalStore((state) => state.openModal);
 
     return (
-        <nav className="bg-gray-800 py-2">
+        <nav className="bg-gray-800 py-2 fixed top-0 left-0 right-0 z-50 shadow-md">
             <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
                 {/* כותרת */}
                 <div className="text-red-400 text-lg font-bold whitespace-nowrap">
