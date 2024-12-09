@@ -1,20 +1,23 @@
 "use client";
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Post } from "../../types/user";
+import PopUpWindow from "../pop-upWindow";
+import PostCard from "../posts/PostCard";
 // import "./FavoriteEvent.css";
 
 interface FavoriteEventProps {
   favoritePosts: Post[];
 }
 
-const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
-  // const navigate = useNavigate();
-
-  // const handlePostClick = (post: Post) => {
-  //   navigate(`/post_events/${post.postId}`, { state: { post } });
-  // };
+const FavoriteEvent: React.FC<FavoriteEventProps> = ({ favoritePosts }) => {
+  const handlePostClick = (post: Post) => {
+    return (
+      <PopUpWindow>
+        <PostCard post={post} />
+      </PopUpWindow>
+    );
+  };
 
   return (
     <div className="favorite-event">
@@ -31,7 +34,9 @@ const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
                 <strong>תאריך:</strong>{" "}
                 {new Date(post.createDate).toLocaleDateString()}
               </p>
-              {/* <button onClick={() = handlePostClick(post)}>לצפייה באירוע</button> */}
+              <button onClick={() => handlePostClick(post)}>
+                לצפייה באירוע
+              </button>
             </div>
           </li>
         ))}

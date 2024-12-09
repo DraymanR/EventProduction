@@ -86,6 +86,17 @@ export interface Post {
   recommendations: ObjectId[];
   postId: ObjectId;
 }
+export interface PostEventProps {
+  createDate: Date;
+  userName: string;
+  album: string[];
+  title: string;
+  description: string;
+  recommendations: ObjectId[];
+  eventCategory: EventCategory;
+  supplierNameArr: string[];
+  budget: number;
+}
 
 export interface Img {
   imgUrl: string
