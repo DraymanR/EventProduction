@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPosts } from '@/app/services/post/post'; // עדכן את הנתיב למיקום הקובץ
-import NewPhoto from '@/app/component/ImageUploader'
+// import NewPhoto from '@/app/component/ImageUploader'
 const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState("");
@@ -30,8 +30,8 @@ const PostList = () => {
         <div className="max-w-4xl mx-auto mt-8">
 
             <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Posts</h1>
-            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {/* {posts.map((post) => (
+            {/* <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {posts.map((post) => (
                     <div key={post._id}>
                         <li
                             key={post._id}
@@ -41,10 +41,10 @@ const PostList = () => {
                             <p className="text-sm text-gray-600 mb-4">{post.description}</p>
                             <small className="block text-gray-500 text-xs">Created by: {post.userName}</small>
                         </li>
-                        <NewPhoto postId={post._id} />
+                        <NewPhoto postId={post._id} /> 
                     </div>
-                ))} */}
-            </ul>
+                ))} 
+            </ul> */}
             <div className="flex justify-between mt-6">
                 <button
                     onClick={handlePrevPage}

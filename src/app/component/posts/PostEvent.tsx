@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Post, Recommendation } from "@/app/types/user"; // ייבוא הממשקים
-import "../PostEvent.css";
+import { Post, Recommendation } from "../../types/user"; // ייבוא הממשקים
+import "./PostEvent.css";
 import { ObjectId } from "mongoose";
 
 interface PostEventProps {
