@@ -4,7 +4,7 @@ import React from "react";
 import { CldUploadWidget } from 'next-cloudinary';
 import saveImageUrlToDatabase from '@/app/services/saveImageUrlToDatabase ';
 
-const NewPost = ({ postId }: { postId: string }) => {  
+const NewPhoto = ({ postId }: { postId: string }) => {  
     const handleUploadSuccess = async (result: any) => {
         if (result.info && result.info.secure_url) {
           const imageUrl = result.info.secure_url;
@@ -38,4 +38,4 @@ const NewPost = ({ postId }: { postId: string }) => {
     )
 }
 
-export default NewPost;
+export default NewPhoto;
