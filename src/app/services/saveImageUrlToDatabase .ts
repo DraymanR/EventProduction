@@ -1,6 +1,6 @@
 const saveImageUrlToDatabase = async (imageUrl: string, postId: string) => {
   try {
-    const response = await fetch('/api/save-image', {
+    const response = await fetch('/api/posts/save-image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

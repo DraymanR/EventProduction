@@ -273,7 +273,7 @@
 'use client'
 import React, { useState } from 'react';
 import LoginWithPassword from '@/app/component/users/register/loginWithPassword';
-import EnterCodeFromEmail from '@/app/component/users/enterCodeFromEmail';
+import EnterCodeFromEmail from '@/app/component/users/register/enterCodeFromEmail';
 import { forgetPassword } from '@/app/services/user/registerUser';
 import Register from './register';
 import ResetPassword from '@/app/component/users/register/newPassword';

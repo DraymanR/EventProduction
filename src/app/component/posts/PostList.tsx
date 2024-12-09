@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPosts } from '@/app/services/post/post'; // עדכן את הנתיב למיקום הקובץ
-import NewPhoto from '@/app/component/ImageUploader'
+// import NewPhoto from '@/app/component/ImageUploader'
 const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
@@ -41,7 +41,7 @@ const PostList = () => {
                             <p className="text-sm text-gray-600 mb-4">{post.description}</p>
                             <small className="block text-gray-500 text-xs">Created by: {post.userName}</small>
                         </li>
-                        <NewPhoto postId={post._id} />
+                        {/* <NewPhoto postId={post._id} /> */}
                     </div>
                 ))}
             </ul>
