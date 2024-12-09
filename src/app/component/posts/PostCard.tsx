@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import { PostCardProps, Recommendation } from "@/app/types/user";
+const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
 
-const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [images, setImages] = useState<string[]>(post.album || []);
-  console.log(post);
+
 
   // פונקציה לפתיחת/סגירת התגובות
   const toggleComments = () => {
