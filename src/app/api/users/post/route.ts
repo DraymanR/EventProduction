@@ -1,7 +1,7 @@
 import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
-import { AddressModel, AuthModel, ConsumerModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -48,6 +48,8 @@ export async function POST(req: Request) {
             addressId: newAddress._id,
             description, 
             postArr: [], 
+            likedPostsArr: [],
+            likedPeople: [],
         });
 
         await newUser.save();
@@ -60,15 +62,7 @@ export async function POST(req: Request) {
                 range: 0
             });
             await newSupplier.save();
-        } else if (title === 'consumer') {
-            const newConsumer = new ConsumerModel({
-                userName,
-                likedPostsArr: [],
-                likedPeople: []
-            });
-            await newConsumer.save();
-        }
-
+        } 
         const token = generateToken(newUser);
 
         const response = NextResponse.json(
@@ -76,7 +70,7 @@ export async function POST(req: Request) {
             { status: 201 }
         );
 
-        setAuthCookies(response, newUser.userName, token);
+        setAuthCookies(response,userName, token);
 
         return response;
 

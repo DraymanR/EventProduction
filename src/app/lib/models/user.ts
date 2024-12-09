@@ -1,5 +1,5 @@
 import mongoose, { Schema
-  
+
  } from 'mongoose';
 
 import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img} from '@/app/types/user';
@@ -7,7 +7,6 @@ import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
-  _id: { type: Schema.Types.ObjectId },
   porofilPic:{ type:String},
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
