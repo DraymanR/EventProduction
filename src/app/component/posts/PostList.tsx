@@ -1,26 +1,56 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import { getAllPosts } from '@/app/services/post/post'; // עדכן את הנתיב למיקום הקובץ
-// import NewPhoto from '@/app/component/ImageUploader'
+import PostCard from './PostCard';
+
+// הגדרת טיפ לפוסט
+type Post = {
+    id: number;
+    title: string;
+    content: string;
+    // כל שדה נוסף שקשור לפוסט
+};
+
 const PostList = () => {
-    const [posts, setPosts] = useState([]);
-    const [error, setError] = useState(null);
-    const [page, setPage] = useState(1);
+    const [posts, setPosts] = useState<Post[]>([]); // הגדרת state עם טיפ
+    const [error, setError] = useState<string | null>(null);
+    const [page, setPage] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
+
+    const loadPosts = async () => {
+        if (loading) return; // אם אנחנו כבר טוענים, לא נבצע טעינה נוספת
+
+        setLoading(true); // נעדכן את מצב הטעינה
+        try {
+            const data = await getAllPosts(page, 10); // העברת פרמטרים של דף ומספר פריטים
+            setPosts((prevPosts) => [...prevPosts, ...data.posts]); // הוספת פוסטים חדשים לרשימה הקיימת
+            setPage((prevPage) => prevPage + 1); // הגדלת הדף
+        } catch (err) {
+            setError('Failed to fetch posts. Please try again later.');
+        } finally {
+            setLoading(false); // נשחרר את מצב הטעינה
+        }
+    };
+
+    const handleScroll = () => {
+        const bottom = window.innerHeight + window.scrollY === document.documentElement.scrollHeight;
+        if (bottom) {
+            loadPosts(); // אם הגענו לתחתית, נטעין עוד פוסטים
+        }
+    };
 
     useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const data = await getAllPosts(page, 10); // העברת פרמטרים של דף ומספר פריטים
-                setPosts(data.posts);
-            } catch (err) {
-                setError('Failed to fetch posts. Please try again later.');
-            }
+        // הוספת מאזין גלילה לחלון, במקום להאזין רק ל-container
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll); // הסרת המאזין
         };
+    }, [loading]);
 
-        getPosts();
-    }, [page]); // ייבוא הפוסטים מחדש בעת שינוי הדף
-
-    const handleNextPage = () => setPage((prev) => prev + 1);
-    const handlePrevPage = () => setPage((prev) => Math.max(1, prev - 1));
+    useEffect(() => {
+        loadPosts();
+    }, []); // טעינה של הפוסטים רק פעם אחת
 
     if (error) {
         return <div className="text-red-600 font-bold text-center mt-4">{error}</div>;
@@ -28,41 +58,17 @@ const PostList = () => {
 
     return (
         <div className="max-w-4xl mx-auto mt-8">
+            <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">פוסטים</h1>
 
-            <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Posts</h1>
-            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {posts.map((post) => (
-                    <div key={post._id}>
-                        <li
-                            key={post._id}
-                            className="bg-white shadow-md rounded-lg p-6 border border-gray-200 hover:shadow-lg transition duration-300"
-                        >
-                            <h2 className="text-lg font-semibold text-gray-800 mb-2">{post.title}</h2>
-                            <p className="text-sm text-gray-600 mb-4">{post.description}</p>
-                            <small className="block text-gray-500 text-xs">Created by: {post.userName}</small>
-                        </li>
-                        {/* <NewPhoto postId={post._id} /> */}
-                    </div>
+            <div className="space-y-6">  {/* לכל פוסט יש שורה משלו */}
+                {posts.map((post, index) => (
+                    <PostCard key={index} post={post} />
                 ))}
-            </ul>
-            <div className="flex justify-between mt-6">
-                <button
-                    onClick={handlePrevPage}
-                    disabled={page === 1}
-                    className={`px-4 py-2 rounded-lg font-semibold text-white ${page === 1
-                            ? 'bg-gray-400 cursor-not-allowed'
-                            : 'bg-blue-500 hover:bg-blue-600 transition'
-                        }`}
-                >
-                    Previous
-                </button>
-                <button
-                    onClick={handleNextPage}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition"
-                >
-                    Next
-                </button>
             </div>
+
+            {loading && (
+                <div className="text-center py-4 animate-pulse text-gray-500">טוען...</div>
+            )}
         </div>
     );
 };
