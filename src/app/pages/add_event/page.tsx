@@ -1,5 +1,5 @@
 "use client"
-import AddPost from '@/app/component/AddPost'
+import AddPost from '@/app/component/postes/AddPost'
 import React from 'react'
 
 const page = () => {

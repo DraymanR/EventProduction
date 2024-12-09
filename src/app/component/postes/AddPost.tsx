@@ -1,13 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import "./AddPost.css";
+import "../AddPost.css";
+import { addingMyPost } from "@/app/services/post/post";
 
 const AddPost: React.FC = () => {
   const [title, setTitle] = useState<string>("");
+  const [isConsummer, setIsConsummer] = useState<boolean>(true);
   const [description, setDescription] = useState<string>("");
   const [eventCategory, setEventCategory] = useState<string>("barmitzva");
   const [location, setLocation] = useState<string>("צפון");
   const [album, setAlbum] = useState<string[]>([]);
+  const [supplierNameArr, setSupplierNameArr] = useState<string[]>([]);
   const [budget, setBudget] = useState<number>(0);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
 
@@ -28,7 +31,7 @@ const AddPost: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const  handleSubmit =async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!acceptedTerms) {
@@ -39,18 +42,15 @@ const AddPost: React.FC = () => {
     const newPost = {
       title,
       description,
-      eventCategory,
-      location,
       album,
+      eventCategory,
       budget,
-      createDate: new Date(),
-      userName: "currentUser",
-      recommendations: [],
-      postId: new Date().getTime(),
+      supplierNameArr:[],
+      isConsummer,
     };
 
     console.log("Post Created: ", newPost);
-
+    await addingMyPost(newPost)
     // שמירת הפוסט או שליחה לשרת
     alert("הפוסט נוסף בהצלחה!");
     setTitle("");
@@ -122,6 +122,15 @@ const AddPost: React.FC = () => {
           type="number"
           value={budget}
           onChange={(e) => setBudget(Number(e.target.value))}
+          required
+        />
+      </label>
+      <label>
+      בעלי מקצוע:
+        <input
+          type="text"
+          value={budget}
+          onChange={(e) => setSupplierNameArr([e.target.value])}
           required
         />
       </label>
