@@ -13,41 +13,6 @@ const Home: React.FC = () => {
     const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
     const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
 
-    // const openModalAddPost = useModalAddPost((state: { openModalAddPost: any; }) => state.openModalAddPost);
-    // const isModalOpenAddPost = useModalAddPost((state: { isModalAddPostOpen: any; }) => state.isModalAddPostOpen);
-
-    // const convertToPosts = (data: any): Post[] => {
-    //     return {
-    //         createDate: data.createDate || "",
-    //         userName: data.userName || "",
-    //         userName: data.userName || "",
-    //         email: data.email || "",
-    //         password: "", // שדה סיסמה כנראה לא יגיע מהשרת
-    //         title: data.title || "consumer", // ערך ברירת מחדל אם אין
-    //         phone: data.phone || "",
-    //         description: data.description || "",
-    //         language: data.language || "Hebrew",
-    //         address: {
-    //             zipCode: data.zipCode || "",
-    //             city: data.city || "",
-    //             street: data.street || "",
-    //             building: data.building || 0,
-    //         },
-    //         supplierDetails: data.supplierDetails
-    //             ? {
-    //                 startingPrice: data.supplierDetails.startingPrice || 0,
-    //                 topPrice: data.supplierDetails.topPrice || 0,
-    //                 eventList: data.supplierDetails.eventList || [],
-    //                 recommendation: data.supplierDetails.recommendation || [],
-    //                 range: data.supplierDetails.range || 0,
-    //                 emptyDate: data.supplierDetails.emptyDate || [],
-    //                 images: data.supplierDetails.images || [],
-    //                 description: data.supplierDetails.description || "",
-    //             }
-    //             : undefined,
-    //     };
-    // };
-
     useEffect(() => {
         const getMyPersonalDetails = async () => {
             try {

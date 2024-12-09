@@ -9,15 +9,17 @@ interface ShowUserPersonalDetailsProps {
 }
 
 const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({userData}) => {
+  console.log("user",userData);
   return (
+
     <div className="user-details">
       <h1>{userData.firstName} {userData.lastName}</h1>
       <p><strong>Username:</strong> {userData.userName}</p>
       <p><strong>Email:</strong> {userData.email}</p>
-      <p><strong>Title:</strong> {userData.title}</p>
+      <p><strong>Title:</strong> {userData.titles}</p>
       <p><strong>Phone:</strong> {userData.phone}</p>
       <p><strong>Description:</strong> {userData.description}</p>
-      <p><strong>Language:</strong> {userData.language}</p>
+      <p><strong>Language:</strong> {userData.languages}</p>
       <h3>Address:</h3>
       <p>{userData.address.street}, {userData.address.building}, {userData.address.city}, {userData.address.zipCode}</p>
 

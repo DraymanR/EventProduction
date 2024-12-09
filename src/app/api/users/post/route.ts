@@ -1,18 +1,13 @@
-
-
-import { NextResponse } from 'next/server';
+import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { UserModel, AuthModel, AddressModel, SupplierModel, ConsumerModel } from '@/app/lib/models/user'; 
-import connectDb from '@/app/lib/db/connectDb'; 
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
+import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
+import { AddressModel, AuthModel, ConsumerModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     try {
         const { firstName, lastName, userName, email, password, title, phone, language, address, description, topPrice, startingPrice } = await req.json();
 
-        
         if (!firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
@@ -20,15 +15,16 @@ export async function POST(req: Request) {
             );
         }
 
+      
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const normalizedEmail = email.toLowerCase();
-       
+
         await connectDb();
 
         const newAuth = new AuthModel({
             userName,
-            email:normalizedEmail,
+            email: normalizedEmail,
             password: hashedPassword,
         });
 
@@ -45,10 +41,10 @@ export async function POST(req: Request) {
             firstName,
             lastName,
             userName,
-            email:normalizedEmail,
-            titles:title,
+            email: normalizedEmail,
+            titles: title,
             phone,
-            languages:language,
+            languages: language,
             addressId: newAddress._id,
             description, 
             postArr: [], 
@@ -73,32 +69,15 @@ export async function POST(req: Request) {
             await newConsumer.save();
         }
 
-       
-        const payload = { userName: newUser.userName, email: newUser.email }; 
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
+        const token = generateToken(newUser);
 
-     
         const response = NextResponse.json(
             { message: 'User created successfully' }, 
             { status: 201 }
         );
 
-    
-        response.cookies.set('userName', newUser.userName, { 
-            httpOnly: false, 
-            secure: process.env.NODE_ENV === 'production', 
-            maxAge: 86400, 
-            path: '/' 
-        });
+        setAuthCookies(response, newUser.userName, token);
 
-        response.cookies.set('token', token, { 
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', 
-            maxAge: 86400, 
-            path: '/' 
-        });
-
-        
         return response;
 
     } catch (error) {
