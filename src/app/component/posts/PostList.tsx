@@ -2,17 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPosts } from '@/app/services/post/post'; // עדכן את הנתיב למיקום הקובץ
 import PostCard from './PostCard';
-
+import { PostCardProps } from "@/app/types/user";
 // הגדרת טיפ לפוסט
-type Post = {
-    id: number;
-    title: string;
-    content: string;
-    // כל שדה נוסף שקשור לפוסט
-};
 
 const PostList = () => {
-    const [posts, setPosts] = useState<Post[]>([]); // הגדרת state עם טיפ
+    const [posts, setPosts] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
     const [error, setError] = useState<string | null>(null);
     const [page, setPage] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
@@ -61,7 +55,7 @@ const PostList = () => {
             <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">פוסטים</h1>
 
             <div className="space-y-6">  {/* לכל פוסט יש שורה משלו */}
-                {posts.map((post, index) => (
+                {posts.map((post:PostCardProps, index:number) => (
                     <PostCard key={index} post={post} />
                 ))}
             </div>
