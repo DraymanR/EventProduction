@@ -4,13 +4,13 @@ import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
 import { getMyEvents } from "@/app/services/post/post";
 import useModalStore from "@/app/store/modelStore";
-import { Post } from "@/app/types/user";
+import { Post, PostCardProps } from "@/app/types/user";
 import { useEffect, useState } from "react";
 import FavoriteEvent from "@/app/component/users/FavoriteEvent";
 
 
 const Home: React.FC = () => {
-    const [MyEvents, setMyEvents] = useState<Post[]>(); //  אם אנחנו 
+    const [MyEvents, setMyEvents] = useState<PostCardProps[]>(); //  אם אנחנו 
     const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
     const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
 
