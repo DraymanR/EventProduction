@@ -64,11 +64,13 @@ const PostList = () => {
                 <div className="text-center py-4 animate-pulse text-gray-500">טוען...</div>
             )}
         </div>
+        
     );
-    
+
 };
 
 export default PostList;
+
 
 
 
