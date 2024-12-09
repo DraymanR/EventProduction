@@ -50,7 +50,7 @@ export interface PostCardProps{
         }]}
 
 export interface User {
-  
+  porofilPic:string,
   _id:  ObjectId;
   firstName: string;
   lastName: string;
@@ -61,7 +61,9 @@ export interface User {
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
-  postArr: ObjectId[]; // מערך של פוסטים
+  postArr: ObjectId[];
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[];    // מערך של פוסטים
 }
 
 export interface Auth {
@@ -79,11 +81,10 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-export interface Consumer {
-  userName: string;
-  likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[];     // array of Usernames
-}
+// export interface Consumer {
+//   userName: string;
+//    // array of Usernames
+// }
 
 export interface Address {
   userName: string;
