@@ -1,8 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
+
 import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory} from '@/app/types/user';
+
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
+  _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -18,20 +21,23 @@ const userSchema = new Schema<User>({
     enum: Object.values(Language), 
     required: true 
   },
-  addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true }, 
+  addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
   description: { type: String, required: true },
-  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-
+  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
 });
 
 // הסכמה למודל כתובת
 const addressSchema = new Schema<Address>({
-  userName: { type: String, ref: 'User', required: true }, 
+  userName: { type: String, ref: 'User', required: true },
   zipCode: { type: String, required: true },
   city: { type: String, required: true },
   street: { type: String, required: true },
   building: { type: Number, required: true },
 });
+
+const ImgSchema = new Schema<Img>({
+  imgUrl: { type: String, ref: 'Img', required: true }
+})
 
 // הסכמה למודל הזדהות (Auth)
 const authSchema = new Schema<Auth>({
@@ -44,7 +50,7 @@ const authSchema = new Schema<Auth>({
 
 // הסכמה למודל ספק
 const supplierSchema = new Schema<Supplier>({
-  userName: { type: String, ref: 'User', required: true }, 
+  userName: { type: String, ref: 'User', required: true },
   startingPrice: { type: Number, required: true },
   topPrice: { type: Number, required: true },
   range: { type: Number, required: true },
@@ -59,7 +65,7 @@ const consumerSchema = new Schema<Consumer>({
 
 // הסכמה למודל פוסט
 const postSchema = new Schema<Post>({
-  userName: { type: String, ref: 'User', required: true }, 
+  userName: { type: String, ref: 'User', required: true },
   createDate: { type: Date, required: true },
   album: [{ type: String, required: true }],
   title: { type: String, required: true },
@@ -70,6 +76,7 @@ const postSchema = new Schema<Post>({
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
+
   eventCategory: { 
     type: String, 
     enum: Object.values(EventCategory), 
@@ -95,7 +102,9 @@ const ConsumerModel = mongoose.models.Consumer || mongoose.model<Consumer>('Cons
 const PostModel = mongoose.models.Post || mongoose.model<Post>('Post', postSchema);
 const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<ConsumerPost>('ConsumerPost', consumerPostSchema);
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
+const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
+
 
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע
 postSchema.index({ title: 'text' });
@@ -116,5 +125,7 @@ export {
   PostModel,  
   ConsumerPostModel, 
   RecommendationModel, 
-  AuthModel 
+  AuthModel,
+  ImgModel
+
 };

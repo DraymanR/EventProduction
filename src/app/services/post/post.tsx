@@ -17,8 +17,23 @@ export const getUserEvents = async (userName: string) => {
         console.log(userDetails.user.postArr);
         return userDetails.user.postArr
     } catch (error) {
-        console.error('Error registering user:', error);
-        throw error; // טיפול בשגיאות
+        console.error('Error fetching posts:', error);
+        throw error; 
+    }
+};
+export const getAllPosts = async (page: number = 1, limit: number = 10) => {
+    try {
+        const response = await axios.get(`http://localhost:3000/api/posts/get?page=${page}&limit=${limit}`, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log('Posts:', response.data);
+        return response.data; 
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        throw error; 
     }
 };
 export const addingMyPost = async (newPost: object) => {

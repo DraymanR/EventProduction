@@ -1,16 +1,13 @@
 
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { AuthModel } from '@/app/lib/models/user';
-import { UserModel } from '@/app/lib/models/user'; // import the User model
+import { AuthModel, UserModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
 
 export async function POST(req: Request) {
     try {
-        const { email, otp, newPassword } = await req.json(); 
+        const { email, otp, newPassword } = await req.json();
 
         if (!email || !otp || !newPassword) {
             return NextResponse.json(
@@ -21,7 +18,7 @@ export async function POST(req: Request) {
 
         await connectDb();
 
-        // חפש את המשתמש לפי האימייל במודל Auth
+      
         const authRecord = await AuthModel.findOne({ email });
 
         if (!authRecord) {
@@ -31,6 +28,7 @@ export async function POST(req: Request) {
             );
         }
 
+       
         const user = await UserModel.findOne({ email });
 
         if (!user) {
@@ -40,54 +38,32 @@ export async function POST(req: Request) {
             );
         }
 
-        const userName = user.userName;  
+        const userName = user.userName;
 
-       
-        if (authRecord.otp != otp || new Date() > authRecord.otpExpiration) {
+        
+        if (authRecord.otp !== otp || new Date() > authRecord.otpExpiration) {
             return NextResponse.json(
                 { error: 'Invalid or expired OTP' },
                 { status: 400 }
             );
         }
 
-     
+       
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        // console.log('Old Password:', authRecord.password);
-        authRecord.password = hashedPassword;
-        // console.log('New Password:', authRecord.password);
-        // await authRecord.save();
-        // console.log('Password updated successfully');
-        
         authRecord.password = hashedPassword;
         authRecord.otp = null;
         authRecord.otpExpiration = null;
         await authRecord.save();
 
-      
-        const payload = { userName, email };
+        const token = generateToken({ userName, email });
 
         
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
-
-      
         const response = NextResponse.json(
             { message: 'Password successfully updated', userName },
             { status: 200 }
         );
 
-        response.cookies.set('userName', userName, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600,
-            path: '/',
-        });
-       
-        response.cookies.set('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600,
-            path: '/',
-        });
+        setAuthCookies(response, userName, token);
 
         return response;
 

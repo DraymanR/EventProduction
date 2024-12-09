@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
         });
 
         const body = await req.json();
-        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr,type } = body;
+        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr,isConsumer } = body;
 
         if (!title || !description) {
             return NextResponse.json(
@@ -178,7 +178,7 @@ export async function POST(req: NextRequest) {
         }
 
         let newPost;
-        if (type==="consumer") {
+        if (foundUser.titles.includes("consumer")&&isConsumer) {
             if (!supplierNameArr || !Array.isArray(supplierNameArr)) {
                 return NextResponse.json(
                     { error: 'Missing supplier name array for consumer post' },
