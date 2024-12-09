@@ -34,13 +34,13 @@ export enum EventCategory {
 
 
 export interface User {
-  
-  _id:  ObjectId;
+
+  _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
-  titles:(Title | "consumer")[]; // מערך של טיטלים
+  titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
@@ -49,7 +49,7 @@ export interface User {
 }
 
 export interface Auth {
-  userName:string,
+  userName: string,
   email: string,
   password: string,
   otp: String,
@@ -88,7 +88,7 @@ export interface Post {
 }
 
 export interface Img {
-  imgUrl : string
+  imgUrl: string
 }
 
 export interface ConsumerPost {
@@ -101,4 +101,32 @@ export interface Recommendation {
   userName: string; // reference to User
   text: string;
   rate: number; // rating 1-5
+}
+export interface UserFormData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
+  // title: 'supplier' | 'consumer';
+  phone: string;
+  description: string,
+  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  supplierDetails?: {
+    startingPrice: number;
+    topPrice: number;
+    eventList: string[];
+    recommendation: string[];
+    range: number;
+    emptyDate: string[];
+    images: string[];
+    description: string;
+  };
 }

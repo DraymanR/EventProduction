@@ -1,11 +1,12 @@
 'use client'
 
-import AddPost from "@/app/component/postes/AddPost";
+import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
 import { getMyEvents } from "@/app/services/post/post";
 import useModalStore from "@/app/store/modelStore";
 import { Post } from "@/app/types/user";
 import { useEffect, useState } from "react";
+import FavoriteEvent from "@/app/component/users/FavoriteEvent";
 
 
 const Home: React.FC = () => {
@@ -26,7 +27,7 @@ const Home: React.FC = () => {
             }
         }
         getMyPersonalDetails()
-    }, [])
+    }, [isModalOpen])
 
     const handleAddEvent = () => {
         if (!isModalOpen) {
@@ -39,13 +40,11 @@ const Home: React.FC = () => {
         <div dir="ltr">
             <button type="button" onClick={() => handleAddEvent()} className=" bg-red-400 text-white py-2 px-4 rounded-lg">הוספת אירוע</button>
             <PopUpWindow>
-                <AddPost />
+                <AddPost ></AddPost>
             </PopUpWindow>
-            {/* {MyEvents ? (
-            //     // <FavoriteEvent favoritePosts={MyEvents} />
-            // ) : (
-            //     <p>Loading...</p> // הודעת טעינה אם הנתונים אינם מוכנים
-            )} */}
+            {MyEvents && (
+                <FavoriteEvent favoritePosts={MyEvents} ></FavoriteEvent>
+            )}
         </div>
 
     )

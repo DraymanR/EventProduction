@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import FavoriteEvent from "@/app/component/postes/FavoriteEvent";
+import FavoriteEvent from "@/app/component/users/FavoriteEvent";
 import { Post } from "@/app/types/user";
 // import { BrowserRouter } from "react-router-dom";
 import dynamic from 'next/dynamic';
@@ -37,7 +37,7 @@ const page = () => {
     <BrowserRouter>
     <div>
       <h1>רשימת אירועים מועדפים</h1>
-      <FavoriteEvent favoritePosts={mockFavoritePosts} />
+      <FavoriteEvent favoritePosts={mockFavoritePosts} ></FavoriteEvent>
     </div>
     </BrowserRouter>
 

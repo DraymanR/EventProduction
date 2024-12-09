@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         const normalizedEmail = email.toLowerCase();
         await connectDb();
 
-        const user = await AuthModel.findOne({ email: normalizedEmail, userName });
+        const user = await AuthModel.findOne({ email: normalizedEmail});
 
         if (!user) {
             return NextResponse.json(

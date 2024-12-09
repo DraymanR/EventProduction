@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Post } from "@/app/types/user";
+import { Post } from "../../types/user";
 // import "./FavoriteEvent.css";
 
 interface FavoriteEventProps {
@@ -10,11 +10,11 @@ interface FavoriteEventProps {
 }
 
 const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handlePostClick = (post: Post) => {
-    navigate(`/post_events/${post.postId}`, { state: { post } });
-  };
+  // const handlePostClick = (post: Post) => {
+  //   navigate(`/post_events/${post.postId}`, { state: { post } });
+  // };
 
   return (
     <div className="favorite-event">
@@ -31,7 +31,7 @@ const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
                 <strong>תאריך:</strong>{" "}
                 {new Date(post.createDate).toLocaleDateString()}
               </p>
-              <button onClick={() => handlePostClick(post)}>לצפייה באירוע</button>
+              {/* <button onClick={() = handlePostClick(post)}>לצפייה באירוע</button> */}
             </div>
           </li>
         ))}

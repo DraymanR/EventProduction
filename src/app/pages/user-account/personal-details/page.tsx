@@ -59,7 +59,7 @@ const Home: React.FC = () => {
     return (
         <div dir="ltr">
             {MyDetails ? (
-                <ShowUserPersonalDetails userData={MyDetails} />
+                <ShowUserPersonalDetails User={MyDetails} ></ShowUserPersonalDetails>
             ) : (
                 <p>Loading...</p> // הודעת טעינה אם הנתונים אינם מוכנים
             )}
