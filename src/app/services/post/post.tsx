@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
+import { ObjectId } from "mongoose";
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -34,7 +35,7 @@ export const getMyEvents = async () => {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
     }
-}; 
+};
 export const getMyFavoriteEvents = async () => {
     try {
         const userDetails = await getMyDetails()
@@ -85,9 +86,12 @@ export const addingMyPost = async (newPost: object) => {
     }
 };
 
-export const addingMyFavoritePost = async (newPost: object) => {
+export const addingMyFavoritePost = async (post_id: string) => {
     try {
-        const response = await axios.post(`http://localhost:3000/api/posts/post`, newPost, {
+        console.log(post_id);
+        
+        const newPost = { "favoritePostID": post_id }
+        const response = await axios.put(`http://localhost:3000/api/users/favorites`, newPost, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',

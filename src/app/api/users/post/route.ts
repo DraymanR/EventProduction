@@ -1,21 +1,22 @@
 import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
-import { AddressModel, AuthModel, ConsumerModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
     try {
-        const { firstName, lastName, userName, email, password, title, phone, language, address, description, topPrice, startingPrice } = await req.json();
+        const { firstName, lastName, userName, email, password, titles, phone, languages, address, description, topPrice, startingPrice } = await req.json();
+        console.log(firstName, lastName, userName, email, password, titles, phone, languages, address, description, topPrice, startingPrice)
 
-        if (!firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
+        if (!firstName || !lastName || !userName || !email || !password || !titles || !phone || !languages || !address || !description) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
                 { status: 400 }
             );
         }
 
-      
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const normalizedEmail = email.toLowerCase();
@@ -32,7 +33,7 @@ export async function POST(req: Request) {
 
         const updatedAddress = {
             userName,
-            ...address 
+            ...address
         };
         const newAddress = new AddressModel(updatedAddress);
         await newAddress.save();
@@ -42,41 +43,35 @@ export async function POST(req: Request) {
             lastName,
             userName,
             email: normalizedEmail,
-            titles: title,
+            titles: titles,
             phone,
-            languages: language,
+            languages: languages,
             addressId: newAddress._id,
-            description, 
-            postArr: [], 
+            description,
+            postArr: [],
+            likedPostsArr: [],
+            likedPeople: [],
         });
 
         await newUser.save();
 
-        if (title === 'supplier') {
+        if (!titles.includes("consumer")) {
             const newSupplier = new SupplierModel({
                 userName,
-                startingPrice: startingPrice || 0, 
+                startingPrice: startingPrice || 0,
                 topPrice: topPrice || 0,
                 range: 0
             });
             await newSupplier.save();
-        } else if (title === 'consumer') {
-            const newConsumer = new ConsumerModel({
-                userName,
-                likedPostsArr: [],
-                likedPeople: []
-            });
-            await newConsumer.save();
         }
-
         const token = generateToken(newUser);
 
         const response = NextResponse.json(
-            { message: 'User created successfully' }, 
+            { message: 'User created successfully' },
             { status: 201 }
         );
 
-        setAuthCookies(response, newUser.userName, token);
+        setAuthCookies(response, userName, token);
 
         return response;
 
