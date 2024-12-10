@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react'
-import { User } from '@/app/types/user';
+import {  UserFormData } from '@/app/types/user';
 
 
 interface ShowUserPersonalDetailsProps {
-  User: User;
+  User: UserFormData;
 }
 
 const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({User}) => {

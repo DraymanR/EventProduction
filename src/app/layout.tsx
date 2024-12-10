@@ -22,7 +22,6 @@ export default function RootLayout({
       <body>
         <Navbar></Navbar>
         <TimerComponent></TimerComponent>
-        <PostList/>
         {children}
       </body>
     </html>

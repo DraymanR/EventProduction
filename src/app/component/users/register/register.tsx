@@ -1,11 +1,12 @@
 'use client';
 
+import Select, { MultiValue } from "react-select";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useModalStore from '../../../store/modelStore';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import { UserFormData, Language, Title } from '@/app/types/user';
+import { UserFormData, Language, Title, Option } from '@/app/types/user';
 import { addUser } from '../../../services/user/registerUser';
 import { CldUploadWidget } from 'next-cloudinary';
 
@@ -20,14 +21,14 @@ let profileImage='';
 
   
     const [formData, setFormData] = useState<UserFormData>({
+        porofilPic: '',
         firstName: '',
         lastName: '',
         userName: '',
         email: '',
         password: '',
-        titles: ['consumer'],
+        titles: [],
         phone: '',
-       
         languages: [Language.Hebrew],
         address: {
             zipCode: '',
@@ -46,7 +47,28 @@ let profileImage='';
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
+    const [selectedLanguages, setSelectedLanguages] = useState<MultiValue<Option>>([]);
+    const language: Option[] = [
+        { value: Language.English, label: "אנגלית" },
+        { value: Language.French, label: "צרפתית" },
+        { value: Language.Hebrew, label: "עיברית" },
+        { value: Language.Russian, label: "רוסית" },
+        { value: Language.Spanish, label: "ספרדית" },
+        { value: Language.Yiddish, label: "אידייש" },
 
+    ];
+
+    const mySetSelectedLanguages = (selectedOptions: MultiValue<Option>) => {
+        setSelectedLanguages(selectedOptions);
+        // עדכון formData.languages עם ערכים כמחרוזות
+        const languagesArray = selectedOptions.map((option) => option.value as Language);
+        console.log(languagesArray);
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            languages: languagesArray,
+        }));
+    }
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -98,7 +120,7 @@ let profileImage='';
             console.log(result);
             // // רישום הצליח, הפנה לדף הכניסה או לדשבורד
 
-            formData.titles.includes('consumer') ? router.push('/pages/consumer-account') : router.push('/pages/supplier-account')
+            formData.titles.includes('consumer') ? router.push('/pages/user-account') : router.push('/pages/supplier-account')
 
             closeModal()
         } catch (err: any) {
@@ -267,6 +289,21 @@ let profileImage='';
                         />
                     </div>
                     <div className="border p-2 rounded">
+                        <label>
+                            השפות שלי:
+                            <Select
+                                options={language}//.map((supplier) => ({ value: supplier, label: supplier }))} // מיפוי לערכים ש-React-Select מבין
+                                isMulti // מאפשר בחירה מרובה
+                                placeholder="בחר שפות..."
+                                onChange={mySetSelectedLanguages}
+                                // onChange={(selectedOptions) => setSelectedLanguages(selectedOptions)}
+                                value={selectedLanguages}
+                            // value={formData.languages.map((supplier) => ({ value: supplier, label: supplier }))}
+                            />
+                        </label>
+                    </div>
+                    {/* 
+                    <div className="border p-2 rounded">
                         <label htmlFor="language" className="block font-medium">
                             שפות
                         </label>
@@ -286,7 +323,7 @@ let profileImage='';
                             <option value="Spanish">ספרדית</option>
                             <option value="Russian">רוסית</option>
                         </select>
-                    </div>
+                    </div> */}
 
 
                     {/* Address Details */}
@@ -352,7 +389,11 @@ let profileImage='';
                             className="w-full px-3 py-2 border rounded-md"
                         />
                     </div>
+
                     {/* {formData.titles.includes('consumer') && (
+
+                    {!formData.titles.includes('consumer') && (
+
                         <>
                             <h3 className="text-xl font-bold mt-4">פרטי ספק</h3>
                             <br></br>

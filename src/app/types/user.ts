@@ -39,7 +39,10 @@ export enum Title {
   Singer = 'singer',
   // תוסיפי עוד טייטלים לפי הצורך
 }
-
+export type Option = {
+  value: string;
+  label: string;
+};
 export enum Language {
   Hebrew = 'Hebrew',
   English = 'English',
@@ -79,6 +82,7 @@ export interface PostCardProps {
 }
 
 export interface User {
+
   _id: ObjectId;
   firstName: string;
   lastName: string;
@@ -132,6 +136,17 @@ export interface Post {
   recommendations: ObjectId[];
   postId: ObjectId;
 }
+export interface PostEventProps {
+  createDate: Date;
+  userName: string;
+  album: string[];
+  title: string;
+  description: string;
+  recommendations: ObjectId[];
+  eventCategory: EventCategory;
+  supplierNameArr: string[];
+  budget: number;
+}
 
 export interface Img {
   imgUrl: string
@@ -147,4 +162,33 @@ export interface Recommendation {
   userName: string; // reference to User
   text: string;
   rate: number; // rating 1-5
+}
+export interface UserFormData {
+  porofilPic: string,
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  titles: (Title | "consumer")[]; // מערך של טיטלים
+  phone: string;
+  languages: Language[]; // מערך של שפות
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  description: string,
+
+  supplierDetails?: {
+    startingPrice: number;
+    topPrice: number;
+    eventList: string[];
+    recommendation: string[];
+    range: number;
+    emptyDate: string[];
+    images: string[];
+    description: string;
+  };
 }

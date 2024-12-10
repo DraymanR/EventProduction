@@ -85,6 +85,7 @@
 import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
+import { Title } from '@/app/types/user';
 import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
@@ -97,6 +98,7 @@ cloudinary.config({
 
 export async function POST(req: Request) {
     try {
+
         const {
             firstName, lastName, userName, email, password, titles,
             phone, languages, address, description, topPrice, startingPrice,
@@ -110,7 +112,9 @@ export async function POST(req: Request) {
             );
         }
 
-        // Hash password
+
+
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const normalizedEmail = email.toLowerCase();
@@ -138,6 +142,7 @@ export async function POST(req: Request) {
 
         // Create Address document
         const updatedAddress = { userName, ...address };
+
         const newAddress = new AddressModel(updatedAddress);
         await newAddress.save();
 
@@ -147,9 +152,9 @@ export async function POST(req: Request) {
             lastName,
             userName,
             email: normalizedEmail,
-            titles: title,
+            titles: titles,
             phone,
-            languages: language,
+            languages: languages,
             addressId: newAddress._id,
             description,
             postArr: [],
@@ -159,8 +164,10 @@ export async function POST(req: Request) {
         });
         await newUser.save();
 
+
         // Create Supplier document if needed
-        if (title === 'supplier') {
+        if (titles.includes(Title)) {
+
             const newSupplier = new SupplierModel({
                 userName,
                 startingPrice: startingPrice || 0,
@@ -170,12 +177,16 @@ export async function POST(req: Request) {
             await newSupplier.save();
         }
 
+
         
         const token = generateToken(newUser);
         const response = NextResponse.json(
             { message: 'User created successfully' },
             { status: 201 }
         );
+
+
+
         setAuthCookies(response, userName, token);
 
         return response;

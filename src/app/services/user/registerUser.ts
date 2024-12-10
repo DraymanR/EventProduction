@@ -22,8 +22,13 @@ export const singIn = async (email: string, userName: string, password: string) 
     throw error; // טיפול בשגיאות
   }
 };
-export const addUser = async (data) => {
+
+export const addUser = async (data: UserFormData) => {
+  console.log("data,",data);
+ 
   try {
+    console.log("data,",data);
+    
     const response = await axios.post('http://localhost:3000/api/users/post', data, {
       headers: {
         'Content-Type': 'application/json',

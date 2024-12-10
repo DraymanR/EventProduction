@@ -1,47 +1,52 @@
-"use client";
+'use client'
 
-import React from "react";
+import AddPost from "@/app/component/posts/AddPost";
+import PopUpWindow from "@/app/component/pop-upWindow";
+import { getMyFavoriteEvents } from "@/app/services/post/post";
+import useModalStore from "@/app/store/modelStore";
+import { Post, PostCardProps } from "@/app/types/user";
+import { useEffect, useState } from "react";
 import FavoriteEvent from "@/app/component/users/FavoriteEvent";
-import { Post } from "@/app/types/user";
-// import { BrowserRouter } from "react-router-dom";
-import dynamic from 'next/dynamic';
 
-// טוען את BrowserRouter רק בצד הלקוח
-const BrowserRouter = dynamic(() => import('react-router-dom').then(mod => mod.BrowserRouter), {
-  ssr: false,  // מבטל את העיבוד בצד השרת
-});
 
-const mockFavoritePosts: Post[] = [
-    {
-      createDate: new Date(),
-      userName: "משתמש 1",
-      album: ["https://via.placeholder.com/150"],
-      title: "אירוע לדוגמה 1",
-      description: "תיאור של אירוע לדוגמה 1",
-      recommendations: [],
-      postId: "1" as any
-    },
-    {
-      createDate: new Date(),
-      userName: "משתמש 2",
-      album: ["https://via.placeholder.com/150"],
-      title: "אירוע לדוגמה 2",
-      description: "תיאור של אירוע לדוגמה 2",
-      recommendations: [],
-      postId: "2" as any
-    },
-  ];
-  
-const page = () => {
+const Home: React.FC = () => {
+  const [MyEvents, setMyEvents] = useState<PostCardProps[]>(); //  אם אנחנו 
+  // const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
+  // const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
+
+  useEffect(() => {
+    const getMyPersonalDetails = async () => {
+      try {
+        const FavoriteEvents = await getMyFavoriteEvents();
+        // const userData = convertToPosts(events.posts);
+        console.log(FavoriteEvents);
+
+        setMyEvents(FavoriteEvents); // מעדכן את המצב
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getMyPersonalDetails()
+  }, [])
+
+  // const handleAddEvent = () => {
+  //     if (!isModalOpen) {
+  //         openModal();
+  //     }
+  // };
+
+
   return (
-    <BrowserRouter>
-    <div>
-      <h1>רשימת אירועים מועדפים</h1>
-      <FavoriteEvent favoritePosts={mockFavoritePosts} />
+    <div dir="ltr">
+      {/* <button type="button" onClick={() => handleAddEvent()} className=" bg-red-400 text-white py-2 px-4 rounded-lg">הוספת אירוע</button> */}
+      <PopUpWindow>
+        <AddPost ></AddPost>
+      </PopUpWindow>
+      {MyEvents && (
+        <FavoriteEvent favoritePosts={MyEvents} ></FavoriteEvent>
+      )}
     </div>
-    </BrowserRouter>
 
-  );
-};
-
-export default page;
+  )
+}
+export default Home;

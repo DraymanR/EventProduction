@@ -46,7 +46,13 @@ export async function PUT(req: NextRequest) {
 
         // עדכון לייקים לפוסטים
         if (favoritePostID) {
+            console.log(favoritePostID);
             const existingPost = await PostModel.findById(favoritePostID);
+            console.log(existingPost);
+            console.log(existingConsumer.likedPostsArr);
+            if (!existingConsumer.likedPostsArr) {
+                existingConsumer.likedPostsArr = [];
+            }
             if (
                 !existingConsumer.likedPostsArr.includes(favoritePostID) &&
                 existingPost
