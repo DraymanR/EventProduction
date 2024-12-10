@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Select, { MultiValue } from "react-select";
 import "../../css/AddPost.css";
 import { addingMyPost } from "@/app/services/post/post";
-import useModalStore from "@/app/store/modelStore";
+import useModalStore from "@/app/store/modelPop-upWindow";
 
 const AddPost: React.FC = () => {
   const [title, setTitle] = useState<string>("");

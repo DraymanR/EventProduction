@@ -1,5 +1,5 @@
 'use client'
-import useModalStore from '@/app/store/modelStore';
+import useModalStore from '@/app/store/modelPop-upWindow';
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
 

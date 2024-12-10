@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import PopUpWindow from "./pop-upWindow";
 import Login from "./users/register/login";
-import useModalStore from "@/app/store/modelStore";
+import useModalStore from "@/app/store/modelPop-upWindow";
 
 const TimerComponent = () => {
     const openModal = useModalStore((state: { openModal: any; }) => state.openModal);

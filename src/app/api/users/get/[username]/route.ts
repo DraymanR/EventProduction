@@ -175,6 +175,8 @@ export async function GET(req: NextRequest) {
 
         if (user.userName !== userName) {
             const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
+            console.log(":user",filteredUser,"supplierDetails:",supplierDetails,"consumerDetails",consumerDetails);
+            
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
