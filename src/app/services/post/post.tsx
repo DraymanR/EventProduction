@@ -39,7 +39,7 @@ export const getMyEvents = async () => {
 export const getMyFavoriteEvents = async () => {
     try {
         const userDetails = await getMyDetails()
-        return userDetails.consumerDetails.likedPostsArr
+        return userDetails.user.likedPostsArr
     } catch (error) {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
