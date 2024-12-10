@@ -80,7 +80,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
 
   const handleFavoriteClick = () => {
     setIsFavorite((prev) => !prev);
-    // addingMyFavoritePost(post._id); // קריאה לפונקציה
+    addingMyFavoritePost(post._id); // קריאה לפונקציה
   };
 
   const toggleComments = () => {

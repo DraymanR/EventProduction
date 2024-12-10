@@ -1,11 +1,13 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema
 
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory} from '@/app/types/user';
+ } from 'mongoose';
+
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img} from '@/app/types/user';
 
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
-  _id: { type: Schema.Types.ObjectId },
+  porofilPic:{ type:String},
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -23,7 +25,9 @@ const userSchema = new Schema<User>({
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
   description: { type: String, required: true },
-  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+  likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
+  likedPeople: [{ type: String }], // שמ  
 });
 
 // הסכמה למודל כתובת
@@ -57,11 +61,7 @@ const supplierSchema = new Schema<Supplier>({
 });
 
 // הסכמה למודל צרכן
-const consumerSchema = new Schema<Consumer>({
-  userName: { type: String, ref: 'User', required: true }, // הפניה למודל User
-  likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
-  likedPeople: [{ type: String }], // שמות משתמשים של אנשים שאהב
-});
+
 
 // הסכמה למודל פוסט
 const postSchema = new Schema<Post>({
@@ -98,7 +98,6 @@ const recommendationSchema = new Schema<Recommendation>({
 const AddressModel = mongoose.models.Address || mongoose.model<Address>('Address', addressSchema);
 const UserModel = mongoose.models.User || mongoose.model<User>('User', userSchema);
 const SupplierModel = mongoose.models.Supplier || mongoose.model<Supplier>('Supplier', supplierSchema);
-const ConsumerModel = mongoose.models.Consumer || mongoose.model<Consumer>('Consumer', consumerSchema);
 const PostModel = mongoose.models.Post || mongoose.model<Post>('Post', postSchema);
 const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<ConsumerPost>('ConsumerPost', consumerPostSchema);
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
@@ -121,7 +120,6 @@ export {
   AddressModel, 
   UserModel, 
   SupplierModel, 
-  ConsumerModel, 
   PostModel,  
   ConsumerPostModel, 
   RecommendationModel, 

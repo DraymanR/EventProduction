@@ -11,7 +11,10 @@ export enum Title {
   Singer = 'singer',
   // תוסיפי עוד טייטלים לפי הצורך
 }
-
+export type Option = {
+  value: string;
+  label: string;
+};
 export enum Language {
   Hebrew = 'Hebrew',
   English = 'English',
@@ -31,26 +34,27 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps{
-"_id": string,
+export interface PostCardProps {
+  "_id": string,
+  "userName": string,
+  "createDate": Date,
+  "album": [
+    string
+  ],
+  "title": string,
+  "description": string,
+  "recommendations": [
+    {
+      "_id": string,
       "userName": string,
-      "createDate": Date,
-      "album": [
-       string
-      ],
-      "title": string,
-      "description": string,
-      "recommendations": [
-        {
-          "_id": string,
-          "userName": string,
-          "text": string,
-          "rate": number,
-         
-        }]}
+      "text": string,
+      "rate": number,
+
+    }]
+}
 
 export interface User {
-
+  porofilPic: string,
   _id: ObjectId;
   firstName: string;
   lastName: string;
@@ -61,7 +65,9 @@ export interface User {
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
-  postArr: ObjectId[]; // מערך של פוסטים
+  postArr: ObjectId[];
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[];    // מערך של פוסטים
 }
 
 export interface Auth {
@@ -79,11 +85,10 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-export interface Consumer {
-  userName: string;
-  likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[];     // array of Usernames
-}
+// export interface Consumer {
+//   userName: string;
+//    // array of Usernames
+// }
 
 export interface Address {
   userName: string;
@@ -130,22 +135,23 @@ export interface Recommendation {
   rate: number; // rating 1-5
 }
 export interface UserFormData {
+  porofilPic: string,
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   password: string;
-  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
-  // title: 'supplier' | 'consumer';
+  titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
-  description: string,
-  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  languages: Language[]; // מערך של שפות
   address: {
     zipCode: string;
     city: string;
     street: string;
     building: number;
   };
+  description: string,
+
   supplierDetails?: {
     startingPrice: number;
     topPrice: number;

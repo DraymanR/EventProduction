@@ -20,7 +20,7 @@ export default function RootLayout({
 
     <html lang="en" dir="rtl">
       <body>
-        <Navbar></Navbar>
+        {/* <Navbar></Navbar> */}
         <TimerComponent></TimerComponent>
         {children}
       </body>
