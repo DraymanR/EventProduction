@@ -1,14 +1,14 @@
 
-import React from "react";
-import LoginBtn from '@/app/component/login-btn'
+// import React from "react";
+// import LoginBtn from '@/app/component/login-btn'
 
-const Loginpage = () => {
+// const Loginpage = () => {
 
-    return (
-        <div>
-            < LoginBtn />
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             < LoginBtn ></LoginBtn>
+//         </div>
+//     )
+// }
 
-export default Loginpage
+// export default Loginpage

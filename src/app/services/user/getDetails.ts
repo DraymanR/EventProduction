@@ -12,6 +12,8 @@ export const getMyDetails = async () => {
                 'Content-Type': 'application/json',
             },
         });
+        console.log(response.data);
+        
         console.log('User :', response.data.user);
         return response.data }
     } catch (error) {

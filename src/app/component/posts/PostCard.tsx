@@ -37,7 +37,7 @@
 //         )}
 //       </div>
 
-   
+
 //       <div className="comments-toggle flex items-center text-blue-500 cursor-pointer" onClick={toggleComments}>
 //         <span>{showComments ? "הסתר תגובות" : "הראה תגובות"}</span>
 //         <span className={`ml-2 transform ${showComments ? "rotate-180" : ""}`}>
@@ -45,7 +45,7 @@
 //         </span>
 //       </div>
 
-     
+
 //       {showComments && (
 //         <div className="comments mt-4">
 //           <h3 className="text-lg font-semibold text-gray-800 mb-2">תגובות והמלצות</h3>
@@ -66,7 +66,7 @@
 'use client'
 import React, { useState } from "react";
 import { PostCardProps, Recommendation } from "@/app/types/user";
-import { addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
+import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
 
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
@@ -76,6 +76,12 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(decodeURIComponent(document.cookie) ? true : false);
   const [comments, setComments] = useState<Recommendation[]>(post.recommendations || []); // מערך התגובות
   const [rating, setRating] = useState<number>(0); // משתנה חדש לשמירת הדירוג
+  const [isFavorite, setIsFavorite] = useState(false); // מצב הלב
+
+  const handleFavoriteClick = () => {
+    setIsFavorite((prev) => !prev);
+    addingMyFavoritePost(post._id); // קריאה לפונקציה
+  };
 
   const toggleComments = () => {
     setShowComments((prev) => !prev);
@@ -90,8 +96,8 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
       setShowLoginModal(true);
     } else {
       try {
-        const newComment = await addRecommendation(post._id, commentText, rating); 
-        setComments((prevComments) => [...prevComments, newComment]);
+        const newComment = await addRecommendation(post._id, commentText, rating);
+        setComments((prevComments) => [...prevComments, newComment.recommendation]);
         // עדכון מיידי של התגובות
         setCommentText(""); // איפוס שדה התגובה
         setRating(0); // איפוס הדירוג אחרי הוספת התגובה
@@ -115,7 +121,16 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
         <h2 className="text-2xl font-semibold text-gray-800">{post.title}</h2>
         <p className="text-sm text-gray-500">מאת {post.userName}</p>
       </div>
-
+      <div className="favorite-toggle mb-4">
+        <span
+          onClick={handleFavoriteClick}
+          className={`cursor-pointer text-3xl ${
+            isFavorite ? "text-red-500" : "text-gray-400"
+          }`}
+        >
+          ♥
+        </span>
+      </div>
       <p className="description text-gray-700 mb-4">{post.description}</p>
 
       {/* אלבום תמונות */}

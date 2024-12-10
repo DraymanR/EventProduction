@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import PopUpWindow from "./pop-upWindow";
 import Login from "./users/register/login";
 import useModalStore from "@/app/store/modelStore";
@@ -28,7 +29,7 @@ const TimerComponent = () => {
         }, 120000); // 2 דקות
 
         return () => clearInterval(intervalId); // ניקוי ה-timer בזמן הסרת הקומפוננטה
-    }, [isModalOpen, openModal]);
+    }, []);
 
     if (!isClient) {
         return null; // מחזיר null או קומפוננטה אחרת בזמן שהדף נטען בצד השרת
