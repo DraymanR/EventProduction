@@ -22,7 +22,7 @@ export const singIn = async (email: string, userName: string, password: string) 
     throw error; // טיפול בשגיאות
   }
 };
-export const addUser = async (data: UserFormData) => {
+export const addUser = async (data) => {
   try {
     const response = await axios.post('http://localhost:3000/api/users/post', data, {
       headers: {

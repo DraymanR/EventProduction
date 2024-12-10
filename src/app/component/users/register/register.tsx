@@ -7,9 +7,18 @@ import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { UserFormData, Language, Title } from '@/app/types/user';
 import { addUser } from '../../../services/user/registerUser';
+import { CldUploadWidget } from 'next-cloudinary';
 
 
 const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+let profileImage='';
+    const handleUploadSuccess = async (result: any) => {
+        if (result.info && result.info.secure_url) {
+           profileImage = result.info.secure_url;
+        }
+    };
+
+  
     const [formData, setFormData] = useState<UserFormData>({
         firstName: '',
         lastName: '',
@@ -18,7 +27,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         password: '',
         titles: ['consumer'],
         phone: '',
-        description: '',
+       
         languages: [Language.Hebrew],
         address: {
             zipCode: '',
@@ -26,16 +35,8 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             street: '',
             building: 0,
         },
-        supplierDetails: {
-            startingPrice: 0,
-            topPrice: 0,
-            eventList: [],
-            recommendation: [],
-            range: 0,
-            emptyDate: [],
-            images: [],
-            description: '',
-        },
+        description: '',
+         profileImage:'',
     });
 
     const [error, setError] = useState('');
@@ -351,7 +352,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             className="w-full px-3 py-2 border rounded-md"
                         />
                     </div>
-                    {formData.titles.includes('consumer') && (
+                    {/* {formData.titles.includes('consumer') && (
                         <>
                             <h3 className="text-xl font-bold mt-4">פרטי ספק</h3>
                             <br></br>
@@ -405,7 +406,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                 />
                             </div>
                         </>
-                    )}
+                    )} */}
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <div className="col-span-2 flex justify-center">
                         <button
@@ -419,7 +420,30 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             {isSubmitting ? 'נרשם...' : 'הירשם'}
                         </button>
                     </div>
-
+                  
+   
+        <CldUploadWidget 
+            uploadPreset="appOrganizerEvent"
+            onSuccess={handleUploadSuccess}
+            options={{
+                sources: [
+                    'local', // Local files
+                    'camera', // Camera capture
+                    'google_drive', // Google Drive
+                    'url' // Web URL
+                ],
+                maxFiles: 35, // limit to 35 file
+            }}
+        >
+            {({ open }) => (
+                <button
+                    onClick={() => open()}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                    Upload an Image
+                </button>
+            )}
+        </CldUploadWidget>
                     <br></br>
                 </form>
                 <p className="text-center mt-4">
@@ -439,4 +463,405 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     );
 };
 
-export default Register;
+ export default Register;
+// import React, { useState } from 'react';
+// import { useRouter } from 'next/router'; // הייבוא הנכון של useRouter
+// import axios from 'axios';
+
+// const Register = () => {
+//   const router = useRouter();
+  
+//   // מצב נתוני הטופס
+//   const [formData, setFormData] = useState({
+//     firstName: '',
+//     lastName: '',
+//     userName: '',
+//     email: '',
+//     password: '',
+//     phone: '',
+//     title: '',
+//     language: [],
+//     address: {
+//       userName: '',
+//       zipCode: '',
+//       city: '',
+//       street: '',
+//       building: 0,
+//     },
+//     description: '',
+//     profileImage: '',
+//     startingPrice: 0,
+//     topPrice: 0,
+//   });
+
+//   // מצב שגיאות לאימות
+//   const [error, setError] = useState('');
+
+//   // פונקציה לעדכון שדות הטופס
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement>) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+//   };
+
+//   // פונקציה לעדכון שדות כתובת
+//   // פונקציה לעדכון שדות הטופס, שתתאים לשני סוגי האלמנטים (input ו-textarea)
+
+  
+//   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value } = e.target;
+//     setFormData((prev) => ({
+//       ...prev,
+//       address: { ...prev.address, [name]: value },
+//     }));
+//   };
+
+//   // פונקציה להעלאת התמונה
+//   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0];
+//     if (file) {
+//       const formData = new FormData();
+//       formData.append('file', file);
+//       formData.append('upload_preset', 'profile_images'); // החלף ב-upload_preset שלך
+//       try {
+//         const res = await axios.post(
+//           'https://api.cloudinary.com/v1_1/your-cloud-name/upload',
+//           formData
+//         );
+//         setFormData((prev) => ({
+//           ...prev,
+//           profileImage: res.data.secure_url, // שומר את ה-URL של התמונה בטופס
+//         }));
+//       } catch (err) {
+//         console.error('Error uploading image:', err);
+//         setError('שגיאה בהעלאת התמונה');
+//       }
+//     }
+//   };
+
+//   // פונקציה לשליחת הטופס
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     const {
+//       firstName, lastName, userName, email, password, title,
+//       phone, language, address, description, profileImage, startingPrice, topPrice,
+//     } = formData;
+
+//     // אימות שדות חובה
+//     if (!firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
+//       setError('אנא מלא את כל השדות');
+//       return;
+//     }
+
+//     try {
+//       const res = await axios.post('/api/register', {
+//         firstName,
+//         lastName,
+//         userName,
+//         email,
+//         password,
+//         title,
+//         phone,
+//         language,
+//         address,
+//         description,
+//         profileImage,
+//         startingPrice,
+//         topPrice,
+//       });
+
+//       if (res.status === 201) {
+//         router.push('/login'); // הפניה לדף התחברות לאחר הרשמה מוצלחת
+//       }
+//     } catch (err) {
+//       console.error('Error during registration:', err);
+//       setError('שגיאה בהרשמה');
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h1>הרשמה</h1>
+//       <form onSubmit={handleSubmit}>
+//         {error && <p style={{ color: 'red' }}>{error}</p>}
+
+//         <label>שם פרטי</label>
+//         <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+
+//         <label>שם משפחה</label>
+//         <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+
+//         <label>שם משתמש</label>
+//         <input type="text" name="userName" value={formData.userName} onChange={handleChange} required />
+
+//         <label>אימייל</label>
+//         <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+
+//         <label>סיסמה</label>
+//         <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+
+//         <label>טלפון</label>
+//         <input type="text" name="phone" value={formData.phone} onChange={handleChange} required />
+
+//         <label>תואר</label>
+//         <select name="title" value={formData.title} onChange={handleChange} required>
+//           <option value="supplier">ספק</option>
+//           <option value="Makeup artist">מאפר</option>
+//           <option value="photographer">צלם</option>
+//           <option value="sound engineer">מהנדס סאונד</option>
+//           <option value="event designer">מעצב אירועים</option>
+//           <option value="orchestra">תזמורת</option>
+//           <option value="singer">זמר</option>
+//         </select>
+
+//         <label>שפות</label>
+//         <select multiple name="language" value={formData.language} onChange={handleChange} required>
+//           <option value="Hebrew">עברית</option>
+//           <option value="English">אנגלית</option>
+//           <option value="French">צרפתית</option>
+//           <option value="Yiddish">יידיש</option>
+//           <option value="Spanish">ספרדית</option>
+//           <option value="Russian">רוסית</option>
+//         </select>
+
+//         <label>כתובת</label>
+//         <input type="text" name="userName" value={formData.address.userName} onChange={handleAddressChange} required />
+//         <input type="text" name="zipCode" value={formData.address.zipCode} onChange={handleAddressChange} required />
+//         <input type="text" name="city" value={formData.address.city} onChange={handleAddressChange} required />
+//         <input type="text" name="street" value={formData.address.street} onChange={handleAddressChange} required />
+//         <input type="number" name="building" value={formData.address.building} onChange={handleAddressChange} required />
+
+//         <label>תיאור</label>
+//         <textarea name="description" value={formData.description} onChange={handleChange} required />
+
+//         <label>תמונה פרופיל</label>
+//         <input type="file" onChange={handleImageUpload} />
+
+//         <button type="submit">הרשמה</button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Register;
+
+// import React, { useState } from 'react';
+// import { UserFormData } from '@/app/types/user';
+// import { addUser } from '@/app/services/user/registerUser'; // שים לב ששינית את הנתיב במידת הצורך
+
+// const UserRegister: React.FC = () => {
+//   const [formData, setFormData] = useState<UserFormData>({
+//     firstName: '',
+//     lastName: '',
+//     userName: '',
+//     email: '',
+//     password: '',
+//     phone: '',
+//     titles: 'supplier', // שינוי לפי הצורך
+//     language: ['English'], // שינוי לפי הצורך
+//     address: {
+//       city: '',
+//       street: '',
+//       building: 0,
+//       zipCode: '',
+//     },
+//     description: '',
+//     profileImage: '', // נניח שזה שדה למערכת קובץ
+//   });
+
+//   const [error, setError] = useState<string>('');
+//   const [isLoading, setIsLoading] = useState<boolean>(false);
+//   const [successMessage, setSuccessMessage] = useState<string>('');
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { name, value } = e.target;
+//     setFormData((prevState) => ({
+//       ...prevState,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setIsLoading(true);
+//     setError('');
+//     setSuccessMessage('');
+
+//     try {
+//       const response = await addUser(formData);
+//       setSuccessMessage('User registered successfully!');
+//     } catch (err) {
+//       setError('There was an error registering the user.');
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="register-form">
+//       <h2>Register New User</h2>
+//       {error && <div className="error">{error}</div>}
+//       {successMessage && <div className="success">{successMessage}</div>}
+
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label htmlFor="firstName">First Name</label>
+//           <input
+//             type="text"
+//             id="firstName"
+//             name="firstName"
+//             value={formData.firstName}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="lastName">Last Name</label>
+//           <input
+//             type="text"
+//             id="lastName"
+//             name="lastName"
+//             value={formData.lastName}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="userName">Username</label>
+//           <input
+//             type="text"
+//             id="userName"
+//             name="userName"
+//             value={formData.userName}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="email">Email</label>
+//           <input
+//             type="email"
+//             id="email"
+//             name="email"
+//             value={formData.email}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="password">Password</label>
+//           <input
+//             type="password"
+//             id="password"
+//             name="password"
+//             value={formData.password}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="phone">Phone</label>
+//           <input
+//             type="text"
+//             id="phone"
+//             name="phone"
+//             value={formData.phone}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="title">Title</label>
+//           <select
+//             id="title"
+//             name="title"
+//             value={formData.title}
+//             onChange={handleChange}
+//           >
+//             <option value="supplier">Supplier</option>
+//             <option value="photographer">Photographer</option>
+//             <option value="makeupArtist">Makeup Artist</option>
+//             <option value="soundEngineer">Sound Engineer</option>
+//             <option value="eventDesigner">Event Designer</option>
+//             <option value="orchestra">Orchestra</option>
+//             <option value="singer">Singer</option>
+//           </select>
+//         </div>
+
+//         <div>
+//           <label htmlFor="address.city">City</label>
+//           <input
+//             type="text"
+//             id="address.city"
+//             name="address.city"
+//             value={formData.address.city}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="address.street">Street</label>
+//           <input
+//             type="text"
+//             id="address.street"
+//             name="address.street"
+//             value={formData.address.street}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="address.building">Building</label>
+//           <input
+//             type="number"
+//             id="address.building"
+//             name="address.building"
+//             value={formData.address.building}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="description">Description</label>
+//           <textarea
+//             id="description"
+//             name="description"
+//             value={formData.description}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+
+//         <div>
+//           <label htmlFor="profileImage">Profile Image URL</label>
+//           <input
+//             type="text"
+//             id="profileImage"
+//             name="profileImage"
+//             value={formData.profileImage}
+//             onChange={handleChange}
+//           />
+//         </div>
+
+//         <div>
+//           <button type="submit" disabled={isLoading}>
+//             {isLoading ? 'Registering...' : 'Register'}
+//           </button>
+//         </div>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default UserRegister;

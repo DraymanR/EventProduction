@@ -1,6 +1,34 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
-
+export interface UserFormData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  titles: string[];
+  phone: string;
+  description: string;
+  languages: Language[];
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string;
+}
+export interface SupplierDetails {
+  startingPrice: number;
+  topPrice: number;
+  eventList: string[];
+  recommendation: string[];
+  range: number;
+  emptyDate: string[];
+  images: string[];
+  description: string;
+}
 export enum Title {
   Supplier = 'supplier',
   MakeupArtist = 'Makeup artist',
@@ -31,43 +59,44 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps{
-"_id": string,
+export interface PostCardProps {
+  "_id": string,
+  "userName": string,
+  "createDate": Date,
+  "album": [
+    string
+  ],
+  "title": string,
+  "description": string,
+  "recommendations": [
+    {
+      "_id": string,
       "userName": string,
-      "createDate": Date,
-      "album": [
-       string
-      ],
-      "title": string,
-      "description": string,
-      "recommendations": [
-        {
-          "_id": string,
-          "userName": string,
-          "text": string,
-          "rate": number,
-         
-        }]}
+      "text": string,
+      "rate": number,
+
+    }]
+}
 
 export interface User {
-  porofilPic:string,
-  _id:  ObjectId;
+  _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
-  titles:(Title | "consumer")[]; // מערך של טיטלים
+  titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
   postArr: ObjectId[];
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[];    // מערך של פוסטים
+  likedPeople: string[];
+  profileImage: string;   // מערך של פוסטים
 }
 
 export interface Auth {
-  userName:string,
+  userName: string,
   email: string,
   password: string,
   otp: String,
@@ -105,7 +134,7 @@ export interface Post {
 }
 
 export interface Img {
-  imgUrl : string
+  imgUrl: string
 }
 
 export interface ConsumerPost {
