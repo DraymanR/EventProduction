@@ -1,9 +1,16 @@
 import mongoose from 'mongoose';
 
 const connectDb = async (): Promise<void> => {
+<<<<<<< HEAD
   try {
     const MONGODB_URI = process.env.MONGODB_URI;
 
+=======
+  console.log('inside the connectDB function , still did nothing :)')
+   try{
+    const MONGODB_URI = process.env.MONGODB_URI ;
+    console.log(MONGODB_URI);
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
     if (!MONGODB_URI) {
       throw new Error('Missing MONGO_URI in environment variables');
     }
@@ -35,4 +42,4 @@ const connectDb = async (): Promise<void> => {
   }
 };
 
-export default connectDb;
+export default connectDb

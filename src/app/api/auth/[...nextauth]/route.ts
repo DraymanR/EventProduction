@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import NextAuth, { AuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
@@ -5,6 +6,10 @@ import connectDb from '@/app/lib/db/connectDb'
 import { UserModel } from '@/app/lib/models/user'
 import { Title , Language} from "@/app/types/user"
 import mongoose from "mongoose"
+=======
+import NextAuth, { AuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error('Missing Google OAuth credentials')
@@ -18,6 +23,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
+<<<<<<< HEAD
     async signIn({ user, account }) {
       // Connect to database
       await connectDb();
@@ -67,10 +73,21 @@ export const authOptions: AuthOptions = {
         }
       }
       return session;
+=======
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.sub || ''
+      }
+      return session
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
     }
   }
 }
 
 const handler = NextAuth(authOptions)
 
+<<<<<<< HEAD
 export { handler as GET, handler as POST }
+=======
+export { handler as GET, handler as POST }
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf

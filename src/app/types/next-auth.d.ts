@@ -7,8 +7,11 @@ declare module "next-auth" {
       name: string
       email: string
       image: string
+<<<<<<< HEAD
       userName?: string
       title?: string[]
+=======
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
     }
   }
 }

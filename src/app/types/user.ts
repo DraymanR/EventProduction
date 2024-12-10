@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 export enum Title {
@@ -33,8 +34,45 @@ export enum EventCategory {
   Birthday = 'birthday',
   FamilyParty = 'family party',
   Other = 'other',
+=======
+export interface User {
+  _id:  ObjectId;
+  firstName: string;
+  lastName: string;
+  userName: string; // unique
+  email: string;    // unique
+  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
+  phone: string;
+  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  addressId: ObjectId; // reference to Address
+  description: string;
+  postArr: ObjectId[];
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
 }
 
+export interface Auth {
+  userName:string,
+  email: string,
+  password: string,
+  otp: String,
+  otpExpiration: Date,
+
+}
+export interface Supplier {
+  userName: string;
+  startingPrice: number;
+  topPrice: number;
+
+  range: number; // maximum distance they will serve
+
+}
+
+export interface Consumer {
+  userName: string;
+
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[]; // array of Usernames
+}
 
 >>>>>>> Stashed changes
 export interface User {

@@ -1,5 +1,6 @@
 
 import mongoose, { Schema, Document } from 'mongoose';
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer, Img } from '@/app/types/user';
 
@@ -7,6 +8,10 @@ import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Cons
 
 import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory , Img} from '@/app/types/user';
 >>>>>>> Stashed changes
+=======
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer, Img } from '@/app/types/user';
+
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
 
 const userSchema = new Schema<User>({
   _id: { type: Schema.Types.ObjectId },
@@ -19,12 +24,16 @@ const userSchema = new Schema<User>({
     enum: ['supplier', 'consumer', 'Makeup artist', 'photographer', 'sound engineer', 'event designer', 'orchestra', 'singer',],
     required: true
   },
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
   phone: { type: String, required: true },
   language: {
     type: String,
     enum: ['Hebrew', 'English', 'French', 'Yiddish', 'Spanish', 'Russian'],
     required: true
+<<<<<<< HEAD
 =======
   phone: { type: String },
   userLanguages: { 
@@ -35,6 +44,11 @@ const userSchema = new Schema<User>({
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
   description: { type: String },
+=======
+  },
+  addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
+  description: { type: String, required: true },
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
   postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
 });
 
@@ -112,9 +126,13 @@ export {
   ConsumerPostModel,
   RecommendationModel,
   ImgModel
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 };
 =======
 
 };
 >>>>>>> Stashed changes
+=======
+};
+>>>>>>> f57a4674fdfec51c87d67cf7791498c7716efcaf
