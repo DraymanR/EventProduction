@@ -44,14 +44,14 @@ const PostList = () => {
 
     useEffect(() => {
         loadPosts();
-    }, [posts]); // טעינה של הפוסטים רק פעם אחת
+    }, []); // טעינה של הפוסטים רק פעם אחת
 
     if (error) {
         return <div className="text-red-600 font-bold text-center mt-4">{error}</div>;
     }
 
     return (
-        <div className="fixed top-[100px] max-w-4xl mx-auto mt-8">
+        <div className="max-w-4xl mx-auto mt-8">
             <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">פוסטים</h1>
 
             <div className="space-y-6">  {/* לכל פוסט יש שורה משלו */}

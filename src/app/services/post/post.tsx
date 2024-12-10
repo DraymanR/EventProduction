@@ -18,10 +18,10 @@ export const addRecommendation = async (postId: string, text: string, rate: numb
         });
 
         console.log('Recommendation added:', response.data.recommendation);
-        return response.data; 
+        return response.data;
     } catch (error) {
         console.error('Error adding recommendation:', error);
-        throw error; 
+        throw error;
     }
 };
 
@@ -34,6 +34,15 @@ export const getMyEvents = async () => {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
     }
+}; 
+export const getMyFavoriteEvents = async () => {
+    try {
+        const userDetails = await getMyDetails()
+        return userDetails.consumerDetails.likedPostsArr
+    } catch (error) {
+        console.error('Error registering user:', error);
+        throw error; // טיפול בשגיאות
+    }
 };
 export const getUserEvents = async (userName: string) => {
     try {
@@ -42,7 +51,7 @@ export const getUserEvents = async (userName: string) => {
         return userDetails.user.postArr
     } catch (error) {
         console.error('Error fetching posts:', error);
-        throw error; 
+        throw error;
     }
 };
 export const getAllPosts = async (page: number = 1, limit: number = 10) => {
@@ -54,13 +63,29 @@ export const getAllPosts = async (page: number = 1, limit: number = 10) => {
             },
         });
         console.log('Posts:', response.data);
-        return response.data; 
+        return response.data;
     } catch (error) {
         console.error('Error fetching posts:', error);
-        throw error; 
+        throw error;
     }
 };
 export const addingMyPost = async (newPost: object) => {
+    try {
+        const response = await axios.post(`http://localhost:3000/api/posts/post`, newPost, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log(response.data);
+        return response.data
+    } catch (error) {
+        console.error('Error registering user:', error);
+        throw error; // טיפול בשגיאות
+    }
+};
+
+export const addingMyFavoritePost = async (newPost: object) => {
     try {
         const response = await axios.post(`http://localhost:3000/api/posts/post`, newPost, {
             withCredentials: true,
