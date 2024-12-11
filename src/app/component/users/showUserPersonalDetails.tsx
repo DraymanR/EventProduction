@@ -16,10 +16,10 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({User})
       <h1>{User.firstName} {User.lastName}</h1>
       <p><strong>Username:</strong> {User.userName}</p>
       <p><strong>Email:</strong> {User.email}</p>
-      <p><strong>Title:</strong> {User.title}</p>
+      <p><strong>Title:</strong> {User.titles}</p>
       <p><strong>Phone:</strong> {User.phone}</p>
       <p><strong>Description:</strong> {User.description}</p>
-      <p><strong>Language:</strong> {User.language}</p>
+      <p><strong>Language:</strong> {User.languages}</p>
       <h3>Address:</h3>
       {/* <p>{User.addressId.street}, {User.address.building}, {User.address.city}, {User.address.zipCode}</p> */}
     

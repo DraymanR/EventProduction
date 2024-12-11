@@ -17,6 +17,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         const getMyPersonalDetails = async () => {
             try {
+                
                 const events = await getMyEvents();
                 // const userData = convertToPosts(events.posts);
                 console.log(events);

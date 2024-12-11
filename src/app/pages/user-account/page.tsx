@@ -2,24 +2,40 @@
 import NewPhoto from '@/app/component/posts/ImageUploader'
 import PostList from '@/app/component/posts/PostList';
 import { getMyDetails } from '@/app/services/user/getDetails';
-import useUserModal from '@/app/store/userModel';
+import { useUpdateUserStore } from '@/app/services/user/registerUser';
+import useUserStore from '@/app/store/userModel';
+import { UserFormData } from '@/app/types/user';
 import { useEffect } from 'react';
 const Home = () => {
-const myDetailes = useUserModal
+    const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
+    const uuser = useUserStore((state) => state.user);
+
     useEffect(() => {
         const getMyPersonalDetails = async () => {
             try {
-                const response = await getMyDetails();
-                // const userData = convertToPosts(events.posts);
-                console.log(response.user);
-
-                // setMyEvents(events); // מעדכן את המצב
+                const userDetailes = await getMyDetails()
+                console.log("userDetailes::", userDetailes);
+                const user: UserFormData = {
+                    firstName: userDetailes.user.firstName,
+                    lastName: userDetailes.user.lastName,
+                    userName: userDetailes.user.userName,
+                    email: userDetailes.user.email,
+                    password: '',
+                    titles: userDetailes.user.titles,
+                    phone: userDetailes.user.phone,
+                    languages: userDetailes.user.languages,
+                    address: { ...userDetailes.user.addressId },
+                    description: userDetailes.user.description,
+                    profileImage: userDetailes.user.profileImage,
+                }
+                updateUserStore(user, userDetailes.user.likedPostsArr, userDetailes.user.likedPeople, userDetailes.user.postArr)
             } catch (error) {
                 console.error(error);
             }
         }
         getMyPersonalDetails()
     }, [])
+    console.log("!!!!", uuser);
 
     return (
         <div>

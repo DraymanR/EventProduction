@@ -153,7 +153,12 @@ export async function GET(req: NextRequest) {
                     path: 'recommendations',
                     model: 'Recommendation',
                 },
-            })
+            }).populate({
+                path: 'likedPostsArr',
+                populate: {
+                    path: 'recommendations',
+                    model: 'Recommendation',
+                },})
             .lean<User>();
 
         if (!user) {
