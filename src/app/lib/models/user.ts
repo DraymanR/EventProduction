@@ -1,7 +1,5 @@
 
 import mongoose, { Schema, Document } from 'mongoose';
-
-
 import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory , Img} from '@/app/types/user';
 
 // הסכמה למודל משתמש
@@ -104,7 +102,7 @@ const PostModel = mongoose.models.Post || mongoose.model<Post>('Post', postSchem
 const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<ConsumerPost>('ConsumerPost', consumerPostSchema);
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
-
+const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
 
 
 
@@ -127,7 +125,8 @@ export {
   PostModel,
   ConsumerPostModel,
   RecommendationModel,
-  ImgModel
+  ImgModel,
+  AuthModel
 
 };
 
