@@ -1,6 +1,16 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
+export interface SupplierDetails {
+  startingPrice: number;
+  topPrice: number;
+  eventList: string[];
+  recommendation: string[];
+  range: number;
+  emptyDate: string[];
+  images: string[];
+  description: string;
+}
 export enum Title {
   Supplier = 'supplier',
   MakeupArtist = 'Makeup artist',
@@ -54,20 +64,22 @@ export interface PostCardProps {
 }
 
 export interface User {
-  porofilPic: string,
+
   _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
   titles: (Title | "consumer")[]; // מערך של טיטלים
+  // titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
   postArr: ObjectId[];
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[];    // מערך של פוסטים
+  likedPeople: string[];
+  profileImage: string;   // מערך של פוסטים
 }
 
 export interface Auth {
@@ -134,32 +146,52 @@ export interface Recommendation {
   text: string;
   rate: number; // rating 1-5
 }
+// export interface UserFormData {
+//   profileImage: string,
+//   firstName: string;
+//   lastName: string;
+//   userName: string;
+//   email: string;
+//   password: string;
+//   titles: (Title | "consumer")[]; // מערך של טיטלים
+//   phone: string;
+//   languages: Language[]; // מערך של שפות
+//   address: {
+//     zipCode: string;
+//     city: string;
+//     street: string;
+//     building: number;
+//   };
+//   description: string,
+
+//   supplierDetails?: {
+//     startingPrice: number;
+//     topPrice: number;
+//     eventList: string[];
+//     recommendation: string[];
+//     range: number;
+//     emptyDate: string[];
+//     images: string[];
+//     description: string;
+//   };
+// }
 export interface UserFormData {
-  porofilPic: string,
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   password: string;
-  titles: (Title | "consumer")[]; // מערך של טיטלים
+  titles: (Title | "consumer")[];//string[];
   phone: string;
-  languages: Language[]; // מערך של שפות
+  description: string;
+  languages: Language[];
+  // address: Address
   address: {
     zipCode: string;
     city: string;
     street: string;
     building: number;
   };
-  description: string,
-
-  supplierDetails?: {
-    startingPrice: number;
-    topPrice: number;
-    eventList: string[];
-    recommendation: string[];
-    range: number;
-    emptyDate: string[];
-    images: string[];
-    description: string;
-  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string;
 }

@@ -7,7 +7,7 @@ import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
-  porofilPic:{ type:String},
+ 
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -28,6 +28,7 @@ const userSchema = new Schema<User>({
   postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
   likedPeople: [{ type: String }], // שמ  
+  profileImage: { type: String, default: null },
 });
 
 // הסכמה למודל כתובת
