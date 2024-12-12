@@ -128,6 +128,8 @@ export const useUpdateUserStore = () => {
 
   return (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
     setUser(userData);
+    console.log(userData);
+    
     setPosts(postArr);
     setLikedPeople(likedPeople);
     setLikedPostsArr(likedPostsArr);

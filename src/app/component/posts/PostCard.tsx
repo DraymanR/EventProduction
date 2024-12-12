@@ -67,6 +67,7 @@
 import React, { useState } from "react";
 import { PostCardProps, Recommendation } from "@/app/types/user";
 import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
+import Image from "next/image";
 
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
@@ -138,7 +139,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
         {images.length > 0 && (
           <div className="images flex gap-4 overflow-x-auto">
             {images.map((image, index) => (
-              <img
+              <Image
                 key={index}
                 src={image}
                 alt={`image-${index}`}

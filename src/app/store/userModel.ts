@@ -76,6 +76,8 @@ interface UserStore {
     setLikedPostsArr: (newPost: Post | Post[]) => void;
     setLikedPeople: (newPeople: string | string[]) => void;
     setPostArr: (newPost: Post | Post[]) => void;
+    isReady: boolean;
+    setReady: (ready: boolean) => void;
     clearUser: () => void;
 }
 
@@ -84,7 +86,10 @@ const useUserStore = create<UserStore>((set) => ({
     likedPostsArr: [],
     likedPeople: [],
     postArr: [],
-    setUser: (newUser: UserFormData) => set({ user: newUser }),
+    setUser: (newUser: UserFormData) => {
+        console.log("Setting user:", newUser);
+        set({ user: newUser })
+    },
     setLikedPostsArr: (newPosts: Post | Post[]) =>
         set((state) => ({
             likedPostsArr: Array.isArray(newPosts) ? [...state.likedPostsArr, ...newPosts] : [...state.postArr, newPosts],
@@ -97,7 +102,8 @@ const useUserStore = create<UserStore>((set) => ({
         set((state) => ({
             postArr: Array.isArray(newPosts) ? [...state.postArr, ...newPosts] : [...state.postArr, newPosts],
         })),
-
+    isReady: false,
+    setReady: (ready: boolean) => set({ isReady: ready }),
     clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [] }),
 }));
 
