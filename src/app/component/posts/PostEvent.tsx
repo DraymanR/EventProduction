@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Post, Recommendation } from "../../types/user"; // ייבוא הממשקים
 import "./PostEvent.css";
 import { ObjectId } from "mongoose";
+import Image from "next/image";
 
 interface PostEventProps {
   post: Post;
@@ -77,7 +78,7 @@ const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
         <div className="images">
           {images.map((image, index) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={index} src={image} alt={`image-${index}`} />
+            <Image key={index} src={image} alt={`image-${index}`} />
           ))}
         </div>
         <div className="image-upload">

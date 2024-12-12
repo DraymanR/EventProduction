@@ -2,66 +2,35 @@
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
 import { getMyDetails } from "@/app/services/user/getDetails";
+import useUserStore from "@/app/store/userModel";
 // import useMyUser from "@/app/store/users";
 import { UserFormData } from "@/app/types/user";
 import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
     const [MyDetails, setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
+    // const userDetails = useUserStore((state) => state.user);
+    // const uuser = useUserStore((state) => state.user);
 
-    const convertToUserFormData = (data: any): UserFormData => {
-        return {
-            firstName: data.firstName || "",
-            lastName: data.lastName || "",
-            userName: data.userName || "",
-            email: data.email || "",
-            password: "", // שדה סיסמה כנראה לא יגיע מהשרת
-            title: data.title || "consumer", // ערך ברירת מחדל אם אין
-            phone: data.phone || "",
-            description: data.description || "",
-            language: data.language || "Hebrew",
-            address: {
-                zipCode: data.zipCode || "",
-                city: data.city || "",
-                street: data.street || "",
-                building: data.building || 0,
-            },
-            supplierDetails: data.supplierDetails
-                ? {
-                    startingPrice: data.supplierDetails.startingPrice || 0,
-                    topPrice: data.supplierDetails.topPrice || 0,
-                    eventList: data.supplierDetails.eventList || [],
-                    recommendation: data.supplierDetails.recommendation || [],
-                    range: data.supplierDetails.range || 0,
-                    emptyDate: data.supplierDetails.emptyDate || [],
-                    images: data.supplierDetails.images || [],
-                    description: data.supplierDetails.description || "",
-                }
-                : undefined,
-        };
-    };
-
+    const userDetails = useUserStore((state) => state.user);
     useEffect(() => {
-        const getMyPersonalDetails = async () => {
-            try {
-                const personalDetails = await getMyDetails();
-                const userData = convertToUserFormData(personalDetails.user);
-                console.log(userData);
-                
-                setMyDetails(userData); // מעדכן את המצב
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        getMyPersonalDetails()
-    }, [])
+        console.log("Updated userDetails:", userDetails);
+    }, [userDetails]);
+    // console.log("userDetails", userDetails);
 
+    const isReady = useUserStore((state) => state.isReady);
+
+    if (!isReady) {
+        return <p>Loading...</p>;
+    }
     return (
         <div dir="ltr">
-            {MyDetails ? (
-                <ShowUserPersonalDetails User={MyDetails} ></ShowUserPersonalDetails>
+            {userDetails ? (
+                // {MyDetails ? (
+                <ShowUserPersonalDetails User={userDetails} ></ShowUserPersonalDetails>
             ) : (
-                <p>Loading...</p> // הודעת טעינה אם הנתונים אינם מוכנים
+                <p>No user data found</p>
+
             )}
         </div>
 

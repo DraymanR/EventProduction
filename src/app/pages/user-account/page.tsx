@@ -5,9 +5,10 @@ import { getMyDetails } from '@/app/services/user/getDetails';
 import { useUpdateUserStore } from '@/app/services/user/registerUser';
 import useUserStore from '@/app/store/userModel';
 import { UserFormData } from '@/app/types/user';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 const Home = () => {
     const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
+    const [isReady, setIsReady] = useState(false);  
     const uuser = useUserStore((state) => state.user);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const Home = () => {
                     profileImage: userDetailes.user.profileImage,
                 }
                 updateUserStore(user, userDetailes.user.likedPostsArr, userDetailes.user.likedPeople, userDetailes.user.postArr)
+                setIsReady(true);  // עדכון isReady אחרי שהנתונים נטענו בהצלחה
             } catch (error) {
                 console.error(error);
             }

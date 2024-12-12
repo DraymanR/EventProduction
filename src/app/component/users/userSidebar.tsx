@@ -7,13 +7,15 @@ import Link from 'next/link';
 import {getUserDetails} from '@/app/services/user/getDetails'
 import { logout } from '../../services/user/registerUser';
 import { useRouter } from 'next/navigation';
+import useUserStore from '@/app/store/userModel';
 
 
 
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
-  
+  const clearUser = useUserStore((state) => state.clearUser);
+
 
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
@@ -21,6 +23,7 @@ const ConsumerNavbar: React.FC = () => {
   };
   const exite = async () => {
     await logout()
+    clearUser()
     router.push('/');
 
   };
@@ -30,7 +33,7 @@ const ConsumerNavbar: React.FC = () => {
       {/* תמונת הפרופיל */}
       <div className="p-4 flex flex-col items-center cursor-pointer" onClick={toggleNavbar}>
       
-      <img
+      <Image
                
                
                src={"https://res.cloudinary.com/dtmyfpazp/image/upload/v1733824430/ftu1bxpgu4wnrzs0iozk.jpg"}
