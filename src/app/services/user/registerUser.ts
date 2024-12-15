@@ -105,3 +105,56 @@ export const logout = async () => {
     throw error; // טיפול בשגיאות
   }
 };
+const GOOGLE_API_KEY = "AIzaSyCyl_TivQSm7Nzjthc5V23C60a2dBRvZ2k";
+
+
+export const fetchAddressAutocomplete = async (query: string) => {
+  if (!query) {
+    return [];
+  }
+
+  try {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // הוספת אופציה עםCredentials במידת הצורך
+        withCredentials: true,
+      }
+    );
+    return response.data.predictions;
+  } catch (error) {
+    console.error('Error fetching autocomplete data:', error);
+    if (error.response) {
+      // אם יש תשובה מהשרת, הצג את השגיאה
+      console.error(error.response.data);
+    } else if (error.request) {
+      // אם לא קיבלת תשובה מהשרת
+      console.error(error.request);
+    } else {
+      console.error('Error', error.message);
+    }
+    return []; // במקרה של שגיאה, מחזירים מערך ריק
+  }
+};
+
+export const validateAddress = async (formData: any) => {
+  const query = `${formData.street} ${formData.building}, ${formData.city}, ${formData.zipCode}`;
+  try {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}`
+    );
+
+    if (response.data.results.length > 0) {
+      const place = response.data.results[0];
+      return place; // מחזירים את התוצאה כדי לעדכן את הפורם
+    } else {
+      return null; // אם לא נמצאה כתובת, מחזירים null
+    }
+  } catch (error) {
+    console.error('Error validating address:', error);
+    return null; // במקרה של שגיאה, מחזירים null
+  }
+};

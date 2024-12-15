@@ -22,12 +22,7 @@ export interface UserFormData {
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
-  eventList: string[];
-  recommendation: string[];
-  range: number;
-  emptyDate: string[];
-  images: string[];
-  description: string;
+ 
 }
 export enum Title {
   Supplier = 'ספק/ית',
@@ -162,33 +157,4 @@ export interface Recommendation {
   userName: string; // reference to User
   text: string;
   rate: number; // rating 1-5
-}
-export interface UserFormData {
-  porofilPic: string,
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  titles: (Title | "consumer")[]; // מערך של טיטלים
-  phone: string;
-  languages: Language[]; // מערך של שפות
-  address: {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  };
-  description: string,
-
-  supplierDetails?: {
-    startingPrice: number;
-    topPrice: number;
-    eventList: string[];
-    recommendation: string[];
-    range: number;
-    emptyDate: string[];
-    images: string[];
-    description: string;
-  };
 }
