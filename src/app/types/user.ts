@@ -20,6 +20,7 @@ export enum Title {
   EventDesigner = 'event designer',
   Orchestra = 'orchestra',
   Singer = 'singer',
+  Consumer = "Consumer",
   // תוסיפי עוד טייטלים לפי הצורך
 }
 
