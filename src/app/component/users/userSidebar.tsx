@@ -12,17 +12,21 @@ import useUserStore from '@/app/store/userModel';
 
 
 
+
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+
   const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
-
-
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
+
+
+
   
   const exite = async () => {
     if (session?.user) {
@@ -37,6 +41,7 @@ const ConsumerNavbar: React.FC = () => {
     
     // Navigate to home page
     router.push('/');
+
   };
 
   return (
@@ -54,6 +59,7 @@ const ConsumerNavbar: React.FC = () => {
           height={80}
           className="rounded-full border"
         />
+
 
         <button
           type="button"

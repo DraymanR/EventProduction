@@ -75,7 +75,6 @@ export const newPassword = async (email: string, otp: string, newPassword: strin
     }
     console.log(data);
     
-
     const response = await axios.post('http://localhost:3000/api/users/register/newPassword', data, {
       // withCredentials: true,
       headers: {

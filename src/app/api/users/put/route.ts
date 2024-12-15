@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { NextResponse,NextRequest } from 'next/server';
 import { UserModel, AddressModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
@@ -133,7 +133,7 @@ export async function PUT(req: NextRequest) {
         );
     }
 }
-=======
+
 // import { NextResponse,NextRequest } from 'next/server';
 // import { UserModel, AddressModel } from '@/app/lib/models/user';
 // import connectDb from '@/app/lib/db/connectDb';
@@ -267,5 +267,3 @@ export async function PUT(req: NextRequest) {
 //             { status: 500 }
 //         );
 //     }
-// }
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
