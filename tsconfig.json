@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -9,14 +10,47 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+=======
+    "target": "esnext", // Updated to a more modern target for Next.js
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    // "typeRoots": ["node_modules/@types"],
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node", // Changed to "node" for better compatibility
+>>>>>>> 2ebe7af3aec6debd6fbbf4f07105abe8a5f0d7dc
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+<<<<<<< HEAD
+=======
+    // "baseUrl": "src", // Set a baseUrl for absolute imports
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "allowSyntheticDefaultImports": true, // Ensure compatibility with common JS/ES6 modules
+    "types": [
+      "node",
+      "next",
+      "next-auth"
+    ] // Include necessary type definitions
+    ,
+>>>>>>> 2ebe7af3aec6debd6fbbf4f07105abe8a5f0d7dc
     "plugins": [
       {
         "name": "next"
       }
+<<<<<<< HEAD
     ],
     "paths": {
       "@/*": ["./src/*"]
@@ -24,4 +58,20 @@
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
+=======
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/**/*" // Ensure all files in src are included
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist"
+  ] // Add build folders to the exclude list
+>>>>>>> 2ebe7af3aec6debd6fbbf4f07105abe8a5f0d7dc
 }

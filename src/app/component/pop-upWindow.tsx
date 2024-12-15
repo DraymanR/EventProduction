@@ -1,5 +1,7 @@
 import React from "react";
-import useModalStore from "@/app/store/modelStore";
+
+import useModalStore from "@/app/store/modelPop-upWindow";
+
 
 const PopUpWindow = ({ children }: { children: React.ReactNode }) => {
   const isModalOpen = useModalStore((state) => state.isModalOpen);

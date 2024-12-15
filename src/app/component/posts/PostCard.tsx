@@ -68,6 +68,9 @@ import React, { useState } from "react";
 import { PostCardProps, Recommendation } from "@/app/types/user";
 import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
 
+import Image from "next/image";
+
+
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);

@@ -4,6 +4,9 @@ import { Post, Recommendation } from "../../types/user"; // ייבוא הממש�
 import "./PostEvent.css";
 import { ObjectId } from "mongoose";
 
+import Image from "next/image";
+
+
 interface PostEventProps {
   post: Post;
   recommendations: ObjectId[];

@@ -1,3 +1,4 @@
+
 // // import { signIn } from 'next-auth/react';
 // 'use client';
 
@@ -270,6 +271,7 @@
 // };
 
 // export default Login;
+
 'use client'
 import React, { useState } from 'react';
 import LoginWithPassword from '@/app/component/users/register/loginWithPassword';
