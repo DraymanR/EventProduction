@@ -2,6 +2,7 @@
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
 import { getMyDetails } from "@/app/services/user/getDetails";
+
 import useUserStore from "@/app/store/userModel";
 // import useMyUser from "@/app/store/users";
 import { UserFormData } from "@/app/types/user";

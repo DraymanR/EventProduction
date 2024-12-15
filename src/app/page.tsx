@@ -1,14 +1,15 @@
 'use client'
-import PostList from "@/app/component/posts/PostList";
-const Home = () => {
 
+import PostList from "./component/posts/PostList";
+
+const Home = () => {
+  // console.log(decodeURIComponent(document.cookie));
 
   return (
-
-      <div>
-        <PostList/>
+    <div>
+      <PostList />
     </div>
-  );
-};
+)}
+
 
 export default Home;

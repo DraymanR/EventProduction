@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { signOut, useSession } from "next-auth/react";
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Link from 'next/link';
 import { getUserDetails } from '@/app/services/user/getDetails'
@@ -14,6 +15,7 @@ import useUserStore from '@/app/store/userModel';
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+  const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
 
 
@@ -21,17 +23,28 @@ const ConsumerNavbar: React.FC = () => {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+  
   const exite = async () => {
-    await logout()
-    clearUser()
+    if (session?.user) {
+      // If logged in via Google (NextAuth)
+      await signOut({ 
+        redirect: false  // Prevent automatic redirection
+      });
+    } else {
+      // If logged in via regular authentication
+      await logout();
+    }
+    
+    // Navigate to home page
     router.push('/');
-
   };
 
   return (
     <div className="fixed top-[100px] right-0 w-64 bg-gray-100 shadow-lg border h-auto">
       {/* תמונת הפרופיל */}
       <div className="p-4 flex flex-col items-center cursor-pointer" onClick={toggleNavbar}>
+        {/* <Image
+          src={profileImage} */}
 
         <img
           // src={profileImage}

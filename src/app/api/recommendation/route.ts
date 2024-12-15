@@ -1,4 +1,6 @@
 
+<<<<<<< HEAD
+=======
 // // import { NextResponse,NextRequest } from 'next/server';
 // // import jwt, { JwtPayload } from 'jsonwebtoken';
 // // import {  PostModel, RecommendationModel } from '@/app/lib/models/user';
@@ -159,14 +161,19 @@
 //         );
 //     }
 // }
+>>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 import { PostModel, RecommendationModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
 
+<<<<<<< HEAD
+// תפקוד POST
+=======
 
 
 
+>>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
 export async function POST(req: NextRequest) {
 
     try {
