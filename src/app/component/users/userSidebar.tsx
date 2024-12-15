@@ -2,25 +2,36 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { signOut, useSession } from "next-auth/react";
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Link from 'next/link';
 import { logout } from '../../services/user/registerUser';
 import { useRouter } from 'next/navigation';
 
 
-
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+  const { data: session } = useSession();
 
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+  
   const exite = async () => {
-    await logout()
+    if (session?.user) {
+      // If logged in via Google (NextAuth)
+      await signOut({ 
+        redirect: false  // Prevent automatic redirection
+      });
+    } else {
+      // If logged in via regular authentication
+      await logout();
+    }
+    
+    // Navigate to home page
     router.push('/');
-
   };
 
   return (

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 import { NextResponse } from 'next/server';
 import { UserModel } from '@/app/lib/models/user';  
 import connectDb from '@/app/lib/db/connectDb';
@@ -21,22 +18,6 @@ export async function GET(req: Request) {
 
         let query: any = {};
 
-<<<<<<< HEAD
-        // אם יש ערך בשדה העיר, הוסף אותו לשאילתא
-        if (city) {
-            query['addressId.city'] = { $regex: city, $options: 'i' };  // חיפוש בעיר
-        }
-
-        // אם יש ערך בשדה הכותרת, הוסף אותו לשאילתא
-        if (title) {
-            query.title = { $regex: title, $options: 'i' };  // חיפוש בכותרת
-        }
-
-        // אם יש ערך בשדה השפה, הוסף אותו לשאילתא
-        if (language) {
-            query.language = { $regex: language, $options: 'i' };  // חיפוש בשפה
-        }
-=======
         if (city) {
             query['addressId.city'] = { $regex: city, $options: 'i' }; 
         }
@@ -50,7 +31,6 @@ export async function GET(req: Request) {
         }
         
         
->>>>>>> main
 
         console.log('Query:', query);
 
@@ -80,8 +60,5 @@ export async function GET(req: Request) {
             { status: 500 }
         );
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
+

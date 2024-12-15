@@ -1,9 +1,9 @@
-
-import { NextResponse, NextRequest } from 'next/server'; 
+import { NextResponse, NextRequest } from 'next/server';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { UserModel, ConsumerModel, SupplierModel } from '@/app/lib/models/user';
-import { User,Title } from '@/app/types/user';
+import { User, Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
+import { getToken } from "next-auth/jwt"; // Import NextAuth JWT helper
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -15,61 +15,77 @@ const verifyToken = (token: string): string | JwtPayload => {
     }
 };
 
-export async function GET(req: NextRequest) {  
- 
+export async function GET(req: NextRequest) {
     try {
         await connectDb();
 
         const { searchParams } = new URL(req.url);
         const userNameFromQuery = searchParams.get('username');
+        const emailFromQuery = searchParams.get('email'); // New parameter for Google auth
 
-        if (!userNameFromQuery) {
+        // If no username or email is provided
+        if (!userNameFromQuery && !emailFromQuery) {
             return NextResponse.json(
-                { error: 'Missing username' },
+                { error: 'Missing username or email' },
                 { status: 400 }
             );
         }
 
-      
-        const tokenCookie = req.cookies.get('token'); 
-        const token = tokenCookie ? tokenCookie.value : null;  
+        // Check for JWT token from cookies
+        const tokenCookie = req.cookies.get('token');
+        const token = tokenCookie ? tokenCookie.value : null;
 
-        if (!token) {
+        // Check for NextAuth token
+        const nextAuthToken = await getToken({ req });
+
+        // Determine authentication method
+        let isAuthenticated = false;
+        let decodedUserName = '';
+
+        // JWT Authentication
+        if (token) {
+            try {
+                const decoded = verifyToken(token);
+                if (typeof decoded === 'object' && 'userName' in decoded) {
+                    isAuthenticated = true;
+                    decodedUserName = decoded.userName as string;
+                }
+            } catch (error) {
+                // Token verification failed, continue to next auth method
+            }
+        }
+
+        // NextAuth (Google) Authentication
+        if (!isAuthenticated && nextAuthToken) {
+            isAuthenticated = true;
+            decodedUserName = nextAuthToken.email as string;
+        }
+
+        // If no authentication method is valid
+        if (!isAuthenticated) {
             return NextResponse.json(
-                { error: 'Missing token' },
+                { error: 'Authentication failed' },
                 { status: 401 }
             );
         }
 
-        let decoded;
-        try {
-            decoded = verifyToken(token);
-        } catch (error) {
-            return NextResponse.json(
-                { error: 'Invalid token' },
-                { status: 401 }
-            );
-        }
+        // Find user by username or email
+        const user = await UserModel.findOne(
+            userNameFromQuery 
+                ? { userName: userNameFromQuery }
+                : { email: emailFromQuery }
+        )
+        .populate('addressId')
+        .populate({
+            path: 'postArr',
+            populate: {
+                path: 'recommendations',
+                model: 'Recommendation',
+            },
+        })
+        .lean<User>();
 
-        if (typeof decoded !== 'object' || !('userName' in decoded)) {
-            return NextResponse.json(
-                { error: 'Invalid token structure' },
-                { status: 401 }
-            );
-        }
-
-        const decodedUserName = decoded.userName;
-        const user = await UserModel.findOne({ userName: userNameFromQuery })
-            .populate('addressId')
-            .populate({
-                path: 'postArr',
-                populate: {
-                    path: 'recommendations',
-                    model: 'Recommendation',
-                },
-            })
-            .lean<User>();
-
+        // If user not found
         if (!user) {
             return NextResponse.json(
                 { error: 'User not found' },
@@ -77,28 +93,30 @@ export async function GET(req: NextRequest) {
             );
         }
 
-        let consumerDetails,supplierDetails;
-
+        // Fetch additional details
+        let consumerDetails, supplierDetails;
         if (user.titles.includes("consumer")) {
-          
-            consumerDetails = await ConsumerModel.findOne({ userName: userNameFromQuery }).lean();
-          }
-        if (user.titles.some(title => Object.values(Title).includes(title as Title))){
-       
-            supplierDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
-          } else
-          
-          
+            consumerDetails = await ConsumerModel.findOne({ 
+                userName: user.userName 
+            }).lean();
+        }
 
+        if (user.titles.some(title => Object.values(Title).includes(title as Title))) {
+            supplierDetails = await SupplierModel.findOne({ 
+                userName: user.userName 
+            }).lean();
+        }
 
-        if (user.userName !== decodedUserName) {
+        // Determine what user details to return
+        // This part remains mostly the same as your original implementation
+        if (user.userName !== decodedUserName && !nextAuthToken) {
             const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
                     user: filteredUser,
                     supplierDetails: supplierDetails,
-                    consumerDetails:consumerDetails
+                    consumerDetails: consumerDetails
                 },
                 { status: 200 }
             );
@@ -109,13 +127,15 @@ export async function GET(req: NextRequest) {
                 message: 'User retrieved successfully',
                 user: user,
                 supplierDetails: supplierDetails,
-                consumerDetails:consumerDetails
+                consumerDetails: consumerDetails
             },
             { status: 200 }
         );
+
     } catch (error) {
+        console.error('Error in user retrieval:', error);
         return NextResponse.json(
-            { error: error || 'Internal Server Error' },
+            { error: 'Internal Server Error' },
             { status: 500 }
         );
     }

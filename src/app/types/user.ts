@@ -124,7 +124,7 @@ export interface UserFormData {
     zipCode: string;
     city: string;
     street: string;
-    building: number;
+    building: string;
   };
   supplierDetails?: {
     startingPrice: number;

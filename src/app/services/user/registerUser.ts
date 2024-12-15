@@ -1,5 +1,6 @@
 import { Address, UserFormData } from '@/app/types/user';
 import axios from 'axios';
+import { signOut } from "next-auth/react";
 // import axios from '';
 
 export const singIn = async (email: string, userName: string, password: string) => {
@@ -91,7 +92,13 @@ export const logout = async () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+
+        // Simultaneously sign out from NextAuth
+        await signOut({ 
+          redirect: false  // Prevent automatic redirection
+        });
+
+    
 
     // החזרת התשובה מהשרת
     return response.data;

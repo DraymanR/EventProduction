@@ -4,11 +4,40 @@ import React from 'react'
 import { UserFormData } from '@/app/types/user';
 
 
+
 interface ShowUserPersonalDetailsProps {
-  userData: UserFormData;
+  userData: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    language: string;
+    title: string;
+    userName: string;
+    address: {
+      street: string;
+      building: string;
+      city: string;
+      zipCode: string;
+    };
+    description: string;
+    supplierDetails?: {
+      startingPrice: number;
+      topPrice: number;
+      eventList: string[];
+      recommendation: string[];
+      range: number;
+      emptyDate: string[];
+      description: string;
+      // images: string[]; // Commented out as it's not clear from the data structure
+    };
+  };
 }
 
-const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({userData}) => {
+const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({ userData }) => {
+
+  console.log("inside the show user details componnents")
+
   return (
     <div className="user-details">
       <h1>{userData.firstName} {userData.lastName}</h1>
@@ -31,12 +60,7 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({userDa
           <p><strong>Range:</strong> {userData.supplierDetails.range} km</p>
           <p><strong>Empty Dates:</strong> {userData.supplierDetails.emptyDate.join(', ')}</p>
           <p><strong>Description:</strong> {userData.supplierDetails.description}</p>
-          <div>
-            <strong>Images:</strong>
-            {/* {userData.supplierDetails.images.map((image, index) => (
-              <img key={index} src={image} alt={`Supplier Image ${index + 1}`} />
-            ))} */}
-          </div>
+          {/* Commented out the images section as it's not clear from the data structure */}
         </>
       )}
     </div>
@@ -44,31 +68,3 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({userDa
 };
 
 export default ShowUserPersonalDetails;
-
-// const showUserPersonalDetails = (data: UserFormData) => {
-//   return (
-//     <div>
-//       <div>
-//         <h3>פרטי משתמש:</h3>
-//         <p>שם מלא: ${data.firstName} ${data.lastName}</p>
-//         <p>אימייל: ${data.email}</p>
-//         <p>טלפון: ${data.phone}</p>
-//         <p>שפה: ${data.language}</p>
-//         <p>כותרת: ${data.title}</p>
-//         <p>שם משתמש: ${data.userName}</p>
-
-//         <h3>כתובת:</h3>
-//         <p>עיר: ${data.address.city}</p>
-//         <p>רחוב: ${data.address.street}, בניין: ${data.address.building}</p>
-//         <p>מיקוד: ${data.address.zipCode}</p>
-
-//         <h3>תיאור:</h3>
-//         <p>${data.description}</p>
-//       </div>
-//       `;
-
-//     </div>
-//   )
-// }
-
-// export default showUserPersonalDetails 
