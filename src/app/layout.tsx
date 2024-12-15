@@ -16,8 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   console.log("fff");
-  console.log("fff");
-  console.log("fff");
 
 
   
