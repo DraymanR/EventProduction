@@ -30,6 +30,8 @@ const PostList = () => {
         (post: { postId: any }) =>
           !posts.some((existingPost) => existingPost.postId === post.postId)
       );
+      console.log("ff");
+      
 
       setPosts((prevPosts) => [...prevPosts, ...newPosts]);
       setFilteredPosts((prevFiltered) => [...prevFiltered, ...newPosts]);
