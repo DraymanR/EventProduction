@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
@@ -12,8 +9,6 @@ cloudinary.config({
 
 
 export default cloudinary;
-=======
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 // import { v2 as cloudinary } from 'cloudinary';
 
 // cloudinary.config({
@@ -25,10 +20,7 @@ export default cloudinary;
 
 
 // export default cloudinary;
-<<<<<<< HEAD
-=======
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
+
 
 
 

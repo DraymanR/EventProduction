@@ -1,9 +1,4 @@
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 // // import { NextResponse,NextRequest } from 'next/server';
 // // import jwt, { JwtPayload } from 'jsonwebtoken';
 // // import {  PostModel, RecommendationModel } from '@/app/lib/models/user';
@@ -164,28 +159,17 @@
 //         );
 //     }
 // }
-<<<<<<< HEAD
-=======
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 import { PostModel, RecommendationModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
 
-<<<<<<< HEAD
 
 
 
-=======
-<<<<<<< HEAD
-// תפקוד POST
-=======
 
 
 
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 export async function POST(req: NextRequest) {
 
     try {

@@ -2,10 +2,6 @@
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
 import { getMyDetails } from "@/app/services/user/getDetails";
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 import useUserStore from "@/app/store/userModel";
 // import useMyUser from "@/app/store/users";
 import { UserFormData } from "@/app/types/user";

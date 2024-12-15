@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 import { NextResponse, NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import {  SupplierModel,PostModel,UserModel } from '@/app/lib/models/user'; 
@@ -88,8 +85,6 @@ export async function PUT(req: NextRequest) {
         );
     }
 }
-=======
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 // import { NextResponse, NextRequest } from 'next/server';
 // import jwt from 'jsonwebtoken';
 // import {  SupplierModel,PostModel,UserModel } from '@/app/lib/models/user'; 
@@ -177,7 +172,3 @@ export async function PUT(req: NextRequest) {
 //         );
 //     }
 // }
-<<<<<<< HEAD
-=======
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
