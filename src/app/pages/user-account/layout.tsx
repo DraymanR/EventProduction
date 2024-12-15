@@ -13,6 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 console.log("hhh");
+console.log("hhh");
 
   return (
     <div>
