@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
-// מפתח סודי
+
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-// טיפוס מותאם אישית לבקשה עם יוזר
+
 interface CustomRequest extends NextRequest {
-    userName?: string; // הוספת userName לבקשה
+    userName?: string;
 }
 
-// פונקציית המידלוואר
 export async function verifyTokenMiddleware(req: CustomRequest, res: NextResponse, next: () => void) {
     try {
         const tokenCookie = req.cookies.get('token');
@@ -22,10 +21,10 @@ export async function verifyTokenMiddleware(req: CustomRequest, res: NextRespons
             );
         }
 
-        // אימות הטוקן
+       
         const decoded: any = jwt.verify(token, JWT_SECRET);
 
-        // הוספת userName ל-req
+  
         req.userName = decoded.userName;
        
         
@@ -36,6 +35,7 @@ export async function verifyTokenMiddleware(req: CustomRequest, res: NextRespons
             );
         }
         // אם הטוקן תקין, נמשיך לפונקציה הבאה
+      
         next();
     } catch (error) {
         console.error('Token verification error:', error);

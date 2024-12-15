@@ -23,7 +23,9 @@ const userSchema = new Schema<User>({
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
   description: { type: String },
- 
+  likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
+  likedPeople: [{ type: String }], // שמ  
+  profileImage: { type: String, default: null },
 });
 
 // הסכמה למודל כתובת
@@ -63,6 +65,7 @@ const consumerSchema = new Schema<Consumer>({
   likedPeople: [{ type: String }], // שמות משתמשים של אנשים שאהב
 });
 
+
 // הסכמה למודל פוסט
 const postSchema = new Schema<Post>({
   userName: { type: String, ref: 'User', required: true },
@@ -76,6 +79,7 @@ const postSchema = new Schema<Post>({
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
+
   eventCategory: { 
     type: String, 
     enum: Object.values(EventCategory), 
@@ -129,4 +133,3 @@ export {
   AuthModel
 
 };
-

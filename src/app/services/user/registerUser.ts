@@ -1,7 +1,8 @@
-import { Address, UserFormData } from '@/app/types/user';
-import axios from 'axios';
+import { Address, Post, UserFormData } from '@/app/types/user';
 import { signOut } from "next-auth/react";
-// import axios from '';
+import useUserStore from '@/app/store/userModel';
+import axios from 'axios';
+
 
 export const singIn = async (email: string, userName: string, password: string) => {
 
@@ -23,8 +24,13 @@ export const singIn = async (email: string, userName: string, password: string) 
     throw error; // טיפול בשגיאות
   }
 };
+
 export const addUser = async (data: UserFormData) => {
+  console.log("data,", data);
+
   try {
+    console.log("data,", data);
+
     const response = await axios.post('http://localhost:3000/api/users/post', data, {
       headers: {
         'Content-Type': 'application/json',
@@ -69,6 +75,7 @@ export const newPassword = async (email: string, otp: string, newPassword: strin
     }
     console.log(data);
     
+
     const response = await axios.post('http://localhost:3000/api/users/register/newPassword', data, {
       // withCredentials: true,
       headers: {
@@ -107,3 +114,33 @@ export const logout = async () => {
     throw error; // טיפול בשגיאות
   }
 };
+
+
+// export const useUpdateUserStore = (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
+//   const setUser = useUserStore((state) => state.setUser);
+//   const setPosts = useUserStore((state) => state.setPostArr);
+//   const setLikedPostsArr = useUserStore((state) => state.setLikedPostsArr);
+//   const setLikedPeople = useUserStore((state) => state.setLikedPeople);
+//   const setUserStor = ()=>{
+//     setUser(userData);
+//     setPosts(postArr);
+//     setLikedPeople(likedPeople)
+//     setLikedPostsArr(likedPostsArr)}
+//   return setUserStor
+// };
+export const useUpdateUserStore = () => {
+  const setUser = useUserStore((state) => state.setUser);
+  const setPosts = useUserStore((state) => state.setPostArr);
+  const setLikedPostsArr = useUserStore((state) => state.setLikedPostsArr);
+  const setLikedPeople = useUserStore((state) => state.setLikedPeople);
+
+  return (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
+    setUser(userData);
+    console.log(userData);
+    
+    setPosts(postArr);
+    setLikedPeople(likedPeople);
+    setLikedPostsArr(likedPostsArr);
+  };
+};
+

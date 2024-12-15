@@ -2,8 +2,17 @@ import { ObjectId, Types } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
 
+export interface SupplierDetails {
+  startingPrice: number;
+  topPrice: number;
+  eventList: string[];
+  recommendation: string[];
+  range: number;
+  emptyDate: string[];
+  images: string[];
+  description: string;
+}
 export enum Title {
-  Consumer = 'consumer',
   Supplier = 'supplier',
   MakeupArtist = 'Makeup artist',
   Photographer = 'photographer',
@@ -14,6 +23,10 @@ export enum Title {
   // תוסיפי עוד טייטלים לפי הצורך
 }
 
+export type Option = {
+  value: string;
+  label: string;
+};
 export enum Language {
   Hebrew = 'Hebrew',
   English = 'English',
@@ -33,24 +46,42 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
+export interface PostCardProps {
+  "_id": string,
+  "userName": string,
+  "createDate": Date,
+  "album": [
+    string
+  ],
+  "title": string,
+  "description": string,
+  "recommendations": [
+    {
+      "_id": string,
+      "userName": string,
+      "text": string,
+      "rate": number,
 
-
+    }]
+}
 
 export interface User {
-  _id : Types.ObjectId ;
+
+  _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
-  titles:(Title | "consumer")[]; // מערך של טיטלים
+  titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
   description: string;
-  postArr: ObjectId[]; // מערך של פוסטים
+  postArr: ObjectId[];
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[];
+  profileImage: string;   // מערך של פוסטים
 }
-
-
 
 export interface Auth {
   userName: string,
@@ -90,13 +121,23 @@ export interface Post {
   recommendations: ObjectId[];
   postId: ObjectId;
 }
+export interface PostEventProps {
+  createDate: Date;
+  userName: string;
+  album: string[];
+  title: string;
+  description: string;
+  recommendations: ObjectId[];
+  eventCategory: EventCategory;
+  supplierNameArr: string[];
+  budget: number;
+}
 
 export interface Img {
-  imgUrl : string
+  imgUrl: string
 }
 
 export interface ConsumerPost {
-
   eventCategory: EventCategory;
   supplierNameArr: string[];
   budget: number;
@@ -109,31 +150,27 @@ export interface Recommendation {
 }
 
 
+
 export interface UserFormData {
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   password: string;
-  title: 'supplier' | 'consumer' | 'Makeup artist' | 'photographer' | 'sound engineer' | 'event designer' | 'orchestra' | 'singer' | string; // אפשר להוסיף עוד בעלי מקצוע
-  // title: 'supplier' | 'consumer';
+  titles: (Title | "consumer")[];//string[];
   phone: string;
-  description: string,
-  language: 'Hebrew' | 'English' | 'French' | 'Yiddish' | 'Spanish' | 'Russian';
+  description: string;
+  languages: Language[];
+  // address: Address
   address: {
     zipCode: string;
     city: string;
     street: string;
-    building: string;
+    building: number;
   };
-  supplierDetails?: {
-    startingPrice: number;
-    topPrice: number;
-    eventList: string[];
-    recommendation: string[];
-    range: number;
-    emptyDate: string[];
-    images: string[];
-    description: string;
-  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string;
 }
+
+
+

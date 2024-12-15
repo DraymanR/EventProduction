@@ -1,41 +1,42 @@
 'use client';
 
+import Select, { MultiValue } from "react-select";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useModalStore from '../../../store/modelStore';
+import useModalStore from '../../../store/modelPop-upWindow';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import { UserFormData } from '@/app/types/user';
+import { UserFormData, Language, Title, Option } from '@/app/types/user';
 import { addUser } from '../../../services/user/registerUser';
+import { CldUploadWidget } from 'next-cloudinary';
 
 
 const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+let profileImage='';
+    const handleUploadSuccess = async (result: any) => {
+        if (result.info && result.info.secure_url) {
+           profileImage = result.info.secure_url;
+        }
+    };
+
+  
     const [formData, setFormData] = useState<UserFormData>({
         firstName: '',
         lastName: '',
         userName: '',
         email: '',
         password: '',
-        title: 'consumer',
+        titles: [],
         phone: '',
-        description: '',
-        language: 'Hebrew',
+        languages: [Language.Hebrew],
         address: {
             zipCode: '',
             city: '',
             street: '',
             building: 0,
         },
-        supplierDetails: {
-            startingPrice: 0,
-            topPrice: 0,
-            eventList: [],
-            recommendation: [],
-            range: 0,
-            emptyDate: [],
-            images: [],
-            description: '',
-        },
+        description: '',
+        profileImage: '',
     });
 
     const [error, setError] = useState('');
@@ -45,7 +46,28 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
+    const [selectedLanguages, setSelectedLanguages] = useState<MultiValue<Option>>([]);
+    const language: Option[] = [
+        { value: Language.English, label: "אנגלית" },
+        { value: Language.French, label: "צרפתית" },
+        { value: Language.Hebrew, label: "עיברית" },
+        { value: Language.Russian, label: "רוסית" },
+        { value: Language.Spanish, label: "ספרדית" },
+        { value: Language.Yiddish, label: "אידייש" },
 
+    ];
+
+    const mySetSelectedLanguages = (selectedOptions: MultiValue<Option>) => {
+        setSelectedLanguages(selectedOptions);
+        // עדכון formData.languages עם ערכים כמחרוזות
+        const languagesArray = selectedOptions.map((option) => option.value as Language);
+        console.log(languagesArray);
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            languages: languagesArray,
+        }));
+    }
 
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -96,7 +118,9 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             const result = await addUser(formData)
             console.log(result);
             // // רישום הצליח, הפנה לדף הכניסה או לדשבורד
-            formData.title === 'consumer' ? router.push('/pages/user-account') : router.push('/pages/supplier-account')
+
+            formData.titles.includes('consumer') ? router.push('/pages/user-account') : router.push('/pages/supplier-account')
+
             closeModal()
         } catch (err: any) {
             setError(err.message);
@@ -224,8 +248,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         <select
                             id="title"
                             name="title"
-                            // value={(formData as any)[title]}
-                            value={formData.title}
+                            value={formData.titles}
                             onChange={handleInputChange}
                             required
                             className="w-full px-3 py-2 border rounded-md"
@@ -265,27 +288,20 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         />
                     </div>
                     <div className="border p-2 rounded">
-                        <label htmlFor="language" className="block font-medium">
-                            שפה
+                        <label>
+                            השפות שלי:
+                            <Select
+                                options={language}//.map((supplier) => ({ value: supplier, label: supplier }))} // מיפוי לערכים ש-React-Select מבין
+                                isMulti // מאפשר בחירה מרובה
+                                placeholder="בחר שפות..."
+                                onChange={mySetSelectedLanguages}
+                                
+                                value={selectedLanguages}
+                            
+                            />
                         </label>
-                        <select
-                            id="language"
-                            name="language"
-                            value={formData.language}
-                            onChange={handleInputChange}
-                            required
-                            className="w-full px-3 py-2 border rounded-md"
-                        >
-                            <option value="Hebrew">עברית</option>
-                            <option value="English">אנגלית</option>
-                            <option value="French">צרפתית</option>
-                            <option value="Yiddish">יידיש</option>
-                            <option value="Spanish">ספרדית</option>
-                            <option value="Russian">רוסית</option>
-                        </select>
                     </div>
-
-                    {/* Address Details */}
+   
                     <h5 className="text-l font-bold mt-4">כתובת</h5>
                     <br></br>
 
@@ -348,62 +364,8 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             className="w-full px-3 py-2 border rounded-md"
                         />
                     </div>
-                    {formData.title !== 'consumer' && (
-                        <>
-                            <h3 className="text-xl font-bold mt-4">פרטי ספק</h3>
-                            <br></br>
-                            <div className=" border p-2 rounded" >
-                                <label htmlFor="title" className="block font-medium">
-                                    המקצוע שלי
-                                </label>
-                                <select
-                                    id="title"
-                                    name="title"
-                                    // value={(formData as any)[title]}
-                                    value={formData.title}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="w-full px-3 py-2 border rounded-md"
-                                >
-                                    <option value="supplier">אחר</option>
-                                    <option value="Makeup artist">מאפרת</option>
-                                    <option value="photographer">צלם</option>
-                                    <option value="sound engineer">מהנדס סאונד</option>
-                                    <option value="event designer">מעצב אירועים</option>
-                                    <option value="orchestra">תזמורת</option>
-                                    <option value="singer">זמר</option>
-                                </select>
-                            </div>
-                            <div className="border p-2 rounded" >
-                                <label htmlFor="startingPrice" className="block font-medium">
-                                    מחיר מינימלי
-                                </label>
-                                <input
-                                    id="startingPrice"
-                                    name="supplierDetails.startingPrice"
-                                    type="number"
-                                    value={formData.supplierDetails?.startingPrice || ''}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="w-full px-3 py-2 border rounded-md"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="topPrice" className="block font-medium">
-                                    מחיר מקסילמלי
-                                </label>
-                                <input
-                                    id="topPrice"
-                                    name="supplierDetails.topPrice"
-                                    type="number"
-                                    value={formData.supplierDetails?.topPrice || ''}
-                                    onChange={handleInputChange}
-                                    required
-                                    className="w-full px-3 py-2 border rounded-md"
-                                />
-                            </div>
-                        </>
-                    )}
+
+      
                     {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                     <div className="col-span-2 flex justify-center">
                         <button
@@ -417,7 +379,30 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             {isSubmitting ? 'נרשם...' : 'הירשם'}
                         </button>
                     </div>
-
+                  
+   
+        <CldUploadWidget 
+            uploadPreset="appOrganizerEvent"
+            onSuccess={handleUploadSuccess}
+            options={{
+                sources: [
+                    'local', // Local files
+                    'camera', // Camera capture
+                    'google_drive', // Google Drive
+                    'url' // Web URL
+                ],
+                maxFiles: 35, // limit to 35 file
+            }}
+        >
+            {({ open }) => (
+                <button
+                    onClick={() => open()}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                    Upload an Image
+                </button>
+            )}
+        </CldUploadWidget>
                     <br></br>
                 </form>
                 <p className="text-center mt-4">
@@ -437,4 +422,4 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     );
 };
 
-export default Register;
+ export default Register;
