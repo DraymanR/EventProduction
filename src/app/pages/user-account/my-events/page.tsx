@@ -3,7 +3,7 @@
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
 import { getMyEvents } from "@/app/services/post/post";
-import useModalStore from "@/app/store/modelStore";
+import useModalStore from "@/app/store/modelPop-upWindow";
 import { Post, PostCardProps } from "@/app/types/user";
 import { useEffect, useState } from "react";
 import FavoriteEvent from "@/app/component/users/FavoriteEvent";
@@ -17,6 +17,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         const getMyPersonalDetails = async () => {
             try {
+                
                 const events = await getMyEvents();
                 // const userData = convertToPosts(events.posts);
                 console.log(events);

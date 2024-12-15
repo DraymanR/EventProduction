@@ -37,16 +37,15 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         password: '',
         titles: [],
         phone: '',
+
         description: '',
         languages: [Language.Hebrew],
-
         address: {
             zipCode: '',
             city: '',
             street: '',
             building: 0,
         },
-
         supplierDetails: { startingPrice: 0, topPrice: 0 },
         profileImage: ''
     });
@@ -86,6 +85,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         { value: Language.Yiddish, label: "אידייש" },
 
     ];
+
     const titleOptions: Option[] = Object.keys(Title).map(key => ({
         value: Title[key as keyof typeof Title],
         label: Title[key as keyof typeof Title],
@@ -94,13 +94,14 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         value: 'consumer',
         label: 'צרכן',
     });
+
     const mySetSelectedLanguages = (selectedOptions: MultiValue<Option>) => {
         setSelectedLanguages(selectedOptions);
         // עדכון formData.languages עם ערכים כמחרוזות
         const languagesArray = selectedOptions.map((option) => option.value as Language);
         console.log(languagesArray);
 
-        setFormData((prevFormData: any) => ({
+        setFormData((prevFormData) => ({
             ...prevFormData,
             languages: languagesArray,
         }));
@@ -123,40 +124,6 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             titles: titleArray,
         }));
     };
-
-    // const handleInputChange = (
-    //     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    // ) => {
-    //     const { name, value } = e.target;
-    //     if (name.includes('.')) {
-    //         const [parent, child] = name.split('.');
-    //         setFormData((prevState) => {
-    //             const parentValue = prevState[parent as keyof UserFormData];
-
-    //             if (typeof parentValue === 'object' && parentValue !== null) {
-    //                 return {
-    //                     ...prevState,
-    //                     [parent]: {
-    //                         ...parentValue,
-    //                         [child]: value,
-    //                     },
-    //                 };
-    //             } else {
-    //                 console.error(`Expected ${parent} to be an object, but got:`, parentValue);
-    //                 return prevState; // לא מבצע עדכון אם השדה אינו אובייקט
-    //             }
-    //         });
-    //     }
-
-    //     else {
-    //         setFormData(prevState => ({
-    //             ...prevState,
-    //             [name]: value,
-    //         }));
-    //     }
-    // };
-
-
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -188,7 +155,6 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             }));
         }
     };
-
 
     return (
         <div className="text-center w-[80vh] mx-auto mb-10 max-h-[80vh] p-6">
@@ -466,4 +432,3 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     );
 };
 export default Register;
-

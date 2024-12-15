@@ -1,13 +1,10 @@
-import mongoose, { Schema
 
- } from 'mongoose';
-
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img} from '@/app/types/user';
-
+import mongoose, { Schema, Document } from 'mongoose';
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory , Img} from '@/app/types/user';
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
- 
+  _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -17,15 +14,15 @@ const userSchema = new Schema<User>({
     enum: [...Object.values(Title), "consumer"], 
     required: true 
   },
-  phone: { type: String, required: true },
+  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+  phone: { type: String },
   languages: { 
     type: [String], 
-    enum: Object.values(Language), 
+    enum: Object.values(Language)||"Hebrew", 
     required: true 
   },
-  addressId: { type: Schema.Types.ObjectId, ref: 'Address', required: true },
-  description: { type: String, required: true },
-  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+  addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
+  description: { type: String },
   likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
   likedPeople: [{ type: String }], // שמ  
   profileImage: { type: String, default: null },
@@ -62,6 +59,7 @@ const supplierSchema = new Schema<Supplier>({
 });
 
 // הסכמה למודל צרכן
+
 
 
 // הסכמה למודל פוסט
@@ -104,6 +102,7 @@ const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<Consume
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
+
 
 
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע

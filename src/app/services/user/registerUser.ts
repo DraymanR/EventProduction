@@ -1,6 +1,8 @@
-import { Address, UserFormData } from '@/app/types/user';
+import { Address, Post, UserFormData } from '@/app/types/user';
+import { signOut } from "next-auth/react";
+import useUserStore from '@/app/store/userModel';
 import axios from 'axios';
-// import axios from '';
+
 
 export const singIn = async (email: string, userName: string, password: string) => {
 
@@ -24,11 +26,11 @@ export const singIn = async (email: string, userName: string, password: string) 
 };
 
 export const addUser = async (data: UserFormData) => {
-  console.log("data,",data);
- 
+  console.log("data,", data);
+
   try {
-    console.log("data,",data);
-    
+    console.log("data,", data);
+
     const response = await axios.post('http://localhost:3000/api/users/post', data, {
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +98,13 @@ export const logout = async () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+
+        // Simultaneously sign out from NextAuth
+        await signOut({ 
+          redirect: false  // Prevent automatic redirection
+        });
+
+    
 
     // החזרת התשובה מהשרת
     return response.data;
@@ -105,56 +113,33 @@ export const logout = async () => {
     throw error; // טיפול בשגיאות
   }
 };
-const GOOGLE_API_KEY = "AIzaSyCyl_TivQSm7Nzjthc5V23C60a2dBRvZ2k";
 
 
-export const fetchAddressAutocomplete = async (query: string) => {
-  if (!query) {
-    return [];
-  }
+// export const useUpdateUserStore = (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
+//   const setUser = useUserStore((state) => state.setUser);
+//   const setPosts = useUserStore((state) => state.setPostArr);
+//   const setLikedPostsArr = useUserStore((state) => state.setLikedPostsArr);
+//   const setLikedPeople = useUserStore((state) => state.setLikedPeople);
+//   const setUserStor = ()=>{
+//     setUser(userData);
+//     setPosts(postArr);
+//     setLikedPeople(likedPeople)
+//     setLikedPostsArr(likedPostsArr)}
+//   return setUserStor
+// };
+export const useUpdateUserStore = () => {
+  const setUser = useUserStore((state) => state.setUser);
+  const setPosts = useUserStore((state) => state.setPostArr);
+  const setLikedPostsArr = useUserStore((state) => state.setLikedPostsArr);
+  const setLikedPeople = useUserStore((state) => state.setLikedPeople);
 
-  try {
-    const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // הוספת אופציה עםCredentials במידת הצורך
-        withCredentials: true,
-      }
-    );
-    return response.data.predictions;
-  } catch (error) {
-    console.error('Error fetching autocomplete data:', error);
-    if (error.response) {
-      // אם יש תשובה מהשרת, הצג את השגיאה
-      console.error(error.response.data);
-    } else if (error.request) {
-      // אם לא קיבלת תשובה מהשרת
-      console.error(error.request);
-    } else {
-      console.error('Error', error.message);
-    }
-    return []; // במקרה של שגיאה, מחזירים מערך ריק
-  }
+  return (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
+    setUser(userData);
+    console.log(userData);
+    
+    setPosts(postArr);
+    setLikedPeople(likedPeople);
+    setLikedPostsArr(likedPostsArr);
+  };
 };
 
-export const validateAddress = async (formData: any) => {
-  const query = `${formData.street} ${formData.building}, ${formData.city}, ${formData.zipCode}`;
-  try {
-    const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=${GOOGLE_API_KEY}`
-    );
-
-    if (response.data.results.length > 0) {
-      const place = response.data.results[0];
-      return place; // מחזירים את התוצאה כדי לעדכן את הפורם
-    } else {
-      return null; // אם לא נמצאה כתובת, מחזירים null
-    }
-  } catch (error) {
-    console.error('Error validating address:', error);
-    return null; // במקרה של שגיאה, מחזירים null
-  }
-};
