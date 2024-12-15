@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Post, Recommendation } from "../../types/user"; // ייבוא הממשקים
 import "./PostEvent.css";
 import { ObjectId } from "mongoose";
+
 import Image from "next/image";
+
 
 interface PostEventProps {
   post: Post;

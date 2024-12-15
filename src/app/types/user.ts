@@ -1,16 +1,28 @@
-import { ObjectId, Types } from "mongoose";
+import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
-
-
+export interface UserFormData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  titles: string[];
+  phone: string;
+  description: string;
+  languages: Language[];
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string;
+}
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
-  eventList: string[];
-  recommendation: string[];
-  range: number;
-  emptyDate: string[];
-  images: string[];
-  description: string;
+ 
 }
 export enum Title {
   Supplier = 'supplier',
@@ -23,7 +35,6 @@ export enum Title {
   Consumer = "Consumer",
   // תוסיפי עוד טייטלים לפי הצורך
 }
-
 export type Option = {
   value: string;
   label: string;
@@ -99,11 +110,10 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-export interface Consumer {
-  userName: string;
-  likedPostsArr: ObjectId[]; // array of Post ObjectIds
-  likedPeople: string[]; // array of Usernames
-}
+// export interface Consumer {
+//   userName: string;
+//    // array of Usernames
+// }
 
 export interface Address {
   userName: string;
@@ -149,29 +159,3 @@ export interface Recommendation {
   text: string;
   rate: number; // rating 1-5
 }
-
-
-
-export interface UserFormData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  titles: (Title | "consumer")[];//string[];
-  phone: string;
-  description: string;
-  languages: Language[];
-  // address: Address
-  address: {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  };
-  supplierDetails?: SupplierDetails;
-  profileImage: string;
-}
-
-
-

@@ -7,7 +7,6 @@ const connectDb = async (): Promise<void> => {
    try{
     const MONGODB_URI = process.env.MONGODB_URI ;
     console.log(MONGODB_URI);
-
     if (!MONGODB_URI) {
       throw new Error('Missing MONGO_URI in environment variables');
     }
