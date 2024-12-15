@@ -48,6 +48,7 @@ const PostList = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = () => {
     const bottom =
       window.innerHeight + window.scrollY >=
@@ -62,7 +63,7 @@ const PostList = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [loading, noMorePosts]);
+  }, [handleScroll, loading, noMorePosts]);
 
   useEffect(() => {
     loadPosts();
