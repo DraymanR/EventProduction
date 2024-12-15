@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-// import NextAuth, { AuthOptions } from "next-auth"
-// import GoogleProvider from "next-auth/providers/google"
-
-// if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-//   throw new Error('Missing Google OAuth credentials')
-// }
-
-// export const authOptions: AuthOptions = {
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID!,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-//     }),
-//   ],
-//   callbacks: {
-//     async session({ session, token }) {
-//       if (session.user) {
-//         session.user.id = token.sub || ''
-//       }
-//       return session
-//     }
-//   }
-// }
-
-// const handler = NextAuth(authOptions)
-
-// export { handler as GET, handler as POST }
-=======
 
 import NextAuth, { AuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
@@ -63,7 +34,7 @@ export const authOptions: AuthOptions = {
             firstName: user.name?.split(' ')[0] || '',
             lastName: user.name?.split(' ').slice(1).join(' ') || '',
             email: user.email!,
-            title:[ Title.Consumer ], // Default title
+            titles:["consumer"], // Default title
             phone: '', // You might want to add a way to collect this
             languages: [ Language.Hebrew ], // Default language
             addressId: null, // You'll need to handle address creation separately
@@ -107,4 +78,3 @@ export { handler as GET, handler as POST }
 // this is the changes for the vercel.
 // export const GET = NextAuth(authOptions);
 // export const POST = NextAuth(authOptions);
->>>>>>> 2ebe7af3aec6debd6fbbf4f07105abe8a5f0d7dc
