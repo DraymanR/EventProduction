@@ -1,21 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Post, Recommendation } from "../../types/user"; // ייבוא הממשקים
+import { Post, Recommendation } from "../types/user"; // ייבוא הממשקים
 import "./PostEvent.css";
 import { ObjectId } from "mongoose";
-import Image from "next/image";
 
 interface PostEventProps {
   post: Post;
-<<<<<<< HEAD
-  recommendations: Recommendation[];
-}
-
-const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
-  const [comments, setComments] = useState<Recommendation[]>(() => {
-    if (typeof window !== "undefined") {
-      // בדיקה אם ה-window זמין
-=======
   recommendations: ObjectId[];
   // recommendations: Recommendation[];
 }
@@ -25,7 +15,6 @@ const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
   const [comments, setComments] = useState<Recommendation[]>(() => {
 
     if (typeof window !== "undefined") {  // בדיקה אם ה-window זמין
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
       const storedComments = localStorage.getItem("comments");
       return storedComments ? JSON.parse(storedComments) : recommendations;
     } else {
@@ -36,16 +25,6 @@ const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
   const [newComment, setNewComment] = useState<string>("");
   const [newRate, setNewRate] = useState<number>(0);
   const [images, setImages] = useState<string[]>(post.album || []);
-<<<<<<< HEAD
-  const [currentUser, setCurrentUser] = useState<string>("");
-
-  // שליפת שם המשתמש המחובר מה-cookies
-  useEffect(() => {
-    const userName = decodeURIComponent(document.cookie.split("=")[1]);
-    setCurrentUser(userName);
-  }, []);
-=======
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 
   // שמירת תגובות ב-localStorage
   useEffect(() => {
@@ -64,11 +43,7 @@ const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
   const handleAddComment = () => {
     if (newComment.trim() && newRate > 0) {
       const newRecommendation: Recommendation = {
-<<<<<<< HEAD
-        userName: currentUser, // שם המשתמש מה-cookies
-=======
         userName: "currentUser", // יש להחליף לשם המשתמש המחובר
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
         text: newComment,
         rate: newRate,
       };
@@ -94,11 +69,7 @@ const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
       <div className="header">
         <h2>{post.title}</h2>
         <p className="user-name">מאת {post.userName}</p>
-<<<<<<< HEAD
-        <p className="date">{new Date(post.createDate).toLocaleDateString()}</p>
-=======
         <p className="date">{post.createDate.toLocaleDateString()}</p>
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
       </div>
       <p className="description">{post.description}</p>
       <div className="image-gallery">

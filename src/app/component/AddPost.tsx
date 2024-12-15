@@ -1,25 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import Select, { MultiValue } from "react-select";
-import "../../css/AddPost.css";
-import { addingMyPost } from "@/app/services/post/post";
-import useModalStore from "@/app/store/modelPop-upWindow";
+import "./AddPost.css";
 
 const AddPost: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [eventCategory, setEventCategory] = useState<string>("barmitzva");
-  // const [location, setLocation] = useState<string>("צפון");
+  const [location, setLocation] = useState<string>("צפון");
   const [album, setAlbum] = useState<string[]>([]);
   const [budget, setBudget] = useState<number>(0);
-  const [isConsumer, setIsConsumer] = useState<boolean>(true);
-  const [supplierNameArr, setSupplierNameArr] = useState<MultiValue<string>>([]);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
-  const closeModal = useModalStore((state) => state.closeModal);
-
-
-  // רשימת הספקים
-  const suppliers: string[] = ["Supplier 1", "Supplier 2", "Supplier 3"];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -38,7 +28,7 @@ const AddPost: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!acceptedTerms) {
@@ -49,23 +39,24 @@ const AddPost: React.FC = () => {
     const newPost = {
       title,
       description,
-      album,
       eventCategory,
+      location,
+      album,
       budget,
-      supplierNameArr,
-      isConsumer,
+      createDate: new Date(),
+      userName: "currentUser",
+      recommendations: [],
+      postId: new Date().getTime(),
     };
 
     console.log("Post Created: ", newPost);
-    await addingMyPost(newPost)
-    closeModal()
+
     // שמירת הפוסט או שליחה לשרת
     alert("הפוסט נוסף בהצלחה!");
     setTitle("");
     setDescription("");
     setEventCategory("barmitzva");
-    // setLocation("צפון");
-    setSupplierNameArr([])
+    setLocation("צפון");
     setAlbum([]);
     setBudget(0);
     setAcceptedTerms(false);
@@ -103,17 +94,19 @@ const AddPost: React.FC = () => {
         </select>
       </label>
 
-      {/* <div style={{ width: "300px" }}> */}
       <label>
-        הספקים שלי:
-        <Select
-          options={suppliers.map((supplier) => ({ value: supplier, label: supplier }))} // מיפוי לערכים ש-React-Select מבין
-          isMulti // מאפשר בחירה מרובה
-          placeholder="בחר ספקים..."
-          onChange={(selectedOptions) => setSupplierNameArr(selectedOptions.map((option) => option.value))}
-          value={supplierNameArr.map((supplier) => ({ value: supplier, label: supplier }))}
-        />
+        מיקום האירוע:
+        <select
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          required
+        >
+          <option value="צפון">צפון</option>
+          <option value="מרכז">מרכז</option>
+          <option value="דרום">דרום</option>
+        </select>
       </label>
+
       <label>
         תיאור האירוע:
         <textarea
@@ -142,6 +135,17 @@ const AddPost: React.FC = () => {
           onChange={handleImageUpload}
         />
       </label>
+      {/* <div className="image-preview">
+        {album.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt={`uploaded-${index}`}
+            className="preview-image"
+          />
+        ))}
+      </div> */}
+
       <label>
         <input
           type="checkbox"

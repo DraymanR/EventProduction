@@ -34,6 +34,7 @@ export async function verifyTokenMiddleware(req: CustomRequest, res: NextRespons
                 { status: 401 }
             );
         }
+        // אם הטוקן תקין, נמשיך לפונקציה הבאה
       
         next();
     } catch (error) {

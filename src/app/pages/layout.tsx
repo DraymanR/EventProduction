@@ -1,5 +1,4 @@
 
-import ConsumerSidebar from '@/app/component/users/userSidebar';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,13 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
   return (
     <div>
-      <ConsumerSidebar></ConsumerSidebar>
       {children}
     </div>
   );

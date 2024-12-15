@@ -1,5 +1,6 @@
-import { ObjectId } from "mongoose";
+import { ObjectId, Types } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
+
 
 export interface SupplierDetails {
   startingPrice: number;
@@ -19,6 +20,7 @@ export enum Title {
   EventDesigner = 'event designer',
   Orchestra = 'orchestra',
   Singer = 'singer',
+  Consumer = "Consumer",
   // תוסיפי עוד טייטלים לפי הצורך
 }
 export type Option = {
@@ -71,7 +73,6 @@ export interface User {
   userName: string; // unique
   email: string; // unique
   titles: (Title | "consumer")[]; // מערך של טיטלים
-  // titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
@@ -97,10 +98,11 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-// export interface Consumer {
-//   userName: string;
-//    // array of Usernames
-// }
+export interface Consumer {
+  userName: string;
+  likedPostsArr: ObjectId[]; // array of Post ObjectIds
+  likedPeople: string[]; // array of Usernames
+}
 
 export interface Address {
   userName: string;
@@ -146,35 +148,9 @@ export interface Recommendation {
   text: string;
   rate: number; // rating 1-5
 }
-// export interface UserFormData {
-//   profileImage: string,
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   titles: (Title | "consumer")[]; // מערך של טיטלים
-//   phone: string;
-//   languages: Language[]; // מערך של שפות
-//   address: {
-//     zipCode: string;
-//     city: string;
-//     street: string;
-//     building: number;
-//   };
-//   description: string,
 
-//   supplierDetails?: {
-//     startingPrice: number;
-//     topPrice: number;
-//     eventList: string[];
-//     recommendation: string[];
-//     range: number;
-//     emptyDate: string[];
-//     images: string[];
-//     description: string;
-//   };
-// }
+
+
 export interface UserFormData {
   firstName: string;
   lastName: string;
@@ -195,3 +171,6 @@ export interface UserFormData {
   supplierDetails?: SupplierDetails;
   profileImage: string;
 }
+
+
+
