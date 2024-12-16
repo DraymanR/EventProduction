@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useModalStore from '@/app/store/modelPop-upWindow';
+
+import useModalStore from '@/app/store/modelStore';
+
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { newPassword } from '@/app/services/user/registerUser';

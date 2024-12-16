@@ -1,9 +1,6 @@
 'use client';
 
 import React from 'react'
-<<<<<<< HEAD
-import {  UserFormData } from '@/app/types/user';
-=======
 import { UserFormData } from '@/app/types/user';
 
 
@@ -67,7 +64,6 @@ import { UserFormData } from '@/app/types/user';
 //         </>
 //       )}
 // import {  UserFormData } from '@/app/types/user';
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 
 
 interface ShowUserPersonalDetailsProps {
