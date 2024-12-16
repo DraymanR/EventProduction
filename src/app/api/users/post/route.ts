@@ -82,6 +82,7 @@
 //         );
 //     }
 // }
+
 import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
@@ -164,10 +165,7 @@ export async function POST(req: Request) {
         });
         await newUser.save();
 
-
-        // Create Supplier document if needed
         if (titles.includes(Title)) {
-
             const newSupplier = new SupplierModel({
                 userName,
                 startingPrice: startingPrice || 0,
@@ -178,7 +176,7 @@ export async function POST(req: Request) {
         }
 
 
-        
+
         const token = generateToken(newUser);
         const response = NextResponse.json(
             { message: 'User created successfully' },
@@ -199,3 +197,4 @@ export async function POST(req: Request) {
         );
     }
 }
+

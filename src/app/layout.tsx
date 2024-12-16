@@ -24,11 +24,16 @@ export default async function RootLayout({
   return (
     <html lang="en" dir="rtl">
       <body>
-      <SessionWrapper session={session}>
-        <Navbar></Navbar>
-        <TimerComponent></TimerComponent>
-        {children}
-        </SessionWrapper>
+     
+
+
+   <SessionWrapper session={session}>
+   <TimerComponent></TimerComponent>
+      <Navbar></Navbar>
+      {children}
+      
+       
+        </SessionWrapper> 
       </body>
     </html>
   );

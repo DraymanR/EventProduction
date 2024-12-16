@@ -90,17 +90,14 @@ export const newPassword = async (
       newPassword: newPassword,
     };
     console.log(data);
-
-    const response = await axios.post(
-      "http://localhost:3000/api/users/register/newPassword",
-      data,
-      {
-        // withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    
+    const response = await axios.post('http://localhost:3000/api/users/register/newPassword',// data,
+       {
+      // withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     console.log(response);
 
     // החזרת התשובה מהשרת

@@ -55,6 +55,7 @@ const ConsumerNavbar: React.FC = () => {
           className="rounded-full border"
         />
 
+
         <button
           type="button"
           onClick={() => exite()} // לוחץ על כפתור זה יעביר לשלב איפוס סיסמה
