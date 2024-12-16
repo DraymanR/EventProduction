@@ -1,9 +1,3 @@
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 // // import { NextResponse,NextRequest } from 'next/server';
 // // import jwt, { JwtPayload } from 'jsonwebtoken';
 // // import {  PostModel, RecommendationModel } from '@/app/lib/models/user';
@@ -23,12 +17,8 @@
 // //     try {
 // //         await connectDb();
 
-      
-     
-// //         const tokenCookie = req.cookies.get('token'); 
-// //         const token = tokenCookie ? tokenCookie.value : null;  
-
-    
+// //         const tokenCookie = req.cookies.get('token');
+// //         const token = tokenCookie ? tokenCookie.value : null;
 
 // //         if (!token) {
 // //             return NextResponse.json(
@@ -48,7 +38,6 @@
 
 // //         const decodedUserName = decoded.userName;
 
-        
 // //         const body = await req.json();
 // //         const { postId, text, rate } = body;
 
@@ -59,7 +48,6 @@
 // //             );
 // //         }
 
-       
 // //         const post = await PostModel.findById(postId);
 // //         if (!post) {
 // //             return NextResponse.json(
@@ -68,7 +56,6 @@
 // //             );
 // //         }
 
-    
 // //         const recommendation = new RecommendationModel({
 // //             userName: decodedUserName,
 // //             text,
@@ -122,8 +109,6 @@
 //             userName = (req as any).userName; // קבלת userName ממידלוואר
 //         });
 
-
-
 //         const body = await req.json();
 //         const { postId, text, rate } = body;
 
@@ -164,79 +149,56 @@
 //         );
 //     }
 // }
-<<<<<<< HEAD
-=======
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
-import { NextRequest, NextResponse } from 'next/server';
-import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
-import { PostModel, RecommendationModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { NextRequest, NextResponse } from "next/server";
+import { verifyTokenMiddleware } from "@/middlewares/middlewareToken";
+import { PostModel, RecommendationModel } from "@/app/lib/models/user";
+import connectDb from "@/app/lib/db/connectDb";
 
-<<<<<<< HEAD
-
-
-
-=======
-<<<<<<< HEAD
-// תפקוד POST
-=======
-
-
-
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
->>>>>>> 9ae9e7a3087546fc2634f0000c5375bf030a299a
 export async function POST(req: NextRequest) {
+  try {
+    await connectDb();
 
-    try {
-        await connectDb();
+    let userName: string | undefined;
 
-        let userName: string | undefined;
+    // קריאה למידלוואר
+    await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
+      userName = (req as any).userName; // קבלת userName ממידלוואר
+    });
 
-        // קריאה למידלוואר
-        await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-            userName = (req as any).userName; // קבלת userName ממידלוואר
-        });
+    const body = await req.json();
+    const { postId, text, rate } = body;
 
-
-
-        const body = await req.json();
-        const { postId, text, rate } = body;
-
-        if (!postId || !text || !rate) {
-            return NextResponse.json(
-                { error: 'Missing postId, text, or rate' },
-                { status: 400 }
-            );
-        }
-
-        const post = await PostModel.findById(postId);
-        if (!post) {
-            return NextResponse.json(
-                { error: 'Post not found' },
-                { status: 404 }
-            );
-        }
-
-        const recommendation = new RecommendationModel({
-            userName, // הוספת userName כאן
-            text,
-            rate,
-        });
-
-        await recommendation.save();
-        post.recommendations.push(recommendation._id);
-        await post.save();
-
-        return NextResponse.json(
-            { message: 'Recommendation added successfully', recommendation },
-            { status: 201 }
-        );
-    } catch (error) {
-        console.error('Error adding recommendation:', error);
-        return NextResponse.json(
-            { error: 'Error adding recommendation' },
-            { status: 500 }
-        );
+    if (!postId || !text || !rate) {
+      return NextResponse.json(
+        { error: "Missing postId, text, or rate" },
+        { status: 400 }
+      );
     }
+
+    const post = await PostModel.findById(postId);
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    }
+
+    const recommendation = new RecommendationModel({
+      userName, // הוספת userName כאן
+      text,
+      rate,
+    });
+
+    await recommendation.save();
+    post.recommendations.push(recommendation._id);
+    await post.save();
+
+    return NextResponse.json(
+      { message: "Recommendation added successfully", recommendation },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Error adding recommendation:", error);
+    return NextResponse.json(
+      { error: "Error adding recommendation" },
+      { status: 500 }
+    );
+  }
 }

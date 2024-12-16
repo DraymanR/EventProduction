@@ -1,6 +1,6 @@
 
 import mongoose, { Schema, Document } from 'mongoose';
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth, Consumer,Title ,Language,EventCategory , Img} from '@/app/types/user';
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory , Img} from '@/app/types/user';
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
@@ -59,11 +59,7 @@ const supplierSchema = new Schema<Supplier>({
 });
 
 // הסכמה למודל צרכן
-const consumerSchema = new Schema<Consumer>({
-  userName: { type: String, ref: 'User', required: true }, // הפניה למודל User
-  likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
-  likedPeople: [{ type: String }], // שמות משתמשים של אנשים שאהב
-});
+
 
 
 // הסכמה למודל פוסט
@@ -101,7 +97,6 @@ const recommendationSchema = new Schema<Recommendation>({
 const AddressModel = mongoose.models.Address || mongoose.model<Address>('Address', addressSchema);
 const UserModel = mongoose.models.User || mongoose.model<User>('User', userSchema);
 const SupplierModel = mongoose.models.Supplier || mongoose.model<Supplier>('Supplier', supplierSchema);
-const ConsumerModel = mongoose.models.Consumer || mongoose.model<Consumer>('Consumer', consumerSchema);
 const PostModel = mongoose.models.Post || mongoose.model<Post>('Post', postSchema);
 const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<ConsumerPost>('ConsumerPost', consumerPostSchema);
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
@@ -120,15 +115,14 @@ userSchema.index({ language: 1 });  // אינדקס על שדה השפה
 // סנכרון אינדקסים
 // PostModel.syncIndexes();
 
-export {
-  AddressModel,
-  UserModel,
-  SupplierModel,
-  ConsumerModel,
-  PostModel,
-  ConsumerPostModel,
-  RecommendationModel,
-  ImgModel,
-  AuthModel
+export { 
+  AddressModel, 
+  UserModel, 
+  SupplierModel, 
+  PostModel,  
+  ConsumerPostModel, 
+  RecommendationModel, 
+  AuthModel,
+  ImgModel
 
 };
