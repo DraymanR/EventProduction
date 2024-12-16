@@ -77,8 +77,6 @@ export interface PostCardProps {
 }
 
 export interface User {
-
-  _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique

@@ -4,7 +4,6 @@ import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
-  _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
