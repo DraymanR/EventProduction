@@ -1,9 +1,9 @@
 
-import connectDb from '@/app/lib/db/connectDb';
+import connectDb from '../../../lib/db/connectDb';
 import bcrypt from 'bcryptjs';
-import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
-import { Title } from '@/app/types/user';
-import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { generateToken, setAuthCookies } from '../../../../middlewares/authMiddleware';
+import { Title } from '../../../types/user';
+import { AddressModel, AuthModel, SupplierModel, UserModel } from '../../../lib/models/user';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
 
