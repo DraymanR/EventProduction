@@ -4,21 +4,16 @@ import { UploadApiResponse } from 'cloudinary';
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
-  eventList: string[];
-  recommendation: string[];
-  range: number;
-  emptyDate: string[];
-  images: string[];
-  description: string;
+ 
 }
 export enum Title {
-  Supplier = 'supplier',
-  MakeupArtist = 'Makeup artist',
-  Photographer = 'photographer',
-  SoundEngineer = 'sound engineer',
-  EventDesigner = 'event designer',
-  Orchestra = 'orchestra',
-  Singer = 'singer',
+  Supplier = 'ספק/ית',
+  MakeupArtist = 'מאפר/ת',
+  Photographer = 'צלם/ת',
+  SoundEngineer = 'סאונדמן/ית',
+  EventDesigner = 'מעצב/ת אירועים',
+  Singer = 'זמר/ת',
+
   // תוסיפי עוד טייטלים לפי הצורך
 }
 export type Option = {

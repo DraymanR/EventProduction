@@ -78,7 +78,7 @@ const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
         <div className="images">
           {images.map((image, index) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <Image key={index} src={image} alt={`image-${index}`} />
+            <img key={index} src={image} alt={`image-${index}`} />
           ))}
         </div>
         <div className="image-upload">

@@ -1,7 +1,8 @@
-import useUserStore from '@/app/store/userModel';
 import { Address, Post, UserFormData } from '@/app/types/user';
+import { signOut } from "next-auth/react";
+import useUserStore from '@/app/store/userModel';
 import axios from 'axios';
-// import axios from '';
+
 
 export const singIn = async (email: string, userName: string, password: string) => {
 
@@ -97,7 +98,13 @@ export const logout = async () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
+
+        // Simultaneously sign out from NextAuth
+        await signOut({ 
+          redirect: false  // Prevent automatic redirection
+        });
+
+    
 
     // החזרת התשובה מהשרת
     return response.data;
