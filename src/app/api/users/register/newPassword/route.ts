@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
 
         const authRecord = await AuthModel.findOne({ email });
 
-        if (!authRecord) {
+        if (!user) {
             return NextResponse.json(
                 { error: 'User not found' },
                 { status: 404 }
