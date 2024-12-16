@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getMyDetails, getUserDetails } from "@/app/services/user/getDetails";
+import { getMyDetails, getUserDetails } from "../user/getDetails";
 import { ObjectId } from "mongoose";
 
 // פונקציה להוספת המלצה לפוסט

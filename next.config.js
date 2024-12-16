@@ -1,23 +1,25 @@
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {}
-
-// module.exports = nextConfig
-
-// module.exports = {
-//     experimental: {
-//       appDir: true,
-//     },
-//   };
-
-
-/**
- * @type {import('next').NextConfig}
- */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // reactStrictMode: true,
-  // images: {
-  //   domains: ['res.cloudinary.com'],
-  // },
-}
+  experimental: {
+    appDir: true,
+  },
+  reactStrictMode: true,
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
+};
+
+export default nextConfig;
+
+
+// /**
+//  * @type {import('next').NextConfig}
+//  */
+// const nextConfig = {
+//   // reactStrictMode: true,
+//   // images: {
+//   //   domains: ['res.cloudinary.com'],
+//   // },
+// }
  
-export default nextConfig
+// export default nextConfig

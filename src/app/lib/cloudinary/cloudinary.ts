@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
@@ -10,7 +9,6 @@ cloudinary.config({
 
 
 export default cloudinary;
-=======
 // import { v2 as cloudinary } from 'cloudinary';
 
 // cloudinary.config({
@@ -22,7 +20,7 @@ export default cloudinary;
 
 
 // export default cloudinary;
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
+
 
 
 
