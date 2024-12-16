@@ -1,57 +1,107 @@
-
-import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { AuthModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
-import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
+import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+import { AuthModel } from "@/app/lib/models/user";
+import connectDb from "@/app/lib/db/connectDb";
+import { generateToken, setAuthCookies } from "@/middlewares/authMiddleware";
 
 export async function POST(req: Request) {
-    try {
-        const { email, password, userName } = await req.json();
+    console.log("qqqqqqqqqqqq");
+    
+  try {
+    const { email, password, userName } = await req.json();
+    console.log(email, password, userName);
 
-        if (!email || !password || !userName) {
-            return NextResponse.json(
-                { error: 'Email, username, and password are required' },
-                { status: 400 }
-            );
-        }
+    if (!email || !password || !userName) {
+      return NextResponse.json(
+        { error: "Email, username, and password are required" },
+        { status: 400 }
+      );
+    }
 
-        const normalizedEmail = email.toLowerCase();
-        await connectDb();
+    const normalizedEmail = email.toLowerCase();
+    await connectDb();
 
-        const user = await AuthModel.findOne({ email: normalizedEmail});
+    const user = await AuthModel.findOne({ email: normalizedEmail });
+    console.log(user);
 
-        if (!user) {
-            return NextResponse.json(
-                { error: 'User not found' },
-                { status: 404 }
-            );
-        }
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) {
-            return NextResponse.json(
-                { error: 'Invalid password' },
-                { status: 401 }
-            );
-        }
+    if (!isMatch) {
+      console.log("password", password, "user.password ", user.password);
+
+      return NextResponse.json({ error: "Invalid password" }, { status: 401 });
+    }
+
+    const token = generateToken({
+      userName: user.userName,
+      email: normalizedEmail,
+    });
+    const response = NextResponse.json(
+      { message: "Login successful" },
+      { status: 200 }
+    );
+
+    setAuthCookies(response, user.userName, token);
+
+    return response;
+  } catch (error) {
+    console.error("Error during login:", error);
+    return NextResponse.json({ error: "Error during login" }, { status: 500 });
+  }
+
+}
+// export async function POST(req: Request) {
+//     try {
+//         const { email, password, userName } = await req.json();
+
+//         if (!email || !password || !userName) {
+//             return NextResponse.json(
+//                 { error: 'Email, username, and password are required' },
+//                 { status: 400 }
+//             );
+//         }
+
+//         const normalizedEmail = email.toLowerCase();
+//         await connectDb();
+
+//         const user = await AuthModel.findOne({ email: normalizedEmail});
+
+//         if (!user) {
+//             return NextResponse.json(
+//                 { error: 'User not found' },
+//                 { status: 404 }
+//             );
+//         }
+
+//         const isMatch = await bcrypt.compare(password, user.password);
+
+//         if (!isMatch) {
+//             return NextResponse.json(
+//                 { error: 'Invalid password' },
+//                 { status: 401 }
+//             );
+//         }
 
         
-        const token = generateToken({ userName: user.userName, email: normalizedEmail });
-        const response = NextResponse.json(
-            { message: 'Login successful' },
-            { status: 200 }
-        );
+//         const token = generateToken({ userName: user.userName, email: normalizedEmail });
+//         const response = NextResponse.json(
+//             { message: 'Login successful' },
+//             { status: 200 }
+//         );
 
-        setAuthCookies(response, user.userName, token);
+//         setAuthCookies(response, user.userName, token);
 
-        return response;
-    } catch (error) {
-        console.error('Error during login:', error);
-        return NextResponse.json(
-            { error: 'Error during login' },
-            { status: 500 }
-        );
-    }
-}
+//         return response;
+//     } catch (error) {
+//         console.error('Error during login:', error);
+//         return NextResponse.json(
+//             { error: 'Error during login' },
+//             { status: 500 }
+//         );
+//     }
+// }
+// }

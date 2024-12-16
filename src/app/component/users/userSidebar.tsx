@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import { signOut, useSession } from "next-auth/react";
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Link from 'next/link';
-import {getUserDetails} from '@/app/services/user/getDetails'
+import { getUserDetails } from '@/app/services/user/getDetails'
 import { logout } from '../../services/user/registerUser';
 import { useRouter } from 'next/navigation';
 import useUserStore from '@/app/store/userModel';
@@ -14,16 +15,26 @@ import useUserStore from '@/app/store/userModel';
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+
+  const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
-
-
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+  
   const exite = async () => {
-    await logout()
-    clearUser()
+    if (session?.user) {
+      // If logged in via Google (NextAuth)
+      await signOut({ 
+        redirect: false  // Prevent automatic redirection
+      });
+    } else {
+      // If logged in via regular authentication
+      await logout();
+    }
+    
+    // Navigate to home page
     router.push('/');
 
   };
@@ -32,16 +43,15 @@ const ConsumerNavbar: React.FC = () => {
     <div className="fixed top-[100px] right-0 w-64 bg-gray-100 shadow-lg border h-auto">
       {/* תמונת הפרופיל */}
       <div className="p-4 flex flex-col items-center cursor-pointer" onClick={toggleNavbar}>
-      
-      <Image
-               
-               
-               src={"https://res.cloudinary.com/dtmyfpazp/image/upload/v1733824430/ftu1bxpgu4wnrzs0iozk.jpg"}
-               alt="תמונת פרופיל"
-               width={80}
-               height={80}
-               className="rounded-full border"
-              />
+        <img
+          // src={profileImage}
+           src={"https://res.cloudinary.com/dtmyfpazp/image/upload/v1733824430/ftu1bxpgu4wnrzs0iozk.jpg"}
+          alt="תמונת פרופיל"
+          width={80}
+          height={80}
+          className="rounded-full border"
+        />
+
 
         <button
           type="button"
