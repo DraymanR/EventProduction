@@ -25,13 +25,14 @@ export interface SupplierDetails {
  
 }
 export enum Title {
-  Supplier = 'ספק/ית',
-  MakeupArtist = 'מאפר/ת',
-  Photographer = 'צלם/ת',
-  SoundEngineer = 'סאונדמן/ית',
-  EventDesigner = 'מעצב/ת אירועים',
-  Singer = 'זמר/ת',
-
+  Supplier = 'supplier',
+  MakeupArtist = 'Makeup artist',
+  Photographer = 'photographer',
+  SoundEngineer = 'sound engineer',
+  EventDesigner = 'event designer',
+  Orchestra = 'orchestra',
+  Singer = 'singer',
+  Consumer = "Consumer",
   // תוסיפי עוד טייטלים לפי הצורך
 }
 export type Option = {
