@@ -3,7 +3,7 @@ import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
 import { Title } from '@/app/types/user';
-import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { AddressModel, AuthModel, ImgModel, SupplierModel, UserModel } from '@/app/lib/models/user';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
 
@@ -33,18 +33,9 @@ export async function POST(req: Request) {
         const hashedPassword = await bcrypt.hash(password, salt);
         const normalizedEmail = email.toLowerCase();
 
-        // Connect to database
         await connectDb();
 
-        // Upload profile image to Cloudinary
-        let uploadedImageUrl = null;
-        if (profileImage) {
-            const uploadedImage = await cloudinary.uploader.upload(profileImage, {
-                folder: 'profile_images',
-                resource_type: 'image',
-            });
-            uploadedImageUrl = uploadedImage.secure_url;
-        }
+     
 
         // Create Auth document
         const newAuth = new AuthModel({
@@ -61,7 +52,9 @@ export async function POST(req: Request) {
         await newAddress.save();
 
         // Create User document
-
+        const profileImg = new ImgModel({
+            imgUrl: profileImage,
+        });
         const newUser = new UserModel({
             firstName,
             lastName,
@@ -75,7 +68,7 @@ export async function POST(req: Request) {
             postArr: [],
             likedPostsArr: [],
             likedPeople: [],
-            profileImage: uploadedImageUrl, // Save image URL in user document
+            profileImage:profileImg
         });
         await newUser.save();
 
