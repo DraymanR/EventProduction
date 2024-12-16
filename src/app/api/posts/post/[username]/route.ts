@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { UserModel, PostModel, ConsumerPostModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { UserModel, PostModel, ConsumerPostModel } from '../../../../lib/models/user';
+import connectDb from '../../../../lib/db/connectDb';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 

@@ -1,9 +1,9 @@
 
 import NextAuth, { AuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import connectDb from '@/app/lib/db/connectDb'
-import { UserModel } from '@/app/lib/models/user'
-import { Title , Language} from "@/app/types/user"
+import connectDb from '../../../lib/db/connectDb'
+import { UserModel } from '../../../lib/models/user'
+import { Title , Language} from "../../../types/user"
 import mongoose from "mongoose"
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
