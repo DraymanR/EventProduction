@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נתיב מתאים למידלואר
-import { PostModel, UserModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { verifyTokenMiddleware } from '../../../../middlewares/middlewareToken'; 
+import { PostModel, UserModel } from '../../../lib/models/user';
+import connectDb from '../../../lib/db/connectDb';
 
 export async function PUT(req: NextRequest) {
     try {

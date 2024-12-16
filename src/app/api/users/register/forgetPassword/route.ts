@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer'; 
 import crypto from 'crypto';
-import { UserModel, AuthModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { UserModel, AuthModel } from '../../../../lib/models/user';
+import connectDb from '../../../../lib/db/connectDb';
 
 export async function POST(req: Request) {
     try {
