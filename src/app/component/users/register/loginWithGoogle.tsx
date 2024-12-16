@@ -10,7 +10,7 @@ const LoginBtn = () => {
       <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-md">
         <p className="mb-2 text-lg font-semibold text-gray-800">
 
-          Signed in as <span className="text-blue-600">{session.user.userName || session.user.email}</span>
+          Signed in as <span className="text-blue-600">{session.user.name || session.user.email}</span>
 
         </p>
         <button

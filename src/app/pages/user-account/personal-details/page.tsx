@@ -25,9 +25,7 @@ const Home: React.FC = () => {
         return <p>Loading...</p>;
     }
     return (
-        
         <div dir="ltr">
-            <p>fghjkcvbc</p>
             {userDetails ? (
                 // {MyDetails ? (
                 <ShowUserPersonalDetails User={userDetails} ></ShowUserPersonalDetails>

@@ -104,7 +104,6 @@ const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
 
 
-
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע
 postSchema.index({ title: 'text' });
 postSchema.index({ description: 'text' });

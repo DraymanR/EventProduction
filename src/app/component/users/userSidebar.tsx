@@ -10,10 +10,11 @@ import { logout } from '../../services/user/registerUser';
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
-
   const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
 
+
+  // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
