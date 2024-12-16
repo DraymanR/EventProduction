@@ -4,7 +4,6 @@ import { User, Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נניח שהמיקום של ה-middleware
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function GET(req: NextRequest) {
     try {
@@ -64,7 +63,7 @@ export async function GET(req: NextRequest) {
         if (user.userName !== userName) {
 
 
-            const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
+            const { firstName, lastName, phone, email, addressId, likedPeople,likedPostsArr,...filteredUser } = user;
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
