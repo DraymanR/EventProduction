@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { AuthModel } from '@/app/lib/models/user';
-import { UserModel } from '@/app/lib/models/user'; // import the User model
 import connectDb from '@/app/lib/db/connectDb';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
 
