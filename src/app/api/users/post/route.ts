@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-
-
-import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { UserModel, AuthModel, AddressModel, SupplierModel, ConsumerModel } from '@/app/lib/models/user'; 
-import connectDb from '@/app/lib/db/connectDb'; 
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
-
-export async function POST(req: Request) {
-    try {
-        const { firstName, lastName, userName, email, password, title, phone, language, address, description, topPrice, startingPrice } = await req.json();
-
-        
-        if (!firstName || !lastName || !userName || !email || !password || !title || !phone || !language || !address || !description) {
-=======
 // import connectDb from '@/app/lib/db/connectDb';
 // import bcrypt from 'bcryptjs';
 // import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
@@ -100,11 +82,12 @@ export async function POST(req: Request) {
 //         );
 //     }
 // }
-import connectDb from '@/app/lib/db/connectDb';
+
+import connectDb from '../../../lib/db/connectDb';
 import bcrypt from 'bcryptjs';
-import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
-import { Title } from '@/app/types/user';
-import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { generateToken, setAuthCookies } from '../../../../middlewares/authMiddleware';
+import { Title } from '../../../types/user';
+import { AddressModel, AuthModel, SupplierModel, UserModel } from '../../../lib/models/user';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
 
@@ -124,36 +107,12 @@ export async function POST(req: Request) {
         } = await req.json();
 
         if (!firstName || !lastName || !userName || !email || !password || !titles || !phone || !languages || !address || !description) {
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
             return NextResponse.json(
                 { error: 'Missing required fields' },
                 { status: 400 }
             );
         }
 
-<<<<<<< HEAD
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        const normalizedEmail = email.toLowerCase();
-       
-        await connectDb();
-
-        const newAuth = new AuthModel({
-            userName,
-            email:normalizedEmail,
-            password: hashedPassword,
-        });
-
-        await newAuth.save();
-
-        const updatedAddress = {
-            userName,
-            ...address 
-        };
-        const newAddress = new AddressModel(updatedAddress);
-        await newAddress.save();
-
-=======
 
 
 
@@ -189,67 +148,10 @@ export async function POST(req: Request) {
         await newAddress.save();
 
         // Create User document
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
         const newUser = new UserModel({
             firstName,
             lastName,
             userName,
-<<<<<<< HEAD
-            email:normalizedEmail,
-            titles:title,
-            phone,
-            languages:language,
-            addressId: newAddress._id,
-            description, 
-            postArr: [], 
-        });
-
-        await newUser.save();
-
-        if (title === 'supplier') {
-            const newSupplier = new SupplierModel({
-                userName,
-                startingPrice: startingPrice || 0, 
-                topPrice: topPrice || 0,
-                range: 0
-            });
-            await newSupplier.save();
-        } else if (title === 'consumer') {
-            const newConsumer = new ConsumerModel({
-                userName,
-                likedPostsArr: [],
-                likedPeople: []
-            });
-            await newConsumer.save();
-        }
-
-       
-        const payload = { userName: newUser.userName, email: newUser.email }; 
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' }); 
-
-     
-        const response = NextResponse.json(
-            { message: 'User created successfully' }, 
-            { status: 201 }
-        );
-
-    
-        response.cookies.set('userName', newUser.userName, { 
-            httpOnly: false, 
-            secure: process.env.NODE_ENV === 'production', 
-            maxAge: 86400, 
-            path: '/' 
-        });
-
-        response.cookies.set('token', token, { 
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', 
-            maxAge: 86400, 
-            path: '/' 
-        });
-
-        
-=======
             email: normalizedEmail,
             titles: titles,
             phone,
@@ -263,10 +165,7 @@ export async function POST(req: Request) {
         });
         await newUser.save();
 
-
-        // Create Supplier document if needed
         if (titles.includes(Title)) {
-
             const newSupplier = new SupplierModel({
                 userName,
                 startingPrice: startingPrice || 0,
@@ -277,7 +176,7 @@ export async function POST(req: Request) {
         }
 
 
-        
+
         const token = generateToken(newUser);
         const response = NextResponse.json(
             { message: 'User created successfully' },
@@ -288,7 +187,6 @@ export async function POST(req: Request) {
 
         setAuthCookies(response, userName, token);
 
->>>>>>> feb4b53c36ceefe34479e7431dd7d5b0453e91d4
         return response;
 
     } catch (error) {
@@ -299,3 +197,4 @@ export async function POST(req: Request) {
         );
     }
 }
+

@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { AuthModel, UserModel } from '@/app/lib/models/user';
@@ -17,32 +16,20 @@ export async function POST(req: Request) {
         }
 
         await connectDb();
+        const user = await AuthModel.findOne({ email });
 
-        // חפש את המשתמש לפי האימייל במודל Auth
-      
-        const authRecord = await AuthModel.findOne({ email });
-
-        if (!authRecord) {
+        if (!user) {
             return NextResponse.json(
                 { error: 'User not found' },
                 { status: 404 }
             );
         }
 
+        const userName = user.userName;  
+
        
-        const user = await UserModel.findOne({ email });
+        if (user.otp != otp || new Date() > user.otpExpiration) {
 
-        if (!user) {
-            return NextResponse.json(
-                { error: 'User not found in User model' },
-                { status: 404 }
-            );
-        }
-
-        const userName = user.userName;
-
-        
-        if (authRecord.otp !== otp || new Date() > authRecord.otpExpiration) {
             return NextResponse.json(
                 { error: 'Invalid or expired OTP' },
                 { status: 400 }
@@ -51,10 +38,16 @@ export async function POST(req: Request) {
 
        
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        authRecord.password = hashedPassword;
-        authRecord.otp = null;
-        authRecord.otpExpiration = null;
-        await authRecord.save();
+       
+        user.password = hashedPassword;
+
+        user.otp = null;
+        user.otpExpiration = null;
+        await user.save();
+        user.password = hashedPassword;
+        user.otp = null;
+        user.otpExpiration = null;
+        await user.save();
 
       
         // const payload = { userName, email };
