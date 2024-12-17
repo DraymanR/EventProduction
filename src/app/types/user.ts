@@ -4,7 +4,7 @@ import { UploadApiResponse } from 'cloudinary';
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
- 
+
 }
 export enum Title {
   Supplier = 'ספק/ית',

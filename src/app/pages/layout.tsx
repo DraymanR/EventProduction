@@ -1,5 +1,6 @@
 
 import type { Metadata } from 'next';
+import PostList from '../component/posts/PostList';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,6 +15,7 @@ export default function RootLayout({
 
   return (
     <div>
+      {/* <PostList/> */}
       {children}
     </div>
   );
