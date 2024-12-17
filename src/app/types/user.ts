@@ -1,13 +1,28 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 export interface UserFormData {
+import { ObjectId } from "mongoose";
+import { UploadApiResponse } from 'cloudinary';
+export interface UserFormData {
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   password: string;
   titles: string[];
+  titles: string[];
   phone: string;
+  description: string;
+  languages: Language[];
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string;
+}
   description: string;
   languages: Language[];
   address: {
@@ -22,6 +37,7 @@ export interface UserFormData {
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
+ 
  
 }
 export enum Title {
@@ -110,6 +126,10 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
+// export interface Consumer {
+//   userName: string;
+//    // array of Usernames
+// }
 // export interface Consumer {
 //   userName: string;
 //    // array of Usernames

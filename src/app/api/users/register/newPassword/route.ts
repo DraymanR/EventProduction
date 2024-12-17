@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { AuthModel, UserModel } from '@/app/lib/models/user';
+import { AuthModel } from '@/app/lib/models/user';
+import { UserModel } from '@/app/lib/models/user'; // import the User model
 import connectDb from '@/app/lib/db/connectDb';
 import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
 
@@ -16,6 +18,9 @@ export async function POST(req: Request) {
         }
 
         await connectDb();
+        const user = await AuthModel.findOne({ email });
+
+        if (!user) {
 
         // חפש את המשתמש לפי האימייל במודל Auth
       
@@ -27,6 +32,11 @@ export async function POST(req: Request) {
                 { status: 404 }
             );
         }
+
+        const userName = user.userName;  
+
+       
+        if (user.otp != otp || new Date() > user.otpExpiration) {
 
        
         const user = await UserModel.findOne({ email });
@@ -48,8 +58,15 @@ export async function POST(req: Request) {
             );
         }
 
+
        
         const hashedPassword = await bcrypt.hash(newPassword, 10);
+       
+        user.password = hashedPassword;
+
+        user.otp = null;
+        user.otpExpiration = null;
+        await user.save();
         authRecord.password = hashedPassword;
         authRecord.otp = null;
         authRecord.otpExpiration = null;
