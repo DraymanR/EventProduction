@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getAllPosts } from "@/app/services/post/post"; // עדכן את הנתיב למיקום הקובץ
 import PostCard from "./PostCard";
 import { PostCardProps, EventCategory } from "@/app/types/user"; // ייבוא ה-Enum של סוגי האירועים
-import SearchBar from "@/app/component/Searchbar";
+import SearchBar from "@/app/component/SearchBar";
 
 const PostList = () => {
   const [posts, setPosts] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
