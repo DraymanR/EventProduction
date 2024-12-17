@@ -34,7 +34,7 @@ export async function GET(req: Request) {
 
         console.log('Query:', query);
 
-        // חפש את המשתמשים לפי השאילתא שהוגדרה
+      
         const users = await UserModel.find(query)
             .skip(skip)  // דלג על הנתונים שכבר הוצגו
             .limit(limit)  // הגבל את התוצאות לפי המגבלה
