@@ -5,6 +5,11 @@ import connectDb from '../../../../lib/db/connectDb';
 import { verifyTokenMiddleware } from '../../../../../middlewares/middlewareToken'; 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+import { UserModel, SupplierModel } from '@/app/lib/models/user';
+import { User, Title } from '@/app/types/user';
+import connectDb from '@/app/lib/db/connectDb';
+import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נניח שהמיקום של ה-middleware
+
 
 export async function GET(req: NextRequest) {
     try {

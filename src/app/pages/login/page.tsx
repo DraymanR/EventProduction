@@ -13,6 +13,7 @@ const Loginpage = () => {
 }
 
 export default Loginpage
+
 // import React from "react";
 // import LoginBtn from '@/app/component/login-btn'
 
@@ -26,3 +27,4 @@ export default Loginpage
 // }
 
 // export default Loginpage
+
