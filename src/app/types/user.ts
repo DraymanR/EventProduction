@@ -188,5 +188,26 @@ export interface UserFormData {
     building: number;
   };
   supplierDetails?: SupplierDetails;
-  profileImage: string;
+  profileImage: string|null;
 }
+export interface UserResponseData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  titles: (Title | null)[]; // אם `titles` יכול להיות `null`
+  phone: string;
+  description: string;
+  languages: Language[];
+  addressId: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  profileImage: string | null;
+  likedPeople: string[]; 
+  likedPostsArr: Post[];
+  postArr: Post[];
+}
+
