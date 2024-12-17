@@ -3,8 +3,7 @@ import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
- 
-  _id: { type: Schema.Types.ObjectId },
+  // _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -103,6 +102,14 @@ const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Rec
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
 
+postSchema.virtual('userDetails', {
+  ref: 'User', // שם המודל שאתה רוצה לשייך
+  localField: 'userName', // השדה במודל Post שמשמש כמפתח
+  foreignField: 'userName', // השדה במודל User שמקשר
+  justOne: true, // אם אתה מצפה לתוצאה אחת
+});
+postSchema.set('toObject', { virtuals: true });
+postSchema.set('toJSON', { virtuals: true });
 
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע
 postSchema.index({ title: 'text' });
