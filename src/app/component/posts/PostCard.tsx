@@ -70,6 +70,7 @@ import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/pos
 import Image from "next/image";
 
 import Image from "next/image";
+import { Link } from "react-router-dom";
 
 
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
@@ -81,10 +82,17 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [comments, setComments] = useState<Recommendation[]>(post.recommendations || []); // מערך התגובות
   const [rating, setRating] = useState<number>(0); // משתנה חדש לשמירת הדירוג
   const [isFavorite, setIsFavorite] = useState(false); // מצב הלב
-
+  const [showPostModal, setShowPostModal] = useState(false);
   const handleFavoriteClick = () => {
     setIsFavorite((prev) => !prev);
     addingMyFavoritePost(post._id); // קריאה לפונקציה
+  };
+  const openPostModal = () => {
+    setShowPostModal(true);
+  };
+
+  const closePostModal = () => {
+    setShowPostModal(false);
   };
 
   const toggleComments = () => {
@@ -123,7 +131,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
     <div className="post-card bg-white rounded-lg shadow-md p-6 max-w-xl mx-auto mb-6">
       <div className="header flex items-center justify-between mb-4">
         <h2 className="text-2xl font-semibold text-gray-800">{post.title}</h2>
-        <p className="text-sm text-gray-500">מאת {post.userName}</p>
+        <p className="text-sm text-gray-500"> <a href={`/pages/users/${post.userName}`} className="block text-gray-600 hover:text-red-400">{post.userName}</a> </p>
       </div>
       <div className="favorite-toggle mb-4">
         <span
@@ -208,6 +216,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
                 התחבר להוספת תגובה
               </button>
             )}
+            
           </div>
         </div>
       )}
@@ -222,7 +231,14 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
             </button>
           </div>
         </div>
+        
       )}
+       <button
+        onClick={openPostModal}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+      >
+        הראה פוסט מלא
+      </button>
     </div>
   );
 };
