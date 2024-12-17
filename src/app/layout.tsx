@@ -29,7 +29,7 @@ export default async function RootLayout({
 
    <SessionWrapper session={session}>
    <TimerComponent></TimerComponent>
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       {children}
       
        
