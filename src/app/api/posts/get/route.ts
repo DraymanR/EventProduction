@@ -63,17 +63,17 @@ export async function GET(req: Request) {
            
         })
         .lean();
-        const enrichedPosts = posts.map(post => ({
-            ...post,
-            userTitles: post.userDetails?.titles || [], // מוסיף את ה-titles
-        }));
+        // const enrichedPosts = posts.map(post => ({
+        //     ...post,
+        //     userTitles: post.userDetails?.titles || [], // מוסיף את ה-titles
+        // }));
 
         const totalPosts = await PostModel.countDocuments(query);
 
         return NextResponse.json(
             {
                 message: 'Posts retrieved successfully',
-                posts: enrichedPosts,
+                posts: posts,
                 totalPosts: totalPosts,
                 totalPages: Math.ceil(totalPosts / limit),
                 currentPage: page,

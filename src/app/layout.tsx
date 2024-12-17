@@ -26,6 +26,7 @@ export default async function RootLayout({
       <body>
       <SessionWrapper session={session}>
         <Navbar></Navbar>
+        
         <TimerComponent></TimerComponent>
         {children}
         </SessionWrapper>

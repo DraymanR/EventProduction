@@ -22,7 +22,7 @@ export interface UserFormData {
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
- 
+
 }
 export enum Title {
   Supplier = 'ספק/ית',
@@ -73,7 +73,15 @@ export interface PostCardProps {
       "text": string,
       "rate": number,
 
-    }]
+    }], "userTitls": [string],
+  "postId": {
+    "budget": number,
+    "eventCategory"
+    :
+    string,
+    "supplierNameArr"
+    : [string]
+  };
 }
 
 export interface User {
