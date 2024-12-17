@@ -1,19 +1,54 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
-
+// export interface UserFormData {
+// import { ObjectId } from "mongoose";
+// import { UploadApiResponse } from 'cloudinary';
+// export interface UserFormData {
+//   firstName: string;
+//   lastName: string;
+//   userName: string;
+//   email: string;
+//   password: string;
+//   titles: string[];
+//   titles: string[];
+//   phone: string;
+//   description: string;
+//   languages: Language[];
+//   address: {
+//     zipCode: string;
+//     city: string;
+//     street: string;
+//     building: number;
+//   };
+//   supplierDetails?: SupplierDetails;
+//   profileImage: string;
+// }
+//   description: string;
+//   languages: Language[];
+//   address: {
+//     zipCode: string;
+//     city: string;
+//     street: string;
+//     building: number;
+//   };
+//   supplierDetails?: SupplierDetails;
+//   profileImage: string;
+// }
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
  
+ 
 }
 export enum Title {
-  Supplier = 'ספק/ית',
-  MakeupArtist = 'מאפר/ת',
-  Photographer = 'צלם/ת',
-  SoundEngineer = 'סאונדמן/ית',
-  EventDesigner = 'מעצב/ת אירועים',
-  Singer = 'זמר/ת',
-
+  Supplier = 'supplier',
+  MakeupArtist = 'Makeup artist',
+  Photographer = 'photographer',
+  SoundEngineer = 'sound engineer',
+  EventDesigner = 'event designer',
+  Orchestra = 'orchestra',
+  Singer = 'singer',
+  Consumer = "Consumer",
   // תוסיפי עוד טייטלים לפי הצורך
 }
 export type Option = {
@@ -39,28 +74,28 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps {
-  "_id": string,
-  "userName": string,
-  "createDate": Date,
-  "album": [
-    string
-  ],
-  "title": string,
-  "description": string,
-  "recommendations": [
-    {
-      "_id": string,
+export interface PostCardProps{
+  postId: any;
+"_id": string,
       "userName": string,
-      "text": string,
-      "rate": number,
-
-    }]
-}
+      "createDate": Date,
+      "album": [
+       string
+      ],
+      "title": string,
+      "description": string,
+      "recommendations": [
+        {
+          "_id": string,
+          "userName": string,
+          "text": string,
+          "rate": number,
+         
+        }]}
 
 export interface User {
-
-  _id: ObjectId;
+  porofilPic:string,
+  _id:  ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
@@ -92,6 +127,10 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
+// export interface Consumer {
+//   userName: string;
+//    // array of Usernames
+// }
 // export interface Consumer {
 //   userName: string;
 //    // array of Usernames
@@ -141,35 +180,6 @@ export interface Recommendation {
   text: string;
   rate: number; // rating 1-5
 }
-// export interface UserFormData {
-//   profileImage: string,
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   titles: (Title | "consumer")[]; // מערך של טיטלים
-//   phone: string;
-//   languages: Language[]; // מערך של שפות
-//   address: {
-//     zipCode: string;
-//     city: string;
-//     street: string;
-//     building: number;
-//   };
-//   description: string,
-
-//   supplierDetails?: {
-//     startingPrice: number;
-//     topPrice: number;
-//     eventList: string[];
-//     recommendation: string[];
-//     range: number;
-//     emptyDate: string[];
-//     images: string[];
-//     description: string;
-//   };
-// }
 export interface UserFormData {
   firstName: string;
   lastName: string;
