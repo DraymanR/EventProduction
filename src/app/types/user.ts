@@ -1,5 +1,6 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
+
 export interface UserFormData {
   firstName: string;
   lastName: string;
