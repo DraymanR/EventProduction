@@ -59,8 +59,8 @@ export interface PostCardProps{
         }]}
 
 export interface User {
-  porofilPic:string,
-  _id:  ObjectId;
+
+  // _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
