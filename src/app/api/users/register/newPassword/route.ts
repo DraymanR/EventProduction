@@ -16,20 +16,32 @@ export async function POST(req: Request) {
         }
 
         await connectDb();
-        const user = await AuthModel.findOne({ email });
 
-        if (!user) {
+        // חפש את המשתמש לפי האימייל במודל Auth
+      
+        const authRecord = await AuthModel.findOne({ email });
+
+        if (!authRecord) {
             return NextResponse.json(
                 { error: 'User not found' },
                 { status: 404 }
             );
         }
 
-        const userName = user.userName;  
-
        
-        if (user.otp != otp || new Date() > user.otpExpiration) {
+        const user = await UserModel.findOne({ email });
 
+        if (!user) {
+            return NextResponse.json(
+                { error: 'User not found in User model' },
+                { status: 404 }
+            );
+        }
+
+        const userName = user.userName;
+
+        
+        if (authRecord.otp !== otp || new Date() > authRecord.otpExpiration) {
             return NextResponse.json(
                 { error: 'Invalid or expired OTP' },
                 { status: 400 }
@@ -38,16 +50,10 @@ export async function POST(req: Request) {
 
        
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-       
-        user.password = hashedPassword;
-
-        user.otp = null;
-        user.otpExpiration = null;
-        await user.save();
-        user.password = hashedPassword;
-        user.otp = null;
-        user.otpExpiration = null;
-        await user.save();
+        authRecord.password = hashedPassword;
+        authRecord.otp = null;
+        authRecord.otpExpiration = null;
+        await authRecord.save();
 
       
         // const payload = { userName, email };
