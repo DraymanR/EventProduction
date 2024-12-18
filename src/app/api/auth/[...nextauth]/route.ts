@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
             firstName: user.name?.split(' ')[0] || '',
             lastName: user.name?.split(' ').slice(1).join(' ') || '',
             email: user.email!,
-            title:[ Title.Consumer ], // Default title
+            title:[ 'consumer' ], // Default title
             phone: '', // You might want to add a way to collect this
             languages: [ Language.Hebrew ], // Default language
             addressId: null, // You'll need to handle address creation separately
