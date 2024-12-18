@@ -7,7 +7,6 @@ import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
 export async function POST(req: Request) {
     try {
         const { email, otp, newPassword } = await req.json();
-
         if (!email || !otp || !newPassword) {
             return NextResponse.json(
                 { error: 'Email, OTP, and new password are required' },
