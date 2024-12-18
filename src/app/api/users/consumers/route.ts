@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
-import {  ConsumerModel,PostModel,UserModel } from '../../../lib/models/user'; 
+import {  ConsumerPostModel,PostModel,UserModel } from '../../../lib/models/user'; 
 import connectDb from '../../../lib/db/connectDb'; 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
@@ -41,13 +41,13 @@ export async function PUT(req: NextRequest) {
      
         await connectDb();
 
-        let existingConsumer = await ConsumerModel.findOne({ userName: decodedUserName });
+        let existingConsumer = await ConsumerPostModel.findOne({ userName: decodedUserName });
 
 
         if (!existingConsumer) {
             const user = await UserModel.findOne({ userName: decodedUserName });
             if(user&&user.titles.includes('consumer')){
-                 existingConsumer = new ConsumerModel({
+                 existingConsumer = new ConsumerPostModel({
                     userName: decodedUserName,
                     likedPostsArr: [],
                     likedPeople: []

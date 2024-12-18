@@ -25,52 +25,24 @@ export async function PUT(req: NextRequest) {
         let existingConsumer = await UserModel.findOne({ userName });
 
         if (!existingConsumer) {
-            const user = await UserModel.findOne({ userName });
-            if (user) {
-                existingConsumer = new UserModel({
-                    userName,
-                    likedPostsArr: [],
-                    likedPeople: [],
-                });
-            } else {
                 return NextResponse.json(
-                    { error: 'Consumer not found' },
+                    { error: 'user not found' },
                     { status: 404 }
                 );
-            }
         }
 
-        // עדכון לייקים לפוסטים
         if (favoritePostID) {
-            console.log(favoritePostID);
-            const existingPost = await PostModel.findById(favoritePostID);
-            console.log(existingPost);
-            console.log(existingConsumer.likedPostsArr);
-            if (!existingConsumer.likedPostsArr) {
-                existingConsumer.likedPostsArr = [];
-            }
-            if (
-                !existingConsumer.likedPostsArr.includes(favoritePostID) &&
-                existingPost
-            ) {
-                existingConsumer.likedPostsArr.push(favoritePostID);
+            const index = existingConsumer.likedPostsArr.indexOf(favoritePostID);
+            if (index > -1) {
+                existingConsumer.likedPostsArr.splice(index, 1);
             }
         }
-
-        // עדכון לייקים למשתמשים
         if (favoriteUserName) {
-            const existingUser = await UserModel.findOne({
-                userName: favoriteUserName,
-            });
-            if (
-                !existingConsumer.likedPeople.includes(favoriteUserName) &&
-                existingUser
-            ) {
-                existingConsumer.likedPeople.push(favoriteUserName);
+            const index = existingConsumer.likedPeople.indexOf(favoriteUserName);
+            if (index > -1) {
+                existingConsumer.likedPeople.splice(index, 1);
             }
         }
-
-        // שמירת השינויים
         await existingConsumer.save();
 
         return NextResponse.json(

@@ -35,6 +35,8 @@ const ConsumerNavbar: React.FC = () => {
     }
     
     // Navigate to home page
+    // await logout()
+    clearUser()
     router.push('/');
 
   };
