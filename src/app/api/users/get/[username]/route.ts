@@ -1,9 +1,4 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { UserModel, SupplierModel } from '../../../../lib/models/user';
-import { User, Title } from '../../../../types/user';
-import connectDb from '../../../../lib/db/connectDb';
-import { verifyTokenMiddleware } from '../../../../../middlewares/middlewareToken'; 
-
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 import { UserModel, SupplierModel } from '@/app/lib/models/user';
 import { User, Title } from '@/app/types/user';
