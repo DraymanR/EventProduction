@@ -1,12 +1,7 @@
 
 import { NextResponse } from 'next/server';
-<<<<<<< HEAD
-import { PostModel } from '../../../lib/models/user';
-import connectDb from '../../../lib/db/connectDb';
-=======
 import { PostModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
->>>>>>> 4c2f294 (add to post user titls)
 
 export async function GET(req: Request) {
     try {
