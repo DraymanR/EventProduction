@@ -1,5 +1,7 @@
 import axios from "axios";
 import { getSession } from "next-auth/react";
+import { log } from "node:console";
+
 export const getUserByUsername = async (username: string) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${username}`, {
@@ -17,11 +19,16 @@ export const getUserByUsername = async (username: string) => {
   
 export const getMyDetails = async () => {
     try {
+        console.log("await getSession();");
+
         // First, check if there's a NextAuth session
         const session = await getSession();
+        console.log(session);
 
         // If a session exists (Google or regular with token)
         if (session?.user) {
+            console.log("session?.user");
+
             // Try to fetch by email first (for Google auth)
             if (session.user.email) {
                 try {
@@ -38,12 +45,18 @@ export const getMyDetails = async () => {
                 }
             }
         }
+        console.log("! session");
 
         // Fallback to cookie-based username retrieval
         if (typeof window !== 'undefined') {
+            console.log(typeof window);
+
             const cookies = document.cookie.split('; ');
-            const usernameCookie = cookies.find(row => row.startsWith('username='));
-            
+            console.log(cookies);
+
+            const usernameCookie = cookies.find(row => row.startsWith('userName='));
+            console.log(usernameCookie);
+
             if (usernameCookie) {
                 const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
                 console.log('Username from cookie:', myUserName);

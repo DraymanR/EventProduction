@@ -5,15 +5,7 @@ import connectDb from '@/app/lib/db/connectDb';
 import { Title } from '@/app/types/user';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
 
-const verifyToken = (token: string): string | jwt.JwtPayload => {
-    try {
-        return jwt.verify(token, JWT_SECRET);
-    } catch (error) {
-        throw new Error('Invalid token');
-    }
-};
 
 
 export async function PUT(req: NextRequest) {

@@ -26,9 +26,6 @@ export const authOptions: AuthOptions = {
         const existingUser = await UserModel.findOne({ email: user.email });
 
         if (!existingUser) {
-          // Redirect to a custom page or return false to prevent sign-in
-          // return '/auth/new_user_error'; // This will redirect to a custom page
-          
           // Create new user if not exists
           await UserModel.create({
             _id: new mongoose.Types.ObjectId(),
