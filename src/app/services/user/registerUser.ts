@@ -159,7 +159,7 @@ export const useUpdateUserStore = () => {
   ) => {
     setUser(userData);
     console.log(userData);
-
+    
     setPosts(postArr);
     setLikedPeople(likedPeople);
     setLikedPostsArr(likedPostsArr);
