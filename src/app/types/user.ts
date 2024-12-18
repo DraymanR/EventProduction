@@ -96,6 +96,23 @@ export interface PostCardProps{
 export interface User {
   porofilPic:string,
   _id:  ObjectId;
+//       "text": string,
+//       "rate": number,
+
+//     }], "userTitls": [string],
+//   "postId": {
+//     "budget": number,
+//     "eventCategory"
+//     :
+//     string,
+//     "supplierNameArr"
+//     : [string]
+//   };
+// }
+
+// export interface User {
+
+//   // _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
@@ -205,7 +222,7 @@ export interface UserResponseData {
   lastName: string;
   userName: string;
   email: string;
-  titles: (Title | null)[]; // אם `titles` יכול להיות `null`
+  titles: (Title |"consumer"| null)[]; // אם `titles` יכול להיות `null`
   phone: string;
   description: string;
   languages: Language[];

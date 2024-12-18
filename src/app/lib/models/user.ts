@@ -102,6 +102,14 @@ const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Rec
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
 
+postSchema.virtual('userDetails', {
+  ref: 'User', // שם המודל שאתה רוצה לשייך
+  localField: 'userName', // השדה במודל Post שמשמש כמפתח
+  foreignField: 'userName', // השדה במודל User שמקשר
+  justOne: true, // אם אתה מצפה לתוצאה אחת
+});
+postSchema.set('toObject', { virtuals: true });
+postSchema.set('toJSON', { virtuals: true });
 
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע
 postSchema.index({ title: 'text' });

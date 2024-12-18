@@ -26,8 +26,20 @@ export const authOptions: AuthOptions = {
         const existingUser = await UserModel.findOne({ email: user.email });
 
         if (!existingUser) {
-          // Redirect to a custom page or return false to prevent sign-in
-          return '/auth/new_user_error'; // This will redirect to a custom page
+          // Create new user if not exists
+          await UserModel.create({
+            _id: new mongoose.Types.ObjectId(),
+            userName: user.name?.replace(/\s+/g, '_').toLowerCase() || 'user',
+            firstName: user.name?.split(' ')[0] || '',
+            lastName: user.name?.split(' ').slice(1).join(' ') || '',
+            email: user.email!,
+            titles:[ "consumer" ], // Default title
+            phone: '', // You might want to add a way to collect this
+            languages: [ Language.Hebrew ], // Default language
+            addressId: null, // You'll need to handle address creation separately
+            description: 'New user',
+            postArr: []
+          });
         }
 
         return true;
@@ -63,3 +75,7 @@ export const authOptions: AuthOptions = {
 const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
+
+// this is the changes for the vercel.
+// export const GET = NextAuth(authOptions);
+// export const POST = NextAuth(authOptions);

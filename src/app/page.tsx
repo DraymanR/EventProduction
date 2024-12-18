@@ -6,7 +6,6 @@ const Home = () => {
 
       <div>
         {/* <PostList/> */}
-        <p>ppppppp</p>
         <ShowUser userName="יהודה כהן" />
     </div>
   );

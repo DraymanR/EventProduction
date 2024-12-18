@@ -5,10 +5,8 @@ import connectDb from '../../../lib/db/connectDb';
 
 export async function PUT(req: NextRequest) {
     try {
-        // התחברות למסד הנתונים
+      
         await connectDb();
-
-        // אימות הטוקן והוספת userName ל-req
         const userName = await new Promise<string | null>((resolve, reject) => {
             verifyTokenMiddleware(req as any, {} as any, () => {
                 resolve((req as any).userName);
@@ -22,10 +20,8 @@ export async function PUT(req: NextRequest) {
             );
         }
 
-        // קבלת המידע מהגוף של הבקשה
         const { favoritePostID, favoriteUserName } = await req.json();
 
-        // בדיקת קיום משתמש
         let existingConsumer = await UserModel.findOne({ userName });
 
         if (!existingConsumer) {
