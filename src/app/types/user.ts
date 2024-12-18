@@ -38,17 +38,15 @@ export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
  
- 
 }
 export enum Title {
-  Supplier = 'supplier',
-  MakeupArtist = 'Makeup artist',
-  Photographer = 'photographer',
-  SoundEngineer = 'sound engineer',
-  EventDesigner = 'event designer',
-  Orchestra = 'orchestra',
-  Singer = 'singer',
-  Consumer = "Consumer",
+  Supplier = 'ספק/ית',
+  MakeupArtist = 'מאפר/ת',
+  Photographer = 'צלם/ת',
+  SoundEngineer = 'סאונדמן/ית',
+  EventDesigner = 'מעצב/ת אירועים',
+  Singer = 'זמר/ת',
+
   // תוסיפי עוד טייטלים לפי הצורך
 }
 export type Option = {
@@ -144,10 +142,6 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-// export interface Consumer {
-//   userName: string;
-//    // array of Usernames
-// }
 // export interface Consumer {
 //   userName: string;
 //    // array of Usernames
