@@ -2,6 +2,21 @@ import axios from "axios";
 import { getSession } from "next-auth/react";
 import { log } from "node:console";
 
+export const getUserByUsername = async (username: string) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${username}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
+      return response.data.user;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      throw error; // טיפול בשגיאות
+    }
+  };
+  
 export const getMyDetails = async () => {
     try {
         console.log("await getSession();");

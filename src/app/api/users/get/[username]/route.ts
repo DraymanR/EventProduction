@@ -64,9 +64,10 @@ export async function GET(req: NextRequest) {
         if (user.userName !== userName) {
 
 
-            const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
-            console.log(":user",filteredUser,"supplierDetails:",supplierDetails)//),"consumerDetails",consumerDetails);
+            // const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
+            // console.log(":user",filteredUser,"supplierDetails:",supplierDetails)//),"consumerDetails",consumerDetails);
             
+            const { firstName, lastName, phone, email, addressId, likedPeople,likedPostsArr,...filteredUser } = user;
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',

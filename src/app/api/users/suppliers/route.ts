@@ -1,55 +1,40 @@
 import { NextResponse, NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
-import {  SupplierModel,PostModel,UserModel } from '@/app/lib/models/user'; 
+import {  SupplierModel,UserModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb'; 
 import { Title } from '@/app/types/user';
+import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
 
-const verifyToken = (token: string): string | jwt.JwtPayload => {
-    try {
-        return jwt.verify(token, JWT_SECRET);
-    } catch (error) {
-        throw new Error('Invalid token');
-    }
-};
 
 export async function PUT(req: NextRequest) {
     try {
-        const tokenCookie = req.cookies.get('token'); 
-        const token = tokenCookie ? tokenCookie.value : null;  
+        await connectDb();
+        const userName = await new Promise<string | null>((resolve, reject) => {
+            verifyTokenMiddleware(req as any, {} as any, () => {
+                resolve((req as any).userName);
+            }).catch(reject);
+        });
 
-        if (!token) {
+        if (!userName) {
             return NextResponse.json(
-                { error: 'Missing token in cookies' },
+                { error: 'Unauthorized' },
                 { status: 401 }
             );
         }
-
-        const decoded = verifyToken(token);
-
-        if (typeof decoded !== 'object' || !('userName' in decoded)) {
-            return NextResponse.json(
-                { error: 'Invalid token structure' },
-                { status: 401 }
-            );
-        }
-
-        const decodedUserName = decoded.userName;
 
         const { topPrice,startingPrice } = await req.json(); 
 
      
         await connectDb();
 
-        let existingSupplier = await SupplierModel.findOne({ userName: decodedUserName });
+        let existingSupplier = await SupplierModel.findOne({ userName: userName });
 
 
         if (!existingSupplier) {
-            const user = await UserModel.findOne({ userName: decodedUserName });
+            const user = await UserModel.findOne({ userName: userName });
             if(user&&user.titles.some((title: Title) => Object.values(Title).includes(title as Title))){
                  existingSupplier = new SupplierModel({
-                    userName: decodedUserName,
+                    userName,
                     startingPrice: startingPrice || 0, 
                     topPrice: topPrice || 0,
                     range: 0
@@ -61,7 +46,6 @@ export async function PUT(req: NextRequest) {
             );}
         }
         
- 
         if (startingPrice) {
             existingSupplier.startingPrice=startingPrice;
 
