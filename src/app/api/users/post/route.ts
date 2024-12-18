@@ -1,9 +1,9 @@
 
 import connectDb from '@/app/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
-import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
-import { Title } from '@/app/types/user';
-import { AddressModel, AuthModel, SupplierModel, UserModel } from '@/app/lib/models/user';
+import { generateToken, setAuthCookies } from '../../../../middlewares/authMiddleware';
+import { Title } from '../../../types/user';
+import { AddressModel, AuthModel, SupplierModel, UserModel } from '../../../lib/models/user';
 import { v2 as cloudinary } from 'cloudinary';
 import { NextResponse } from 'next/server';
 
@@ -28,6 +28,10 @@ export async function POST(req: Request) {
                 { status: 400 }
             );
         }
+
+
+
+
       
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -100,6 +104,7 @@ export async function POST(req: Request) {
 
 
         setAuthCookies(response, userName, token);
+
         return response;
 
     } catch (error) {

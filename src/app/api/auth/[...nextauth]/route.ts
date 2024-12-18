@@ -2,7 +2,7 @@ import NextAuth, { AuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import connectDb from '../../../lib/db/connectDb'
 import { UserModel } from '../../../lib/models/user'
-import { Title , Language} from "../../../types/user"
+import { Title, Language } from "../../../types/user"
 import mongoose from "mongoose"
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
@@ -26,25 +26,27 @@ export const authOptions: AuthOptions = {
         const existingUser = await UserModel.findOne({ email: user.email });
 
         if (!existingUser) {
-          // Instead of creating a complex URL, simply return false
-          return false;
+          throw new Error('User not found');
+
         }
 
         return true;
       } catch (error) {
         console.error("User validation error:", error);
-        return false;
+      
+        // Redirect to the error page
+        return `/pages/user-account/auth/new-user-error?error=UserNotFound`;
       }
     },
     async session({ session, token }) {
       if (session.user) {
         // Add user ID from token to session
         session.user.id = token.sub || '';
-        
+
         // Fetch additional user details from MongoDB
         await connectDb();
         const dbUser = await UserModel.findOne({ email: session.user.email });
-        
+
         if (dbUser) {
           // Add any additional user details you want to expose in the session
           session.user.userName = dbUser.userName;
@@ -54,10 +56,10 @@ export const authOptions: AuthOptions = {
       return session;
     }
   },
-  // Add custom pages configuration
-  pages: {
-    error: '/pages/user-account/auth/new-user-error'
-  }
+  // // Add custom pages configuration
+  // pages: {
+  //   error: '/pages/user-account/auth/new-user-error'
+  // }
 }
 
 const handler = NextAuth(authOptions)
