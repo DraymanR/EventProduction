@@ -1,7 +1,7 @@
 
 import { NextResponse } from 'next/server';
-import { PostModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { PostModel } from '../../../lib/models/user';
+import connectDb from '../../../lib/db/connectDb';
 
 export async function GET(req: Request) {
     try {

@@ -1,9 +1,9 @@
 
 import NextAuth, { AuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import connectDb from '@/app/lib/db/connectDb'
-import { UserModel } from '@/app/lib/models/user'
-import { Title , Language} from "@/app/types/user"
+import connectDb from '../../../lib/db/connectDb'
+import { UserModel } from '../../../lib/models/user'
+import { Title , Language} from "../../../types/user"
 import mongoose from "mongoose"
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
             firstName: user.name?.split(' ')[0] || '',
             lastName: user.name?.split(' ').slice(1).join(' ') || '',
             email: user.email!,
-            titles:[ "consumer" ], // Default title
+            title:[ Title.Consumer ], // Default title
             phone: '', // You might want to add a way to collect this
             languages: [ Language.Hebrew ], // Default language
             addressId: null, // You'll need to handle address creation separately
@@ -45,7 +45,7 @@ export const authOptions: AuthOptions = {
 
         return true;
       } catch (error) {
-        console.error("User creation error:", error);
+        console.error("User validation error:", error);
         return false;
       }
     },
@@ -62,12 +62,14 @@ export const authOptions: AuthOptions = {
           // Add any additional user details you want to expose in the session
           session.user.userName = dbUser.userName;
           session.user.email = dbUser.email;
-                // when he will update the type to contain profile imege
-          // session.user.image = dbUser.image;
         }
       }
       return session;
     }
+  },
+  pages: {
+    // Redirect to this page for new users trying to sign in with Google
+    newUser: '/auth/new_user_error'
   }
 }
 

@@ -1,11 +1,8 @@
-
-
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation"; // for client-side navigation
 import { useSession } from "next-auth/react"; // for authentication state
-
 import PopUpWindow from "./pop-upWindow";
 import Login from "./users/register/login";
 import useModalStore from "@/app/store/modelStore";

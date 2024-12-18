@@ -4,7 +4,10 @@ import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
+<<<<<<< HEAD
   // _id: { type: Schema.Types.ObjectId },
+=======
+>>>>>>> 0cedf946c1cbb0be5481f528a99fa773e502f789
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -111,7 +114,6 @@ postSchema.virtual('userDetails', {
 });
 postSchema.set('toObject', { virtuals: true });
 postSchema.set('toJSON', { virtuals: true });
-
 
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע
 postSchema.index({ title: 'text' });

@@ -1,8 +1,8 @@
 import { NextResponse,NextRequest } from 'next/server';
-import { UserModel, AddressModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { UserModel, AddressModel } from '../../../lib/models/user';
+import connectDb from '../../../lib/db/connectDb';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { User } from '@/app/types/user';
+import { User } from '../../../types/user';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const verifyToken = (token: string): string | JwtPayload => {

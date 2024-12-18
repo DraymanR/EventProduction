@@ -58,30 +58,24 @@ export enum EventCategory {
   Other = 'other',
 }
 export interface PostCardProps {
-  "_id": string,
-  "userName": string,
-  "createDate": Date,
-  "album": [
-    string
-  ],
-  "title": string,
-  "description": string,
-  "recommendations": [
-    {
-      "_id": string,
-      "userName": string,
-      "text": string,
-      "rate": number,
+  _id: string,
+  recommendations: [{  text: string,
+    rate: number}];
+  album: [String];
+    createDate: string | number | Date;
+  title: string;
+  description: string;
+  userName: string,
 
-    }], "userTitls": [string],
-  "postId": {
-    "budget": number,
-    "eventCategory"
+ userTitls: [string],
+  postId: {
+  budget: number,
+    eventCategory
     :
-    string,
-    "supplierNameArr"
+  EventCategory,
+    supplierNameArr
     : [string]
-  };
+};
 }
 
 export interface User {

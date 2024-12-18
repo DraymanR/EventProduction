@@ -104,4 +104,3 @@ export const addingMyFavoritePost = async (post_id: string) => {
         throw error; // טיפול בשגיאות
     }
 };
-
