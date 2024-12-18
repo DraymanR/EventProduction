@@ -43,9 +43,9 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           <div className="suppliers-list mb-4">
             <h3 className="text-lg font-semibold text-gray-800">ספקים:</h3>
             <ul>
-              {post.postId.supplierNameArr?.map((supplier, index) => (
+              {post.postId.supplierNameArr?.map((supplier: string, index:number) => (
                 <li key={index} className="text-sm text-gray-600">
-                  <a href={`/supplier/${supplier}`} className="text-blue-500 hover:underline">
+                  <a href={`/pages/users/${supplier}`} className="text-blue-500 hover:underline">
                     {supplier}
                   </a>
                 </li>
