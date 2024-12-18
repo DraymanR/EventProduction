@@ -60,7 +60,7 @@ export enum EventCategory {
 export interface PostCardProps {
   _id: string,
   recommendations: [Recommendation];
-  album: [String];
+  album: [Img];
     createDate: string | number | Date;
   title: string;
   description: string;
