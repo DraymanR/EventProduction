@@ -72,24 +72,33 @@ const PostList = () => {
   const handleSearch = (
     userName: string,
     eventTitle: string,
-    eventType: EventCategory
+    eventType: EventCategory,
+    startDate: string,
+    endDate: string,
+    description: string
   ) => {
     const results = posts.filter((post) => {
-      const matchUserName = post.userName
-        .toLowerCase()
-        .includes(userName.toLowerCase());
-      const matchEventTitle = post.title
-        .toLowerCase()
-        .includes(eventTitle.toLowerCase());
-      const matchEventType = post.postId
-        ? post.postId.eventCategory === eventType
-        : null;
+      const matchUserName = post.userName.toLowerCase().includes(userName.toLowerCase());
+      const matchEventTitle = post.title.toLowerCase().includes(eventTitle.toLowerCase());
+      const matchEventType = eventType ? post.postId?.eventCategory === eventType : true;
+      const matchDescription = post.description?.toLowerCase().includes(description.toLowerCase());
+  
+      const postDate = new Date(post.createDate);
+      const isWithinDateRange =
+        (!startDate || postDate >= new Date(startDate)) &&
+        (!endDate || postDate <= new Date(endDate));
+  
       return (
-        matchUserName && matchEventTitle && (eventType ? matchEventType : true)
+        matchUserName &&
+        matchEventTitle &&
+        matchEventType &&
+        matchDescription &&
+        isWithinDateRange
       );
     });
     setFilteredPosts(results);
   };
+  
 
   if (error) {
     return (
