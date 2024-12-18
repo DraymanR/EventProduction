@@ -73,7 +73,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           <div className="image-gallery mb-4">
             {post.album?.length > 0 && (
               <div className="images flex gap-4 overflow-x-auto">
-                {post.album.map((image, index) => (
+                {post.album.map((image: string | undefined, index: number) => (
                   <img
                     key={index}
                     src={image}

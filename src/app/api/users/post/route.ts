@@ -28,6 +28,10 @@ export async function POST(req: Request) {
                 { status: 400 }
             );
         }
+
+
+
+
       
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -93,6 +97,7 @@ export async function POST(req: Request) {
 
 
         setAuthCookies(response, userName, token);
+
         return response;
 
     } catch (error) {
