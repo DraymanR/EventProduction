@@ -22,24 +22,37 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [description, setDescription] = useState("");
 
   const handleSearch = () => {
-    onSearch(userName, eventTitle, eventType as EventCategory, startDate, endDate, description);
+    onSearch(
+      userName,
+      eventTitle,
+      eventType as EventCategory,
+      startDate,
+      endDate,
+      description
+    );
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4 bg-gray-100 rounded-lg shadow-md">
       <input
         type="text"
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
         placeholder="חפש לפי שם משתמש"
+        className="input-field"
       />
       <input
         type="text"
         value={eventTitle}
         onChange={(e) => setEventTitle(e.target.value)}
         placeholder="חפש לפי שם אירוע"
+        className="input-field"
       />
-      <select value={eventType} onChange={(e) => setEventType(e.target.value as EventCategory)}>
+      <select
+        value={eventType}
+        onChange={(e) => setEventType(e.target.value as EventCategory)}
+        className="input-field"
+      >
         <option value="">בחר סוג אירוע</option>
         {Object.values(EventCategory).map((type, index) => (
           <option key={index} value={type}>
@@ -51,21 +64,27 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         type="date"
         value={startDate}
         onChange={(e) => setStartDate(e.target.value)}
-        placeholder="תאריך התחלה"
+        className="input-field"
       />
       <input
         type="date"
         value={endDate}
         onChange={(e) => setEndDate(e.target.value)}
-        placeholder="תאריך סיום"
+        className="input-field"
       />
       <input
         type="text"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="חפש לפי תיאור"
+        className="input-field"
       />
-      <button onClick={handleSearch}>חפש</button>
+      <button
+        onClick={handleSearch}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        חפש
+      </button>
     </div>
   );
 };
