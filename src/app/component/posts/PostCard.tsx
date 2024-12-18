@@ -69,7 +69,6 @@ import { PostCardProps, Recommendation } from "@/app/types/user";
 import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
 import Image from "next/image";
 
-import Image from "next/image";
 import { Link } from "react-router-dom";
 
 
