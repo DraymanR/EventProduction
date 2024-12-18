@@ -1,9 +1,10 @@
-
-import mongoose, { Schema, Document } from 'mongoose';
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory , Img} from '@/app/types/user';
+import mongoose, { Schema} from 'mongoose';
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img } from '@/app/types/user';
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
+ 
+  _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -13,15 +14,15 @@ const userSchema = new Schema<User>({
     enum: [...Object.values(Title), "consumer"], 
     required: true 
   },
-  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   phone: { type: String },
   languages: { 
     type: [String], 
-    enum: Object.values(Language)||"Hebrew", 
+    enum: Object.values(Language)||"Hebrew",
     required: true 
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
   description: { type: String },
+  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
   likedPeople: [{ type: String }], // שמ  
   profileImage: { type: String, default: null },
