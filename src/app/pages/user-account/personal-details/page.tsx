@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
     console.log("page personal details")
-    const [MyDetails, setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
+    // const [MyDetails, setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
     // const userDetails = useUserStore((state) => state.user);
     // const uuser = useUserStore((state) => state.user);
-
+    
     const userDetails = useUserStore((state) => state.user);
     useEffect(() => {
         console.log("Updated userDetails:", userDetails);
@@ -22,7 +22,7 @@ const Home: React.FC = () => {
     const isReady = useUserStore((state) => state.isReady);
 
     if (!isReady) {
-        // return <p>Loading...</p>;
+        return <p>Loading...</p>;
     }
     return (
         <div dir="ltr">

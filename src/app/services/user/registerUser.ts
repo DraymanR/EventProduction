@@ -145,6 +145,20 @@ export const logout = async () => {
 //     setLikedPostsArr(likedPostsArr)}
 //   return setUserStor
 // };
+
+export const updateUserStore = (
+  user: UserFormData,
+  likedPosts: Post[],
+  likedPeople: string[],
+  posts: Post[]
+) => {
+  useUserStore.getState().setUser(user);
+  useUserStore.getState().setLikedPostsArr(likedPosts);
+  useUserStore.getState().setLikedPeople(likedPeople);
+  useUserStore.getState().setPostArr(posts);
+  useUserStore.getState().setReady(true);
+};
+
 export const useUpdateUserStore = () => {
   const setUser = useUserStore((state) => state.setUser);
   const setPosts = useUserStore((state) => state.setPostArr);
