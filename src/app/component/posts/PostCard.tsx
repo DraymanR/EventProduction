@@ -149,7 +149,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
         {images.length > 0 && (
           <div className="images flex gap-4 overflow-x-auto">
             {images.map((image, index) => (
-              <Image
+              <img
                 key={index}
                 src={image}
                 alt={`image-${index}`}

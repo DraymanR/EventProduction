@@ -10,9 +10,11 @@ const Home = () => {
     const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
     const [isReady, setIsReady] = useState(false);  
     const uuser = useUserStore((state) => state.user);
+    const storeUser = useUserStore((state) => state.user);
 
     useEffect(() => {
         const getMyPersonalDetails = async () => {
+            console.log("user!",storeUser);
             try {
                 const userDetailes = await getMyDetails()
                 console.log("userDetailes::", userDetailes);
@@ -30,6 +32,8 @@ const Home = () => {
                     profileImage: userDetailes.user.profileImage,
                 }
                 updateUserStore(user, userDetailes.user.likedPostsArr, userDetailes.user.likedPeople, userDetailes.user.postArr)
+                console.log("user!",storeUser);
+                
                 setIsReady(true);  // עדכון isReady אחרי שהנתונים נטענו בהצלחה
             } catch (error) {
                 console.error(error);
@@ -42,7 +46,6 @@ const Home = () => {
     return (
         <div>
             <PostList />
-            {/* <NewPhoto postId={"6751731765569760ca17ec3a"} /> */}
         </div>
 
     )

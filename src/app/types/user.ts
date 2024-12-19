@@ -39,24 +39,23 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps{
+export interface PostCardProps {
   postId: any;
-"_id": string,
-      "userName": string,
-      "createDate": Date,
-      "album": [
-       string
-      ],
-      "title": string,
-      "description": string,
-      "recommendations": [
-        {
-          "_id": string,
-          "userName": string,
-          "text": string,
-          "rate": number,
-         
-        }]}
+  "_id": string,
+  "userName": string,
+  "createDate": Date,
+  "album": string[],
+  "title": string,
+  "description": string,
+  "recommendations":
+  {
+    "_id": string,
+    "userName": string,
+    "text": string,
+    "rate": number,
+
+  }[]
+}
 
 export interface User {
 
@@ -112,7 +111,7 @@ export interface Post {
   title: string;
   description: string;
   recommendations: ObjectId[];
-  postId: ObjectId;
+  _id: ObjectId;
 }
 export interface PostEventProps {
   createDate: Date;
@@ -159,14 +158,14 @@ export interface UserFormData {
     building: number;
   };
   supplierDetails?: SupplierDetails;
-  profileImage: string|null;
+  profileImage: string | null;
 }
 export interface UserResponseData {
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
-  titles: (Title |"consumer"| null)[]; // אם `titles` יכול להיות `null`
+  titles: (Title | "consumer" | null)[]; // אם `titles` יכול להיות `null`
   phone: string;
   description: string;
   languages: Language[];
@@ -177,7 +176,7 @@ export interface UserResponseData {
     building: number;
   };
   profileImage: string | null;
-  likedPeople: string[]; 
+  likedPeople: string[];
   likedPostsArr: Post[];
   postArr: Post[];
 }
@@ -229,14 +228,14 @@ export interface UserFormData {
     building: number;
   };
   supplierDetails?: SupplierDetails;
-  profileImage: string|null;
+  profileImage: string | null;
 }
 export interface UserResponseData {
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
-  titles: (Title |"consumer"| null)[]; // אם `titles` יכול להיות `null`
+  titles: (Title | "consumer" | null)[]; // אם `titles` יכול להיות `null`
   phone: string;
   description: string;
   languages: Language[];
@@ -247,7 +246,7 @@ export interface UserResponseData {
     building: number;
   };
   profileImage: string | null;
-  likedPeople: string[]; 
+  likedPeople: string[];
   likedPostsArr: Post[];
   postArr: Post[];
 }
