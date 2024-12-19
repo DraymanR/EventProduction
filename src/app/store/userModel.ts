@@ -25,20 +25,29 @@ const useUserStore = create<UserStore>((set) => ({
         set({ user: newUser })
     },
     setLikedPostsArr: (newPosts: Post | Post[]) =>
-        set((state) => ({
-            likedPostsArr: Array.isArray(newPosts) ? [...state.likedPostsArr, ...newPosts] : [...state.postArr, newPosts],
-        })),
+        set((state) => {
+            const postsToAdd = Array.isArray(newPosts) ? newPosts : [newPosts];
+            const updatedPosts = [...state.likedPostsArr, ...postsToAdd].filter(
+                (post, index, arr) => arr.findIndex((p) => p._id === post._id) === index
+            );
+            return { likedPostsArr: updatedPosts };
+        }),
+    setPostArr: (newPosts: Post | Post[]) =>
+        set((state) => {
+            const postsToAdd = Array.isArray(newPosts) ? newPosts : [newPosts];
+            const updatedPosts = [...state.postArr, ...postsToAdd].filter(
+                (post, index, arr) => arr.findIndex((p) => p._id === post._id) === index
+            );
+            return { postArr: updatedPosts };
+        }),
+
     setLikedPeople: (newPeople: string | string[]) =>
         set((state) => ({
             likedPeople: Array.isArray(newPeople) ? [...state.likedPeople, ...newPeople] : [...state.likedPeople, newPeople],
         })),
-    setPostArr: (newPosts: Post | Post[]) =>
-        set((state) => ({
-            postArr: Array.isArray(newPosts) ? [...state.postArr, ...newPosts] : [...state.postArr, newPosts],
-        })),
     isReady: false,
     setReady: (ready: boolean) => set({ isReady: ready }),
-    clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [] }),
+    clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [] , isReady: false,}),
 }));
 
 export default useUserStore;

@@ -3,7 +3,6 @@
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
 import { getMyFavoriteEvents } from "@/app/services/post/post";
-import useModalStore from "@/app/store/modelPop-upWindow";
 import { Post, PostCardProps } from "@/app/types/user";
 import { useEffect, useState } from "react";
 import FavoriteEvent from "@/app/component/users/FavoriteEvent";
@@ -11,19 +10,29 @@ import FavoriteEvent from "@/app/component/users/FavoriteEvent";
 
 const Home: React.FC = () => {
   const [MyEvents, setMyEvents] = useState<PostCardProps[]>(); //  אם אנחנו 
-  // const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
-  // const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
-
   useEffect(() => {
     const getMyPersonalDetails = async () => {
       console.log("ppp");
       
       try {
         const FavoriteEvents = await getMyFavoriteEvents();
-        // const userData = convertToPosts(events.posts);
         console.log(FavoriteEvents);
-
-        setMyEvents(FavoriteEvents); // מעדכן את המצב
+        const postCardPropsArray: PostCardProps[] = FavoriteEvents.map((post) => ({
+          postId: post._id.toString(), // המרת ObjectId ל-String
+          _id: post._id.toString(),
+          userName: post.userName,
+          createDate: post.createDate,
+          album: post.album,
+          title: post.title,
+          description: post.description,
+          recommendations: post.recommendations.map((rec) => ({
+            _id: rec.toString(),
+            userName: '', // ערך דמה (אם אין לך נתונים)
+            text: '', // ערך דמה
+            rate: 0, // ערך דמה
+          })),
+        }));
+        setMyEvents(postCardPropsArray); // מעדכן את המצב
       } catch (error) {
         console.error(error);
       }
