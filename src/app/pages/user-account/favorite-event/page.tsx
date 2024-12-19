@@ -16,6 +16,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const getMyPersonalDetails = async () => {
+      console.log("ppp");
+      
       try {
         const FavoriteEvents = await getMyFavoriteEvents();
         // const userData = convertToPosts(events.posts);
@@ -38,9 +40,10 @@ const Home: React.FC = () => {
 
   return (
     <div dir="ltr">
+      <p>pp</p>
       {/* <button type="button" onClick={() => handleAddEvent()} className=" bg-red-400 text-white py-2 px-4 rounded-lg">הוספת אירוע</button> */}
       <PopUpWindow>
-        <AddPost ></AddPost>
+        <AddPost></AddPost>
       </PopUpWindow>
       {MyEvents && (
         <FavoriteEvent favoritePosts={MyEvents} ></FavoriteEvent>

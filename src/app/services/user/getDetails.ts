@@ -49,14 +49,8 @@ export const getMyDetails = async () => {
 
         // Fallback to cookie-based username retrieval
         if (typeof window !== 'undefined') {
-            console.log(typeof window);
-
             const cookies = document.cookie.split('; ');
-            console.log(cookies);
-
             const usernameCookie = cookies.find(row => row.startsWith('userName='));
-            console.log(usernameCookie);
-
             if (usernameCookie) {
                 const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
                 console.log('Username from cookie:', myUserName);
@@ -67,7 +61,7 @@ export const getMyDetails = async () => {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log('User (Cookie Auth):', response.data.user);
+                console.log('User (Cookie Auth):', response.data);
                 return response.data;
             }
         }
