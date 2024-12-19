@@ -10,14 +10,22 @@ import useUserStore from "@/app/store/userModel";
 
 const Home: React.FC = () => {
   const [MyEvents, setMyEvents] = useState<PostCardProps[]>(); //  אם אנחנו 
+  const FavoriteEvents = useUserStore((state) => state.likedPostsArr);
+
   useEffect(() => {
     const getMyPersonalDetails = async () => {
       console.log("ppp");
-      
+
       try {
-        const FavoriteEvents = useUserStore((state) => state.likedPostsArr);
         // const FavoriteEvents = await getMyFavoriteEvents();
         console.log(FavoriteEvents);
+        if (!FavoriteEvents) {
+          return (
+            <div>
+              !FavoriteEvents
+            </div>
+          )
+        }
         const postCardPropsArray: PostCardProps[] = FavoriteEvents.map((post) => ({
           postId: post._id.toString(), // המרת ObjectId ל-String
           _id: post._id.toString(),
@@ -50,7 +58,6 @@ const Home: React.FC = () => {
 
   return (
     <div dir="ltr">
-      <p>pp</p>
       {/* <button type="button" onClick={() => handleAddEvent()} className=" bg-red-400 text-white py-2 px-4 rounded-lg">הוספת אירוע</button> */}
       <PopUpWindow>
         <AddPost></AddPost>
