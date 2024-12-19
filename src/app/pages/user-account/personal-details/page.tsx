@@ -19,11 +19,11 @@ const Home: React.FC = () => {
     }, [userDetails]);
     // console.log("userDetails", userDetails);
 
-    const isReady = useUserStore((state) => state.isReady);
+    // const isReady = useUserStore((state) => state.isReady);
 
-    if (!isReady) {
-        // return <p>Loading...</p>;
-    }
+    // if (!isReady) {
+    //     // return <p>Loading...</p>;
+    // }
     return (
         <div dir="ltr">
             {userDetails ? (

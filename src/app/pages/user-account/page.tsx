@@ -9,7 +9,9 @@ import { useEffect, useState } from 'react';
 const Home = () => {
     const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
     const [isReady, setIsReady] = useState(false);  
-    const uuser = useUserStore((state) => state.user);
+    const storpostArr = useUserStore((state) => state.postArr);
+    const storlikedPeople = useUserStore((state) => state.likedPeople);
+    const storlikedPostsArr = useUserStore((state) => state.likedPostsArr);
     const storeUser = useUserStore((state) => state.user);
 
     useEffect(() => {
@@ -41,7 +43,10 @@ const Home = () => {
         }
         getMyPersonalDetails()
     }, [])
-    console.log("!!!!", uuser);
+    console.log("!!!storeUser!", storeUser);
+    console.log("!!!!storlikedPeople", storlikedPeople);
+    console.log("!!!!storlikedPostsArr", storlikedPostsArr);
+    console.log("!!!!storpostArr", storpostArr);
 
     return (
         <div>
