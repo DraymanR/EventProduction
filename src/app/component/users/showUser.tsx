@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getUserDetails } from "@/app/services/user/getDetails";
-import { UserResponseData } from '@/app/types/user';
+import { Post, PostCardProps, Recommendation, UserResponseData } from '@/app/types/user';
+import PostCard from '../posts/PostCard';
+import { ObjectId } from 'mongodb';
 
 const ShowUser = ({ userName }: { userName: string }) => {
     const [user, setUser] = useState<UserResponseData | null>(null);
@@ -9,6 +11,24 @@ const ShowUser = ({ userName }: { userName: string }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // האם המשתמש מחובר
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
 
+    // פונקציה להמרת פוסט ל-PostCardProps
+    const mapPostToPostCardProps = (post: Post): PostCardProps => {
+        return {
+            postId: post._id.toString(),
+            _id: post._id.toString(), // התאמה לדרישת PostCardProps
+            userName: post.userName,
+            createDate: post.createDate,
+            album: post.album,
+            title: post.title,
+            description: post.description,
+            recommendations: post.recommendations.map(rec => ({
+                _id: "rec",
+                userName: "userName",
+                text: "rec.text",
+                rate: 4,
+            })),
+        };
+    };
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -18,7 +38,7 @@ const ShowUser = ({ userName }: { userName: string }) => {
                 setUser(userDetails.user); // שומר את המידע ב-state
                 setError(null); // מנקה שגיאות אם יש
             } catch (err: any) {
-                setError("Failed to fetch user details");
+                setError("שגיאה בטעינת פרטי המשתמש");
                 console.error(err);
             }
         };
@@ -61,50 +81,53 @@ const ShowUser = ({ userName }: { userName: string }) => {
     }
 
     if (!user) {
-        return <div>Loading...</div>;
+        return <div>טוען...</div>;
     }
 
     return (
-        <div className="user-details p-6 bg-white shadow-lg rounded-lg">
-            <h1 className="text-2xl font-bold mb-4">Details for {user.userName}</h1>
+        <div className="user-details p-6 bg-gray-100 shadow-lg rounded-lg" dir="rtl">
+            <h1 className="text-2xl font-bold mb-4 text-right">פרטי משתמש - {user.userName}</h1>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 mb-4">
                 {user.profileImage ? (
                     <img
                         src={user.profileImage}
-                        alt="Profile"
+                        alt="תמונת פרופיל"
                         className="w-24 h-24 rounded-full object-cover"
                     />
                 ) : (
                     <div className="w-24 h-24 rounded-full bg-gray-300"></div>
                 )}
-                <div>
-                    <p><strong>Full Name:</strong> {user.firstName} {user.lastName}</p>
-                    <p><strong>Email:</strong> {user.email}</p>
-                    <p><strong>Phone:</strong> {user.phone}</p>
-                    <p><strong>Description:</strong> {user.description}</p>
-                    <p><strong>Languages:</strong> {user.languages.length > 0 ? user.languages.join(", ") : "No languages available"}</p>
+                <div className="text-right">
+                    <p><strong>שם מלא:</strong> {user.firstName} {user.lastName}</p>
+                    <p><strong>אימייל:</strong> {user.email}</p>
+                    <p><strong>טלפון:</strong> {user.phone}</p>
+                    <p><strong>תיאור:</strong> {user.description}</p>
+                    <p><strong>שפות:</strong> {user.languages.length > 0 ? user.languages.join(", ") : "אין שפות זמינות"}</p>
                 </div>
             </div>
 
-            <div className="mt-4">
-                {user.titles.length > 1 && user.titles.includes("consumer") === false ? (
-                    <div>
-                        <h2 className="text-xl font-semibold">Pricing:</h2>
-                        <p>Price information goes here</p>
-                    </div>
-                ) : null}
-            </div>
-
-            {isLoggedIn && user && (
-                <div className="mt-4">
+            {isLoggedIn && (
+                <div className="mt-4 text-right">
                     <button
                         onClick={toggleFavorite}
                         className={`px-4 py-2 rounded-lg ${isFavorite ? 'bg-red-500' : 'bg-blue-500'} text-white`}
                     >
-                        {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                        {isFavorite ? "הסר מרשימת אהובים" : "הוסף לרשימת אהובים"}
                     </button>
                 </div>
+            )}
+
+            {user.postArr && user.postArr.length > 0 ? (
+                <div className="space-y-6 mt-4">
+                    <h2 className="text-xl font-semibold text-right">פוסטים:</h2>
+                    {user.postArr.map((post: Post, index: number) => {
+                        const postCardProps = mapPostToPostCardProps(post); // המרת הפוסט
+                        return <PostCard key={index} post={postCardProps} />;
+                    })}
+                </div>
+            ) : (
+                <p className="mt-6 text-gray-500 text-right">אין פוסטים זמינים.</p>
             )}
         </div>
     );
