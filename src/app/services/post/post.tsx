@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
-import { ObjectId } from "mongoose";
+import useUserStore from "@/app/store/userModel";
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -38,8 +38,9 @@ export const getMyEvents = async () => {
 };
 export const getMyFavoriteEvents = async () => {
     try {
-        const userDetails = await getMyDetails()
-        return userDetails.user.likedPostsArr
+        return useUserStore((state) => state.likedPostsArr);
+        // const userDetails = await getMyDetails()
+        // return userDetails.user.likedPostsArr
     } catch (error) {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
@@ -89,7 +90,7 @@ export const addingMyPost = async (newPost: object) => {
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
         console.log(post_id);
-        
+
         const newPost = { "favoritePostID": post_id }
         const response = await axios.put(`http://localhost:3000/api/users/favorites`, newPost, {
             withCredentials: true,
