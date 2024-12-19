@@ -2,10 +2,10 @@
 
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
-import { getMyFavoriteEvents } from "@/app/services/post/post";
 import { Post, PostCardProps } from "@/app/types/user";
 import { useEffect, useState } from "react";
 import FavoriteEvent from "@/app/component/users/FavoriteEvent";
+import useUserStore from "@/app/store/userModel";
 
 
 const Home: React.FC = () => {
@@ -15,7 +15,8 @@ const Home: React.FC = () => {
       console.log("ppp");
       
       try {
-        const FavoriteEvents = await getMyFavoriteEvents();
+        const FavoriteEvents = useUserStore((state) => state.likedPostsArr);
+        // const FavoriteEvents = await getMyFavoriteEvents();
         console.log(FavoriteEvents);
         const postCardPropsArray: PostCardProps[] = FavoriteEvents.map((post) => ({
           postId: post._id.toString(), // המרת ObjectId ל-String
