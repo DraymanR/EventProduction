@@ -14,6 +14,7 @@ const ConsumerNavbar: React.FC = () => {
 
   const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
+
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -22,13 +23,14 @@ const ConsumerNavbar: React.FC = () => {
 
 
 
-  
-  const exite = async () => {
+    const exite = async () => {
     if (session?.user) {
       // If logged in via Google (NextAuth)
       await signOut({ 
         redirect: false  // Prevent automatic redirection
       });
+      await logout();
+
     } else {
       // If logged in via regular authentication
       await logout();

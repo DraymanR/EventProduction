@@ -10,14 +10,11 @@ import { useEffect, useState } from "react";
 const Home: React.FC = () => {
     console.log("page personal details")
     const [MyDetails, setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
-    // const userDetails = useUserStore((state) => state.user);
-    // const uuser = useUserStore((state) => state.user);
-
     const userDetails = useUserStore((state) => state.user);
+
     useEffect(() => {
         console.log("Updated userDetails:", userDetails);
     }, [userDetails]);
-    // console.log("userDetails", userDetails);
 
     const isReady = useUserStore((state) => state.isReady);
 
@@ -27,7 +24,6 @@ const Home: React.FC = () => {
     return (
         <div dir="ltr">
             {userDetails ? (
-                // {MyDetails ? (
                 <ShowUserPersonalDetails User={userDetails} ></ShowUserPersonalDetails>
             ) : (
                 <p>No user data found</p>
