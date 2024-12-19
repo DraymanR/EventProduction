@@ -36,16 +36,16 @@ export const getMyEvents = async () => {
         throw error; // טיפול בשגיאות
     }
 };
-export const getMyFavoriteEvents = async () => {
-    try {
-        return useUserStore((state) => state.likedPostsArr);
-        // const userDetails = await getMyDetails()
-        // return userDetails.user.likedPostsArr
-    } catch (error) {
-        console.error('Error registering user:', error);
-        throw error; // טיפול בשגיאות
-    }
-};
+// export const getMyFavoriteEvents = async () => {
+//     try {
+//         return useUserStore((state) => state.likedPostsArr);
+//         // const userDetails = await getMyDetails()
+//         // return userDetails.user.likedPostsArr
+//     } catch (error) {
+//         console.error('Error registering user:', error);
+//         throw error; // טיפול בשגיאות
+//     }
+// };
 export const getUserEvents = async (userName: string) => {
     try {
         const userDetails = await getUserDetails(userName)
