@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
                 { status: 400 }
             );
         }
+        console.log(userNameFromQuery);
 
         const user = await UserModel.findOne({ userName: userNameFromQuery })
             .populate('addressId')
@@ -39,10 +40,12 @@ export async function GET(req: NextRequest) {
                 populate: {
                     path: 'recommendations',
                     model: 'Recommendation',
-                },})
+                },
+            })
             .lean<User>();
 
 
+        console.log("user",user);
 
 
         if (!user) {
@@ -51,7 +54,7 @@ export async function GET(req: NextRequest) {
                 { status: 404 }
             );
         }
-        let  supplierDetails;
+        let supplierDetails;
 
         if (
             user.titles.some((title) =>
@@ -66,14 +69,14 @@ export async function GET(req: NextRequest) {
 
             // const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
             // console.log(":user",filteredUser,"supplierDetails:",supplierDetails)//),"consumerDetails",consumerDetails);
-            
-            const { firstName, lastName, phone, email, addressId, likedPeople,likedPostsArr,...filteredUser } = user;
+
+            const { firstName, lastName, phone, email, addressId, likedPeople, likedPostsArr, ...filteredUser } = user;
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
                     user: filteredUser,
                     supplierDetails,
- 
+
                 },
                 { status: 200 }
             );
@@ -83,7 +86,7 @@ export async function GET(req: NextRequest) {
             {
                 message: 'User retrieved successfully',
                 user,
-            
+
             },
             { status: 200 }
         );
@@ -93,6 +96,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(
             { error: 'Internal Server Error' },
             { status: 500 }
-        );}
+        );
+    }
 }
 
