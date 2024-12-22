@@ -248,7 +248,7 @@
 
 import React, { useState } from "react";
 import { PostCardProps, Recommendation } from "@/app/types/user";
-import PostModal from "./PostModel";
+import PostModal from "./PostDisplay";
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showPostModal, setShowPostModal] = useState(false);
 

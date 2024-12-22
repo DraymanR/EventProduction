@@ -58,6 +58,7 @@ export enum EventCategory {
   Other = 'other',
 }
 export interface PostCardProps {
+    eventCategory: EventCategory;
   _id: string,
   recommendations: [Recommendation];
   album: [Img];

@@ -4,39 +4,40 @@ import { getAllPosts } from "@/app/services/post/post"; // עדכן את הנת�
 import PostCard from "./PostCard";
 import { PostCardProps, EventCategory } from "@/app/types/user"; // ייבוא ה-Enum של סוגי האירועים
 import SearchBar from "@/app/component/SearchBar";
+import usePostStore from "@/app/store/postStore";
 
 const PostList = () => {
-  const [posts, setPosts] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
+    const { posts, setPosts } = usePostStore(); 
+  const [postss, setPostss] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
   const [filteredPosts, setFilteredPosts] = useState<PostCardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
   const [noMorePosts, setNoMorePosts] = useState<boolean>(false); // מצב של אין יותר פוסטים
-
   const loadPosts = async () => {
     if (loading || noMorePosts) return; // אם אנחנו כבר טוענים או שאין יותר פוסטים, לא נבצע טעינה נוספת
-
+  
     setLoading(true); // נעדכן את מצב הטעינה
     try {
       const data = await getAllPosts(page, 10); // העברת פרמטרים של דף ומספר פריטים
-
+  
       if (data.posts.length === 0) {
         setNoMorePosts(true); // אין יותר פוסטים לטעון
         return;
       }
-
+  
       // הוספת מניעת כפילויות באמצעות ID ייחודי של פוסט
       const newPosts = data.posts.filter(
         (post: { postId: any }) =>
           !posts.some((existingPost) => existingPost.postId === post.postId)
       );
-      console.log("ff");
-      
-
-      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setPosts(newPosts);
+      // עדכון הסטור עם הפוסטים החדשים
+      setPostss((prevPosts) => [...prevPosts, ...newPosts]);
       setFilteredPosts((prevFiltered) => [...prevFiltered, ...newPosts]);
+  
       setPage((prevPage) => prevPage + 1); // הגדלת הדף
-
+  
       if (newPosts.length < 10) {
         setNoMorePosts(true); // אין יותר פוסטים לטעון לאחר מכן
       }
@@ -47,7 +48,7 @@ const PostList = () => {
       setLoading(false); // נשחרר את מצב הטעינה
     }
   };
-
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = () => {
     const bottom =
