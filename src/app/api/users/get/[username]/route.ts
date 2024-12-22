@@ -1,15 +1,10 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { UserModel, SupplierModel } from '../../../../lib/models/user';
-import { User, Title } from '../../../../types/user';
-import connectDb from '../../../../lib/db/connectDb';
-import { verifyTokenMiddleware } from '../../../../../middlewares/middlewareToken'; 
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 import { UserModel, SupplierModel } from '@/app/lib/models/user';
 import { User, Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נניח שהמיקום של ה-middleware
 
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function GET(req: NextRequest) {
     try {
@@ -30,6 +25,7 @@ export async function GET(req: NextRequest) {
                 { status: 400 }
             );
         }
+        console.log(userNameFromQuery);
 
         const user = await UserModel.findOne({ userName: userNameFromQuery })
             .populate('addressId')
@@ -44,10 +40,12 @@ export async function GET(req: NextRequest) {
                 populate: {
                     path: 'recommendations',
                     model: 'Recommendation',
-                },})
+                },
+            })
             .lean<User>();
 
 
+        console.log("user",user);
 
 
         if (!user) {
@@ -56,7 +54,7 @@ export async function GET(req: NextRequest) {
                 { status: 404 }
             );
         }
-        let  supplierDetails;
+        let supplierDetails;
 
         if (
             user.titles.some((title) =>
@@ -69,13 +67,16 @@ export async function GET(req: NextRequest) {
         if (user.userName !== userName) {
 
 
-            const { firstName, lastName, phone, email, addressId, likedPeople,likedPostsArr,...filteredUser } = user;
+            // const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
+            // console.log(":user",filteredUser,"supplierDetails:",supplierDetails)//),"consumerDetails",consumerDetails);
+
+            const { firstName, lastName, phone, email, addressId, likedPeople, likedPostsArr, ...filteredUser } = user;
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
                     user: filteredUser,
                     supplierDetails,
- 
+
                 },
                 { status: 200 }
             );
@@ -85,7 +86,7 @@ export async function GET(req: NextRequest) {
             {
                 message: 'User retrieved successfully',
                 user,
-            
+
             },
             { status: 200 }
         );
@@ -95,6 +96,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json(
             { error: 'Internal Server Error' },
             { status: 500 }
-        );}
+        );
+    }
 }
 

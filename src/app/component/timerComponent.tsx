@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"; // for client-side navigation
 import { useSession } from "next-auth/react"; // for authentication state
 import PopUpWindow from "./pop-upWindow";
 import Login from "./users/register/login";
-import useModalStore from "@/app/store/modelStore";
+import useModalStore from "@/app/store/modelPop-upWindow";
 
 const TimerComponent = () => {
     const { data: session, status } = useSession(); // Get session and status

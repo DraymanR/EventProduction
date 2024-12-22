@@ -21,7 +21,7 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({User})
       <p><strong>Description:</strong> {User.description}</p>
       <p><strong>Language:</strong> {User.languages}</p>
       <h3>Address:</h3>
-      {/* <p>{User.addressId.street}, {User.address.building}, {User.address.city}, {User.address.zipCode}</p> */}
+      {/* <p>{User.address.street}, {User.address.building}, {User.address.city}, {User.address.zipCode}</p> */}
     
       
       

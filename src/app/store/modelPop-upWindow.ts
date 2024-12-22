@@ -14,3 +14,5 @@ const useModalStore = create<ModalState>((set) => ({
 }));
 
 export default useModalStore;
+
+

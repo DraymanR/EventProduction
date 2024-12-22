@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
-import { ObjectId } from "mongoose";
+import useUserStore from "@/app/store/userModel";
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -36,15 +36,16 @@ export const getMyEvents = async () => {
         throw error; // טיפול בשגיאות
     }
 };
-export const getMyFavoriteEvents = async () => {
-    try {
-        const userDetails = await getMyDetails()
-        return userDetails.user.likedPostsArr
-    } catch (error) {
-        console.error('Error registering user:', error);
-        throw error; // טיפול בשגיאות
-    }
-};
+// export const getMyFavoriteEvents = async () => {
+//     try {
+//         return useUserStore((state) => state.likedPostsArr);
+//         // const userDetails = await getMyDetails()
+//         // return userDetails.user.likedPostsArr
+//     } catch (error) {
+//         console.error('Error registering user:', error);
+//         throw error; // טיפול בשגיאות
+//     }
+// };
 export const getUserEvents = async (userName: string) => {
     try {
         const userDetails = await getUserDetails(userName)
@@ -70,6 +71,21 @@ export const getAllPosts = async (page: number = 1, limit: number = 10) => {
         throw error;
     }
 };
+export const getPost = async (page: number = 1, limit: number = 10,postId:string) => {
+    try {
+        const response = await axios.get(`http://localhost:3000/api/posts/get?page=${page}&limit=${limit}&postId=${postId}`, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log('Post:', response.data.posts[0]);
+        return response.data.posts[0];
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        throw error;
+    }
+};
 export const addingMyPost = async (newPost: object) => {
     try {
         const response = await axios.post(`http://localhost:3000/api/posts/post`, newPost, {
@@ -89,7 +105,7 @@ export const addingMyPost = async (newPost: object) => {
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
         console.log(post_id);
-        
+
         const newPost = { "favoritePostID": post_id }
         const response = await axios.put(`http://localhost:3000/api/users/favorites`, newPost, {
             withCredentials: true,

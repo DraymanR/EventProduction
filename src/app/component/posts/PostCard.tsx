@@ -248,7 +248,13 @@
 
 import React, { useState } from "react";
 import { PostCardProps, Recommendation } from "@/app/types/user";
-import PostModal from "./PostDisplay";
+import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
+import Image from "next/image";
+
+import { Link } from "react-router-dom";
+import PostModal from "./PostModel";
+
+
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showPostModal, setShowPostModal] = useState(false);
 

@@ -17,12 +17,13 @@ export async function GET(req: Request) {
         const eventCategory = searchParams.get('eventCategory');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
-
+        const postId = searchParams.get('postId');
         let query: any = {};
 
         if (title) {
             query.title = { $regex: title, $options: 'i' };
         }
+        
 
         if (username) {
             query.userName = { $regex: username, $options: 'i' };
@@ -43,6 +44,9 @@ export async function GET(req: Request) {
             };
         }
 
+        if (postId) {
+            query._id = postId; // הוספת תנאי לשדה postId
+        }
         console.log('Query:', query);
      
     
@@ -63,10 +67,7 @@ export async function GET(req: Request) {
            
         })
         .lean();
-        // const enrichedPosts = posts.map(post => ({
-        //     ...post,
-        //     userTitles: post.userDetails?.titles || [], // מוסיף את ה-titles
-        // }));
+    
 
         const totalPosts = await PostModel.countDocuments(query);
 
