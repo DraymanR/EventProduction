@@ -2,10 +2,10 @@
 
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
-import {  mapPostToPostCardProps } from "@/app/services/post/post";
+import { mapPostToPostCardProps } from "@/app/services/post/post";
 import useModalStore from "@/app/store/modelPop-upWindow";
 import { Post, PostCardProps } from "@/app/types/user";
-import {  useState } from "react";
+import { useState } from "react";
 import useUserStore from "@/app/store/userModel";
 import PostCard from "@/app/component/posts/PostCard";
 
@@ -14,14 +14,14 @@ const Home: React.FC = () => {
     const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
     const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
     const postArr = useUserStore((state) => state.postArr);
-    const [MyEvents, setMyEvents] = useState<Post[]>(postArr); 
+    const [MyEvents, setMyEvents] = useState<Post[]>(postArr);
 
 
 
     // useEffect(() => {
     //     const getMyPersonalDetails = async () => {
     //         try {
-                
+
     //             const events = await getMyEvents();
     //             // const userData = convertToPosts(events.posts);
     //             console.log(events);
@@ -51,12 +51,12 @@ const Home: React.FC = () => {
                 <FavoriteEvent favoritePosts={MyEvents} ></FavoriteEvent>
             )} */}
             <div className="space-y-6 mt-4">
-                    <h2 className="text-xl font-semibold text-right">פוסטים:</h2>
-                    {MyEvents.map((post: Post, index: number) => {
-                        const postCardProps = mapPostToPostCardProps(post); // המרת הפוסט
-                        return <PostCard key={index} post={postCardProps} />;
-                    })}
-                </div>
+                <h2 className="text-xl font-semibold text-right">פוסטים:</h2>
+                {MyEvents.map((post: Post, index: number) => {
+                    const postCardProps = mapPostToPostCardProps(post); // המרת הפוסט
+                    return <PostCard key={index} post={postCardProps} />;
+                })}
+            </div>
         </div>
     )
 }
