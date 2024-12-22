@@ -1,60 +1,54 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getAllPosts } from "@/app/services/post/post"; // עדכן את הנתיב למיקום הקובץ
+import { getAllPosts } from "@/app/services/post/post";
 import PostCard from "./PostCard";
-import { PostCardProps, EventCategory } from "@/app/types/user"; // ייבוא ה-Enum של סוגי האירועים
+import { PostCardProps, EventCategory, Title } from "@/app/types/user";
 import SearchBar from "@/app/component/SearchBar";
 
 const PostList = () => {
-  const [posts, setPosts] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
+  const [posts, setPosts] = useState<PostCardProps[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<PostCardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
-  const [noMorePosts, setNoMorePosts] = useState<boolean>(false); // מצב של אין יותר פוסטים
+  const [loading, setLoading] = useState<boolean>(false);
+  const [noMorePosts, setNoMorePosts] = useState<boolean>(false);
 
   const loadPosts = async () => {
-    if (loading || noMorePosts) return; // אם אנחנו כבר טוענים או שאין יותר פוסטים, לא נבצע טעינה נוספת
+    if (loading || noMorePosts) return;
 
-    setLoading(true); // נעדכן את מצב הטעינה
+    setLoading(true);
     try {
-      const data = await getAllPosts(page, 10); // העברת פרמטרים של דף ומספר פריטים
-
+      const data = await getAllPosts(page, 10);
       if (data.posts.length === 0) {
-        setNoMorePosts(true); // אין יותר פוסטים לטעון
+        setNoMorePosts(true);
         return;
       }
 
-      // הוספת מניעת כפילויות באמצעות ID ייחודי של פוסט
       const newPosts = data.posts.filter(
         (post: { postId: any }) =>
           !posts.some((existingPost) => existingPost.postId === post.postId)
       );
-      console.log("ff");
-      
 
       setPosts((prevPosts) => [...prevPosts, ...newPosts]);
       setFilteredPosts((prevFiltered) => [...prevFiltered, ...newPosts]);
-      setPage((prevPage) => prevPage + 1); // הגדלת הדף
+      setPage((prevPage) => prevPage + 1);
 
       if (newPosts.length < 10) {
-        setNoMorePosts(true); // אין יותר פוסטים לטעון לאחר מכן
+        setNoMorePosts(true);
       }
     } catch (err) {
       setError("Failed to fetch posts. Please try again later.");
       console.error("Error loading posts:", err);
     } finally {
-      setLoading(false); // נשחרר את מצב הטעינה
+      setLoading(false);
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = () => {
     const bottom =
-      window.innerHeight + window.scrollY >=
-      document.documentElement.offsetHeight - 100; // הוספת מרווח קטן לחישוב התחתית
+      window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 100;
     if (bottom) {
-      loadPosts(); // אם הגענו לתחתית, נטעין עוד פוסטים
+      loadPosts();
     }
   };
 
@@ -67,7 +61,7 @@ const PostList = () => {
 
   useEffect(() => {
     loadPosts();
-  }, []); // טעינה של הפוסטים רק פעם אחת
+  }, []);
 
   const handleSearch = (
     userName: string,
@@ -75,30 +69,33 @@ const PostList = () => {
     eventType: EventCategory,
     startDate: string,
     endDate: string,
-    description: string
+    description: string,
+    userTitle: Title
   ) => {
     const results = posts.filter((post) => {
       const matchUserName = post.userName.toLowerCase().includes(userName.toLowerCase());
       const matchEventTitle = post.title.toLowerCase().includes(eventTitle.toLowerCase());
-      const matchEventType = eventType ? post.postId?.eventCategory === eventType : true;
+      const matchEventType = eventType ? post.eventCategory === eventType : true;
       const matchDescription = post.description?.toLowerCase().includes(description.toLowerCase());
-  
       const postDate = new Date(post.createDate);
       const isWithinDateRange =
         (!startDate || postDate >= new Date(startDate)) &&
         (!endDate || postDate <= new Date(endDate));
-  
+      const matchUserTitle = userTitle
+        ? post.userDetails?.titles.includes(userTitle)
+        : true;
+
       return (
         matchUserName &&
         matchEventTitle &&
         matchEventType &&
         matchDescription &&
-        isWithinDateRange
+        isWithinDateRange &&
+        matchUserTitle
       );
     });
     setFilteredPosts(results);
   };
-  
 
   if (error) {
     return (
@@ -128,11 +125,9 @@ const PostList = () => {
         <div className="text-center py-4 text-gray-500">
           אין יותר פוסטים לטעון
         </div>
-        
-    )}
+      )}
     </div>
-  )
+  );
 };
-
 
 export default PostList;
