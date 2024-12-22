@@ -40,6 +40,7 @@ export enum EventCategory {
   Other = 'other',
 }
 export interface PostCardProps{
+  userDetails: any;
   eventCategory: EventCategory;
   postId: any;
 "_id": string,

@@ -69,7 +69,6 @@ import { PostCardProps, Recommendation } from "@/app/types/user";
 import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
 import Image from "next/image";
 
-import Image from "next/image";
 import { Link } from "react-router-dom";
 
 
@@ -150,7 +149,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
         {images.length > 0 && (
           <div className="images flex gap-4 overflow-x-auto">
             {images.map((image, index) => (
-              <Image
+              <img
                 key={index}
                 src={image}
                 alt={`image-${index}`}

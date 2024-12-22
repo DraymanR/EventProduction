@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { EventCategory } from "@/app/types/user";
+import { EventCategory, Title } from "@/app/types/user";
 
 interface SearchBarProps {
   onSearch: (
@@ -9,7 +9,8 @@ interface SearchBarProps {
     eventType: EventCategory,
     startDate: string,
     endDate: string,
-    description: string
+    description: string,
+    userTitle: Title
   ) => void;
 }
 
@@ -20,6 +21,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
+  const [userTitle, setUserTitle] = useState<Title | "">("");
 
   const handleSearch = () => {
     onSearch(
@@ -28,7 +30,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       eventType as EventCategory,
       startDate,
       endDate,
-      description
+      description,
+      userTitle as Title
     );
   };
 
@@ -79,6 +82,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="חפש לפי תיאור"
         className="input-field"
       />
+      <select
+        value={userTitle}
+        onChange={(e) => setUserTitle(e.target.value as Title)}
+        className="input-field"
+      >
+        <option value="">בחר סוג לקוח</option>
+        {Object.values(Title).map((type, index) => (
+          <option key={index} value={type}>
+            {type}
+          </option>
+        ))}
+      </select>
       <button
         onClick={handleSearch}
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
