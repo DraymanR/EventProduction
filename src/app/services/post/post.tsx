@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
-import { ObjectId } from "mongoose";
+import useUserStore from "@/app/store/userModel";
+import { Post, PostCardProps } from "@/app/types/user";
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -36,15 +37,16 @@ export const getMyEvents = async () => {
         throw error; // טיפול בשגיאות
     }
 };
-export const getMyFavoriteEvents = async () => {
-    try {
-        const userDetails = await getMyDetails()
-        return userDetails.user.likedPostsArr
-    } catch (error) {
-        console.error('Error registering user:', error);
-        throw error; // טיפול בשגיאות
-    }
-};
+// export const getMyFavoriteEvents = async () => {
+//     try {
+//         return useUserStore((state) => state.likedPostsArr);
+//         // const userDetails = await getMyDetails()
+//         // return userDetails.user.likedPostsArr
+//     } catch (error) {
+//         console.error('Error registering user:', error);
+//         throw error; // טיפול בשגיאות
+//     }
+// };
 export const getUserEvents = async (userName: string) => {
     try {
         const userDetails = await getUserDetails(userName)
@@ -89,7 +91,7 @@ export const addingMyPost = async (newPost: object) => {
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
         console.log(post_id);
-        
+
         const newPost = { "favoritePostID": post_id }
         const response = await axios.put(`http://localhost:3000/api/users/favorites`, newPost, {
             withCredentials: true,
@@ -104,3 +106,21 @@ export const addingMyFavoritePost = async (post_id: string) => {
         throw error; // טיפול בשגיאות
     }
 };
+  // פונקציה להמרת פוסט ל-PostCardProps
+   export const mapPostToPostCardProps = (post: Post): PostCardProps => {
+        return {
+            postId: post._id.toString(),
+            _id: post._id.toString(), // התאמה לדרישת PostCardProps
+            userName: post.userName,
+            createDate: post.createDate,
+            album: post.album,
+            title: post.title,
+            description: post.description,
+            recommendations: post.recommendations.map(rec => ({
+                _id: "rec",
+                userName: "userName",
+                text: "rec.text",
+                rate: 4,
+            })),
+        };
+    };

@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import useUserStore from '../../store/userModel' ;
 import { logout } from '../../services/user/registerUser';
 
-
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
@@ -19,11 +18,8 @@ const ConsumerNavbar: React.FC = () => {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-
-
-
-
-    const exite = async () => {
+  
+  const exite = async () => {
     if (session?.user) {
       // If logged in via Google (NextAuth)
       await signOut({ 
@@ -37,6 +33,8 @@ const ConsumerNavbar: React.FC = () => {
     }
     
     // Navigate to home page
+    // await logout()
+    clearUser()
     router.push('/');
 
   };

@@ -2,14 +2,12 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-import useModalStore from '@/app/store/modelStore';
-
+import useModalStore from '@/app/store/modelPop-upWindow';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { newPassword } from '@/app/services/user/registerUser';
 
-const ResetPassword:React.FC<{ otp: string; email: string }> = ({otp, email}) => {
+const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email }) => {
     const [myNewPassword, setMyNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -30,7 +28,7 @@ const ResetPassword:React.FC<{ otp: string; email: string }> = ({otp, email}) =>
             console.log('סיסמה חדשה:', myNewPassword);
             const result = await newPassword(email, otp, myNewPassword)
             console.log(result);
-            
+
             // לאחר שינוי הסיסמה נוכל להפנות את המשתמש למסך התחברות
             router.push('/pages/consumer-account');
             closeModal()

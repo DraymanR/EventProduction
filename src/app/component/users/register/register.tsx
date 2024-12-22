@@ -3,7 +3,7 @@
 import Select, { MultiValue } from "react-select";
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useModalStore from '../../../store/modelStore';
+import useModalStore from '../../../store/modelPop-upWindow';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { UserFormData, Language, SupplierDetails, Title, Option } from '@/app/types/user';
