@@ -30,7 +30,7 @@ export default async function RootLayout({
         <SessionWrapper session={session}>
           <TimerComponent></TimerComponent>
           <Navbar />
-          <main className="page-content">
+          <main className="main-content">
             {children}
           </main>
         </SessionWrapper>

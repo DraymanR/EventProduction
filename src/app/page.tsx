@@ -5,7 +5,7 @@ const Home = () => {
   return (
 
       <div>
-        {/* <PostList/> */}
+        <PostList/>
         {/* <ShowUser userName="יהודה כהן" /> */}
     </div>
   );

@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Select, { MultiValue } from "react-select";
-import "../../css/AddPost.css";
+import "@/app/css/posts/AddPost.css";
 import { addingMyPost } from "../../services/post/post";
 import useModalStore from "../../store/modelPop-upWindow";
 import useUserStore from "@/app/store/userModel";
+import '@/app/globals.css';
 
 
 const AddPost: React.FC = () => {
@@ -154,7 +155,7 @@ const AddPost: React.FC = () => {
         אני מאשרת את התנאים
       </label>
 
-      <button type="submit">הוספת פוסט</button>
+      <button type="submit" className="button-primary">הוספת פוסט</button>
     </form>
   );
 };

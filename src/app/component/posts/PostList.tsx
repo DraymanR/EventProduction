@@ -1,9 +1,11 @@
 "use client";
+import "@/app/css/posts/customStyles.css";
 import React, { useState, useEffect } from "react";
 import { getAllPosts } from "@/app/services/post/post";
 import PostCard from "./PostCard";
 import { PostCardProps, EventCategory, Title } from "@/app/types/user";
 import SearchBar from "@/app/component/SearchBar";
+import '@/app/globals.css'
 
 const PostList = () => {
   const [posts, setPosts] = useState<PostCardProps[]>([]);
@@ -99,35 +101,30 @@ const PostList = () => {
 
   if (error) {
     return (
-      <div className="text-red-600 font-bold text-center mt-4">{error}</div>
+      <div className="error-message">{error}</div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-8">
-      <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        פוסטים
-      </h1>
-      <div className="mt-12">
+    <div className="posts-container">
+      <h1 className="posts-title">פוסטים</h1>
+      <div className="search-bar-container">
         <SearchBar onSearch={handleSearch} />
       </div>
-      <div className="space-y-6">
+      <div className="posts-list">
         {filteredPosts.map((post: PostCardProps, index: number) => (
           <PostCard key={index} post={post} />
         ))}
       </div>
       {loading && (
-        <div className="text-center py-4 animate-pulse text-gray-500">
-          טוען...
-        </div>
+        <div className="loading-text">טוען...</div>
       )}
       {noMorePosts && (
-        <div className="text-center py-4 text-gray-500">
-          אין יותר פוסטים לטעון
-        </div>
+        <div className="no-more-posts-text">אין יותר פוסטים לטעון</div>
       )}
     </div>
   );
+  
 };
 
 export default PostList;
