@@ -39,7 +39,9 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps {
+export interface PostCardProps{
+  userDetails: any;
+  eventCategory: EventCategory;
   postId: any;
   "_id": string,
   "userName": string,
