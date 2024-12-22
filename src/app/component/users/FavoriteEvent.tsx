@@ -11,13 +11,13 @@ interface FavoriteEventProps {
 }
 
 const FavoriteEvent: React.FC<FavoriteEventProps> = ({ favoritePosts }) => {
-  const handlePostClick = (post: PostCardProps) => {
-    return (
-      <PopUpWindow>
-        <PostCard post={post} />
-      </PopUpWindow>
-    );
-  };
+  // const handlePostClick = (post: PostCardProps) => {
+  //   return (
+  //     <PopUpWindow>
+  //       <PostCard post={post} />
+  //     </PopUpWindow>
+  //   );
+  // };
 
   return (
     <div className="favorite-event">

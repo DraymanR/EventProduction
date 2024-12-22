@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
 import useUserStore from "@/app/store/userModel";
+import { Post, PostCardProps } from "@/app/types/user";
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -105,3 +106,21 @@ export const addingMyFavoritePost = async (post_id: string) => {
         throw error; // טיפול בשגיאות
     }
 };
+  // פונקציה להמרת פוסט ל-PostCardProps
+   export const mapPostToPostCardProps = (post: Post): PostCardProps => {
+        return {
+            postId: post._id.toString(),
+            _id: post._id.toString(), // התאמה לדרישת PostCardProps
+            userName: post.userName,
+            createDate: post.createDate,
+            album: post.album,
+            title: post.title,
+            description: post.description,
+            recommendations: post.recommendations.map(rec => ({
+                _id: "rec",
+                userName: "userName",
+                text: "rec.text",
+                rate: 4,
+            })),
+        };
+    };

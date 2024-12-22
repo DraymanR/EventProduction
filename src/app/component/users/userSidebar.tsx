@@ -11,6 +11,7 @@ const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
 
+
   const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
   // פונקציה לטיפול בלחיצה על תמונת הפרופיל

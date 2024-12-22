@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* globals.css */
+.navbar {
+    position: fixed; /* ה-navbar מקובע לחלק העליון */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* גובה ה-navbar */
+    background-color: #fff; /* צבע רקע */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* צל למראה יפה */
+    z-index: 1000; /* כדי לוודא שה-navbar יהיה מעל הכל */
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .page-content {
+    margin-top: 60px; /* רווח מלמעלה כדי לא לכסות את התוכן */
+  }
+  

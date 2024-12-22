@@ -3,6 +3,7 @@ import { getUserDetails } from "@/app/services/user/getDetails";
 import { Post, PostCardProps, Recommendation, UserResponseData } from '@/app/types/user';
 import PostCard from '../posts/PostCard';
 import { ObjectId } from 'mongodb';
+import { mapPostToPostCardProps } from '@/app/services/post/post';
 
 const ShowUser = ({ userName }: { userName: string }) => {
     const [user, setUser] = useState<UserResponseData | null>(null);
@@ -10,25 +11,6 @@ const ShowUser = ({ userName }: { userName: string }) => {
     const [isFavorite, setIsFavorite] = useState<boolean>(false); // האם המשתמש הוא חלק מרשימת האהובים
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // האם המשתמש מחובר
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
-
-    // פונקציה להמרת פוסט ל-PostCardProps
-    const mapPostToPostCardProps = (post: Post): PostCardProps => {
-        return {
-            postId: post._id.toString(),
-            _id: post._id.toString(), // התאמה לדרישת PostCardProps
-            userName: post.userName,
-            createDate: post.createDate,
-            album: post.album,
-            title: post.title,
-            description: post.description,
-            recommendations: post.recommendations.map(rec => ({
-                _id: "rec",
-                userName: "userName",
-                text: "rec.text",
-                rate: 4,
-            })),
-        };
-    };
 
     useEffect(() => {
         const fetchUser = async () => {
