@@ -69,8 +69,9 @@ const postSchema = new Schema<Post>({
   title: { type: String, required: true },
   description: { type: String, required: true },
   recommendations: [{ type: Schema.Types.ObjectId, ref: 'Recommendation' }],
-  _id: { type: Schema.Types.ObjectId, ref: 'ConsumerPost' }
+  postId: { type: Schema.Types.ObjectId, ref: 'ConsumerPost' }
 });
+
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
