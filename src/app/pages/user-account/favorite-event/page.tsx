@@ -2,7 +2,7 @@
 
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
-import { Post, PostCardProps } from "@/app/types/user";
+import { EventCategory, Post, PostCardProps } from "@/app/types/user";
 import { useEffect, useState } from "react";
 import FavoriteEvent from "@/app/component/users/FavoriteEvent";
 import useUserStore from "@/app/store/userModel";
@@ -31,6 +31,7 @@ const Home: React.FC = () => {
           _id: post._id.toString(),
           userName: post.userName,
           createDate: post.createDate,
+          PostCardProps: "",
           album: post.album,
           title: post.title,
           description: post.description,
@@ -40,6 +41,9 @@ const Home: React.FC = () => {
             text: '', // ערך דמה
             rate: 0, // ערך דמה
           })),
+
+          userDetails: [],
+          eventCategory: EventCategory.Other
         }));
         setMyEvents(postCardPropsArray); // מעדכן את המצב
       } catch (error) {

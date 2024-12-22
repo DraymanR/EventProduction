@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { getUserDetails } from "@/app/services/user/getDetails";
 import { Post, PostCardProps, Recommendation, UserResponseData } from '@/app/types/user';
 import PostCard from '../posts/PostCard';
-import { ObjectId } from 'mongodb';
 import { mapPostToPostCardProps } from '@/app/services/post/post';
 
 const ShowUser = ({ userName }: { userName: string }) => {

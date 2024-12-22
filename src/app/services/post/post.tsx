@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
 import useUserStore from "@/app/store/userModel";
-import { Post, PostCardProps } from "@/app/types/user";
+import { EventCategory, Post, PostCardProps } from "@/app/types/user";
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -122,5 +122,7 @@ export const addingMyFavoritePost = async (post_id: string) => {
                 text: "rec.text",
                 rate: 4,
             })),
+            userDetails:[],
+            eventCategory:EventCategory.Other
         };
     };
