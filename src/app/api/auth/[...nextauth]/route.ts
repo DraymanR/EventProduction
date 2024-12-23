@@ -79,6 +79,3 @@ const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
 
-// this is the changes for the vercel.
-// export const GET = NextAuth(authOptions);
-// export const POST = NextAuth(authOptions);

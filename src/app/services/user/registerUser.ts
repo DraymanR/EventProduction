@@ -2,6 +2,9 @@ import { Address, Post, UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
+import { getBaseUrl } from "../config/axios";
+
+const baseUrl = getBaseUrl();
 
 export const singIn = async (
   email: string,
@@ -13,7 +16,7 @@ export const singIn = async (
     console.log("data", data);
 
     const response = await axios.post(
-      "http://localhost:3000/api/users/register",
+      `${baseUrl}/api/users/register`,
       data,
       {
         headers: {
@@ -38,7 +41,7 @@ export const addUser = async (data: UserFormData) => {
     console.log("data,", data);
 
     const response = await axios.post(
-      "http://localhost:3000/api/users/post",
+      `${baseUrl}/api/users/post`,
       data,
       {
         headers: {
@@ -60,7 +63,7 @@ export const forgetPassword = async (data: string) => {
   try {
     const email = { email: data };
     const response = await axios.post(
-      "http://localhost:3000/api/users/register/forgetPassword",
+      `${baseUrl}/api/users/register/forgetPassword`,
       email,
       {
         withCredentials: true,
@@ -91,7 +94,7 @@ export const newPassword = async (
     };
     console.log(data);
     
-    const response = await axios.post('http://localhost:3000/api/users/register/newPassword',// data,
+    const response = await axios.post(`${baseUrl}/api/users/register/newPassword`,// data,
        {
       // withCredentials: true,
       headers: {
@@ -111,7 +114,7 @@ export const newPassword = async (
 export const logout = async () => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/users/logout",
+      `${baseUrl}/api/users/logout`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -133,18 +136,6 @@ export const logout = async () => {
   }
 };
 
-// export const useUpdateUserStore = (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
-//   const setUser = useUserStore((state) => state.setUser);
-//   const setPosts = useUserStore((state) => state.setPostArr);
-//   const setLikedPostsArr = useUserStore((state) => state.setLikedPostsArr);
-//   const setLikedPeople = useUserStore((state) => state.setLikedPeople);
-//   const setUserStor = ()=>{
-//     setUser(userData);
-//     setPosts(postArr);
-//     setLikedPeople(likedPeople)
-//     setLikedPostsArr(likedPostsArr)}
-//   return setUserStor
-// };
 
 export const updateUserStore = (
   user: UserFormData,
