@@ -17,7 +17,7 @@ export async function GET(req: Request) {
         const eventCategory = searchParams.get('eventCategory');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
-        const postId = searchParams.get('postId');
+        const Id = searchParams.get('postId');
         let query: any = {};
 
         if (title) {
@@ -44,8 +44,8 @@ export async function GET(req: Request) {
             };
         }
 
-        if (postId) {
-            query._id = postId; // הוספת תנאי לשדה postId
+        if (Id) {
+            query._id = Id; // הוספת תנאי לשדה postId
         }
         console.log('Query:', query);
      
@@ -63,8 +63,7 @@ export async function GET(req: Request) {
         })
         .populate({
             path: 'userDetails', // שם וירטואלי לשדה
-            select: 'titles', // מחזיר רק את שדה titles
-           
+            select: 'titles', // מחזיר רק את שדה titles 
         })
         .lean();
     
