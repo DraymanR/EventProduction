@@ -11,6 +11,8 @@ const Home: React.FC = () => {
     }, [userDetails]);
     // const isReady = useUserStore((state) => state.isReady);
 
+    // const isReady = useUserStore((state) => state.isReady);
+
     // if (!isReady) {
     //     // return <p>Loading...</p>;
     // }

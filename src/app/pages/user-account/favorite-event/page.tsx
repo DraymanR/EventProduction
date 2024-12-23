@@ -1,10 +1,7 @@
 'use client'
 
-import AddPost from "@/app/component/posts/AddPost";
-import PopUpWindow from "@/app/component/pop-upWindow";
-import { EventCategory, Post, PostCardProps } from "@/app/types/user";
-import { useEffect, useState } from "react";
-import FavoriteEvent from "@/app/component/users/FavoriteEvent";
+import { Post } from "@/app/types/user";
+import { useState } from "react";
 import useUserStore from "@/app/store/userModel";
 import { mapPostToPostCardProps } from "@/app/services/post/post";
 import PostCard from "@/app/component/posts/PostCard";
@@ -16,7 +13,7 @@ const Home: React.FC = () => {
 
   return (
     <div dir="ltr">
-     
+
       <div className="space-y-6 mt-4">
         <h2 className="page-title">: האירועים שאהבתי</h2>
         {MyEvents.map((post: Post, index: number) => {

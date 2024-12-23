@@ -72,6 +72,21 @@ export const getAllPosts = async (page: number = 1, limit: number = 10) => {
         throw error;
     }
 };
+export const getPost = async (page: number = 1, limit: number = 10, postId: string) => {
+    try {
+        const response = await axios.get(`http://localhost:3000/api/posts/get?page=${page}&limit=${limit}&postId=${postId}`, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log('Post:', response.data.posts[0]);
+        return response.data.posts[0];
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        throw error;
+    }
+};
 export const addingMyPost = async (newPost: object) => {
     try {
         const response = await axios.post(`http://localhost:3000/api/posts/post`, newPost, {
@@ -106,23 +121,28 @@ export const addingMyFavoritePost = async (post_id: string) => {
         throw error; // טיפול בשגיאות
     }
 };
-  // פונקציה להמרת פוסט ל-PostCardProps
-   export const mapPostToPostCardProps = (post: Post): PostCardProps => {
-        return {
-            postId: post._id.toString(),
-            _id: post._id.toString(), // התאמה לדרישת PostCardProps
-            userName: post.userName,
-            createDate: post.createDate,
-            album: post.album,
-            title: post.title,
-            description: post.description,
-            recommendations: post.recommendations.map(rec => ({
-                _id: "rec",
-                userName: "userName",
-                text: "rec.text",
-                rate: 4,
-            })),
-            userDetails:[],
-            eventCategory:EventCategory.Other
-        };
+//צריך שינוי- התאמה למה שמקבלים מהשרת
+// פונקציה להמרת פוסט ל-PostCardProps
+export const mapPostToPostCardProps = (post: Post): PostCardProps => {
+    return {
+        postId: {
+            budget: 1,
+            eventCategory: EventCategory.Other,
+            supplierNameArr: [post._id.toString()]
+        },
+        _id: post._id.toString(), // התאמה לדרישת PostCardProps
+        userName: post.userName,
+        createDate: post.createDate,
+        album: post.album.map(img => ({ imgUrl: img.toString() })),
+        title: post.title,
+        description: post.description,
+        recommendations: post.recommendations.map(rec => ({
+            // _id: "rec",
+            userName: "userName",
+            text: "rec.text",
+            rate: 4,
+        })),
+        userDetails: { titles: [""] },
+        eventCategory: EventCategory.Other
     };
+};

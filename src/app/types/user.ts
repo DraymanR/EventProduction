@@ -39,29 +39,45 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps{
-  userDetails: any;
-  eventCategory: EventCategory;
-  postId: any;
-  "_id": string,
-  "userName": string,
-  "createDate": Date,
-  "album": string[],
-  "title": string,
-  "description": string,
-  "recommendations":
-  {
-    "_id": string,
-    "userName": string,
-    "text": string,
-    "rate": number,
+// export interface PostCardProps{
+//   userDetails: any;
+//   eventCategory: EventCategory;
+//   postId: any;
+//   "_id": string,
+//   "userName": string,
+//   "createDate": Date,
+//   "album": string[],
+//   "title": string,
+//   "description": string,
+//   "recommendations":
+//   {
+//     "_id": string,
+//     "userName": string,
+//     "text": string,
+//     "rate": number,
 
-  }[]
+//   }[]
+export interface PostCardProps {
+  eventCategory: EventCategory;
+  _id: string,
+  recommendations: Recommendation[];
+  album: Img[];
+  createDate: string | number | Date;
+  title: string;
+  description: string;
+  userName: string,
+
+  userDetails: { titles: [string] },
+  postId: {
+    budget: number,
+    eventCategory: EventCategory,
+    supplierNameArr: string[]
+  };
 }
 
 export interface User {
 
-  _id: ObjectId;
+  // _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique

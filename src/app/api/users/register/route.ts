@@ -4,8 +4,7 @@ import { AuthModel } from "@/app/lib/models/user";
 import connectDb from "@/app/lib/db/connectDb";
 import { generateToken, setAuthCookies } from "@/middlewares/authMiddleware";
 
-export async function POST(req: Request) {
-    
+export async function POST(req: Request) { 
   try {
     const { email, password, userName } = await req.json();
     console.log(email, password, userName);
@@ -18,6 +17,7 @@ export async function POST(req: Request) {
     }
 
     const normalizedEmail = email.toLowerCase();
+
     await connectDb();
 
     const user = await AuthModel.findOne({ email: normalizedEmail });

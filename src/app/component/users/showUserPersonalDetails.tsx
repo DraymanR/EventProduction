@@ -21,11 +21,8 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({ user}
       <p><strong>Description:</strong> {user.description}</p>
       <p><strong>Language:</strong> {user.languages}</p>
       <h3>Address:</h3>
-      <p>{user.address.street}, {user.address.building}, {user.address.city}, {user.address.zipCode}</p>
-      <p><strong>Titles:</strong> {user.titles.filter(Boolean).join(", ") || "No titles available"}</p>
-      {/* <p><strong>Posts:</strong> {user.postArr.length}</p>
-      <p><strong>Liked Posts:</strong> {user.likedPostsArr.length}</p>
-     */}
+      {/* <p>{User.address.street}, {User.address.building}, {User.address.city}, {User.address.zipCode}</p> */}
+    
       
       
     </div>

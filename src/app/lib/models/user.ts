@@ -74,7 +74,6 @@ const postSchema = new Schema<Post>({
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
-
   eventCategory: { 
     type: String, 
     enum: Object.values(EventCategory), 

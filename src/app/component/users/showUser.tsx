@@ -2,28 +2,31 @@
 
 import React, { useEffect, useState } from 'react';
 import { getUserDetails } from '@/app/services/user/getDetails';
-import { Post, UserResponseData } from '@/app/types/user';
-import PostCard from '../posts/PostCard';
 import { mapPostToPostCardProps } from '@/app/services/post/post';
 import '@/app/css/users/showUser.css'
 import '@/app/globals.css'
+import { Post, PostCardProps, Recommendation, UserResponseData ,EventCategory} from '@/app/types/user';
+import PostCard from '../posts/PostCard';
+import { ObjectId } from 'mongodb';
 
 const ShowUser = ({ userName }: { userName: string }) => {
     const [user, setUser] = useState<UserResponseData | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [isFavorite, setIsFavorite] = useState<boolean>(false); // האם המשתמש אהוב
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // האם מחובר
+    const [isFavorite, setIsFavorite] = useState<boolean>(false); // האם המשתמש הוא חלק מרשימת האהובים
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // האם המשתמש מחובר
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+
+
 
     useEffect(() => {
         const fetchUser = async () => {
             try {
                 const userDetails = await getUserDetails(userName);
-                console.log('Fetched User:', userDetails);
-                setUser(userDetails.user); // שומר מידע ב-state
-                setError(null); // מנקה שגיאות
+                console.log("Fetched User:", userDetails);
+                setUser(userDetails.user); // שומר את המידע ב-state
+                setError(null); // מנקה שגיאות אם יש
             } catch (err: any) {
-                setError('שגיאה בטעינת פרטי המשתמש');
+                setError("שגיאה בטעינת פרטי המשתמש");
                 console.error(err);
             }
         };
@@ -31,11 +34,11 @@ const ShowUser = ({ userName }: { userName: string }) => {
         const checkIfLoggedIn = () => {
             if (typeof window !== 'undefined') {
                 const cookies = document.cookie.split('; ');
-                const usernameCookie = cookies.find((row) => row.startsWith('userName='));
+                const usernameCookie = cookies.find(row => row.startsWith('userName='));
                 if (usernameCookie) {
                     setIsLoggedIn(true);
                     const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
-                    setLoggedInUser(myUserName);
+                    setLoggedInUser(myUserName)
                     console.log('Username from cookie:', myUserName);
                 }
             }
