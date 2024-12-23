@@ -5,7 +5,7 @@ import { Post } from '@/app/types/user';  // נניח שיש לך טיפוס כ�
 // import { useUserStore } from '@/app/store/userModel';
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
-    console.log("hh")
+
   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
   const [isFavorite, setIsFavorite] = useState<boolean>(false);  // מצב האם המשתמש ברשימת האהובים
   const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש
