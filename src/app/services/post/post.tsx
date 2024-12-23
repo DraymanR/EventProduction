@@ -121,28 +121,3 @@ export const addingMyFavoritePost = async (post_id: string) => {
         throw error; // טיפול בשגיאות
     }
 };
-//צריך שינוי- התאמה למה שמקבלים מהשרת
-// פונקציה להמרת פוסט ל-PostCardProps
-export const mapPostToPostCardProps = (post: Post): PostCardProps => {
-    return {
-        postId: {
-            budget: 1,
-            eventCategory: EventCategory.Other,
-            supplierNameArr: [post._id.toString()]
-        },
-        _id: post._id.toString(), // התאמה לדרישת PostCardProps
-        userName: post.userName,
-        createDate: post.createDate,
-        album: post.album.map(img => ({ imgUrl: img.toString() })),
-        title: post.title,
-        description: post.description,
-        recommendations: post.recommendations.map(rec => ({
-            // _id: "rec",
-            userName: "userName",
-            text: "rec.text",
-            rate: 4,
-        })),
-        userDetails: { titles: [""] },
-        eventCategory: EventCategory.Other
-    };
-};

@@ -1,4 +1,4 @@
-import { Address, Post, UserFormData } from "@/app/types/user";
+import { Address, Post, PostCardProps, UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
@@ -133,24 +133,13 @@ export const logout = async () => {
   }
 };
 
-// export const useUpdateUserStore = (userData: UserFormData, likedPostsArr: Post[], likedPeople: string[], postArr: Post[]) => {
-//   const setUser = useUserStore((state) => state.setUser);
-//   const setPosts = useUserStore((state) => state.setPostArr);
-//   const setLikedPostsArr = useUserStore((state) => state.setLikedPostsArr);
-//   const setLikedPeople = useUserStore((state) => state.setLikedPeople);
-//   const setUserStor = ()=>{
-//     setUser(userData);
-//     setPosts(postArr);
-//     setLikedPeople(likedPeople)
-//     setLikedPostsArr(likedPostsArr)}
-//   return setUserStor
-// };
+
 
 export const updateUserStore = (
   user: UserFormData,
-  likedPosts: Post[],
+  likedPosts: PostCardProps[],
   likedPeople: string[],
-  posts: Post[]
+  posts: PostCardProps[]
 ) => {
   useUserStore.getState().setUser(user);
   useUserStore.getState().setLikedPostsArr(likedPosts);
@@ -167,9 +156,9 @@ export const useUpdateUserStore = () => {
 
   return (
     userData: UserFormData,
-    likedPostsArr: Post[],
+    likedPostsArr: PostCardProps[],
     likedPeople: string[],
-    postArr: Post[]
+    postArr: PostCardProps[]
   ) => {
     setUser(userData);
     console.log(userData);
