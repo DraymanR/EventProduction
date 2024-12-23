@@ -1,9 +1,9 @@
-
-import mongoose, { Schema, Document } from 'mongoose';
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory , Img} from '@/app/types/user';
+import mongoose, { Schema} from 'mongoose';
+import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img } from '@/app/types/user';
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
+  // _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -13,15 +13,15 @@ const userSchema = new Schema<User>({
     enum: [...Object.values(Title), "consumer"], 
     required: true 
   },
-  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   phone: { type: String },
   languages: { 
     type: [String], 
-    enum: Object.values(Language)||"Hebrew", 
+    enum: Object.values(Language)||"Hebrew",
     required: true 
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
   description: { type: String },
+  postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
   likedPeople: [{ type: String }], // שמ  
   profileImage: { type: String, default: null },
@@ -74,7 +74,6 @@ const postSchema = new Schema<Post>({
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
-
   eventCategory: { 
     type: String, 
     enum: Object.values(EventCategory), 
@@ -102,6 +101,14 @@ const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Rec
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
 
+postSchema.virtual('userDetails', {
+  ref: 'User', // שם המודל שאתה רוצה לשייך
+  localField: 'userName', // השדה במודל Post שמשמש כמפתח
+  foreignField: 'userName', // השדה במודל User שמקשר
+  justOne: true, // אם אתה מצפה לתוצאה אחת
+});
+postSchema.set('toObject', { virtuals: true });
+postSchema.set('toJSON', { virtuals: true });
 
 // חיפוש חכם על כותרת, שם משתמש וקטגוריית האירוע
 postSchema.index({ title: 'text' });

@@ -2,7 +2,7 @@ import { Address, Post, UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
-
+import {getUserByUsername} from '@/app/services/user/getDetails'
 export const singIn = async (
   email: string,
   userName: string,
@@ -22,7 +22,7 @@ export const singIn = async (
       }
     );
     console.log(response);
-
+    getUserByUsername(userName);
     // החזרת התשובה מהשרת
     return response;
   } catch (error) {
@@ -145,6 +145,20 @@ export const logout = async () => {
 //     setLikedPostsArr(likedPostsArr)}
 //   return setUserStor
 // };
+
+export const updateUserStore = (
+  user: UserFormData,
+  likedPosts: Post[],
+  likedPeople: string[],
+  posts: Post[]
+) => {
+  useUserStore.getState().setUser(user);
+  useUserStore.getState().setLikedPostsArr(likedPosts);
+  useUserStore.getState().setLikedPeople(likedPeople);
+  useUserStore.getState().setPostArr(posts);
+  useUserStore.getState().setReady(true);
+};
+
 export const useUpdateUserStore = () => {
   const setUser = useUserStore((state) => state.setUser);
   const setPosts = useUserStore((state) => state.setPostArr);
@@ -159,7 +173,7 @@ export const useUpdateUserStore = () => {
   ) => {
     setUser(userData);
     console.log(userData);
-
+    
     setPosts(postArr);
     setLikedPeople(likedPeople);
     setLikedPostsArr(likedPostsArr);

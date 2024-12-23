@@ -1,50 +1,26 @@
 'use client'
 
-import AddPost from "@/app/component/posts/AddPost";
-import PopUpWindow from "@/app/component/pop-upWindow";
-import { getMyFavoriteEvents } from "@/app/services/post/post";
-import useModalStore from "@/app/store/modelPop-upWindow";
-import { Post, PostCardProps } from "@/app/types/user";
-import { useEffect, useState } from "react";
-import FavoriteEvent from "@/app/component/users/FavoriteEvent";
-
+import { Post } from "@/app/types/user";
+import { useState } from "react";
+import useUserStore from "@/app/store/userModel";
+import { mapPostToPostCardProps } from "@/app/services/post/post";
+import PostCard from "@/app/component/posts/PostCard";
+import '@/app/globals.css'
 
 const Home: React.FC = () => {
-  const [MyEvents, setMyEvents] = useState<PostCardProps[]>(); //  אם אנחנו 
-  // const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
-  // const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
-
-  useEffect(() => {
-    const getMyPersonalDetails = async () => {
-      try {
-        const FavoriteEvents = await getMyFavoriteEvents();
-        // const userData = convertToPosts(events.posts);
-        console.log(FavoriteEvents);
-
-        setMyEvents(FavoriteEvents); // מעדכן את המצב
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getMyPersonalDetails()
-  }, [])
-
-  // const handleAddEvent = () => {
-  //     if (!isModalOpen) {
-  //         openModal();
-  //     }
-  // };
-
+  const favoriteEvents = useUserStore((state) => state.likedPostsArr);
+  const [MyEvents, setMyEvents] = useState<Post[]>(favoriteEvents); //  אם אנחנו 
 
   return (
     <div dir="ltr">
-      {/* <button type="button" onClick={() => handleAddEvent()} className=" bg-red-400 text-white py-2 px-4 rounded-lg">הוספת אירוע</button> */}
-      <PopUpWindow>
-        <AddPost ></AddPost>
-      </PopUpWindow>
-      {MyEvents && (
-        <FavoriteEvent favoritePosts={MyEvents} ></FavoriteEvent>
-      )}
+
+      <div className="space-y-6 mt-4">
+        <h2 className="page-title">: האירועים שאהבתי</h2>
+        {MyEvents.map((post: Post, index: number) => {
+          const postCardProps = mapPostToPostCardProps(post); // המרת הפוסט
+          return <PostCard key={index} post={postCardProps} />;
+        })}
+      </div>
     </div>
 
   )

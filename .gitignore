@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -26,7 +24,10 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env 
+.env
+.env           # הוסף כאן את ה- .env אם הוא לא נמצא
+# אם רוצים גם להתעלם מקבצי env עם שם מותאם אישית (למשל .env.production או .env.development)
+*.env.*
 
 # vercel
 .vercel
@@ -34,7 +35,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-
-
-

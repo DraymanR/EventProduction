@@ -1,29 +1,10 @@
 import { ObjectId } from "mongoose";
 import { UploadApiResponse } from 'cloudinary';
 
-export interface UserFormData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  titles: string[];
-  phone: string;
-  description: string;
-  languages: Language[];
-  address: {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  };
-  supplierDetails?: SupplierDetails;
-  profileImage: string;
-}
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
- 
+
 }
 export enum Title {
   Supplier = 'ספק/ית',
@@ -58,33 +39,52 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-export interface PostCardProps{
-  postId: any;
-"_id": string,
-      "userName": string,
-      "createDate": Date,
-      "album": [
-       string
-      ],
-      "title": string,
-      "description": string,
-      "recommendations": [
-        {
-          "_id": string,
-          "userName": string,
-          "text": string,
-          "rate": number,
-         
-        }]}
+// export interface PostCardProps{
+//   userDetails: any;
+//   eventCategory: EventCategory;
+//   postId: any;
+//   "_id": string,
+//   "userName": string,
+//   "createDate": Date,
+//   "album": string[],
+//   "title": string,
+//   "description": string,
+//   "recommendations":
+//   {
+//     "_id": string,
+//     "userName": string,
+//     "text": string,
+//     "rate": number,
+
+//   }[]
+export interface PostCardProps {
+  _id: string,
+  recommendations: [Recommendation];
+  album: [Img];
+  createDate: Date;
+  title: string;
+  description: string;
+  userName: string,
+  userDetails: { titles: [string] },
+  postId: {
+    budget: number,
+    eventCategory
+    :
+    EventCategory,
+    supplierNameArr
+    : [string]
+  };
+}
 
 export interface User {
-  porofilPic:string,
-  _id:  ObjectId;
+
+  // _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
   titles: (Title | "consumer")[]; // מערך של טיטלים
+  // titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
@@ -159,3 +159,114 @@ export interface Recommendation {
   text: string;
   rate: number; // rating 1-5
 }
+export interface UserFormData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  titles: (Title | "consumer")[];//string[];
+  phone: string;
+  description: string;
+  languages: Language[];
+  // address: Address
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string | null;
+}
+export interface UserResponseData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  titles: (Title | "consumer" | null)[]; // אם `titles` יכול להיות `null`
+  phone: string;
+  description: string;
+  languages: Language[];
+  addressId: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  profileImage: string | null;
+  likedPeople: string[];
+  likedPostsArr: Post[];
+  postArr: Post[];
+}
+
+// export interface UserFormData {
+//   profileImage: string,
+//   firstName: string;
+//   lastName: string;
+//   userName: string;
+//   email: string;
+//   password: string;
+//   titles: (Title | "consumer")[]; // מערך של טיטלים
+//   phone: string;
+//   languages: Language[]; // מערך של שפות
+//   address: {
+//     zipCode: string;
+//     city: string;
+//     street: string;
+//     building: number;
+//   };
+//   description: string,
+
+//   supplierDetails?: {
+//     startingPrice: number;
+//     topPrice: number;
+//     eventList: string[];
+//     recommendation: string[];
+//     range: number;
+//     emptyDate: string[];
+//     images: string[];
+//     description: string;
+//   };
+// }
+export interface UserFormData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+  titles: (Title | "consumer")[];//string[];
+  phone: string;
+  description: string;
+  languages: Language[];
+  // address: Address
+  address: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  supplierDetails?: SupplierDetails;
+  profileImage: string | null;
+}
+export interface UserResponseData {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  titles: (Title | "consumer" | null)[]; // אם `titles` יכול להיות `null`
+  phone: string;
+  description: string;
+  languages: Language[];
+  addressId: {
+    zipCode: string;
+    city: string;
+    street: string;
+    building: number;
+  };
+  profileImage: string | null;
+  likedPeople: string[];
+  likedPostsArr: Post[];
+  postArr: Post[];
+}
+

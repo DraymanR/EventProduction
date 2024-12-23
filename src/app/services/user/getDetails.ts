@@ -1,13 +1,50 @@
+import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
+export const getUserByUsername = async (username: string) => {
+    try {
+      // שליחת בקשה לשרת לשליפת נתוני המשתמש
+      const response = await axios.get(
+        `http://localhost:3000/api/users/get/username?username=${username}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("User fetched successfully:", response.data);
+  
+      // קבלת נתוני המשתמש מהתגובה
+      const user = response.data.user;
+  
+      // שמירת נתוני המשתמש בסטור
+      const setUser = useUserStore.getState().setUser;
+      setUser(user);
+  
+      console.log("User successfully stored in Zustand:", user);
+  
+      // החזרת נתוני המשתמש
+      return user;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error; // טיפול בשגיאות
+    }
+  };
+  
 export const getMyDetails = async () => {
     try {
+        console.log("await getSession();");
+
         // First, check if there's a NextAuth session
         const session = await getSession();
+        console.log(session);
 
         // If a session exists (Google or regular with token)
         if (session?.user) {
+            console.log("session?.user");
+
             // Try to fetch by email first (for Google auth)
             if (session.user.email) {
                 try {
@@ -24,12 +61,12 @@ export const getMyDetails = async () => {
                 }
             }
         }
+        console.log("! session");
 
         // Fallback to cookie-based username retrieval
         if (typeof window !== 'undefined') {
             const cookies = document.cookie.split('; ');
-            const usernameCookie = cookies.find(row => row.startsWith('username='));
-            
+            const usernameCookie = cookies.find(row => row.startsWith('userName='));
             if (usernameCookie) {
                 const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
                 console.log('Username from cookie:', myUserName);
@@ -40,7 +77,7 @@ export const getMyDetails = async () => {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log('User (Cookie Auth):', response.data.user);
+                console.log('User (Cookie Auth):', response.data);
                 return response.data;
             }
         }

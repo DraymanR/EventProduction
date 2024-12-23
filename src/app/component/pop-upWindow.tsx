@@ -32,7 +32,7 @@ import React from "react";
 import useModalStore from "@/app/store/modelPop-upWindow";
 import Login from "@/app/component/users/register/login"
 
-const PopUpWindow = () => {
+const PopUpWindow = ({ children }: { children: React.ReactNode }) => {
   const isModalOpen = useModalStore((state) => state.isModalOpen);
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -47,7 +47,8 @@ const PopUpWindow = () => {
         >
           ✕
         </button>
-        <Login />
+        {/* <Login /> */}
+        {children}
       </div>
     </div>
   );

@@ -1,60 +1,62 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { getAllPosts } from "@/app/services/post/post"; // עדכן את הנתיב למיקום הקובץ
-import PostCard from "./PostCard";
 import { PostCardProps, EventCategory } from "@/app/types/user"; // ייבוא ה-Enum של סוגי האירועים
 import SearchBar from "@/app/component/SearchBar";
+import usePostStore from "@/app/store/postStore";
+import "@/app/css/posts/customStyles.css";
+import React, { useState, useEffect } from "react";
+import { getAllPosts } from "@/app/services/post/post";
+import PostCard from "./PostCard";
+import '@/app/globals.css'
 
 const PostList = () => {
-  const [posts, setPosts] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
+    const { posts, setPosts } = usePostStore(); 
+  const [postss, setPostss] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
   const [filteredPosts, setFilteredPosts] = useState<PostCardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
   const [noMorePosts, setNoMorePosts] = useState<boolean>(false); // מצב של אין יותר פוסטים
-
   const loadPosts = async () => {
     if (loading || noMorePosts) return; // אם אנחנו כבר טוענים או שאין יותר פוסטים, לא נבצע טעינה נוספת
-
+  
     setLoading(true); // נעדכן את מצב הטעינה
     try {
       const data = await getAllPosts(page, 10); // העברת פרמטרים של דף ומספר פריטים
-
+  
       if (data.posts.length === 0) {
-        setNoMorePosts(true); // אין יותר פוסטים לטעון
+        setNoMorePosts(true);
         return;
       }
-
+  
       // הוספת מניעת כפילויות באמצעות ID ייחודי של פוסט
       const newPosts = data.posts.filter(
         (post: { postId: any }) =>
           !posts.some((existingPost) => existingPost.postId === post.postId)
       );
-      console.log("ff");
-      
-
-      setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setPosts(newPosts);
+      // עדכון הסטור עם הפוסטים החדשים
+      setPostss((prevPosts) => [...prevPosts, ...newPosts]);
       setFilteredPosts((prevFiltered) => [...prevFiltered, ...newPosts]);
+  
       setPage((prevPage) => prevPage + 1); // הגדלת הדף
-
+  
       if (newPosts.length < 10) {
-        setNoMorePosts(true); // אין יותר פוסטים לטעון לאחר מכן
+        setNoMorePosts(true);
       }
     } catch (err) {
       setError("Failed to fetch posts. Please try again later.");
       console.error("Error loading posts:", err);
     } finally {
-      setLoading(false); // נשחרר את מצב הטעינה
+      setLoading(false);
     }
   };
-
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = () => {
     const bottom =
-      window.innerHeight + window.scrollY >=
-      document.documentElement.offsetHeight - 100; // הוספת מרווח קטן לחישוב התחתית
+      window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 100;
     if (bottom) {
-      loadPosts(); // אם הגענו לתחתית, נטעין עוד פוסטים
+      loadPosts();
     }
   };
 
@@ -67,7 +69,7 @@ const PostList = () => {
 
   useEffect(() => {
     loadPosts();
-  }, []); // טעינה של הפוסטים רק פעם אחת
+  }, []);
 
   const handleSearch = (
     userName: string,
@@ -102,36 +104,30 @@ const PostList = () => {
 
   if (error) {
     return (
-      <div className="text-red-600 font-bold text-center mt-4">{error}</div>
+      <div className="error-message">{error}</div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-8">
-      <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        פוסטים
-      </h1>
-      <div className="mt-12">
+    <div className="posts-container">
+      <h1 className="posts-title">פוסטים</h1>
+      <div className="search-bar-container">
         <SearchBar onSearch={handleSearch} />
       </div>
-      <div className="space-y-6">
+      <div className="posts-list">
         {filteredPosts.map((post: PostCardProps, index: number) => (
           <PostCard key={index} post={post} />
         ))}
       </div>
       {loading && (
-        <div className="text-center py-4 animate-pulse text-gray-500">
-          טוען...
-        </div>
+        <div className="loading-text">טוען...</div>
       )}
       {noMorePosts && (
-        <div className="text-center py-4 text-gray-500">
-          אין יותר פוסטים לטעון
-        </div>
-        
-    )}
+        <div className="no-more-posts-text">אין יותר פוסטים לטעון</div>
+      )}
     </div>
-  )
+  );
+  
 };
 
 

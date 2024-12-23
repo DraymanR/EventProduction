@@ -7,10 +7,10 @@ import { useRouter } from 'next/navigation';
 import useUserStore from '../../store/userModel' ;
 import { logout } from '../../services/user/registerUser';
 
-
 const ConsumerNavbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
+
 
   const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
@@ -18,10 +18,6 @@ const ConsumerNavbar: React.FC = () => {
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
-
-
-
-
   
   const exite = async () => {
     if (session?.user) {
@@ -35,6 +31,8 @@ const ConsumerNavbar: React.FC = () => {
     }
     
     // Navigate to home page
+    // await logout()
+    clearUser()
     router.push('/');
 
   };

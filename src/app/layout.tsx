@@ -18,22 +18,22 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   const session = await getServerSession(authOptions)
 
   return (
     <html lang="en" dir="rtl">
       <body>
-     
 
 
-   <SessionWrapper session={session}>
-   <TimerComponent></TimerComponent>
-      <Navbar></Navbar>
-      {children}
-      
-       
-        </SessionWrapper> 
+
+        <SessionWrapper session={session}>
+          <TimerComponent></TimerComponent>
+          <Navbar />
+          <main className="main-content">
+            {children}
+          </main>
+        </SessionWrapper>
       </body>
     </html>
   );

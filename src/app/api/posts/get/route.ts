@@ -17,19 +17,20 @@ export async function GET(req: Request) {
         const eventCategory = searchParams.get('eventCategory');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
-
+        const Id = searchParams.get('postId');
         let query: any = {};
 
         if (title) {
-            query.title = { $regex: title, $options: 'i' }; 
+            query.title = { $regex: title, $options: 'i' };
         }
+        
 
         if (username) {
-            query.userName = { $regex: username, $options: 'i' }; 
+            query.userName = { $regex: username, $options: 'i' };
         }
 
         if (eventCategory) {
-            query.eventCategory = { $regex: eventCategory, $options: 'i' }; 
+            query.eventCategory = { $regex: eventCategory, $options: 'i' };
         }
 
         if (startDate) {
@@ -37,26 +38,35 @@ export async function GET(req: Request) {
         }
 
         if (endDate) {
-            query.createDate = { 
-                ...query.createDate, 
-                $lte: new Date(endDate) 
+            query.createDate = {
+                ...query.createDate,
+                $lte: new Date(endDate)
             };
         }
 
-        console.log('Query:', query); 
-
+        if (Id) {
+            query._id = Id; // הוספת תנאי לשדה postId
+        }
+        console.log('Query:', query);
+     
+    
         const posts = await PostModel.find(query)
-            .skip(skip)  
-            .limit(limit) 
-            .populate({
-                path: 'recommendations',
-                model: 'Recommendation',
-            })
-            .populate({
-                path: 'postId',
-                model: 'ConsumerPost',
-            })
-            .lean(); 
+        .skip(skip)
+        .limit(limit)
+        .populate({
+            path: 'recommendations',
+            model: 'Recommendation',
+        })
+        .populate({
+            path: 'postId',
+            model: 'ConsumerPost',
+        })
+        .populate({
+            path: 'userDetails', // שם וירטואלי לשדה
+            select: 'titles', // מחזיר רק את שדה titles 
+        })
+        .lean();
+    
 
         const totalPosts = await PostModel.countDocuments(query);
 
@@ -64,8 +74,8 @@ export async function GET(req: Request) {
             {
                 message: 'Posts retrieved successfully',
                 posts: posts,
-                totalPosts: totalPosts, 
-                totalPages: Math.ceil(totalPosts / limit), 
+                totalPosts: totalPosts,
+                totalPages: Math.ceil(totalPosts / limit),
                 currentPage: page,
             },
             { status: 200 }

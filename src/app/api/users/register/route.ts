@@ -1,13 +1,10 @@
+import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+import { AuthModel } from "@/app/lib/models/user";
+import connectDb from "@/app/lib/db/connectDb";
+import { generateToken, setAuthCookies } from "@/middlewares/authMiddleware";
 
-import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
-import { AuthModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
-import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
-
-export async function POST(req: Request) {
-    console.log("qqqqqqqqqqqq");
-    
+export async function POST(req: Request) { 
   try {
     const { email, password, userName } = await req.json();
     console.log(email, password, userName);
@@ -20,6 +17,7 @@ export async function POST(req: Request) {
     }
 
     const normalizedEmail = email.toLowerCase();
+
     await connectDb();
 
     const user = await AuthModel.findOne({ email: normalizedEmail });
@@ -48,12 +46,10 @@ export async function POST(req: Request) {
 
     setAuthCookies(response, user.userName, token);
 
-        return response;
-    } catch (error) {
-        console.error('Error during login:', error);
-        return NextResponse.json(
-            { error: 'Error during login' },
-            { status: 500 }
-        );
-    }
+    return response;
+  } catch (error) {
+    console.error("Error during login:", error);
+    return NextResponse.json({ error: "Error during login" }, { status: 500 });
+  }
+
 }
