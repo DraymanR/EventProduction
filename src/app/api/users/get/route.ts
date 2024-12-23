@@ -36,10 +36,11 @@ export async function GET(req: Request) {
 
       
         const users = await UserModel.find(query)
-            .skip(skip)  // דלג על הנתונים שכבר הוצגו
-            .limit(limit)  // הגבל את התוצאות לפי המגבלה
-            .populate('addressId') // ממלא את פרטי הכתובת ממודל הכתובת
-            .lean(); // הפוך לאובייקט רגיל ולא דוקומנט של Mongoose
+        .skip(skip)
+        .limit(limit)// בחר רק את השדות שברצונך להחזיר
+        .populate('addressId', 'city')
+        .select('userName email phone titles languages profileImage ') // אם אתה רוצה גם להציג את פרטי הכתובת
+        .lean();
 
         const totalUsers = await UserModel.countDocuments(query); // ספר את כל המשתמשים שמתאימים לשאילתא
 

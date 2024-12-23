@@ -4,7 +4,7 @@ import connectDb from "../../../lib/db/connectDb";
 import { ConsumerPostModel, PostModel, UserModel } from "../../../lib/models/user";
 import { verifyTokenMiddleware } from "../../../../middlewares/middlewareToken";
 
-export async function POST(req: NextRequest) {  
+export async function POST(req: NextRequest) {
     try {
         await connectDb();
 
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
 
         // const { title, description, album, recommendations, eventCategory, budget, supplierNameArr,isConsumer } = body;
-        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr,isConsumer } = body;
+        const { title, description, album, recommendations, eventCategory, budget, supplierNameArr, isConsumer } = body;
 
 
         if (!title || !description) {
@@ -39,8 +39,8 @@ export async function POST(req: NextRequest) {
         }
 
         let newPost;
-
-        if (foundUser.titles.includes("consumer")&&isConsumer) {
+        let consumerPost;
+        if (foundUser.titles.includes("consumer") && isConsumer) {
 
             if (!supplierNameArr || !Array.isArray(supplierNameArr)) {
                 return NextResponse.json(
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
                 );
             }
 
-            const consumerPost = new ConsumerPostModel({
+            consumerPost = new ConsumerPostModel({
                 eventCategory,
                 supplierNameArr,
                 budget,
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
         await newPost.save();
         foundUser.postArr.push(newPost._id);
         await foundUser.save();
-
+        consumerPost?newPost.postId = consumerPost:null;
         return NextResponse.json(
             { message: 'Post added successfully', post: newPost },
             { status: 201 }
