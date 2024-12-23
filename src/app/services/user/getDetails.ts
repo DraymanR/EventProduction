@@ -1,17 +1,34 @@
+import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getSession } from "next-auth/react";
 
 export const getUserByUsername = async (username: string) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${username}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log(response);
-      return response.data.user;
+      // שליחת בקשה לשרת לשליפת נתוני המשתמש
+      const response = await axios.get(
+        `http://localhost:3000/api/users/get/username?username=${username}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("User fetched successfully:", response.data);
+  
+      // קבלת נתוני המשתמש מהתגובה
+      const user = response.data.user;
+  
+      // שמירת נתוני המשתמש בסטור
+      const setUser = useUserStore.getState().setUser;
+      setUser(user);
+  
+      console.log("User successfully stored in Zustand:", user);
+  
+      // החזרת נתוני המשתמש
+      return user;
     } catch (error) {
-      console.error('Error fetching user:', error);
+      console.error("Error fetching user:", error);
       throw error; // טיפול בשגיאות
     }
   };

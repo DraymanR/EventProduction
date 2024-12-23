@@ -2,7 +2,7 @@ import { Address, Post, UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
-
+import {getUserByUsername} from '@/app/services/user/getDetails'
 export const singIn = async (
   email: string,
   userName: string,
@@ -22,7 +22,7 @@ export const singIn = async (
       }
     );
     console.log(response);
-
+    getUserByUsername(userName);
     // החזרת התשובה מהשרת
     return response;
   } catch (error) {

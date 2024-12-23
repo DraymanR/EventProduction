@@ -1,15 +1,42 @@
 import React from 'react';
 import Link from 'next/link';
 import { PostCardProps } from '@/app/types/user';
-
+import useUserStore from '@/app/store/userModel';
+import { addPostToFavorites } from '@/app/services/user/post';
 const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
-  const isFavorite = true; // יש להחליף במידע אמיתי האם זה פוסט מעודף
+  const { likedPostsArr, setLikedPostsArr } = useUserStore();
+
+  // פונקציה שבודקת אם הפוסט במועדפים
+  const isFavorite = likedPostsArr.some((favoritePost) => favoritePost._id === post._id);
+
+  // פונקציה להוספה או הסרה של פוסט ממועדפים
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      // אם הפוסט במועדפים - נסיר אותו
+      setLikedPostsArr(likedPostsArr.filter((favoritePost) => favoritePost._id !== post._id));
+    } else {
+      // אם הפוסט לא במועדפים - נוסיף אותו
+      setLikedPostsArr(post);
+    }
+  };
+
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('he-IL', options);
+  };
 
   return (
     <div className="container mx-auto p-6">
       <div className="bg-white shadow-lg rounded-lg p-6">
         {/* כותרת הפוסט */}
         <h1 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h1>
+        {/* תאריך יצירת הפוסט */}
+        {post.createDate && (
+          <p className="text-sm text-gray-500 mb-4">
+            נוצר בתאריך: {formatDate(post.createDate.toString())}
+          </p>
+        )}
 
         {/* פרטי הכותב */}
         <div className="flex items-center mb-4">
@@ -84,7 +111,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
 
         {/* כפתור מועדפים */}
         <div className="favorite mt-6">
-          <button
+          <button onClick={()=>addPostToFavorites(post._id)}
             className={`px-4 py-2 rounded-md ${
               isFavorite ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-800'
             }`}
