@@ -1,8 +1,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import connectDb from "../../../lib/db/connectDb";
-import { ConsumerPostModel, PostModel, UserModel } from "../../../lib/models/user";
-import { verifyTokenMiddleware } from "../../../../middlewares/middlewareToken";
+import connectDb from "@/app/lib/db/connectDb";
+import { ConsumerPostModel, PostModel, UserModel } from "@/app/lib/models/user";
+import { verifyTokenMiddleware } from "@/middlewares/middlewareToken";
 
 export async function POST(req: NextRequest) {  
     try {

@@ -61,7 +61,6 @@ const AddPost: React.FC = () => {
     console.log("Post Created: ", newPost);
     const pp = await addingMyPost(newPost)
     closeModal()
-    console.log("pp",pp);
     setPostArr(pp.post)
     alert("הפוסט נוסף בהצלחה!");
     setTitle("");

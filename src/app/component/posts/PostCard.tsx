@@ -65,7 +65,7 @@
 // export default PostCard;
 'use client'
 import React, { useState } from "react";
-import { PostCardProps, Recommendation } from "@/app/types/user";
+import { PostCardProps, Recommendation } from "@/app/types/post";
 import { addingMyFavoritePost, addRecommendation } from "@/app/services/post/post"; // ייבוא הפונקציה
 import Image from "next/image";
 

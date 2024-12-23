@@ -1,5 +1,6 @@
 import mongoose, { Schema} from 'mongoose';
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img } from '@/app/types/user';
+import { User, Address, Supplier,Auth,Title ,Language, Img } from '@/app/types/user';
+import { ConsumerPost, EventCategory, Post, Recommendation } from '@/app/types/post';
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
@@ -69,7 +70,7 @@ const postSchema = new Schema<Post>({
   title: { type: String, required: true },
   description: { type: String, required: true },
   recommendations: [{ type: Schema.Types.ObjectId, ref: 'Recommendation' }],
-  _id: { type: Schema.Types.ObjectId, ref: 'ConsumerPost' }
+  postId: { type: Schema.Types.ObjectId, ref: 'ConsumerPost' }
 });
 
 // הסכמה למודל פוסט צרכן (ConsumerPost)

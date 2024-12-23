@@ -1,18 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { EventCategory, Title } from "@/app/types/user";
+import {  SearchBarProps, Title } from "@/app/types/user";
+import { EventCategory } from "@/app/types/post";
 
-interface SearchBarProps {
-  onSearch: (
-    userName: string,
-    eventTitle: string,
-    eventType: EventCategory,
-    startDate: string,
-    endDate: string,
-    description: string,
-    userTitle: Title
-  ) => void;
-}
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [userName, setUserName] = useState("");

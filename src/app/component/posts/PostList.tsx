@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { getAllPosts } from "@/app/services/post/post";
 import PostCard from "./PostCard";
-import { PostCardProps, EventCategory, Title } from "@/app/types/user";
+import {  Title } from "@/app/types/user";
 import SearchBar from "@/app/component/SearchBar";
+import { EventCategory, PostCardProps } from "@/app/types/post";
 
 const PostList = () => {
   const [posts, setPosts] = useState<PostCardProps[]>([]);

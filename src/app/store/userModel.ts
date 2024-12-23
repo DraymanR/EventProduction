@@ -1,19 +1,7 @@
 import { create } from 'zustand';
-import { Post, UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
+import {  UserFormData, UserStore } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
+import { Post } from '@/app/types/post';
 
-interface UserStore {
-    user: UserFormData | null,
-    likedPostsArr: Post[],
-    likedPeople: string[],
-    postArr: Post[],
-    setUser: (newUser: UserFormData) => void;
-    setLikedPostsArr: (newPost: Post | Post[]) => void;
-    setLikedPeople: (newPeople: string | string[]) => void;
-    setPostArr: (newPost: Post | Post[]) => void;
-    isReady: boolean;
-    setReady: (ready: boolean) => void;
-    clearUser: () => void;
-}
 
 const useUserStore = create<UserStore>((set) => ({
     user: null,

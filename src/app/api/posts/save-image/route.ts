@@ -78,8 +78,8 @@
 // }
 
 import { NextRequest, NextResponse } from 'next/server';
-import connectDb from '../../../lib/db/connectDb';
-import { ImgModel, PostModel } from '../../../lib/models/user';
+import connectDb from '@/app/lib/db/connectDb';
+import { ImgModel, PostModel } from '@/app/lib/models/user';
 
 export async function POST(req: NextRequest) {
     try {

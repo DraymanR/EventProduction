@@ -1,12 +1,7 @@
 
 // store/modalStore.ts
 import {create} from "zustand";
-
-interface ModalState {
-  isModalOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-}
+import { ModalState } from "../types/user";
 
 const useModalStore = create<ModalState>((set) => ({
   isModalOpen: false,

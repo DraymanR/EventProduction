@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getUserDetails } from "@/app/services/user/getDetails";
-import { Post, PostCardProps, Recommendation, UserResponseData } from '@/app/types/user';
+import {  UserResponseData } from '@/app/types/user';
 import PostCard from '../posts/PostCard';
 import { mapPostToPostCardProps } from '@/app/services/post/post';
+import { Post } from '@/app/types/post';
 
 const ShowUser = ({ userName }: { userName: string }) => {
     const [user, setUser] = useState<UserResponseData | null>(null);

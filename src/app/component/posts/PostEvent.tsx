@@ -1,15 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Post, Recommendation } from "../../types/user"; // ייבוא הממשקים
 import "./PostEvent.css";
 import { ObjectId } from "mongoose";
 import Image from "next/image";
+import { PostEventProps, Recommendation } from "@/app/types/post";
 
-interface PostEventProps {
-  post: Post;
-  recommendations: ObjectId[];
-  // recommendations: Recommendation[];
-}
 
 const PostEvent: React.FC<PostEventProps> = ({ post, recommendations }) => {
 

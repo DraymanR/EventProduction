@@ -1,11 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { getUserByUsername } from '@/app/services/user/getDetails';  // נניח שזו פונקציה ששולחת בקשה ל-API
-import { Post } from '@/app/types/user';  // נניח שיש לך טיפוס כזה
+import { Post } from '@/app/types/post';  // נניח שיש לך טיפוס כזה
 // import { useUserStore } from '@/app/store/userModel';
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
-    console.log("hh")
   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
   const [isFavorite, setIsFavorite] = useState<boolean>(false);  // מצב האם המשתמש ברשימת האהובים
   const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש

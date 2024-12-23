@@ -1,14 +1,11 @@
 "use client";
 
 import React from "react";
-import { Post, PostCardProps } from "../../types/user";
 import PopUpWindow from "../pop-upWindow";
 import PostCard from "../posts/PostCard";
+import { FavoriteEventProps, PostCardProps } from "@/app/types/post";
 // import "./FavoriteEvent.css";
 
-interface FavoriteEventProps {
-  favoritePosts: PostCardProps[];
-}
 
 const FavoriteEvent: React.FC<FavoriteEventProps> = ({ favoritePosts }) => {
   // const handlePostClick = (post: PostCardProps) => {

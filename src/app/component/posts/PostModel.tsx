@@ -1,11 +1,7 @@
 import React from 'react';
-import { PostCardProps } from '@/app/types/user';
 import Image from 'next/image';
+import { PostModalProps } from '@/app/types/post';
 
-interface PostModalProps {
-  post: PostCardProps;
-  onClose: () => void;
-}
 
 const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   return (
