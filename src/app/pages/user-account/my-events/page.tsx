@@ -41,7 +41,7 @@ const Home: React.FC = () => {
         <div dir="ltr">
             <button type="button" onClick={() => handleAddEvent()} className=" bg-red-400 text-white py-2 px-4 rounded-lg">הוספת אירוע</button>
             <PopUpWindow>
-                <AddPost ></AddPost>
+                {/* <AddPost ></AddPost> */}
             </PopUpWindow>
             {MyEvents && (
                 <FavoriteEvent favoritePosts={MyEvents} ></FavoriteEvent>
