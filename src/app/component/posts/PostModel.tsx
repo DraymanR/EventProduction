@@ -62,7 +62,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
               {post.album.map((image, index) => (
                 <img
                   key={index}
-                  src={image.imgUrl}
+                  // src={image.imgUrl}
                   alt={`image-${index}`}
                   className="w-32 h-32 object-cover rounded-md"
                 />

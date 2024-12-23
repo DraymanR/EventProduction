@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.error-message {
+  @apply text-red-600 font-bold text-center mt-4;
+}
+
+.main-content {
+  @apply pt-16; /* Adjust this value based on Navbar height */
+}
+.page-title {
+  text-align: center; /* ימרכז את הכותרת */
+  color: #f87171; /* text-red-400 */
+  font-size: 1.125rem; /* text-lg */
+  font-weight: bold; /* font-bold */
+}
+.button-primary {
+  width: 100%;
+  background-color: #f87171; /* bg-red-300 */
+  color: white;
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  border-radius: 0.75rem; /* rounded-lg */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button-primary:hover {
+  background-color: #f43f5e; /* bg-red-400 */
+}
+
+/* עיצוב כפתור כמראה קישור */
+.button-link {
+  color: #3b82f6; /* text-blue-500 */
+  text-decoration: underline; /* underline */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+
+.button-link:hover {
+  text-decoration: none; /* להפסיק את הקו תחתון בהובר אם רוצים */
+}

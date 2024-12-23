@@ -1,22 +1,24 @@
 "use client";
 import React, { useState } from "react";
 import Select, { MultiValue } from "react-select";
-import "../../css/AddPost.css";
+import "@/app/css/posts/AddPost.css";
 import { addingMyPost } from "../../services/post/post";
 import useModalStore from "../../store/modelPop-upWindow";
+import useUserStore from "@/app/store/userModel";
+import '@/app/globals.css';
 
 
 const AddPost: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [eventCategory, setEventCategory] = useState<string>("barmitzva");
-  // const [location, setLocation] = useState<string>("צפון");
   const [album, setAlbum] = useState<string[]>([]);
   const [budget, setBudget] = useState<number>(0);
   const [isConsumer, setIsConsumer] = useState<boolean>(true);
   const [supplierNameArr, setSupplierNameArr] = useState<MultiValue<string>>([]);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
   const closeModal = useModalStore((state) => state.closeModal);
+    const setPostArr = useUserStore((state) => state.setPostArr);
 
 
   // רשימת הספקים
@@ -58,14 +60,14 @@ const AddPost: React.FC = () => {
     };
 
     console.log("Post Created: ", newPost);
-    await addingMyPost(newPost)
+    const pp = await addingMyPost(newPost)
     closeModal()
-    // שמירת הפוסט או שליחה לשרת
+    console.log("pp",pp);
+    setPostArr(pp.post)
     alert("הפוסט נוסף בהצלחה!");
     setTitle("");
     setDescription("");
     setEventCategory("barmitzva");
-    // setLocation("צפון");
     setSupplierNameArr([])
     setAlbum([]);
     setBudget(0);
@@ -153,7 +155,7 @@ const AddPost: React.FC = () => {
         אני מאשרת את התנאים
       </label>
 
-      <button type="submit">הוספת פוסט</button>
+      <button type="submit" className="button-primary">הוספת פוסט</button>
     </form>
   );
 };

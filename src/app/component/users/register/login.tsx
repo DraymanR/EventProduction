@@ -5,6 +5,7 @@ import EnterCodeFromEmail from '@/app/component/users/register/enterCodeFromEmai
 import { forgetPassword } from '@/app/services/user/registerUser';
 import Register from './register';
 import ResetPassword from '@/app/component/users/register/newPassword';
+import '@/app/globals.css'
 
 
 const Login: React.FC = () => {
@@ -44,7 +45,7 @@ const Login: React.FC = () => {
             {currentStep === 'newUser' && (
                 <Register onBack={() => { setErrorMessage(''); setCurrentStep('LoginWithPassword') }} />
             )}
-            {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         </div>
     );
