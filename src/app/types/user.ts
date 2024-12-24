@@ -91,10 +91,6 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-// export interface Consumer {
-//   userName: string;
-//    // array of Usernames
-// }
 
 export interface Address {
   userName: string;
@@ -150,7 +146,6 @@ export interface UserFormData {
   phone: string;
   description: string;
   languages: Language[];
-  // address: Address
   address: {
     zipCode: string;
     city: string;
@@ -181,35 +176,6 @@ export interface UserResponseData {
   postArr: Post[];
 }
 
-// export interface UserFormData {
-//   profileImage: string,
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   titles: (Title | "consumer")[]; // מערך של טיטלים
-//   phone: string;
-//   languages: Language[]; // מערך של שפות
-//   address: {
-//     zipCode: string;
-//     city: string;
-//     street: string;
-//     building: number;
-//   };
-//   description: string,
-
-//   supplierDetails?: {
-//     startingPrice: number;
-//     topPrice: number;
-//     eventList: string[];
-//     recommendation: string[];
-//     range: number;
-//     emptyDate: string[];
-//     images: string[];
-//     description: string;
-//   };
-// }
 export interface UserFormData {
   firstName: string;
   lastName: string;

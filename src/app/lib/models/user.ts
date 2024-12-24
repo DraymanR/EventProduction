@@ -72,6 +72,7 @@ const postSchema = new Schema<Post>({
   postId: { type: Schema.Types.ObjectId, ref: 'ConsumerPost' }
 });
 
+
 // הסכמה למודל פוסט צרכן (ConsumerPost)
 const consumerPostSchema = new Schema<ConsumerPost>({
   eventCategory: { 

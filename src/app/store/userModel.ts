@@ -1,3 +1,4 @@
+
 import { create } from 'zustand';
 import { Post,PostCardProps, UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
 
@@ -45,9 +46,13 @@ const useUserStore = create<UserStore>((set) => ({
         set((state) => ({
             likedPeople: Array.isArray(newPeople) ? [...state.likedPeople, ...newPeople] : [...state.likedPeople, newPeople],
         })),
+    setPostArr: (newPosts: Post | Post[]) =>
+        set((state) => ({
+            postArr: Array.isArray(newPosts) ? [...state.postArr, ...newPosts] : [...state.postArr, newPosts],
+        })),
     isReady: false,
     setReady: (ready: boolean) => set({ isReady: ready }),
-    clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [] , isReady: false,}),
+    clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [] }),
 }));
 
 export default useUserStore;

@@ -64,7 +64,16 @@ export async function POST(req: Request) {
 
         return NextResponse.json(
             { message: 'OTP sent to email' },
-            { status: 200 }
+            { status: 200 ,
+                headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app/'
+                        : 'http://localhost:3000',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
+            }
         );
     } catch (error) {
         console.error('Error sending OTP:', error);

@@ -1,17 +1,19 @@
-// middleware.ts (NEW file in project root)
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'
 
 // Define which routes need protection
 const protectedPaths = [
-    '/api/protected',
-    '/dashboard',
-    // Add your protected routes
+    '/pages/user-account/message-box',
+    '/pages/user-account/favorite-event',
+    '/pages/user-account/my-events',
+    '/pages/user-account/personal-details',
+    // to add her all the pages that just login user can route (that check the token before)
 ]
 
 export async function middleware(request: NextRequest) {
     // Skip authentication for login and registration routes
+    //TO DO: check what is the routs that i need to update here.
     if (
         request.nextUrl.pathname.startsWith('/api/auth') ||
         request.nextUrl.pathname.startsWith('/login') ||
@@ -35,8 +37,10 @@ export async function middleware(request: NextRequest) {
 // Tell Next.js which routes to run middleware on
 export const config = {
     matcher: [
-        '/api/:path*',
-        '/dashboard/:path*',
+        '/pages/user-account/message-box',
+        '/pages/user-account/favorite-event',
+        '/pages/user-account/my-events',
+        '/pages/user-account/personal-details',
         // Add your protected paths
     ],
 }
