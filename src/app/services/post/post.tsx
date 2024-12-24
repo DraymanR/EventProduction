@@ -128,9 +128,10 @@ export const mapPostToPostCardProps = (post: Post): PostCardProps => {
         postId: {
             budget: 1,
             eventCategory: EventCategory.Other,
-            supplierNameArr: [post._id.toString()]
+            supplierNameArr: ['']
+            // supplierNameArr: [post.postId.toString()]
         },
-        _id: post._id.toString(), // התאמה לדרישת PostCardProps
+        _id: "post.postId.toString()", // התאמה לדרישת PostCardProps
         userName: post.userName,
         createDate: post.createDate,
         album: post.album.map(img => ({ imgUrl: img.toString() })),

@@ -129,7 +129,7 @@ export interface Post {
   title: string;
   description: string;
   recommendations: ObjectId[];
-  _id: ObjectId;
+  postId: ObjectId;
 }
 export interface PostEventProps {
   createDate: Date;
