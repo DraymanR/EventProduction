@@ -61,13 +61,11 @@ export interface PostCardProps {
 
 export interface User {
 
-  // _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
   titles: (Title | "consumer")[]; // מערך של טיטלים
-  // titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
