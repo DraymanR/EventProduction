@@ -1,9 +1,10 @@
-import { Address, Post, PostCardProps, UserFormData } from "@/app/types/user";
+import { Address,  UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getBaseUrl } from "../config/axios";
 import {getUserByUsername} from '@/app/services/user/getDetails'
+import { PostCardProps } from "@/app/types/post";
 
 
 const baseUrl = getBaseUrl();

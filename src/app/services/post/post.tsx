@@ -4,6 +4,7 @@ import { ObjectId } from "mongoose";
 import { getBaseUrl } from "../config/axios";
 import useUserStore from "@/app/store/userModel";
 import { EventCategory, Post, PostCardProps } from "@/app/types/post";
+const baseUrl = getBaseUrl()
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
