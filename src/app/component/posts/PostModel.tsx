@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { PostCardProps } from '@/app/types/user';
+import { PostCardProps } from '@/app/types/post';
 import useUserStore from '@/app/store/userModel';
 import { addPostToFavorites } from '@/app/services/user/post';
 const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {

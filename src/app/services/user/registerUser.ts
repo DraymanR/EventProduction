@@ -1,9 +1,10 @@
-import { Address, Post, PostCardProps, UserFormData } from "@/app/types/user";
+import { Address,  UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getBaseUrl } from "../config/axios";
 import {getUserByUsername} from '@/app/services/user/getDetails'
+import { PostCardProps } from "@/app/types/post";
 
 
 const baseUrl = getBaseUrl();
@@ -95,14 +96,14 @@ export const newPassword = async (
       newPassword: newPassword,
     };
     console.log(data);
-    
+
     const response = await axios.post(`${baseUrl}/api/users/register/newPassword`,// data,
-       {
-      // withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      {
+        // withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     console.log(response);
 
     // החזרת התשובה מהשרת
@@ -166,9 +167,25 @@ export const useUpdateUserStore = () => {
   ) => {
     setUser(userData);
     console.log(userData);
-    
+
     setPosts(postArr);
     setLikedPeople(likedPeople);
     setLikedPostsArr(likedPostsArr);
   };
+};
+
+// export const getCookie = (name: string): string | undefined => {
+//   const value = `; ${document.cookie}`;
+//   const parts = value.split(`; ${name}=`);
+//   if (parts.length === 2) {
+//     return parts.pop()?.split(';').shift();
+//   }
+//   return undefined;
+// };
+export const checkIfLoggedIn = () => {
+  if (typeof window !== 'undefined') {
+    const cookies = document.cookie.split('; ');
+    const usernameCookie = cookies.find(row => row.startsWith('userName='));
+    return usernameCookie
+  }
 };
