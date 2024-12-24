@@ -1,16 +1,16 @@
 
 import { create } from 'zustand';
-import { Post,PostCardProps, UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
+import { User, Address, Post, SupplierDetails, UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
 
 interface UserStore {
     user: UserFormData | null,
-    likedPostsArr: PostCardProps[],
+    likedPostsArr: Post[],
     likedPeople: string[],
-    postArr: PostCardProps[],
+    postArr: Post[],
     setUser: (newUser: UserFormData) => void;
-    setLikedPostsArr: (newPost: PostCardProps | PostCardProps[]) => void;
+    setLikedPostsArr: (newPost: Post | Post[]) => void;
     setLikedPeople: (newPeople: string | string[]) => void;
-    setPostArr: (newPost: PostCardProps | PostCardProps[]) => void;
+    setPostArr: (newPost: Post | Post[]) => void;
     isReady: boolean;
     setReady: (ready: boolean) => void;
     clearUser: () => void;
@@ -25,23 +25,10 @@ const useUserStore = create<UserStore>((set) => ({
         console.log("Setting user:", newUser);
         set({ user: newUser })
     },
-    setLikedPostsArr: (newPosts: PostCardProps | PostCardProps[]) =>
-        set((state) => {
-            const postsToAdd = Array.isArray(newPosts) ? newPosts : [newPosts];
-            const updatedPosts = [...state.likedPostsArr, ...postsToAdd].filter(
-                (post, index, arr) => arr.findIndex((p) => p._id === post._id) === index
-            );
-            return { likedPostsArr: updatedPosts };
-        }),
-    setPostArr: (newPosts: PostCardProps | PostCardProps[]) =>
-        set((state) => {
-            const postsToAdd = Array.isArray(newPosts) ? newPosts : [newPosts];
-            const updatedPosts = [...state.postArr, ...postsToAdd].filter(
-                (post, index, arr) => arr.findIndex((p) => p._id === post._id) === index
-            );
-            return { postArr: updatedPosts };
-        }),
-
+    setLikedPostsArr: (newPosts: Post | Post[]) =>
+        set((state) => ({
+            likedPostsArr: Array.isArray(newPosts) ? [...state.likedPostsArr, ...newPosts] : [...state.postArr, newPosts],
+        })),
     setLikedPeople: (newPeople: string | string[]) =>
         set((state) => ({
             likedPeople: Array.isArray(newPeople) ? [...state.likedPeople, ...newPeople] : [...state.likedPeople, newPeople],
