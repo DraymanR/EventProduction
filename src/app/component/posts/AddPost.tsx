@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Select, { MultiValue } from "react-select";
 import "@/app/css/posts/AddPost.css";
-import { addingMyPost } from "../../services/post/post";
-import useModalStore from "../../store/modelPop-upWindow";
+import { addingMyPost } from "@/app/services/post/post";
+import useModalStore from "@/app/store/modelStore";
 import useUserStore from "@/app/store/userModel";
 import '@/app/globals.css';
 
@@ -62,7 +62,6 @@ const AddPost: React.FC = () => {
     console.log("Post Created: ", newPost);
     const pp = await addingMyPost(newPost)
     closeModal()
-    console.log("pp",pp);
     setPostArr(pp.post)
     alert("הפוסט נוסף בהצלחה!");
     setTitle("");

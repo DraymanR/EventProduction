@@ -2,12 +2,12 @@
 
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
-import useModalStore from "@/app/store/modelPop-upWindow";
-import { Post, PostCardProps } from "@/app/types/user";
+import { Post, PostCardProps } from "@/app/types/post";
 import { useState } from "react";
 import useUserStore from "@/app/store/userModel";
 import PostCard from "@/app/component/posts/PostCard";
 import '@/app/globals.css'
+import useModalStore from "@/app/store/modelStore";
 
 const Home: React.FC = () => {
     const openModal = useModalStore((state: { openModal: any; }) => state.openModal);

@@ -1,5 +1,6 @@
 import mongoose, { Schema} from 'mongoose';
-import { User, Address, Supplier, Recommendation, Post, ConsumerPost, Auth,Title ,Language,EventCategory, Img } from '@/app/types/user';
+import { User, Address, Supplier,Auth,Title ,Language, Img } from '@/app/types/user';
+import { ConsumerPost, EventCategory, Post, Recommendation } from '@/app/types/post';
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useModalStore from '@/app/store/modelPop-upWindow';
+import useModalStore from '@/app/store/modelStore';
 import { singIn } from '@/app/services/user/registerUser';
 import LoginWithGoogle from '@/app/component/users/register/loginWithGoogle';
 import axios from 'axios';

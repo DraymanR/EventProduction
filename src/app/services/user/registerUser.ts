@@ -1,4 +1,4 @@
-import { Address, Post, PostCardProps, UserFormData } from "@/app/types/user";
+import { Address,  PostCardProps, UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";

@@ -1,10 +1,12 @@
 import { ObjectId } from "mongoose";
-import { UploadApiResponse } from 'cloudinary';
+import { UploadApiResponse } from "cloudinary";
+import exp from "constants";
+import { NextRequest } from "next/server";
+import { EventCategory, Post, Recommendation } from "./post";
 
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
-
 }
 export enum Title {
   Supplier = 'ספק/ית',
@@ -30,15 +32,7 @@ export enum Language {
   // תוסיפי עוד שפות לפי הצורך
 }
 
-export enum EventCategory {
-  Barmitzva = 'barmitzva',
-  Wedding = 'wedding',
-  BatMitzva = 'bat mitzva',
-  Engagement = 'engagement',
-  Birthday = 'birthday',
-  FamilyParty = 'family party',
-  Other = 'other',
-}
+
 
 export interface PostCardProps {
   _id: string,
@@ -57,7 +51,7 @@ export interface PostCardProps {
 }
 
 export interface User {
-
+  _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
@@ -70,16 +64,15 @@ export interface User {
   postArr: ObjectId[];
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
   likedPeople: string[];
-  profileImage: string;   // מערך של פוסטים
+  profileImage: string; // מערך של פוסטים
 }
 
 export interface Auth {
-  userName: string,
-  email: string,
-  password: string,
-  otp: String,
-  otpExpiration: Date,
-
+  userName: string;
+  email: string;
+  password: string;
+  otp: String;
+  otpExpiration: Date;
 }
 export interface Supplier {
   userName: string;
@@ -87,7 +80,6 @@ export interface Supplier {
   topPrice: number;
   range: number; // maximum distance they will serve
 }
-
 
 export interface Address {
   userName: string;
@@ -97,49 +89,13 @@ export interface Address {
   building: number;
 }
 
-export interface Post {
-  createDate: Date;
-  userName: string;
-  album: string[];
-  title: string;
-  description: string;
-  recommendations: ObjectId[];
-  postId: ObjectId;
-}
-export interface PostEventProps {
-  createDate: Date;
-  userName: string;
-  album: string[];
-  title: string;
-  description: string;
-  recommendations: ObjectId[];
-  eventCategory: EventCategory;
-  supplierNameArr: string[];
-  budget: number;
-}
-
-export interface Img {
-  imgUrl: string
-}
-
-export interface ConsumerPost {
-  eventCategory: EventCategory;
-  supplierNameArr: string[];
-  budget: number;
-}
-
-export interface Recommendation {
-  userName: string; // reference to User
-  text: string;
-  rate: number; // rating 1-5
-}
 export interface UserFormData {
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   password: string;
-  titles: (Title | "consumer")[];//string[];
+  titles: (Title | "consumer")[]; //string[];
   phone: string;
   description: string;
   languages: Language[];
@@ -172,6 +128,17 @@ export interface UserResponseData {
   likedPostsArr: Post[];
   postArr: Post[];
 }
+export interface SearchBarProps {
+  onSearch: (
+    userName: string,
+    eventTitle: string,
+    eventType: EventCategory,
+    startDate: string,
+    endDate: string,
+    description: string,
+    userTitle: Title
+  ) => void;
+}
 
 export interface UserFormData {
   firstName: string;
@@ -179,7 +146,7 @@ export interface UserFormData {
   userName: string;
   email: string;
   password: string;
-  titles: (Title | "consumer")[];//string[];
+  titles: (Title | "consumer")[]; //string[];
   phone: string;
   description: string;
   languages: Language[];
@@ -213,4 +180,80 @@ export interface UserResponseData {
   likedPostsArr: Post[];
   postArr: Post[];
 }
+export interface UserStore {
+  user: UserFormData | null,
+  likedPostsArr: Post[],
+  likedPeople: string[],
+  postArr: Post[],
+  setUser: (newUser: UserFormData) => void;
+  setLikedPostsArr: (newPost: Post | Post[]) => void;
+  setLikedPeople: (newPeople: string | string[]) => void;
+  setPostArr: (newPost: Post | Post[]) => void;
+  isReady: boolean;
+  setReady: (ready: boolean) => void;
+  clearUser: () => void;
+}
 
+
+
+export interface CustomRequest extends NextRequest {
+    userName?: string;
+}
+
+
+export interface ModalState {
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+}
+
+export interface ShowUserPersonalDetailsProps {
+  user: UserFormData;
+}
+
+export interface Img {
+  imgUrl: string;
+}
+
+export interface ModalState {
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+}
+
+
+
+// export interface UserFormData {
+//   profileImage: string,
+//   firstName: string;
+//   lastName: string;
+//   userName: string;
+//   email: string;
+//   password: string;
+//   titles: (Title | "consumer")[]; // מערך של טיטלים
+//   phone: string;
+//   languages: Language[]; // מערך של שפות
+//   address: {
+//     zipCode: string;
+//     city: string;
+//     street: string;
+//     building: number;
+//   };
+//   description: string,
+
+//   supplierDetails?: {
+//     startingPrice: number;
+//     topPrice: number;
+//     eventList: string[];
+//     recommendation: string[];
+//     range: number;
+//     emptyDate: string[];
+//     images: string[];
+//     description: string;
+//   };
+// }
+
+// export interface Consumer {
+//   userName: string;
+//    // array of Usernames
+// }

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
 import { getMyDetails } from "@/app/services/user/getDetails";

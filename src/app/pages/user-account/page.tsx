@@ -43,10 +43,6 @@ const Home = () => {
         }
         getMyPersonalDetails()
     }, [])
-    console.log("!!!storeUser!", storeUser);
-    console.log("!!!!storlikedPeople", storlikedPeople);
-    console.log("!!!!storlikedPostsArr", storlikedPostsArr);
-    console.log("!!!!storpostArr", storpostArr);
 
     return (
         <div>

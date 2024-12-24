@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import { CustomRequest } from '@/app/types/user';
 
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 
-interface CustomRequest extends NextRequest {
-    userName?: string;
-}
 
 export async function verifyTokenMiddleware(req: CustomRequest, res: NextResponse, next: () => void) {
     try {

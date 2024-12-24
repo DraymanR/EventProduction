@@ -3,10 +3,8 @@ import { getMyDetails, getUserDetails } from "../user/getDetails";
 import { ObjectId } from "mongoose";
 import { getBaseUrl } from "../config/axios";
 import useUserStore from "@/app/store/userModel";
-import { EventCategory, Post, PostCardProps } from "@/app/types/user";
-
-
-const baseUrl = getBaseUrl();
+import { EventCategory, Post, PostCardProps } from "@/app/types/post";
+const baseUrl = getBaseUrl()
 
 // פונקציה להוספת המלצה לפוסט
 export const addRecommendation = async (postId: string, text: string, rate: number) => {
@@ -110,7 +108,7 @@ export const addingMyPost = async (newPost: object) => {
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
         console.log(post_id);
-        
+
         const newPost = { "favoritePostID": post_id }
         const response = await axios.put(`${baseUrl}/api/users/favorites`, newPost, {
             withCredentials: true,
@@ -135,7 +133,7 @@ export const mapPostToPostCardProps = (post: Post): PostCardProps => {
             supplierNameArr: ['']
             // supplierNameArr: [post.postId.toString()]
         },
-        _id: "post.postId.toString()", // התאמה לדרישת PostCardProps
+        _id: post.postId.toString(), // התאמה לדרישת PostCardProps
         userName: post.userName,
         createDate: post.createDate,
         album: post.album.map(img => ({ imgUrl: img.toString() })),

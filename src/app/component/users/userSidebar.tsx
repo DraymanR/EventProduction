@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import useUserStore from '../../store/userModel' ;
-import { logout } from '../../services/user/registerUser';
 import useNavbarStore from '@/app/store/navbarStore';
+import useUserStore from '@/app/store/userModel';
+import { logout } from '@/app/services/user/registerUser';
 
 const ConsumerNavbar: React.FC = () => {
   // const [isOpen, setIsOpen] = useState(true);

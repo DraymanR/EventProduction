@@ -1,5 +1,4 @@
 'use client'
-import useModalStore from '@/app/store/modelPop-upWindow';
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
 import "@/app/css/customNavbar.css";
@@ -7,6 +6,7 @@ import { checkIfLoggedIn } from '@/app/services/user/registerUser'
 import useNavbarStore from '../store/navbarStore';
 import useUserStore from '../store/userModel';
 import { UserFormData } from '../types/user';
+import useModalStore from '../store/modelStore';
 
 
 const Navbar = () => {
