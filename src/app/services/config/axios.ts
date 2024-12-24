@@ -5,6 +5,6 @@ export const getBaseUrl = () => {
     }
     // Fallback for development
     return process.env.NODE_ENV === 'production' 
-      ? 'https://event-production-git-main-riva-draimans-projects.vercel.app/' 
+      ? 'https://event-production-git-main-riva-draimans-projects.vercel.app' 
       : 'http://localhost:3000';
   };

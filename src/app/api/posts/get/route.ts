@@ -82,7 +82,7 @@ export async function GET(req: Request) {
                  headers: {
                     'Access-Control-Allow-Credentials': 'true',
                     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
-                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app/'
+                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
                         : 'http://localhost:3000',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
