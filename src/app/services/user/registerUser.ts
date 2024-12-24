@@ -141,9 +141,9 @@ export const logout = async () => {
 
 export const updateUserStore = (
   user: UserFormData,
-  likedPosts: Post[],
+  likedPosts: PostCardProps[],
   likedPeople: string[],
-  posts: Post[]
+  posts: PostCardProps[]
 ) => {
   useUserStore.getState().setUser(user);
   useUserStore.getState().setLikedPostsArr(likedPosts);
@@ -160,9 +160,9 @@ export const useUpdateUserStore = () => {
 
   return (
     userData: UserFormData,
-    likedPostsArr: Post[],
+    likedPostsArr: PostCardProps[],
     likedPeople: string[],
-    postArr: Post[]
+    postArr: PostCardProps[]
   ) => {
     setUser(userData);
     console.log(userData);
