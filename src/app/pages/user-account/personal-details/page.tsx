@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
     console.log("page personal details")
-    const [MyDetails, setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
+    const [ , setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
     const userDetails = useUserStore((state) => state.user);
 
     useEffect(() => {
