@@ -2,7 +2,6 @@
 
 import AddPost from "@/app/component/posts/AddPost";
 import PopUpWindow from "@/app/component/pop-upWindow";
-import { mapPostToPostCardProps } from "@/app/services/post/post";
 import useModalStore from "@/app/store/modelPop-upWindow";
 import { Post, PostCardProps } from "@/app/types/user";
 import { useState } from "react";
@@ -14,7 +13,8 @@ const Home: React.FC = () => {
     const openModal = useModalStore((state: { openModal: any; }) => state.openModal);
     const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
     const postArr = useUserStore((state) => state.postArr);
-    const [MyEvents, setMyEvents] = useState<Post[]>(postArr);
+    const [MyEvents, setMyEvents] = useState<PostCardProps[]>(postArr);
+    console.log(MyEvents);
 
     const handleAddEvent = () => {
         if (!isModalOpen) {
@@ -31,9 +31,9 @@ const Home: React.FC = () => {
 
             <div className="space-y-6 mt-4">
                 <h2 className="page-title">:האירועים שלי</h2>
-                {MyEvents.map((post: Post, index: number) => {
-                    const postCardProps = mapPostToPostCardProps(post); // המרת הפוסט
-                    return <PostCard key={index} post={postCardProps} />;
+                {MyEvents.map((post: PostCardProps, index: number) => {
+                    // המרת הפוסט
+                    return <PostCard key={index} post={post} />;
                 })}
             </div>
             <button type="button" onClick={() => handleAddEvent()} className="button-primary">הוספת אירוע</button>

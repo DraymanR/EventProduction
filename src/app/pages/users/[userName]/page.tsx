@@ -3,6 +3,7 @@ import React from 'react';
 // השתמש ב-useParams מ-next/navigation
 import UserProfileDisplay from '@/app/component/users/userProfileDisplay';
 import { useParams } from 'next/navigation';  // השתמש ב-useParams
+import '@/app/globals.css'
 
 const Page = () => {
   const { userName } = useParams();  // השגת שם המשתמש מתוך ה-params
@@ -15,7 +16,11 @@ const Page = () => {
   console.log(decodedUserName);  // אמור להדפיס את שם המשתמש המפורש
 
   return (
-    <div>
+    <div className='centered'>
+      <a href={`/pages/user-account`} className="button-primary  width-10%;">
+        חזור לפרופיל שלך
+      </a>
+      <br></br>
       {/* הצגת פרופיל המשתמש */}
       <UserProfileDisplay username={decodedUserName} />
     </div>

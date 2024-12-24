@@ -1,15 +1,15 @@
 import { create } from 'zustand';
-import { Post, UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
+import { Post,PostCardProps, UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
 
 interface UserStore {
     user: UserFormData | null,
-    likedPostsArr: Post[],
+    likedPostsArr: PostCardProps[],
     likedPeople: string[],
-    postArr: Post[],
+    postArr: PostCardProps[],
     setUser: (newUser: UserFormData) => void;
-    setLikedPostsArr: (newPost: Post | Post[]) => void;
+    setLikedPostsArr: (newPost: PostCardProps | PostCardProps[]) => void;
     setLikedPeople: (newPeople: string | string[]) => void;
-    setPostArr: (newPost: Post | Post[]) => void;
+    setPostArr: (newPost: PostCardProps | PostCardProps[]) => void;
     isReady: boolean;
     setReady: (ready: boolean) => void;
     clearUser: () => void;
@@ -24,7 +24,7 @@ const useUserStore = create<UserStore>((set) => ({
         console.log("Setting user:", newUser);
         set({ user: newUser })
     },
-    setLikedPostsArr: (newPosts: Post | Post[]) =>
+    setLikedPostsArr: (newPosts: PostCardProps | PostCardProps[]) =>
         set((state) => {
             const postsToAdd = Array.isArray(newPosts) ? newPosts : [newPosts];
             const updatedPosts = [...state.likedPostsArr, ...postsToAdd].filter(
@@ -32,7 +32,7 @@ const useUserStore = create<UserStore>((set) => ({
             );
             return { likedPostsArr: updatedPosts };
         }),
-    setPostArr: (newPosts: Post | Post[]) =>
+    setPostArr: (newPosts: PostCardProps | PostCardProps[]) =>
         set((state) => {
             const postsToAdd = Array.isArray(newPosts) ? newPosts : [newPosts];
             const updatedPosts = [...state.postArr, ...postsToAdd].filter(

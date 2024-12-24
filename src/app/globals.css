@@ -9,6 +9,14 @@
 .main-content {
   @apply pt-16; /* Adjust this value based on Navbar height */
 }
+.centered {
+  display: flex;
+  flex-direction: column; /* סידור הילדים אחד מתחת לשני */
+  justify-content: center;
+  align-items: center;
+}
+
+
 .page-title {
   text-align: center; /* ימרכז את הכותרת */
   color: #f87171; /* text-red-400 */
@@ -16,7 +24,7 @@
   font-weight: bold; /* font-bold */
 }
 .button-primary {
-  width: 100%;
+  /* width: 20%; */
   background-color: #f87171; /* bg-red-300 */
   color: white;
   padding: 0.5rem 1rem; /* py-2 px-4 */

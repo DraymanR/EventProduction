@@ -39,35 +39,16 @@ export enum EventCategory {
   FamilyParty = 'family party',
   Other = 'other',
 }
-// export interface PostCardProps{
-//   userDetails: any;
-//   eventCategory: EventCategory;
-//   postId: any;
-//   "_id": string,
-//   "userName": string,
-//   "createDate": Date,
-//   "album": string[],
-//   "title": string,
-//   "description": string,
-//   "recommendations":
-//   {
-//     "_id": string,
-//     "userName": string,
-//     "text": string,
-//     "rate": number,
 
-//   }[]
 export interface PostCardProps {
-  eventCategory: EventCategory;
   _id: string,
   recommendations: Recommendation[];
   album: Img[];
-  createDate: string | number | Date;
+  createDate: Date;
   title: string;
   description: string;
   userName: string,
-
-  userDetails: { titles: [string] },
+  userDetails: { titles: string[] },
   postId: {
     budget: number,
     eventCategory: EventCategory,
@@ -77,13 +58,11 @@ export interface PostCardProps {
 
 export interface User {
 
-  // _id: ObjectId;
   firstName: string;
   lastName: string;
   userName: string; // unique
   email: string; // unique
   titles: (Title | "consumer")[]; // מערך של טיטלים
-  // titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
@@ -109,10 +88,6 @@ export interface Supplier {
   range: number; // maximum distance they will serve
 }
 
-// export interface Consumer {
-//   userName: string;
-//    // array of Usernames
-// }
 
 export interface Address {
   userName: string;
@@ -168,7 +143,6 @@ export interface UserFormData {
   phone: string;
   description: string;
   languages: Language[];
-  // address: Address
   address: {
     zipCode: string;
     city: string;
@@ -199,35 +173,6 @@ export interface UserResponseData {
   postArr: Post[];
 }
 
-// export interface UserFormData {
-//   profileImage: string,
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   titles: (Title | "consumer")[]; // מערך של טיטלים
-//   phone: string;
-//   languages: Language[]; // מערך של שפות
-//   address: {
-//     zipCode: string;
-//     city: string;
-//     street: string;
-//     building: number;
-//   };
-//   description: string,
-
-//   supplierDetails?: {
-//     startingPrice: number;
-//     topPrice: number;
-//     eventList: string[];
-//     recommendation: string[];
-//     range: number;
-//     emptyDate: string[];
-//     images: string[];
-//     description: string;
-//   };
-// }
 export interface UserFormData {
   firstName: string;
   lastName: string;

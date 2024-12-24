@@ -37,7 +37,7 @@ const Page = () => {
 
   return (
     <div>
-      <PostModel post={post} onClose={() => {}} />
+      <PostModel post={post}  />
     </div>
   );
 };

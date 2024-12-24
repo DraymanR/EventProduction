@@ -30,7 +30,7 @@ export default function UserList() {
   return (
     <ul>
       {users.map(user => (
-        <li key={user._id?.toString()}>
+        <li key={user.userName}>
           {`${user.firstName} ${user.lastName}`}
         </li>
       ))}

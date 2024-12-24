@@ -17,7 +17,7 @@ export async function GET(req: Request) {
         const eventCategory = searchParams.get('eventCategory');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
-        const postId = searchParams.get('postId');
+        const Id = searchParams.get('postId');
         let query: any = {};
 
         if (title) {
@@ -44,8 +44,8 @@ export async function GET(req: Request) {
             };
         }
 
-        if (postId) {
-            query._id = postId; // הוספת תנאי לשדה postId
+        if (Id) {
+            query._id = Id; // הוספת תנאי לשדה postId
         }
         console.log('Query:', query);
      
@@ -63,11 +63,9 @@ export async function GET(req: Request) {
         })
         .populate({
             path: 'userDetails', // שם וירטואלי לשדה
-            select: 'titles', // מחזיר רק את שדה titles
-           
+            select: 'titles', // מחזיר רק את שדה titles 
         })
         .lean();
-    
 
         const totalPosts = await PostModel.countDocuments(query);
 
@@ -79,7 +77,18 @@ export async function GET(req: Request) {
                 totalPages: Math.ceil(totalPosts / limit),
                 currentPage: page,
             },
-            { status: 200 }
+            {
+                 status: 200 ,
+                 headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
+                        : 'http://localhost:3000',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
+
+                }
         );
     } catch (error) {
         console.error('Error retrieving posts:', error);
