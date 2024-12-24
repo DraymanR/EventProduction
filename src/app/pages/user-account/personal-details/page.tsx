@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     const isReady = useUserStore((state) => state.isReady);
 
     if (!isReady) {
-        return <p>Loading...</p>;
+        // return <p>Loading...</p>;
     }
     return (
         <div dir="ltr">

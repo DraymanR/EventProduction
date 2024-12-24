@@ -2,12 +2,54 @@ import { ObjectId } from "mongoose";
 import { UploadApiResponse } from "cloudinary";
 import exp from "constants";
 import { NextRequest } from "next/server";
-import { EventCategory, Post } from "./post";
+import { EventCategory, Post, Recommendation } from "./post";
 
 export interface SupplierDetails {
   startingPrice: number;
   topPrice: number;
 }
+export enum Title {
+  Supplier = 'ספק/ית',
+  MakeupArtist = 'מאפר/ת',
+  Photographer = 'צלם/ת',
+  SoundEngineer = 'סאונדמן/ית',
+  EventDesigner = 'מעצב/ת אירועים',
+  Singer = 'זמר/ת',
+
+  // תוסיפי עוד טייטלים לפי הצורך
+}
+export type Option = {
+  value: string;
+  label: string;
+};
+export enum Language {
+  Hebrew = 'Hebrew',
+  English = 'English',
+  French = 'French',
+  Yiddish = 'Yiddish',
+  Spanish = 'Spanish',
+  Russian = 'Russian',
+  // תוסיפי עוד שפות לפי הצורך
+}
+
+
+
+export interface PostCardProps {
+  _id: string,
+  recommendations: Recommendation[];
+  album: Img[];
+  createDate: Date;
+  title: string;
+  description: string;
+  userName: string,
+  userDetails: { titles: string[] },
+  postId: {
+    budget: number,
+    eventCategory: EventCategory,
+    supplierNameArr: string[]
+  };
+}
+
 export interface User {
   _id: ObjectId;
   firstName: string;
@@ -153,29 +195,6 @@ export interface UserStore {
 }
 
 
-export enum Title {
-  Supplier = "ספק/ית",
-  MakeupArtist = "מאפר/ת",
-  Photographer = "צלם/ת",
-  SoundEngineer = "סאונדמן/ית",
-  EventDesigner = "מעצב/ת אירועים",
-  Singer = "זמר/ת",
-
-  // תוסיפי עוד טייטלים לפי הצורך
-}
-export type Option = {
-  value: string;
-  label: string;
-};
-export enum Language {
-  Hebrew = "Hebrew",
-  English = "English",
-  French = "French",
-  Yiddish = "Yiddish",
-  Spanish = "Spanish",
-  Russian = "Russian",
-  // תוסיפי עוד שפות לפי הצורך
-}
 
 export interface CustomRequest extends NextRequest {
     userName?: string;

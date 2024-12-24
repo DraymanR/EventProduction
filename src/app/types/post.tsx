@@ -50,17 +50,17 @@ export interface PostModalProps {
   onClose: () => void;
 }
 
-export interface PostEventProps {
-  createDate: Date;
-  userName: string;
-  album: string[];
-  title: string;
-  description: string;
-  recommendations: ObjectId[];
-  eventCategory: EventCategory;
-  supplierNameArr: string[];
-  budget: number;
-}
+// export interface PostEventProps {
+//   createDate: Date;
+//   userName: string;
+//   album: string[];
+//   title: string;
+//   description: string;
+//   recommendations: ObjectId[];
+//   eventCategory: EventCategory;
+//   supplierNameArr: string[];
+//   budget: number;
+// }
 
 
 
