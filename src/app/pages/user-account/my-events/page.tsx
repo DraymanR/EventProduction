@@ -14,6 +14,7 @@ const Home: React.FC = () => {
     const isModalOpen = useModalStore((state: { isModalOpen: any; }) => state.isModalOpen);
     const postArr = useUserStore((state) => state.postArr);
     const [MyEvents, setMyEvents] = useState<PostCardProps[]>(postArr);
+    console.log(MyEvents);
 
     const handleAddEvent = () => {
         if (!isModalOpen) {
@@ -31,7 +32,7 @@ const Home: React.FC = () => {
             <div className="space-y-6 mt-4">
                 <h2 className="page-title">:האירועים שלי</h2>
                 {MyEvents.map((post: PostCardProps, index: number) => {
-                  // המרת הפוסט
+                    // המרת הפוסט
                     return <PostCard key={index} post={post} />;
                 })}
             </div>

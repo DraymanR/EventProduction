@@ -108,7 +108,7 @@ export const addingMyPost = async (newPost: object) => {
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
         console.log(post_id);
-        
+
         const newPost = { "favoritePostID": post_id }
         const response = await axios.put(`${baseUrl}/api/users/favorites`, newPost, {
             withCredentials: true,
@@ -130,7 +130,8 @@ export const mapPostToPostCardProps = (post: Post): PostCardProps => {
         postId: {
             budget: 1,
             eventCategory: EventCategory.Other,
-            supplierNameArr: [post.postId.toString()]
+            supplierNameArr: ['']
+            // supplierNameArr: [post.postId.toString()]
         },
         _id: post.postId.toString(), // התאמה לדרישת PostCardProps
         userName: post.userName,
