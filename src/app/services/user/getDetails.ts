@@ -1,21 +1,19 @@
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getSession } from "next-auth/react";
+import { getBaseUrl } from '@/app/services/config/axios'
+
+
+const baseUrl = getBaseUrl();
 
 export const getUserByUsername = async (username: string) => {
     try {
-      // שליחת בקשה לשרת לשליפת נתוני המשתמש
-      const response = await axios.get(
-        `http://localhost:3000/api/users/get/username?username=${username}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-  
-      console.log("User fetched successfully:", response.data);
-  
+      const response = await axios.get(`${baseUrl}/api/users/get/username?username=${username}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log(response);
       // קבלת נתוני המשתמש מהתגובה
       const user = response.data.user;
   
@@ -26,7 +24,7 @@ export const getUserByUsername = async (username: string) => {
       console.log("User successfully stored in Zustand:", user);
   
       // החזרת נתוני המשתמש
-      return user;
+      return response.data.user;
     } catch (error) {
       console.error("Error fetching user:", error);
       throw error; // טיפול בשגיאות
@@ -48,7 +46,7 @@ export const getMyDetails = async () => {
             // Try to fetch by email first (for Google auth)
             if (session.user.email) {
                 try {
-                    const response = await axios.get(`http://localhost:3000/api/users/get/username?email=${session.user.email}`, {
+                    const response = await axios.get(`${baseUrl}/api/users/get/username?email=${session.user.email}`, {
                         withCredentials: true,
                         headers: {
                             'Content-Type': 'application/json',
@@ -71,7 +69,7 @@ export const getMyDetails = async () => {
                 const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
                 console.log('Username from cookie:', myUserName);
 
-                const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${myUserName}`, {
+                const response = await axios.get(`${baseUrl}/api/users/get/username?username=${myUserName}`, {
                     withCredentials: true,
                     headers: {
                         'Content-Type': 'application/json',
@@ -92,7 +90,7 @@ export const getMyDetails = async () => {
 
 export const getUserDetails = async (userName: string) => {
     try {
-        const response = await axios.get(`http://localhost:3000/api/users/get/username?username=${userName}`, {
+        const response = await axios.get(`${baseUrl}/api/users/get/username?username=${userName}`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',

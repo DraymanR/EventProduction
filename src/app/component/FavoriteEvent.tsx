@@ -9,8 +9,8 @@ import {  FavoriteEventProps, PostCardProps } from "@/app/types/post";
 const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
   const navigate = useNavigate();
 
-  const handlePostClick = (post: PostCardProps) => {
-    navigate(`/post_events/${post._id}`, { state: { post } });
+  const handlePostClick = (post: Post) => {
+    navigate(`/post_events/${post.postId}`, { state: { post } });
   };
 
   return (
@@ -18,7 +18,7 @@ const FavoriteEvent: React.FC<FavoriteEventProps> = ({favoritePosts}) => {
       <h1>האירועים המועדפים</h1>
       <ul>
         {favoritePosts.map((post) => (
-          <li key={post._id.toString()} className="favorite-item">
+          <li key={post.postId.toString()} className="favorite-item">
             <div className="post-details">
               <h2>{post.title}</h2>
               <p>

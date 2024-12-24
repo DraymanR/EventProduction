@@ -15,7 +15,6 @@ export interface User {
   userName: string; // unique
   email: string; // unique
   titles: (Title | "consumer")[]; // מערך של טיטלים
-  // titles: (Title | "consumer")[]; // מערך של טיטלים
   phone: string;
   languages: [Language]; // מערך של שפות
   addressId: ObjectId; // reference to Address
@@ -58,7 +57,6 @@ export interface UserFormData {
   phone: string;
   description: string;
   languages: Language[];
-  // address: Address
   address: {
     zipCode: string;
     city: string;

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
+import { ObjectId } from "mongoose";
+import { getBaseUrl } from "../config/axios";
 import useUserStore from "@/app/store/userModel";
 import { EventCategory, Post, PostCardProps } from "@/app/types/post";
 
@@ -12,7 +14,7 @@ export const addRecommendation = async (postId: string, text: string, rate: numb
             rate,
         };
 
-        const response = await axios.post('http://localhost:3000/api/recommendation', recommendation, {
+        const response = await axios.post(`${baseUrl}/api/recommendation`, recommendation, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -39,9 +41,8 @@ export const getMyEvents = async () => {
 };
 // export const getMyFavoriteEvents = async () => {
 //     try {
-//         return useUserStore((state) => state.likedPostsArr);
-//         // const userDetails = await getMyDetails()
-//         // return userDetails.user.likedPostsArr
+//         const userDetails = await getMyDetails()
+//         return userDetails.user.likedPostsArr
 //     } catch (error) {
 //         console.error('Error registering user:', error);
 //         throw error; // טיפול בשגיאות
@@ -59,7 +60,7 @@ export const getUserEvents = async (userName: string) => {
 };
 export const getAllPosts = async (page: number = 1, limit: number = 10) => {
     try {
-        const response = await axios.get(`http://localhost:3000/api/posts/get?page=${page}&limit=${limit}`, {
+        const response = await axios.get(`${baseUrl}/api/posts/get?page=${page}&limit=${limit}`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -74,7 +75,7 @@ export const getAllPosts = async (page: number = 1, limit: number = 10) => {
 };
 export const getPost = async (page: number = 1, limit: number = 10, postId: string) => {
     try {
-        const response = await axios.get(`http://localhost:3000/api/posts/get?page=${page}&limit=${limit}&postId=${postId}`, {
+        const response = await axios.get(`${baseUrl}/api/posts/get?page=${page}&limit=${limit}&postId=${postId}`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -89,7 +90,7 @@ export const getPost = async (page: number = 1, limit: number = 10, postId: stri
 };
 export const addingMyPost = async (newPost: object) => {
     try {
-        const response = await axios.post(`http://localhost:3000/api/posts/post`, newPost, {
+        const response = await axios.post(`${baseUrl}/api/posts/post`, newPost, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
@@ -106,9 +107,9 @@ export const addingMyPost = async (newPost: object) => {
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
         console.log(post_id);
-
+        
         const newPost = { "favoritePostID": post_id }
-        const response = await axios.put(`http://localhost:3000/api/users/favorites`, newPost, {
+        const response = await axios.put(`${baseUrl}/api/users/favorites`, newPost, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
