@@ -1,7 +1,7 @@
 
 import { NextResponse } from 'next/server';
-import { PostModel } from '@/app/lib/models/user';
-import connectDb from '@/app/lib/db/connectDb';
+import { PostModel } from '../../../lib/models/user';
+import connectDb from '../../../lib/db/connectDb';
 
 export async function GET(req: Request) {
     try {
@@ -17,12 +17,13 @@ export async function GET(req: Request) {
         const eventCategory = searchParams.get('eventCategory');
         const startDate = searchParams.get('startDate');
         const endDate = searchParams.get('endDate');
-
+        const Id = searchParams.get('postId');
         let query: any = {};
 
         if (title) {
             query.title = { $regex: title, $options: 'i' };
         }
+        
 
         if (username) {
             query.userName = { $regex: username, $options: 'i' };
@@ -43,6 +44,9 @@ export async function GET(req: Request) {
             };
         }
 
+        if (Id) {
+            query._id = Id; // הוספת תנאי לשדה postId
+        }
         console.log('Query:', query);
      
     
@@ -59,14 +63,10 @@ export async function GET(req: Request) {
         })
         .populate({
             path: 'userDetails', // שם וירטואלי לשדה
-            select: 'titles', // מחזיר רק את שדה titles
-           
+            select: 'titles', // מחזיר רק את שדה titles 
         })
         .lean();
-        // const enrichedPosts = posts.map(post => ({
-        //     ...post,
-        //     userTitles: post.userDetails?.titles || [], // מוסיף את ה-titles
-        // }));
+    
 
         const totalPosts = await PostModel.countDocuments(query);
 

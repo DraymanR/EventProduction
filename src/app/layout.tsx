@@ -1,10 +1,11 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/app/component/navbar";
 import TimerComponent from "./component/timerComponent";
-import SessionWrapper from "@/app/component/SessionProvider";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import SessionWrapper from "@/app/component/SessionProvider"
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 import PostList from "./component/posts/PostList";
 export const metadata: Metadata = {
@@ -17,17 +18,24 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
+
+  const session = await getServerSession(authOptions)
 
   return (
     <html lang="en" dir="rtl">
       <body>
+
+
+
         <SessionWrapper session={session}>
           <TimerComponent></TimerComponent>
           <Navbar />
-          <main className="page-content">{children}</main>
+          <main className="main-content">
+            {children}
+          </main>
         </SessionWrapper>
       </body>
     </html>
   );
 }
+

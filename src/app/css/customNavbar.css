@@ -1,0 +1,33 @@
+/* customNavbar.css */
+.navbar {
+    @apply fixed top-0 left-0 right-0 z-50 shadow-md bg-gray-900;
+  }
+  
+  .navbar-container {
+    @apply max-w-7xl mx-auto flex justify-between items-center px-4 py-2;
+  }
+  
+  .navbar-title {
+    @apply text-red-400 text-lg font-bold whitespace-nowrap;
+  }
+  
+  .profile-section {
+    @apply flex items-center space-x-4;
+  }
+  
+  .profile-image-container {
+    @apply flex flex-col items-center cursor-pointer;
+  }
+  
+  .profile-image {
+    @apply rounded-full border object-cover;
+  }
+  
+  .profile-text {
+    @apply mt-1 text-center text-sm font-medium text-red-400;
+  }
+  
+  .main-content {
+    @apply mt-16; /* Adjust margin for content below the navbar */
+  }
+  

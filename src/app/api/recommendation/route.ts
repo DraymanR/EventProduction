@@ -29,6 +29,8 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    
+
 
     const post = await PostModel.findById(postId);
     if (!post) {

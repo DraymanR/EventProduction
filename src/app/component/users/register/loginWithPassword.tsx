@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useModalStore from '@/app/store/modelPop-upWindow';
+import useModalStore from '@/app/store/modelStore';
 import { singIn } from '@/app/services/user/registerUser';
 import LoginWithGoogle from '@/app/component/users/register/loginWithGoogle';
 import axios from 'axios';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
+import '@/app/globals.css'; // וודא שאתה מייבא את ה־CSS
 
-const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; onNewUser: () => void }> = ({ onForgetPassword, onNewUser: onNewUser }) => {
+const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; onNewUser: () => void }> = ({ onForgetPassword, onNewUser }) => {
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const closeModal = useModalStore((state) => state.closeModal)
+    const closeModal = useModalStore((state) => state.closeModal);
     const [showPassword, setshowPassword] = useState(false);
 
     const router = useRouter();
@@ -21,7 +22,7 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
 
         try {
             console.log(userName, email, password);
-            
+
             const result = await singIn(email.value, userName.value, password.value);
             console.log(result);
             router.push('/pages/user-account');
@@ -36,8 +37,8 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     };
 
     return (
-        <div>
-            <h2 className="text-red-400 text-2xl font-bold text-center mb-6">התחבר לחשבון שלך</h2>
+        <div className="main-content">
+            <h2 className="page-title">התחבר לחשבון שלך</h2>
 
             <form onSubmit={handleLogin} className="space-y-4">
                 <div>
@@ -78,8 +79,8 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                     />
 
                 </div>
-                {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
-                <button type="submit" className="w-full bg-red-300 text-white py-2 px-4 rounded-lg shadow-lg  hover:bg-red-400 ">התחבר</button>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                <button type="submit" className="button-primary">התחבר</button>
                 <LoginWithGoogle></LoginWithGoogle>
 
             </form>
@@ -88,17 +89,17 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                 <button
                     type="button"
                     onClick={() => onForgetPassword(email)}
-                    className="text-blue-500 underline"
+                    className="button-link"
                 >
                     איפוס סיסמה
                 </button>
             </p>
-            <p className='text-center'>
+            <p className="text-center">
                 אין לך חשבון?{' '}
                 <button
                     type="button"
                     onClick={onNewUser} // לוחץ על כפתור זה יעביר לשלב הרשמה
-                    className="text-blue-500 underline bg-transparent border-none cursor-pointer"
+                    className="button-link"
                 >
                     הירשם כאן
                 </button>

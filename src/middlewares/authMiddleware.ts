@@ -5,7 +5,6 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 export const generateToken = (user: { userName: any; email: any; }) => {
     const payload = { userName: user.userName, email: user.email };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
-
     return token;
 };
 
@@ -16,7 +15,6 @@ export const setAuthCookies = (response: { cookies: { set: (arg0: string, arg1: 
         maxAge: 86400, 
         path: '/' 
     });
-
     response.cookies.set('token', token, { 
         httpOnly: true, 
         secure: process.env.NODE_ENV === 'production', 

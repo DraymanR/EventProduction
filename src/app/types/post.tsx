@@ -1,5 +1,5 @@
 import { ObjectId } from "mongoose";
-
+import { Img } from "./user";
 
 export interface Post {
   createDate: Date;
@@ -11,59 +11,59 @@ export interface Post {
   postId: ObjectId;
 }
 
+
 export interface PostCardProps {
-  userDetails: any;
-  eventCategory: EventCategory;
-  postId: any;
-  _id: string;
-  userName: string;
+  _id: string,
+  recommendations: Recommendation[];
+  album: Img[];
   createDate: Date;
-  album: string[];
   title: string;
   description: string;
-  recommendations: {
-    _id: string;
-    userName: string;
-    text: string;
-    rate: number;
-  }[];
+  userName: string,
+  userDetails: { titles: string[] },
+  postId: {
+    budget: number,
+    eventCategory: EventCategory,
+    supplierNameArr: string[]
+  };
 }
 
 
 export interface FavoriteEventProps {
-    favoritePosts: PostCardProps[];
-  }
-  
-  export interface PostEventProps {
-    post: Post;
-    recommendations: ObjectId[];
-    // recommendations: Recommendation[];
-  }
-  
-  export interface ConsumerPost {
-    eventCategory: EventCategory;
-    supplierNameArr: string[];
-    budget: number;
-  }
-  
+  favoritePosts: PostCardProps[];
+}
 
-  export interface PostModalProps {
-    post: PostCardProps;
-    onClose: () => void;
-  }
-  
-  export interface PostEventProps {
-    createDate: Date;
-    userName: string;
-    album: string[];
-    title: string;
-    description: string;
-    recommendations: ObjectId[];
-    eventCategory: EventCategory;
-    supplierNameArr: string[];
-    budget: number;
-  }
-  
+export interface PostEventProps {
+  post: Post;
+  recommendations: ObjectId[];
+  // recommendations: Recommendation[];
+}
+
+export interface ConsumerPost {
+  eventCategory: EventCategory;
+  supplierNameArr: string[];
+  budget: number;
+}
+
+export interface PostModalProps {
+  post: PostCardProps;
+  onClose: () => void;
+}
+
+export interface PostEventProps {
+  createDate: Date;
+  userName: string;
+  album: string[];
+  title: string;
+  description: string;
+  recommendations: ObjectId[];
+  eventCategory: EventCategory;
+  supplierNameArr: string[];
+  budget: number;
+}
+
+
+
 export enum EventCategory {
   Barmitzva = "barmitzva",
   Wedding = "wedding",
@@ -74,11 +74,8 @@ export enum EventCategory {
   Other = "other",
 }
 
-
 export interface Recommendation {
-    userName: string; // reference to User
-    text: string;
-    rate: number; // rating 1-5
-  }
-
-  
+  userName: string; // reference to User
+  text: string;
+  rate: number; // rating 1-5
+}
