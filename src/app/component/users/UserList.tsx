@@ -59,7 +59,8 @@ const UserList = () => {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+}, [filters]);  // כאשר filters משתנה, תטעין מחדש את היוזרים
+
 
   // Function to update filters
   const handleFilterChange = (newFilters: { language?: string; title?: string; city?: string }) => {
