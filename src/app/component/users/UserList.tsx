@@ -1,50 +1,47 @@
 "use client";
- // ייבוא ה-Enum של סוגי האירועים
 
+import React, { useState, useEffect } from "react";
 import usePostStore from "@/app/store/postStore";
 import "@/app/css/posts/customStyles.css";
-import React, { useState, useEffect } from "react";
 import { getAllUsers } from "@/app/services/user/getDetails";
-
-import '@/app/globals.css'
+import "@/app/globals.css";
 import UserCard from "./UserCard";
+import SortFilter from "@/app/component/users/SortUser";
 
 const UserList = () => {
-
-// הגדרת state עם טיפ
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
-  const [noMoreUsers, setNoMoreUsers] = useState<boolean>(false); // מצב של אין יותר פוסטים
+  const [loading, setLoading] = useState<boolean>(false);
+  const [noMoreUsers, setNoMoreUsers] = useState<boolean>(false);
+  const [filters, setFilters] = useState<{ language?: string; title?: string; city?: string }>({
+    language: "",
+    title: "",
+    city: "",
+  });
+
+  // Function to load users from the API
   const loadUsers = async () => {
-    if (loading || noMoreUsers) return; // אם אנחנו כבר טוענים או שאין יותר פוסטים, לא נבצע טעינה נוספת
-  
-    setLoading(true); // נעדכן את מצב הטעינה
+    if (loading || noMoreUsers) return;  // מניעת קריאות כפולות
+    setLoading(true);
     try {
-      
-      const data = await getAllUsers(page, 10); // העברת פרמטרים של דף ומספר פריטים
-      setFilteredUsers(data.users);
+      const data = await getAllUsers(page, 10, filters);  // שלח את הסטייט המעודכן
+      console.log("Fetched users:", data.users);
       if (data.users.length === 0) {
         setNoMoreUsers(true);
         return;
       }
-  
-      // הוספת מניעת כפילויות באמצעות ID ייחודי של פוסט
-      
-  
-      setPage((prevPage) => prevPage + 1); // הגדלת הדף
-  
-     
+      setFilteredUsers((prevUsers) => [...prevUsers, ...data.users]);  // הוסף את היוזרים החדשים
+      setPage((prevPage) => prevPage + 1);  // עדכון העמוד
     } catch (err) {
-      setError("Failed to fetch posts. Please try again later.");
-      console.error("Error loading posts:", err);
+      setError("Failed to fetch users. Please try again later.");
+      console.error("Error loading users:", err);
     } finally {
-      setLoading(false);
+      setLoading(false);  // תמיד לסיים טעינה
     }
   };
   
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Scroll event to load more users
   const handleScroll = () => {
     const bottom =
       window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 100;
@@ -64,29 +61,31 @@ const UserList = () => {
     loadUsers();
   }, []);
 
- 
+  // Function to update filters
+  const handleFilterChange = (newFilters: { language?: string; title?: string; city?: string }) => {
+    setFilters(newFilters);
+    console.log("jj",filteredUsers);
+    loadUsers();  // טען מחדש את היוזרים עם המסננים החדשים
+  };
+  
 
   return (
     <div className="posts-container">
       <h1 className="posts-title">יוזרים</h1>
       <div className="search-bar-container">
+        {/* Sort and Filter Component */}
+        <SortFilter setFilteredUsers={setFilteredUsers} onFilterChange={handleFilterChange} />
 
       </div>
       <div className="posts-list">
-        {filteredUsers.map((user:any, index: number) => (
+        {/* Render users */}
+        {filteredUsers.map((user: any, index: number) => (
           <UserCard key={index} user={user} />
         ))}
       </div>
-      {loading && (
-        <div className="loading-text">טוען...</div>
-      )}
-      {noMoreUsers && (
-        <div className="no-more-posts-text">אין יותר פוסטים לטעון</div>
-      )}
+      {loading && <div className="loading-text">טוען...</div>}
+      {noMoreUsers && <div className="no-more-posts-text">אין יותר יוזרים לטעון</div>}
     </div>
   );
-  
 };
-
-
-export default UserList;
+export default UserList

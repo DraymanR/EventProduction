@@ -102,19 +102,56 @@ export const getUserDetails = async (userName: string) => {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
     }
-};export const getAllUsers = async (page: number = 1, limit: number = 10) => {
-    try {
-     
-        const response = await axios.get(`http://localhost:3000/api/users/get/?page=${page}&limit=${limit}`, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        console.log('users:', response);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching posts:', error);
-        throw error;
-    }
 };
+// export const getAllUsers = async (page: number = 1, limit: number = 10) => {
+//     try {
+     
+//         const response = await axios.get(`http://localhost:3000/api/users/get/?page=${page}&limit=${limit}`, {
+//             withCredentials: true,
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//         });
+//         console.log('users:', response);
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error fetching posts:', error);
+//         throw error;
+//     }
+// };
+export const getAllUsers = async (
+    page: number = 1,
+    limit: number = 10,
+    filters: {
+      title?: string;
+      language?: string;
+      city?: string;
+    } = {}
+  ) => {
+    try {
+      const queryParams = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+        ...(filters.title && { title: filters.title }),
+        ...(filters.language && { language: filters.language }),
+        ...(filters.city && { city: filters.city }),
+      }).toString();
+  
+      const response = await axios.get(
+        `http://localhost:3000/api/users/get/?${queryParams}`,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      console.log('users:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  };
+  

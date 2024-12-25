@@ -23,11 +23,11 @@ export async function GET(req: Request) {
         }
 
         if (title) {
-            query.title = { $elemMatch: { $regex: title, $options: 'i' } };
+            query.titles = { $elemMatch: { $regex: title, $options: 'i' } };
         }
         
         if (language) {
-            query.language = { $elemMatch: { $regex: language, $options: 'i' } };
+            query.languages = { $elemMatch: { $regex: language, $options: 'i' } };
         }
         
         
