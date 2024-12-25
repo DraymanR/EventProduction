@@ -14,6 +14,7 @@ const Navbar = () => {
     const userDetails = useUserStore((state) => state.user);
     console.log("userDetails", userDetails);
 
+
     const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
     const handleProfileClick = () => {
@@ -37,6 +38,19 @@ const Navbar = () => {
     const isUserFormData = (data: unknown): data is UserFormData => {
         return typeof (data as UserFormData)?.profileImage === 'string';
     };
+    if (checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage) {
+
+        console.log("lll", userDetails.profileImage
+            .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')
+            .replace(/(\w+):/g, '"$1":')
+            .replace(/'([^']+)'/g, '"$1"')
+            .replace(/""([^"]+)""/g, '"$1"')
+            .replace(/"([^"]+:\/\/[^"]+)"/g, '"$1"')
+            .replace(/""([^"]+)""/g, '"$1"') 
+            .replace(/\n|\r/g, '').trim());
+
+    }
+
     return (
         <div className="navbar">
             <nav className="navbar-container">
@@ -48,7 +62,14 @@ const Navbar = () => {
                     >
                         {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
                             <img
-                                src={JSON.parse(userDetails.profileImage.replace(/'/g, '"').replace(/new ObjectId\(([^)]+)\)/g, '"$1"')).imgUrl}
+                                src={JSON.parse(userDetails.profileImage
+                                    .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')
+                                    .replace(/(\w+):/g, '"$1":')
+                                    .replace(/'([^']+)'/g, '"$1"')
+                                    .replace(/""([^"]+)""/g, '"$1"')
+                                    .replace(/"([^"]+)":\s*""([^"]+)""/g, '"$1": "$2"')
+                                    .replace(/""https""/g, '"https')
+                                    .replace(/\n|\r/g, '').trim()).imgUrl}
                                 alt="Profile"
                                 width={50}
                                 height={50}
