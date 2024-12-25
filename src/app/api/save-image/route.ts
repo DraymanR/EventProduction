@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import connectDb from '../../lib/db/connectDb';
+import connectDb from '@/app/lib/db/connectDb';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { ImgModel, PostModel } from '../../lib/models/user';
+import { ImgModel, PostModel } from '@/app/lib/models/user';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -74,7 +74,16 @@ export async function POST(req: NextRequest) {
                 message: 'Image URL saved successfully',
                 newImg,
             },
-            { status: 201 }
+            { status: 201 ,
+                headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
+                        : 'http://localhost:3000',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
+            }
         );
     } catch (error) {
         console.error('Error saving image URL:', error);

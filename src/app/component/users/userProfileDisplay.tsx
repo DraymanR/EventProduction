@@ -1,22 +1,24 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { getUserByUsername } from '@/app/services/user/getDetails';  // נניח שזו פונקציה ששולחת בקשה ל-API
-import { Post } from '@/app/types/user';  // נניח שיש לך טיפוס כזה
+import { Post } from '@/app/types/post';  // נניח שיש לך טיפוס כזה
 // import { useUserStore } from '@/app/store/userModel';
+import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png';
+import Image from 'next/image';
+
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
-
   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
   const [isFavorite, setIsFavorite] = useState<boolean>(false);  // מצב האם המשתמש ברשימת האהובים
   const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);  // האם המשתמש מחובר
   const [isSupplier, setIsSupplier] = useState<boolean>(false);  // האם המשתמש הוא ספק
 
-//   const { userData, likedPostsArr, likedPeople } = useUserStore(state => ({
-//     userData: state.userData,
-//     likedPostsArr: state.likedPostsArr,
-//     likedPeople: state.likedPeople
-//   }));
+  //   const { userData, likedPostsArr, likedPeople } = useUserStore(state => ({
+  //     userData: state.userData,
+  //     likedPostsArr: state.likedPostsArr,
+  //     likedPeople: state.likedPeople
+  //   }));
 
   useEffect(() => {
     // שליחת בקשה לקבלת פרטי המשתמש
@@ -28,7 +30,7 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
         setPosts(data.postArr);
         setIsLoggedIn(data.isLoggedIn);
         setIsSupplier(data.isSupplier);
-      
+
         // setIsFavorite(likedPeople.includes(data.userName));  // בדוק אם המשתמש נמצא ברשימת האהובים
       } catch (error) {
         console.error("Error fetching user data", error);
@@ -54,8 +56,16 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
       {user ? (
         <>
           <h2>{user.userName}</h2>
-          <img src={user.profileImage || '/default-profile.png'} alt="Profile" />
-          
+          {user.profileImage ? (<Image
+            src={defaulPprofileImage}
+            alt="תמונת פרופיל"
+            width={50}
+            height={50}
+            className="profile-image"
+          />
+          ) :
+            <img src={user.profileImage} alt="Profile" />
+          }
           <div className="user-info">
             <div>
               <strong>Title:</strong> {user.titles}
@@ -83,7 +93,7 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
           <div className="posts">
             <h3>Posts by {user.userName}</h3>
             {posts.length > 0 ? (
-              posts.map((post,i) => (
+              posts.map((post, i) => (
                 <div key={i} className="post">
                   <h4>{post.title}</h4>
                   <p>{post.description}</p>

@@ -1,8 +1,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
-import connectDb from "../../../lib/db/connectDb";
-import { ConsumerPostModel, PostModel, UserModel } from "../../../lib/models/user";
-import { verifyTokenMiddleware } from "../../../../middlewares/middlewareToken";
+import connectDb from "@/app/lib/db/connectDb";
+import { ConsumerPostModel, PostModel, UserModel } from "@/app/lib/models/user";
+import { verifyTokenMiddleware } from "@/middlewares/middlewareToken";
 
 export async function POST(req: NextRequest) {
     try {
@@ -83,7 +83,16 @@ export async function POST(req: NextRequest) {
         consumerPost?newPost.postId = consumerPost:null;
         return NextResponse.json(
             { message: 'Post added successfully', post: newPost },
-            { status: 201 }
+            { status: 201 ,
+                headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
+                        : 'http://localhost:3000',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                }
+            }
         );
     } catch (error) {
         console.error('Error adding post:', error);

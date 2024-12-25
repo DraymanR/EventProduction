@@ -1,5 +1,8 @@
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
+import { getBaseUrl } from "../config/axios";
+
+const baseUrl = getBaseUrl();
 
 // פעולה להוספת פוסט למשתמש
 export const addPostToUser = async (post: object) => {
@@ -10,7 +13,7 @@ export const addPostToUser = async (post: object) => {
 
     // שליחת בקשה לשרת
     const response = await axios.post(
-      `http://localhost:3000/api/posts/post/username?username=${username}`,
+      `${baseUrl}/api/posts/post/username?username=${username}`,
       post,
       {
         headers: {
@@ -38,7 +41,7 @@ export const getUserPosts = async () => {
 
     // קריאה לשרת לקבלת נתוני המשתמש
     const response = await axios.get(
-      `http://localhost:3000/api/users/get/username?username=${username}`
+      `${baseUrl}/api/users/get/username?username=${username}`
     );
 
     console.log("User fetched successfully:", response.data);

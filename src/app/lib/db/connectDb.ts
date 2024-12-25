@@ -2,26 +2,23 @@ import mongoose from 'mongoose';
 
 const connectDb = async (): Promise<void> => {
 
+  try {
+    const MONGODB_URI = process.env.MONGODB_URI;
 
-  console.log('inside the connectDB function , still did nothing :)')
-   try{
-    const MONGODB_URI = process.env.MONGODB_URI ;
-    console.log(MONGODB_URI);
     if (!MONGODB_URI) {
-      throw new Error('Missing MONGO_URI in environment variables');
+      throw new Error('Missing MONGODB_URI in environment variables');
     }
 
-    // Check if we have a cached connection
+    // Check if we are already connected
     if (mongoose.connection.readyState === 1) {
-      console.log('Using existing MongoDB connection');
-      return;
+      console.log('Already connected to MongoDB. Exiting connectDb function.');
+      return; // Exit the function early
     }
 
     // If not connected, establish a new connection
     await mongoose.connect(MONGODB_URI, {
-      // These options help with connection stability
       serverSelectionTimeoutMS: 5000,
-      retryWrites: true
+      retryWrites: true,
     });
 
     console.log('Connected to MongoDB');
@@ -32,10 +29,9 @@ const connectDb = async (): Promise<void> => {
     });
 
   } catch (error) {
-    console.error("Database connection error:", error);
-    // Optionally, you could implement a retry mechanism here
-    throw new Error("Failed to connect to database");
+    console.error('Database connection error:', error);
+    throw new Error('Failed to connect to database');
   }
-}
+};
 
 export default connectDb;

@@ -1,5 +1,5 @@
 "use client";
-import { PostCardProps, EventCategory } from "@/app/types/user"; // ייבוא ה-Enum של סוגי האירועים
+import { PostCardProps, EventCategory } from "@/app/types/post"; // ייבוא ה-Enum של סוגי האירועים
 import SearchBar from "@/app/component/SearchBar";
 import usePostStore from "@/app/store/postStore";
 import "@/app/css/posts/customStyles.css";
@@ -116,6 +116,7 @@ const PostList = () => {
       </div>
       <div className="posts-list">
         {filteredPosts.map((post: PostCardProps, index: number) => (
+          
           <PostCard key={index} post={post} />
         ))}
       </div>
