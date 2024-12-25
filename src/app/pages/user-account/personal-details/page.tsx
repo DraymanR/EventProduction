@@ -1,35 +1,42 @@
 "use client";
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
-import { getMyDetails } from "@/app/services/user/getDetails";
 import useUserStore from "@/app/store/userModel";
-import { UserFormData } from "@/app/types/user";
 import { useEffect, useState } from "react";
+import UpdateUserPersonalDetails from "@/app/component/users/updateUserPersonalDetails";
+import { UserFormData } from "@/app/types/user";
 
 const Home: React.FC = () => {
-    console.log("page personal details")
-    const [ , setMyDetails] = useState<UserFormData>(); //  אם אנחנו בשלב הזנת קוד
+    console.log("page personal details");
     const userDetails = useUserStore((state) => state.user);
+
+    // State to toggle the update form
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
 
     useEffect(() => {
         console.log("Updated userDetails:", userDetails);
     }, [userDetails]);
 
-    const isReady = useUserStore((state) => state.isReady);
 
-    if (!isReady) {
-        // return <p>Loading...</p>;
-    }
     return (
         <div dir="ltr">
             {userDetails ? (
-               <ShowUserPersonalDetails user={userDetails}></ShowUserPersonalDetails>
+                <div>
+                    <ShowUserPersonalDetails user={userDetails} />
+                    <button onClick={() => setShowUpdateForm((prev) => !prev)} className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+                        {showUpdateForm ? "Hide Update Form" : "Update Details"}
+                    </button>
+                    {showUpdateForm && (
+                        <div>
+                            <UpdateUserPersonalDetails user={userDetails} />
+                        </div>
+                    )}
+                </div>
             ) : (
                 <p>No user data found</p>
-
             )}
         </div>
+    );
+};
 
-    )
-}
 export default Home;

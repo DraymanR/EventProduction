@@ -90,6 +90,7 @@ export interface Address {
 }
 
 export interface UserFormData {
+  roles: never[];
   firstName: string;
   lastName: string;
   userName: string;
