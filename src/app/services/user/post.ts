@@ -57,15 +57,13 @@ export const getUserPosts = async () => {
 export const addPostToFavorites = async (favoritePostID: string) => {
   try {
     // יצירת גוף הבקשה
-    const data = {
-      favoritePostID,
-    };
+    const data={"favoritePostID":favoritePostID};
 
     // שליחת הבקשה לשרת
-    const response = await axios.post(
+    const response = await axios.put(
      
       " http://localhost:3000/api/users/favorites",
-      JSON.stringify(data),
+      data,
       {
         headers: {
           "Content-Type": "application/json",
@@ -75,12 +73,43 @@ export const addPostToFavorites = async (favoritePostID: string) => {
 
     console.log("Post added to favorites successfully:", response.data);
 
-    // הוספת הפוסט לסטור
     const setLikedPostsArr = useUserStore.getState().setLikedPostsArr;
     const likedPost = response.data; // נניח שהתגובה מהשרת מכילה מידע מלא על הפוסט
     setLikedPostsArr(likedPost);
 
-    return response.data;
+    return response;
+  } catch (error) {
+    console.error("Error adding post to favorites:", error);
+    throw error; // טיפול בשגיאות
+  }
+};
+
+
+export const removePostToFavorites = async (favoritePostID: string) => {
+  try {
+    // יצירת גוף הבקשה
+    const data={"favoritePostID":favoritePostID};
+
+    // שליחת הבקשה לשרת
+    const response = await axios.put(
+     
+      " http://localhost:3000/api/users/favorites/delete",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Post deleted from favorites successfully:", response.data);
+    const setLikedPostsArr = useUserStore.getState().setLikedPostsArr;
+    const updatedLikedPostsArr = useUserStore.getState().likedPostsArr.filter(
+      (post: any) => post._id !== favoritePostID
+    ); 
+    setLikedPostsArr(updatedLikedPostsArr)
+
+    return response;
   } catch (error) {
     console.error("Error adding post to favorites:", error);
     throw error; // טיפול בשגיאות

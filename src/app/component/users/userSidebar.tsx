@@ -35,7 +35,7 @@ const ConsumerNavbar: React.FC = () => {
         יציאה
       </button>
       <Link href="/pages/user-account" className="consumer-navbar-link">
-        🏠 דף הבית
+         דף הבית
       </Link>
       <Link href="/pages/user-account/personal-details" className="consumer-navbar-link">
         פרטים אישיים

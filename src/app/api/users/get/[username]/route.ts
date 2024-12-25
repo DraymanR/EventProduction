@@ -4,7 +4,7 @@ import { User, Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נניח שהמיקום של ה-middleware
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
 
 export async function GET(req: NextRequest) {
     try {
@@ -31,16 +31,25 @@ export async function GET(req: NextRequest) {
             .populate('addressId')
             .populate({
                 path: 'postArr',
-                populate: {
-                    path: 'recommendations',
-                    model: 'Recommendation',
-                },
+                populate:[
+                    {
+                        path: 'recommendations',
+                        model: 'Recommendation',
+                    },
+                    {
+                        path: 'postId', // זה ה-ID של ה-ConsumerPost
+                        model: 'ConsumerPost', // הכוונה היא לפופל את ה-ID של ה-ConsumerPost
+                    },
+                ]
             }).populate({
                 path: 'likedPostsArr',
-                populate: {
+                populate: [{
                     path: 'recommendations',
                     model: 'Recommendation',
-                },
+                },  {
+                    path: 'postId',
+                    model: 'ConsumerPost',
+                }]
             })
             .lean<User>();
 

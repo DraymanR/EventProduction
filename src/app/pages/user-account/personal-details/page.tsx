@@ -33,7 +33,7 @@ const Home: React.FC = () => {
                     )}
                 </div>
             ) : (
-                <p>No user data found</p>
+                <p>No user data found , please log in</p>
             )}
         </div>
     );
