@@ -11,8 +11,10 @@ import useModalStore from '../store/modelStore';
 const Navbar = () => {
     const openModal = useModalStore((state) => state.openModal);
     const userDetails = useUserStore((state) => state.user);
-    
-    const { toggleNavbar } = useNavbarStore();
+    console.log("userDetails", userDetails);
+
+
+    const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
     const handleProfileClick = () => {
         if (checkIfLoggedIn()) {
@@ -28,83 +30,52 @@ const Navbar = () => {
     const isUserFormData = (data: unknown): data is UserFormData => {
         return typeof (data as UserFormData)?.profileImage === 'string';
     };
+    if (checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage) {
 
-    // Helper function to safely parse profile image URL
-    const getProfileImageUrl = (profileImage: string): string => {
-        try {
-            // Debug log
-            console.log('Raw profile image data:', profileImage);
-            
-            if (!profileImage) {
-                return '';
-            }
+        console.log("lll", userDetails.profileImage
+            .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')
+            .replace(/(\w+):/g, '"$1":')
+            .replace(/'([^']+)'/g, '"$1"')
+            .replace(/""([^"]+)""/g, '"$1"')
+            .replace(/"([^"]+:\/\/[^"]+)"/g, '"$1"')
+            .replace(/""([^"]+)""/g, '"$1"') 
+            .replace(/\n|\r/g, '').trim());
 
-            const parsed = JSON.parse(
-                profileImage
-                    .replace(/'/g, '"')  // Replace single quotes with double quotes
-                    .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')  // Handle ObjectId
-            );
-
-            if (!parsed || !parsed.imgUrl) {
-                console.error('Invalid profile image data structure:', parsed);
-                return '';
-            }
-
-            return parsed.imgUrl;
-        } catch (error) {
-            console.error('Error parsing profile image:', error);
-            return '';
-        }
-    };
-
-    const renderProfileImage = () => {
-        if (checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage) {
-            const imageUrl = getProfileImageUrl(userDetails.profileImage);
-            
-            if (!imageUrl) {
-                return (
-                    <Image
-                        src={profileImage}
-                        alt="תמונת פרופיל"
-                        width={50}
-                        height={50}
-                        className="profile-image"
-                    />
-                );
-            }
-
-            return (
-                <img
-                    src={imageUrl}
-                    alt="Profile"
-                    width={50}
-                    height={50}
-                    className="profile-image"
-                />
-            );
-        }
-
-        return (
-            <Image
-                src={profileImage}
-                alt="תמונת פרופיל"
-                width={50}
-                height={50}
-                className="profile-image"
-            />
-        );
-    };
+    }
 
     return (
         <div className="navbar">
             <nav className="navbar-container">
-                {/* Profile section on the right */}
+                {/* אזור הפרופיל בצד ימין */}
                 <div className="profile-section">
                     <div
                         className="profile-image-container"
-                        onClick={handleProfileClick}
+                        onClick={() => { handleProfileClick() }}
                     >
-                        {renderProfileImage()}
+                        {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
+                            <img
+                                src={JSON.parse(userDetails.profileImage
+                                    .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')
+                                    .replace(/(\w+):/g, '"$1":')
+                                    .replace(/'([^']+)'/g, '"$1"')
+                                    .replace(/""([^"]+)""/g, '"$1"')
+                                    .replace(/"([^"]+)":\s*""([^"]+)""/g, '"$1": "$2"')
+                                    .replace(/""https""/g, '"https')
+                                    .replace(/\n|\r/g, '').trim()).imgUrl}
+                                alt="Profile"
+                                width={50}
+                                height={50}
+                                className="profile-image"
+                            />
+                        ) : (
+                            <Image
+                                src={profileImage}
+                                alt="תמונת פרופיל"
+                                width={50}
+                                height={50}
+                                className="profile-image"
+                            />
+                        )}
                         <p className="profile-text">הפרופיל שלי</p>
                     </div>
                 </div>

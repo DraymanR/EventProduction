@@ -1,10 +1,10 @@
 'use client'
 
-import { PostCardProps } from "@/app/types/user";
 import { useState, useEffect } from "react";
 import useUserStore from "@/app/store/userModel";
 import PostCard from "@/app/component/posts/PostCard";
 import '@/app/globals.css'
+import { PostCardProps } from "@/app/types/post";
 
 const Home: React.FC = () => {
   const favoriteEvents = useUserStore((state) => state.likedPostsArr);

@@ -116,6 +116,7 @@ const PostList = () => {
       </div>
       <div className="posts-list">
         {filteredPosts.map((post: PostCardProps, index: number) => (
+          
           <PostCard key={index} post={post} />
         ))}
       </div>

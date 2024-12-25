@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { getUserDetails } from '@/app/services/user/getDetails';
 import '@/app/css/users/showUser.css';
 import '@/app/globals.css';
-import { PostCardProps, UserResponseData } from '@/app/types/user';
+import {  UserResponseData } from '@/app/types/user';
 import PostCard from '../posts/PostCard';
 import useUserStore from '@/app/store/userModel';
+import { PostCardProps } from '@/app/types/post';
 
 const ShowUser = ({ userName }: { userName: string }) => {
     // Get values and actions from the store
