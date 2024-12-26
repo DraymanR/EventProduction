@@ -22,6 +22,11 @@ export type Option = {
   value: string;
   label: string;
 };
+
+export type Img = {
+  imgUrl: string;
+}
+
 export enum Language {
   Hebrew = 'Hebrew',
   English = 'English',
@@ -64,7 +69,7 @@ export interface User {
   postArr: ObjectId[];
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
   likedPeople: string[];
-  profileImage: string; // מערך של פוסטים
+  profileImage: Img; // מערך של פוסטים
 }
 
 export interface Auth {
@@ -90,6 +95,7 @@ export interface Address {
 }
 
 export interface UserFormData {
+  // roles: never[];
   firstName: string;
   lastName: string;
   userName: string;
@@ -140,26 +146,6 @@ export interface SearchBarProps {
   ) => void;
 }
 
-export interface UserFormData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  titles: (Title | "consumer")[]; //string[];
-  phone: string;
-  description: string;
-  languages: Language[];
-  // address: Address
-  address: {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  };
-  supplierDetails?: SupplierDetails;
-  profileImage: string | null;
-}
 export interface UserResponseData {
   firstName: string;
   lastName: string;
@@ -197,7 +183,7 @@ export interface UserStore {
 
 
 export interface CustomRequest extends NextRequest {
-    userName?: string;
+  userName?: string;
 }
 
 
@@ -209,10 +195,6 @@ export interface ModalState {
 
 export interface ShowUserPersonalDetailsProps {
   user: UserFormData;
-}
-
-export interface Img {
-  imgUrl: string;
 }
 
 export interface ModalState {

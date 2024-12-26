@@ -7,36 +7,35 @@ import useNavbarStore from '../store/navbarStore';
 import useUserStore from '../store/userModel';
 import { UserFormData } from '../types/user';
 import useModalStore from '../store/modelStore';
-
+import { useState } from 'react';
 
 const Navbar = () => {
     const openModal = useModalStore((state) => state.openModal);
     const userDetails = useUserStore((state) => state.user);
-    console.log("userDetails", userDetails);
-
     const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
+    const [openSideBar, setOpenSideBar] = useState<boolean>(true);
     const handleProfileClick = () => {
         console.log("i am");
 
-
         if (checkIfLoggedIn()) {
             // המשתמש מחובר - נפתח את הצדדי
-            console.log(checkIfLoggedIn());
-
-            toggleNavbar()
+            console.log("User is logged in");
+            setOpenSideBar(!openSideBar)
+            toggleNavbar(openSideBar);
         } else {
-            console.log("לא מחובר");
-
+            console.log("User is not logged in");
             // המשתמש לא מחובר - ננווט לחלון ההרשמה
             openModal();
         }
     };
 
-    // פונקציית Type Guard לבדיקה אם userDetails הוא מסוג UserFormData
+    // Type Guard
     const isUserFormData = (data: unknown): data is UserFormData => {
         return typeof (data as UserFormData)?.profileImage === 'string';
     };
+
+
     return (
         <div className="navbar">
             <nav className="navbar-container">
@@ -46,9 +45,10 @@ const Navbar = () => {
                         className="profile-image-container"
                         onClick={() => { handleProfileClick() }}
                     >
-                        {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
+                        {checkIfLoggedIn() && userDetails?.profileImage ? (
+                            // {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
                             <img
-                                src={JSON.parse(userDetails.profileImage.replace(/'/g, '"').replace(/new ObjectId\(([^)]+)\)/g, '"$1"')).imgUrl}
+                                src={userDetails.profileImage}
                                 alt="Profile"
                                 width={50}
                                 height={50}
@@ -63,11 +63,15 @@ const Navbar = () => {
                                 className="profile-image"
                             />
                         )}
-                        <p className="profile-text">הפרופיל שלי</p>
+                        {checkIfLoggedIn() && userDetails ? (
+                            <p className="profile-text">{userDetails.firstName} {userDetails.lastName}</p>
+                        ) : (
+                            <p className="profile-text">הפרופיל שלי</p>
+                        )}
                     </div>
                 </div>
 
-                {/* כותרת בצד שמאל */}
+                {/* Title on the left */}
                 <div className="navbar-title">
                     חגיגה מושלמת
                 </div>

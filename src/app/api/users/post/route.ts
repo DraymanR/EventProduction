@@ -21,6 +21,7 @@ export async function POST(req: Request) {
             phone, languages, address, description, topPrice, startingPrice,
             profileImage
         } = await req.json();
+        console.log("profileImage", profileImage);
 
         if (!firstName || !lastName || !userName || !email || !password || !titles || !phone || !languages || !address || !description) {
             return NextResponse.json(
@@ -32,14 +33,14 @@ export async function POST(req: Request) {
 
 
 
-      
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const normalizedEmail = email.toLowerCase();
 
         await connectDb();
 
-     
+
 
         // Create Auth document
         const newAuth = new AuthModel({
@@ -59,6 +60,8 @@ export async function POST(req: Request) {
         const profileImg = new ImgModel({
             imgUrl: profileImage,
         });
+        console.log("profileImg",profileImg);
+        
         const newUser = new UserModel({
             firstName,
             lastName,
@@ -72,7 +75,7 @@ export async function POST(req: Request) {
             postArr: [],
             likedPostsArr: [],
             likedPeople: [],
-            profileImage:profileImg
+            profileImage: profileImg.imgUrl
         });
         await newUser.save();
 
@@ -91,10 +94,11 @@ export async function POST(req: Request) {
         const token = generateToken(newUser);
         const response = NextResponse.json(
             { message: 'User created successfully' },
-            { status: 201 ,
+            {
+                status: 201,
                 headers: {
                     'Access-Control-Allow-Credentials': 'true',
-                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                         ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
                         : 'http://localhost:3000',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
