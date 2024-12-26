@@ -121,3 +121,27 @@
 .modal-open {
   overflow: hidden;
 }
+
+.layout {
+  display: flex;
+  flex-direction: row; /* מיקום התוכן וה-navbar לצד זה לצד זה */
+  height: 100vh; /* גובה מלא */
+}
+
+.sidebar {
+  width: 250px; /* רוחב ה-navbar */
+  background-color: #2d2d2d; /* צבע רקע לדוגמה */
+  height: 100%; /* גובה מלא */
+  position: fixed; /* מיקום קבוע בצד */
+  right: 0; /* צד ימין */
+  top: 90px; /* להתחשב בגובה ה-navbar העליון */
+  z-index: 10; /* למנוע דריסה */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* צל */
+}
+
+.main-content {
+  flex-grow: 1; /* התוכן המרכזי תופס את שאר הרוחב */
+  margin-right: 250px; /* מרווח כדי לא לעלות על ה-sidebar */
+  padding: 16px; /* ריווח פנימי */
+  overflow-y: auto; /* גלילה אם יש צורך */
+}
