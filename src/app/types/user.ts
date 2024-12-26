@@ -112,7 +112,7 @@ export interface UserFormData {
     building: number;
   };
   supplierDetails?: SupplierDetails;
-  profileImage: Img | null;
+  profileImage: string | null;
 }
 export interface UserResponseData {
   firstName: string;

@@ -45,9 +45,10 @@ const Navbar = () => {
                         className="profile-image-container"
                         onClick={() => { handleProfileClick() }}
                     >
-                        {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
+                        {checkIfLoggedIn() && userDetails?.profileImage ? (
+                            // {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
                             <img
-                                src={userDetails.profileImage.imgUrl}
+                                src={userDetails.profileImage}
                                 alt="Profile"
                                 width={50}
                                 height={50}

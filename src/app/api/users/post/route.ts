@@ -75,7 +75,7 @@ export async function POST(req: Request) {
             postArr: [],
             likedPostsArr: [],
             likedPeople: [],
-            profileImage: profileImg
+            profileImage: profileImg.imgUrl
         });
         await newUser.save();
 
