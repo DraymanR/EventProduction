@@ -25,7 +25,13 @@ const userSchema = new Schema<User>({
   postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
   likedPeople: [{ type: String }], // שמ  
-  profileImage: { type: String, default: null },
+  // profileImage: { type: Img, default: null },
+  // profileImage: { 
+  //   type: { imgUrl: String }, // אובייקט מותאם
+  //   default: null 
+  // },
+  profileImage: [{ type: Schema.Types.ObjectId, ref: 'Img' }],
+
 });
 
 // הסכמה למודל כתובת

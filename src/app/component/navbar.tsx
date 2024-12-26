@@ -7,28 +7,24 @@ import useNavbarStore from '../store/navbarStore';
 import useUserStore from '../store/userModel';
 import { UserFormData } from '../types/user';
 import useModalStore from '../store/modelStore';
-
+import { useState } from 'react';
 
 const Navbar = () => {
     const openModal = useModalStore((state) => state.openModal);
     const userDetails = useUserStore((state) => state.user);
-    console.log("userDetails", userDetails);
-
-
     const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
+    const [openSideBar, setOpenSideBar] = useState<boolean>(true);
     const handleProfileClick = () => {
         console.log("i am");
-
 
         if (checkIfLoggedIn()) {
             // המשתמש מחובר - נפתח את הצדדי
             console.log(checkIfLoggedIn());
-
-            toggleNavbar()
+            setOpenSideBar(!openSideBar)
+            toggleNavbar(openSideBar);
         } else {
             console.log("לא מחובר");
-
             // המשתמש לא מחובר - ננווט לחלון ההרשמה
             openModal();
         }
@@ -38,18 +34,7 @@ const Navbar = () => {
     const isUserFormData = (data: unknown): data is UserFormData => {
         return typeof (data as UserFormData)?.profileImage === 'string';
     };
-    if (checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage) {
 
-        console.log("lll", userDetails.profileImage
-            .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')
-            .replace(/(\w+):/g, '"$1":')
-            .replace(/'([^']+)'/g, '"$1"')
-            .replace(/""([^"]+)""/g, '"$1"')
-            .replace(/"([^"]+:\/\/[^"]+)"/g, '"$1"')
-            .replace(/""([^"]+)""/g, '"$1"') 
-            .replace(/\n|\r/g, '').trim());
-
-    }
 
     return (
         <div className="navbar">
@@ -62,14 +47,7 @@ const Navbar = () => {
                     >
                         {checkIfLoggedIn() && isUserFormData(userDetails) && userDetails.profileImage ? (
                             <img
-                                src={JSON.parse(userDetails.profileImage
-                                    .replace(/new ObjectId\(([^)]+)\)/g, '"$1"')
-                                    .replace(/(\w+):/g, '"$1":')
-                                    .replace(/'([^']+)'/g, '"$1"')
-                                    .replace(/""([^"]+)""/g, '"$1"')
-                                    .replace(/"([^"]+)":\s*""([^"]+)""/g, '"$1": "$2"')
-                                    .replace(/""https""/g, '"https')
-                                    .replace(/\n|\r/g, '').trim()).imgUrl}
+                                src={userDetails.profileImage.imgUrl}
                                 alt="Profile"
                                 width={50}
                                 height={50}
@@ -84,7 +62,11 @@ const Navbar = () => {
                                 className="profile-image"
                             />
                         )}
-                        <p className="profile-text">הפרופיל שלי</p>
+                        {checkIfLoggedIn() && userDetails ? (
+                            <p className="profile-text">{userDetails.firstName} {userDetails.lastName}</p>
+                        ) : (
+                            <p className="profile-text">הפרופיל שלי</p>
+                        )}
                     </div>
                 </div>
 
