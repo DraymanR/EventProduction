@@ -102,6 +102,9 @@ const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<Consume
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
+userSchema.index({ 'addressId.city': 'text' }); 
+userSchema.index({ title: 'text' });
+userSchema.index({ language: 1 });
 
 postSchema.virtual('userDetails', {
   ref: 'User', // שם המודל שאתה רוצה לשייך
