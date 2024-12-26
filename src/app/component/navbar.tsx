@@ -20,17 +20,17 @@ const Navbar = () => {
 
         if (checkIfLoggedIn()) {
             // המשתמש מחובר - נפתח את הצדדי
-            console.log(checkIfLoggedIn());
+            console.log("User is logged in");
             setOpenSideBar(!openSideBar)
             toggleNavbar(openSideBar);
         } else {
-            console.log("לא מחובר");
+            console.log("User is not logged in");
             // המשתמש לא מחובר - ננווט לחלון ההרשמה
             openModal();
         }
     };
 
-    // פונקציית Type Guard לבדיקה אם userDetails הוא מסוג UserFormData
+    // Type Guard
     const isUserFormData = (data: unknown): data is UserFormData => {
         return typeof (data as UserFormData)?.profileImage === 'string';
     };
@@ -70,7 +70,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* כותרת בצד שמאל */}
+                {/* Title on the left */}
                 <div className="navbar-title">
                     חגיגה מושלמת
                 </div>

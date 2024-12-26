@@ -4,7 +4,6 @@ import { ConsumerPost, EventCategory, Post, Recommendation } from '@/app/types/p
 
 // הסכמה למודל משתמש
 const userSchema = new Schema<User>({
-  // _id: { type: Schema.Types.ObjectId },
   userName: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -108,6 +107,7 @@ const ConsumerPostModel = mongoose.models.ConsumerPost || mongoose.model<Consume
 const RecommendationModel = mongoose.models.Recommendation || mongoose.model<Recommendation>('Recommendation', recommendationSchema);
 const ImgModel = mongoose.models.Img || mongoose.model<Img>('Img', ImgSchema);
 const AuthModel = mongoose.models.Auth || mongoose.model<Auth>('Auth', authSchema);
+
 
 postSchema.virtual('userDetails', {
   ref: 'User', // שם המודל שאתה רוצה לשייך

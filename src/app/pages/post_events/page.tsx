@@ -8,7 +8,7 @@ const Page: React.FC = () => {
   const post: Post = {
     createDate: new Date(),
     userName: "Esther Cohen",
-    album: [], // אפשר להוסיף כאן קישורים לתמונות בתחילה אם יש לך
+    album: [], 
     postId: "1" as any,
     // postId: 1, // הוספת postId
     title: "חתונת הכסף של ההורים היקרים שלי",
