@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Select, { MultiValue, ActionMeta } from "react-select";
 
 interface SortFilterProps {
-    onFilterChange: (filters: { language?: string[]; title?: string[]; city?: string }) => void;
+    onFilterChange: (filters: { language?: string[]; title?: string[]; city?: string[] }) => void;
     setFilteredUsers: (users: any[]) => void;
 }
 
@@ -14,10 +14,10 @@ interface Option {
 }
 
 const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUsers }) => {
-    const [filters, setFilters] = useState<{ language: string[]; title: string[]; city: string }>({
+    const [filters, setFilters] = useState<{ language: string[]; title: string[]; city: string[] }>({
         language: [],
         title: [],
-        city: "",
+        city: [],
     });
 
     const languageOptions: Option[] = [
@@ -58,7 +58,7 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
 
     const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        const updatedFilters = { ...filters, city: value };
+        const updatedFilters = { ...filters, city: [value] };
         updateFilters(updatedFilters);
     };
 
