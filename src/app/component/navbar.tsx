@@ -14,7 +14,7 @@ const Navbar = () => {
     const userDetails = useUserStore((state) => state.user);
     const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
-    const [openSideBar, setOpenSideBar] = useState<boolean>(true);
+    const [openSideBar, setOpenSideBar] = useState<boolean>(false);
     const handleProfileClick = () => {
         console.log("i am");
 
