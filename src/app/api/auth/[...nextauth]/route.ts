@@ -44,11 +44,6 @@ export const authOptions: AuthOptions = {
         return `/pages/user-account/auth/new-user-error?error=UserNotFound`;
       }
     },
-    // //TO DO: this signOut operation should signOut of the regular token too  
-    // async signOut({user}){
-    // need to import the logOut from the services/user/registerUser and use it here.
-
-    // },
 
     async session({ session, token }) {
       if (session.user) {

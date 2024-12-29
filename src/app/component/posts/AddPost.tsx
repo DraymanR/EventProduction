@@ -105,12 +105,11 @@ const AddPost: React.FC = () => {
         </select>
       </label>
 
-      {/* <div style={{ width: "300px" }}> */}
       <label>
         הספקים שלי:
         <Select
           options={suppliers.map((supplier) => ({ value: supplier, label: supplier }))} // מיפוי לערכים ש-React-Select מבין
-          isMulti // מאפשר בחירה מרובה
+          isMulti 
           placeholder="בחר ספקים..."
           onChange={(selectedOptions) => setSupplierNameArr(selectedOptions.map((option) => option.value))}
           value={supplierNameArr.map((supplier) => ({ value: supplier, label: supplier }))}
@@ -126,7 +125,7 @@ const AddPost: React.FC = () => {
       </label>
 
       <label>
-        תקציב האירוע:
+        תקציב האירוע:  
         <input
           type="number"
           value={budget}
