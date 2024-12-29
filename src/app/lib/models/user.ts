@@ -29,7 +29,9 @@ const userSchema = new Schema<User>({
   //   type: { imgUrl: String }, // אובייקט מותאם
   //   default: null 
   // },
-  profileImage: [{ type: Schema.Types.ObjectId, ref: 'Img' }],
+  // profileImage: { type: Schema.Types.ObjectId, ref: 'Img' },
+  profileImage: { type: String, default: null },
+
 
 });
 
@@ -71,7 +73,7 @@ const supplierSchema = new Schema<Supplier>({
 const postSchema = new Schema<Post>({
   userName: { type: String, ref: 'User', required: true },
   createDate: { type: Date, required: true },
-  album: [{ type: String, required: true }],
+  album: [{type: String, default: null}],
   title: { type: String, required: true },
   description: { type: String, required: true },
   recommendations: [{ type: Schema.Types.ObjectId, ref: 'Recommendation' }],
