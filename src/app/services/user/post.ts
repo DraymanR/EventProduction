@@ -62,7 +62,7 @@ export const addPostToFavorites = async (favoritePostID: string) => {
     // שליחת הבקשה לשרת
     const response = await axios.put(
      
-      " http://localhost:3000/api/users/favorites",
+      `${baseUrl}/api/users/favorites`,
       data,
       {
         headers: {
@@ -93,7 +93,7 @@ export const removePostToFavorites = async (favoritePostID: string) => {
     // שליחת הבקשה לשרת
     const response = await axios.put(
      
-      " http://localhost:3000/api/users/favorites/delete",
+     `${baseUrl}/api/users/favorites/delete`,
       data,
       {
         headers: {

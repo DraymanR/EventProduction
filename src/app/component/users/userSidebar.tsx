@@ -14,6 +14,7 @@ const ConsumerNavbar: React.FC = () => {
   const { data: session } = useSession();
   const clearUser = useUserStore((state) => state.clearUser);
   const { isOpen } = useNavbarStore(); // גישה ל-store
+  const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
   if (!isOpen) return null; // אם ה-navbar סגור, לא להציג כלום
 
@@ -21,8 +22,11 @@ const ConsumerNavbar: React.FC = () => {
     if (session?.user) {
       await signOut({ redirect: false });
       await logout();
+      toggleNavbar(false)
     } else {
       await logout();
+      toggleNavbar(false)
+
     }
 
     clearUser();
@@ -35,7 +39,7 @@ const ConsumerNavbar: React.FC = () => {
         יציאה
       </button>
       <Link href="/pages/user-account" className="consumer-navbar-link">
-        🏠 דף הבית
+         דף הבית
       </Link>
       <Link href="/pages/user-account/personal-details" className="consumer-navbar-link">
         פרטים אישיים

@@ -15,7 +15,7 @@ export default function RootLayout({
 
   return (
     <div>
-      {/* <PostList/> */}
+     
       {children}
     </div>
   );
