@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import PostEvent from "@/app/component/PostEvent";
+// import PostEvent from "@/app/component/PostEvent";
 import mongoose from "mongoose";
 import { Post } from "@/app/types/post";
 
@@ -19,7 +19,7 @@ const Page: React.FC = () => {
   return (
     <div>
       <h1>Event Page</h1>
-      <PostEvent post={post} recommendations={post.recommendations} />
+      {/* <PostEvent post={post} recommendations={post.recommendations} /> */}
     </div>
   );
 };

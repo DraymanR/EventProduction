@@ -21,6 +21,8 @@ export async function POST(req: NextRequest) {
         // const { title, description, album, recommendations, eventCategory, budget, supplierNameArr,isConsumer } = body;
         const { title, description, album, recommendations, eventCategory, budget, supplierNameArr, isConsumer } = body;
 
+        console.log("album", typeof(album));
+        console.log("album", album);
 
         if (!title || !description) {
             return NextResponse.json(
@@ -80,13 +82,14 @@ export async function POST(req: NextRequest) {
         await newPost.save();
         foundUser.postArr.push(newPost._id);
         await foundUser.save();
-        consumerPost?newPost.postId = consumerPost:null;
+        consumerPost ? newPost.postId = consumerPost : null;
         return NextResponse.json(
             { message: 'Post added successfully', post: newPost },
-            { status: 201 ,
+            {
+                status: 201,
                 headers: {
                     'Access-Control-Allow-Credentials': 'true',
-                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                         ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
                         : 'http://localhost:3000',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
