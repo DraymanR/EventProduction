@@ -1,21 +1,33 @@
+import { addImageToPost } from '@/app/services/post/post';
+import { CldUploadWidget } from 'next-cloudinary';
 import React, { useState } from 'react';
 
 interface ImageGalleryProps {
+  postUsername:string;
+   postId:string;
   images: string[];
+
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images,postId ,postUsername}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
-
+  const userNameFromCookie = decodeURIComponent(document.cookie);
+  console.log(userNameFromCookie);
+  const userName = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName=')).split('=')[1];
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     setIsModalOpen(true);
     setIsImageSelected(true);
   };
-
+  const handleUploadSuccess = async (result: any) => {
+    if (result.info && result.info.secure_url) {
+      const secureUrl = result.info.secure_url;
+      addImageToPost(postId, secureUrl); // שומר את הקישור המלא במערך
+    }
+  };
   const closeModal = () => {
     setIsModalOpen(false);
     setIsImageSelected(false);
@@ -81,7 +93,28 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           הסתר
         </button>
       )}
-
+      {(postUsername == userName) && <CldUploadWidget
+        uploadPreset="appOrganizerEvent"
+        onSuccess={handleUploadSuccess}
+        options={{
+          sources: [
+            'local',
+            'camera',
+            'google_drive',
+            'url'
+          ],
+          maxFiles: 35,
+        }}
+      >
+        {({ open }) => (
+          <button
+            onClick={() => open()}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            +
+          </button>
+        )}
+      </CldUploadWidget>}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="relative bg-white p-6 rounded-lg max-w-4xl shadow-lg">

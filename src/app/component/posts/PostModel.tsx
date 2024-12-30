@@ -246,12 +246,15 @@ import { PostCardProps } from '@/app/types/user';
 import { Recommendation } from '@/app/types/post';
 import useUserStore from '@/app/store/userModel';
 import { addPostToFavorites, removePostToFavorites } from '@/app/services/user/post';
-import { addRecommendation } from '@/app/services/post/post';
+import { addRecommendation, addImageToPost } from '@/app/services/post/post';
 import ImageGallery from '@/app/component/posts/ImageGallry'; // ייבוא קומפוננטת הגלריה
+import { CldUploadWidget } from 'next-cloudinary';
 
 const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const { likedPostsArr, setLikedPostsArr } = useUserStore();
   const userNameFromCookie = decodeURIComponent(document.cookie);
+ 
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(decodeURIComponent(document.cookie) ? true : false);
   const [comments, setComments] = useState<Recommendation[]>(post.recommendations || []);
@@ -266,7 +269,12 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1); // כל כוכב יקבל דירוג בין 1 ל-5
   };
-
+  const handleUploadSuccess = async (result: any) => {
+    if (result.info && result.info.secure_url) {
+      const secureUrl = result.info.secure_url;
+      addImageToPost(post._id, secureUrl); // שומר את הקישור המלא במערך
+    }
+  };
   const addComment = async () => {
     if (!isAuthenticated) {
       setShowLoginModal(true);
@@ -340,7 +348,8 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
         <p className="text-gray-700 mb-6">{post.description}</p>
 
         {/* גלריית תמונות */}
-        {post.album?.length > 0 && <ImageGallery images={post.album} />}
+       
+        {post.album?.length > 0 && <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
 
         {/* פרטי פוסט של צרכן */}
         {post.postId && (
@@ -371,7 +380,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
             {showComments ? (
               <FaChevronUp /> // הצג או סגור תגובות
             ) : (
-              <FaChevronDown /> 
+              <FaChevronDown />
             )}
           </button>
           {showComments && (

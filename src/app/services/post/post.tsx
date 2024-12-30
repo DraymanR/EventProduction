@@ -38,7 +38,27 @@ export const getMyEvents = async () => {
         throw error; // טיפול בשגיאות
     }
 };
+export const addImageToPost = async (imageUrl: string, postId: string) => {
+    try {
+        const data = {
+            imageUrl,
+            postId,
+        };
 
+        const response = await axios.post(`${baseUrl}/api/posts/save-image`, data, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        console.log('Image added to post:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding image to post:', error);
+        throw error;
+    }
+};
 export const getUserEvents = async (userName: string) => {
     try {
         const userDetails = await getUserDetails(userName)
