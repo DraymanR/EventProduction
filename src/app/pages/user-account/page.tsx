@@ -3,6 +3,7 @@ import PostList from '@/app/component/posts/PostList';
 import UserList from '@/app/component/users/UserList';
 import { getMyDetails } from '@/app/services/user/getDetails';
 import { useUpdateUserStore } from '@/app/services/user/registerUser';
+import useNavbarStore from '@/app/store/navbarStore';
 import useUserStore from '@/app/store/userModel';
 import { UserFormData } from '@/app/types/user';
 import { useEffect, useState } from 'react';
@@ -13,10 +14,12 @@ const Home = () => {
     const storlikedPeople = useUserStore((state) => state.likedPeople);
     const storlikedPostsArr = useUserStore((state) => state.likedPostsArr);
     const storeUser = useUserStore((state) => state.user);
+    const toggleNavbar = useNavbarStore((state) => state.toggleNavbar);
     const [activeTab, setActiveTab] = useState("users");
 
     useEffect(() => {
         const getMyPersonalDetails = async () => {
+            toggleNavbar(true)
             if (useUserStore.getState().isReady) return; // הימנע משאילתת נתונים כפולה
             if(storeUser)return;
             try {
