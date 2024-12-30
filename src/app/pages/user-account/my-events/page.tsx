@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div dir="ltr">
+    <div dir="rtl">
       <PopUpWindow>
         <AddPost></AddPost>
       </PopUpWindow>

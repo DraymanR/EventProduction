@@ -25,7 +25,7 @@ export default async function RootLayout({
 
 
   return (
-    <html lang="en" dir="rtl">
+    <html lang="he" dir="rtl">
       <body className="flex flex-col h-screen overflow-hidden">
         <SessionWrapper session={session}>
           <Navbar />

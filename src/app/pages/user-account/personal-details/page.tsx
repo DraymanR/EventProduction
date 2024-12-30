@@ -19,7 +19,7 @@ const Home: React.FC = () => {
 
 
     return (
-        <div dir="ltr">
+        <div dir="rtl">
             {userDetails ? (
                 <div>
                     <ShowUserPersonalDetails user={userDetails} />
