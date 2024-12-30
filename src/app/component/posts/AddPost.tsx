@@ -51,10 +51,11 @@ const AddPost: React.FC = () => {
   
   const handleUploadSuccess = async (result: any) => {
     if (result.info && result.info.secure_url) {
-      setAlbum((prev) => [...prev, ...result.info.secure_url]);
-        // setProfileImage(result.info.secure_url);
+      const secureUrl = result.info.secure_url;
+      setAlbum((prev) => [...prev, secureUrl]); // שומר את הקישור המלא במערך
     }
-};
+  };
+  
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
