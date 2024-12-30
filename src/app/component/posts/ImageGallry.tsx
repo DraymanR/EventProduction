@@ -8,6 +8,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
 
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
@@ -36,11 +37,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     }
   };
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded); // משנה את המצב של ההתרחבות
+  };
+
+  // הצגת רק 2 תמונות אם לא מורחב
+  const displayedImages = isExpanded ? images : images.slice(0, 2);
+
   return (
     <div className="image-gallery mb-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">תמונות:</h2>
       <div className="flex gap-6 flex-wrap justify-start">
-        {images.map((image, index) => (
+        {displayedImages.map((image, index) => (
           <div
             key={index}
             className="w-28 h-28 bg-gray-200 rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform duration-300 hover:scale-105"
@@ -54,6 +62,25 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           </div>
         ))}
       </div>
+
+      {/* כפתור להתרחבות */}
+      {images.length > 2 && !isExpanded && (
+        <button
+          onClick={toggleExpand}
+          className="mt-4 text-blue-600 font-semibold"
+        >
+          הצג עוד
+        </button>
+      )}
+
+      {isExpanded && images.length > 2 && (
+        <button
+          onClick={toggleExpand}
+          className="mt-4 text-blue-600 font-semibold"
+        >
+          הסתר
+        </button>
+      )}
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
