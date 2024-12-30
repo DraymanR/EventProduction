@@ -13,10 +13,10 @@ const UserList = () => {
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [noMoreUsers, setNoMoreUsers] = useState<boolean>(false);
-  const [filters, setFilters] = useState<{ language?: string; title?: string; city?: string }>({
-    language: "",
-    title: "",
-    city: "",
+  const [filters, setFilters] = useState<{ language?:string []; title?:string []; city?:string [] }>({
+    language:[ ""],
+    title:[ ""],
+    city: [""],
   });
 
   // Function to load users from the API
@@ -62,7 +62,7 @@ const UserList = () => {
     };
   }, [handleScroll, loading, noMoreUsers]);
 
-  useEffect(() => {
+useEffect(() => {
     loadUsers();
   }, [filters]);  // כאשר filters משתנה, תטעין מחדש את היוזרים
 

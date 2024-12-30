@@ -1,16 +1,29 @@
 import { getAllUsers } from "@/app/services/user/getDetails";
+import { Language, Title } from "@/app/types/user";
 import React, { useState } from "react";
 import { SortFilterProps } from '@/app/types/post'
 
 
-const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUsers }) => {
-    const [filters, setFilters] = useState({ language: "", title: "", city: "" });
+interface Option {
+    value: string;
+    label: string;
+}
 
-    const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        const updatedFilters = { ...filters, [name]: value };
-        setFilters(updatedFilters);  // עדכון הסטייט
-        const data = await getAllUsers(1, 10, updatedFilters);
+const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUsers }) => {
+    const [filters, setFilters] = useState<{ language: string[]; title: string[]; city: string[] }>({
+        language: [],
+        title: [],
+        city: [],
+    });
+
+    const languageOptions: Option[] = [
+        { value: Language.English, label: "אנגלית" },
+        { value: Language.French, label: "צרפתית" },
+        { value: Language.Hebrew, label: "עברית" },
+        { value: Language.Russian, label: "רוסית" },
+        { value: Language.Spanish, label: "ספרדית" },
+        { value: Language.Yiddish, label: "אידיש" },
+    ];
 
         console.log("uu", data.users);
         if (data.users.length > 0) {
@@ -24,21 +37,22 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
         <div className="filter-container">
             <label>
                 שפה:
-                <select name="language" value={filters.language} onChange={handleInputChange}>
-                    <option value="">בחר שפה</option>
-                    <option value="English">אנגלית</option>
-                    <option value="Hebrew">עברית</option>
-                    <option value="Spanish">ספרדית</option>
-                </select>
+                <Select
+                    options={languageOptions}
+                    isMulti
+                    placeholder="בחר שפות..."
+                    onChange={handleLanguageChange}
+                    value={filters.language.map((lang) => languageOptions.find((opt) => opt.value === lang))}
+                />
             </label>
             <label>
                 טייטל:
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="הכנס טייטל"
-                    value={filters.title}
-                    onChange={handleInputChange}
+                <Select
+                    options={titleOptions}
+                    isMulti
+                    placeholder="בחר טייטלים..."
+                    onChange={handleTitleChange}
+                    value={filters.title.map((title) => titleOptions.find((opt) => opt.value === title))}
                 />
             </label>
             <label>
@@ -48,10 +62,10 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
                     name="city"
                     placeholder="הכנס עיר"
                     value={filters.city}
-                    onChange={handleInputChange}
+                    onChange={handleCityChange}
                 />
             </label>
         </div>
     );
-};
-export default SortFilter
+}
+export default SortFilter;

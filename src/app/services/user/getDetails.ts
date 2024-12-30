@@ -95,18 +95,18 @@ export const getAllUsers = async (
     page: number = 1,
     limit: number = 10,
     filters: {
-      title?: string;
-      language?: string;
-      city?: string;
+      title?: string[]; // תמיכה במערך של טייטלים
+      language?: string[]; // תמיכה במערך של שפות
+      city?: string[]; // תמיכה במערך של ערים
     } = {}
   ) => {
     try {
       const queryParams = new URLSearchParams({
         page: page.toString(),
         limit: limit.toString(),
-        ...(filters.title && { title: filters.title }),
-        ...(filters.language && { language: filters.language }),
-        ...(filters.city && { city: filters.city }),
+        ...(filters.title && { title: filters.title.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
+        ...(filters.language && { language: filters.language.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
+        ...(filters.city && { city: filters.city.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
       }).toString();
   
       const response = await axios.get(
