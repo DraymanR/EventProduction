@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import usePostStore from "@/app/store/postStore";
 import "@/app/css/posts/customStyles.css";
 import { getAllUsers } from "@/app/services/user/getDetails";
 import "@/app/globals.css";

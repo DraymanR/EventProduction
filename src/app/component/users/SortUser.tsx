@@ -67,5 +67,5 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
             </label>
         </div>
     );
-};
+}
 export default SortFilter;
