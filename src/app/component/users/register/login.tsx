@@ -7,21 +7,17 @@ import Register from './register';
 import ResetPassword from '@/app/component/users/register/newPassword';
 import '@/app/globals.css'
 
-
 const Login: React.FC = () => {
     const [currentStep, setCurrentStep] = useState<'LoginWithPassword' | 'newPassword' | 'EnterCodeFromEmail' | 'newUser'>('LoginWithPassword');
     const [errorMessage, setErrorMessage] = useState('');
     const [codeFromEmail, setCodeFromEmail] = useState('');
     const [userEmail, setUserFromEmail] = useState('');
 
-
     const handleForgetPassword = async (email: string) => {
-        // setErrorMessage('');
         try {
             const result = await forgetPassword(email);
             setUserFromEmail(email)
             console.log(result);
-            // setCodeFromEmail(result.OTP);
             setErrorMessage('');
             setCurrentStep('EnterCodeFromEmail');
         } catch (error) {

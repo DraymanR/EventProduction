@@ -13,7 +13,6 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     const [errorMessage, setErrorMessage] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
     const [showPassword, setshowPassword] = useState(false);
-
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {

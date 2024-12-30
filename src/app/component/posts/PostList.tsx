@@ -9,25 +9,26 @@ import PostCard from "./PostCard";
 import '@/app/globals.css'
 
 const PostList = () => {
-    const { posts, setPosts } = usePostStore(); 
+  const { posts, setPosts } = usePostStore();
   const [postss, setPostss] = useState<PostCardProps[]>([]); // הגדרת state עם טיפ
   const [filteredPosts, setFilteredPosts] = useState<PostCardProps[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false); // מצב טעינה
   const [noMorePosts, setNoMorePosts] = useState<boolean>(false); // מצב של אין יותר פוסטים
+
   const loadPosts = async () => {
     if (loading || noMorePosts) return; // אם אנחנו כבר טוענים או שאין יותר פוסטים, לא נבצע טעינה נוספת
-  
+
     setLoading(true); // נעדכן את מצב הטעינה
     try {
       const data = await getAllPosts(page, 10); // העברת פרמטרים של דף ומספר פריטים
-  
+
       if (data.posts.length === 0) {
         setNoMorePosts(true);
         return;
       }
-  
+
       // הוספת מניעת כפילויות באמצעות ID ייחודי של פוסט
       const newPosts = data.posts.filter(
         (post: { postId: any }) =>
@@ -37,9 +38,9 @@ const PostList = () => {
       // עדכון הסטור עם הפוסטים החדשים
       setPostss((prevPosts) => [...prevPosts, ...newPosts]);
       setFilteredPosts((prevFiltered) => [...prevFiltered, ...newPosts]);
-  
+
       setPage((prevPage) => prevPage + 1); // הגדלת הדף
-  
+
       if (newPosts.length < 10) {
         setNoMorePosts(true);
       }
@@ -50,7 +51,7 @@ const PostList = () => {
       setLoading(false);
     }
   };
-  
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleScroll = () => {
     const bottom =
@@ -59,17 +60,6 @@ const PostList = () => {
       loadPosts();
     }
   };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll, loading, noMorePosts]);
-
-  useEffect(() => {
-    loadPosts();
-  }, []);
 
   const handleSearch = (
     userName: string,
@@ -84,12 +74,11 @@ const PostList = () => {
       const matchEventTitle = post.title.toLowerCase().includes(eventTitle.toLowerCase());
       const matchEventType = eventType ? post.postId?.eventCategory === eventType : true;
       const matchDescription = post.description?.toLowerCase().includes(description.toLowerCase());
-  
       const postDate = new Date(post.createDate);
       const isWithinDateRange =
         (!startDate || postDate >= new Date(startDate)) &&
         (!endDate || postDate <= new Date(endDate));
-  
+
       return (
         matchUserName &&
         matchEventTitle &&
@@ -100,7 +89,17 @@ const PostList = () => {
     });
     setFilteredPosts(results);
   };
-  
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll, loading, noMorePosts]);
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
 
   if (error) {
     return (
@@ -116,7 +115,6 @@ const PostList = () => {
       </div>
       <div className="posts-list">
         {filteredPosts.map((post: PostCardProps, index: number) => (
-          
           <PostCard key={index} post={post} />
         ))}
       </div>
@@ -128,7 +126,7 @@ const PostList = () => {
       )}
     </div>
   );
-  
+
 };
 
 

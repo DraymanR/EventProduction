@@ -4,8 +4,7 @@ import React from "react";
 import useModalStore from "@/app/store/modelStore";
 
 const PopUpWindow = ({ children }: { children: React.ReactNode }) => {
-const isModalOpen = useModalStore((state) => state.isModalOpen);
-
+  const isModalOpen = useModalStore((state) => state.isModalOpen);
   const closeModal = useModalStore((state) => state.closeModal);
 
   console.log("isModalOpen:", isModalOpen);  // הוסף כאן את ההדפסה כדי לבדוק את ה-state

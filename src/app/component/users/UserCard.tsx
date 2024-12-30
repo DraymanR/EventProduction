@@ -1,16 +1,5 @@
 import React from 'react';
 
-interface User {
-  userName: string;
-  email: string;
-  phone: string;
-  titles: string[];
-  languages: string[];
-  addressId: {
-    city: string;
-  };
-}
-
 const UserCard: React.FC<{ user: any }> = ({ user }) => {
   const defaultProfileImage = (
     <svg

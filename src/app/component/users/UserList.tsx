@@ -40,7 +40,13 @@ const UserList = () => {
       setLoading(false);  // תמיד לסיים טעינה
     }
   };
-  
+  // Function to update filters
+  const handleFilterChange = (newFilters: { language?: string; title?: string; city?: string }) => {
+    setFilters(newFilters);
+    console.log("jj", filteredUsers);
+    loadUsers();  // טען מחדש את היוזרים עם המסננים החדשים
+  };
+
   // Scroll event to load more users
   const handleScroll = () => {
     const bottom =
@@ -59,16 +65,7 @@ const UserList = () => {
 
   useEffect(() => {
     loadUsers();
-}, [filters]);  // כאשר filters משתנה, תטעין מחדש את היוזרים
-
-
-  // Function to update filters
-  const handleFilterChange = (newFilters: { language?: string; title?: string; city?: string }) => {
-    setFilters(newFilters);
-    console.log("jj",filteredUsers);
-    loadUsers();  // טען מחדש את היוזרים עם המסננים החדשים
-  };
-  
+  }, [filters]);  // כאשר filters משתנה, תטעין מחדש את היוזרים
 
   return (
     <div className="posts-container">

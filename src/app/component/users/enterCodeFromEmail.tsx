@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 
-const EnterCodeFromEmail: React.FC<{  onBack: (currentStep: 'LoginWithPassword' | 'newPassword',myCodeFromEmail:string) => void }> = ({ onBack }) => {
+const EnterCodeFromEmail: React.FC<{ onBack: (currentStep: 'LoginWithPassword' | 'newPassword', myCodeFromEmail: string) => void }> = ({ onBack }) => {
   const [code, setCode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-
   const handleCodeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-      setErrorMessage('')
-      onBack('newPassword',code)
-      alert('Code verified! Redirecting to reset password form.');
+    setErrorMessage('')
+    onBack('newPassword', code)
+    alert('Code verified! Redirecting to reset password form.');
   };
 
   return (
@@ -30,7 +29,7 @@ const EnterCodeFromEmail: React.FC<{  onBack: (currentStep: 'LoginWithPassword' 
         {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
         <button type="submit" className="w-full bg-red-400 text-white py-2 px-4 rounded-lg">אשר</button>
       </form>
-      <button onClick={() => { setErrorMessage(''); onBack('LoginWithPassword','') }} className="text-blue-500 underline mt-4">חזרה</button>
+      <button onClick={() => { setErrorMessage(''); onBack('LoginWithPassword', '') }} className="text-blue-500 underline mt-4">חזרה</button>
     </div>
   );
 };

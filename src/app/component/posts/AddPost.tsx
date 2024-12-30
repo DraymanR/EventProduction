@@ -7,10 +7,6 @@ import useModalStore from "@/app/store/modelStore";
 import useUserStore from "@/app/store/userModel";
 import '@/app/globals.css';
 import { getAllUsers } from "@/app/services/user/getDetails";
-import connectDb from "@/app/lib/db/connectDb";
-import { UserModel } from "@/app/lib/models/user";
-import { User } from "@/app/types/user";
-
 
 
 const AddPost: React.FC = () => {
@@ -26,19 +22,7 @@ const AddPost: React.FC = () => {
 
   const closeModal = useModalStore((state) => state.closeModal);
   const setPostArr = useUserStore((state) => state.setPostArr);
-  // async function getUsers(): Promise<User[]> {
-  //   try {
-  //     await connectDb();
-  //     const users = await UserModel.find().lean<User[]>();
-  
-  //     return users.map(user => ({
-  //       ...user,
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error in getUsers:', error);
-  //     return [];
-  //   }
-  // }
+
   useEffect(() => {
     const fetchSuppliers = async () => {
       try {
@@ -148,7 +132,6 @@ const AddPost: React.FC = () => {
         הספקים שלי:
         <Select
           options={suppliers}
-          // options={suppliers.map((supplier) => ({ value: supplier, label: supplier }))} // מיפוי לערכים ש-React-Select מבין
           isMulti // מאפשר בחירה מרובה
           placeholder="בחר ספקים..."
           onChange={(selectedOptions) => setSupplierNameArr(selectedOptions.map((option) => option.value))}

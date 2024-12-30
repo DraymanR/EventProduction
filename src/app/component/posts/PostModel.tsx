@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaHeart, FaRegHeart, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { PostCardProps } from '@/app/types/user';
-import {Recommendation} from '@/app/types/post';
+import { Recommendation } from '@/app/types/post';
 import useUserStore from '@/app/store/userModel';
 import { addPostToFavorites, removePostToFavorites } from '@/app/services/user/post';
 import { addRecommendation } from '@/app/services/post/post';
@@ -19,7 +19,6 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [isFavorite, setIsFavorite] = useState(
     likedPostsArr.some((favoritePost) => favoritePost._id === post._id)
   );
-  const [newComment, setNewComment] = useState('');
   const [showAddComment, setShowAddComment] = useState(false); // מצב עבור פתיחה/סגירה של שדה הוספת תגובה
 
   const handleStarClick = (starIndex: number) => {

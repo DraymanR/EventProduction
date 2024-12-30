@@ -20,7 +20,7 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({ user 
         <p className="text-gray-600 mb-2">
           <strong className="font-semibold">Phone:</strong> {user?.phone}
         </p>
-                <p className="text-gray-600 mb-2">
+        <p className="text-gray-600 mb-2">
           <strong className="font-semibold">Language:</strong> {user?.languages.filter(Boolean).join(", ") || "No language available"}
         </p>
         <p className="text-gray-600">

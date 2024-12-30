@@ -14,15 +14,7 @@ import { useRouter } from 'next/navigation';
 // בתוך הקומפוננטה Register
 const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const router = useRouter();
-
-    // let profileImage = '';
     const [profileImage, setProfileImage] = useState(null);
-
-    const handleUploadSuccess = async (result: any) => {
-        if (result.info && result.info.secure_url) {
-            setProfileImage(result.info.secure_url);
-        }
-    };
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
@@ -52,6 +44,25 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         },
         supplierDetails: { startingPrice: 0, topPrice: 0 },
         profileImage: profileImage
+    });
+
+    const language: Option[] = [
+        { value: Language.English, label: "אנגלית" },
+        { value: Language.French, label: "צרפתית" },
+        { value: Language.Hebrew, label: "עיברית" },
+        { value: Language.Russian, label: "רוסית" },
+        { value: Language.Spanish, label: "ספרדית" },
+        { value: Language.Yiddish, label: "אידייש" },
+
+    ];
+
+    const titleOptions: Option[] = Object.keys(Title).map(key => ({
+        value: Title[key as keyof typeof Title],
+        label: Title[key as keyof typeof Title],
+    }));
+    titleOptions.push({
+        value: 'consumer',
+        label: 'צרכן',
     });
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         console.log(formData);
@@ -91,25 +102,11 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         }
     };
 
-    const language: Option[] = [
-        { value: Language.English, label: "אנגלית" },
-        { value: Language.French, label: "צרפתית" },
-        { value: Language.Hebrew, label: "עיברית" },
-        { value: Language.Russian, label: "רוסית" },
-        { value: Language.Spanish, label: "ספרדית" },
-        { value: Language.Yiddish, label: "אידייש" },
-
-    ];
-
-    const titleOptions: Option[] = Object.keys(Title).map(key => ({
-        value: Title[key as keyof typeof Title],
-        label: Title[key as keyof typeof Title],
-    }));
-    titleOptions.push({
-        value: 'consumer',
-        label: 'צרכן',
-    });
-
+    const handleUploadSuccess = async (result: any) => {
+        if (result.info && result.info.secure_url) {
+            setProfileImage(result.info.secure_url);
+        }
+    };
     const mySetSelectedLanguages = (selectedOptions: MultiValue<Option>) => {
         setSelectedLanguages(selectedOptions);
         // עדכון formData.languages עם ערכים כמחרוזות
@@ -138,13 +135,8 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             ...prevFormData,
             titles: titleArray,
         }));
-
-        // const titleArray = selectedOptions.map((option) => { option.value as Title || 'consumer'; (option.value != 'consumer') ? setIsSupplier(true) : setIsSupplier(false); });
-        // setFormData((prevFormData: any) => ({
-        //     ...prevFormData,
-        //     titles: titleArray,
-        // }));
     };
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -413,12 +405,9 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 {/* שלב של תמונת פרופיל */}
                 {currentStep === 4 && (
                     <>
-
                         {/* אם יש טיטל "ספק" נוסיף שדות של מחיר */}
-
                         <div className="border p-2 rounded">
                             <label>העלאת תמונת פרופיל</label>
-
                             <CldUploadWidget
                                 uploadPreset="appOrganizerEvent"
                                 onSuccess={handleUploadSuccess}

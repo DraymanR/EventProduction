@@ -1,12 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { UserFormData, Title, Language } from '@/app/types/user';
+import { UserFormData, Title, Language, UpdateUserPersonalDetailsProps } from '@/app/types/user';
 import useUserStore from '@/app/store/userModel';
-
-interface UpdateUserPersonalDetailsProps {
-  user: UserFormData;
-}
 
 const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ user }) => {
   const setUser = useUserStore((state) => state.setUser);
@@ -162,7 +158,7 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Street</label>
             <input
@@ -174,7 +170,7 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
             />
           </div>
         </div>
-        
+
         {/* Titles and Languages */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -237,11 +233,10 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
         {/* Message */}
         {message && (
           <div
-            className={`p-4 rounded-lg ${
-              message.includes('success')
+            className={`p-4 rounded-lg ${message.includes('success')
                 ? 'bg-green-100 text-green-800'
                 : 'bg-red-100 text-red-800'
-            }`}
+              }`}
           >
             {message}
           </div>
