@@ -24,7 +24,11 @@ const PopUpWindow = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="modal-bg">
       <div className="popup-content">
-        <button onClick={closeModal}>✕</button>
+        <button onClick={() => {
+          closeModal()
+
+          console.log(isModalOpen);
+        }}>✕</button>
         {children}
       </div>
     </div>

@@ -1,16 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { PostCardProps, Recommendation } from "@/app/types/post";
-import {
-  addingMyFavoritePost,
-  addRecommendation,
-} from "@/app/services/post/post"; // ייבוא הפונקציה
-import Image from "next/image";
-
-import { Link } from "react-router-dom";
+import { PostCardProps } from "@/app/types/post";
 import PostModal from "./PostModel";
-import PopUpWindow from "../pop-upWindow";
 
 const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showPostModal, setShowPostModal] = useState(false);
@@ -22,10 +14,12 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const closePostModal = () => {
     setShowPostModal(false);
   };
+
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('he-IL', options);
   };
+
   return (
     <div className="relative">
       {/* כרטיס הפוסט */}

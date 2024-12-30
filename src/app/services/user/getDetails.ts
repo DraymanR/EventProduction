@@ -13,7 +13,6 @@ export const getUserByUsername = async (username: string) => {
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
       // קבלת נתוני המשתמש מהתגובה
       const user = response.data.user;
   
@@ -33,16 +32,10 @@ export const getUserByUsername = async (username: string) => {
   
 export const getMyDetails = async () => {
     try {
-        console.log("await getSession();");
-
         // First, check if there's a NextAuth session
         const session = await getSession();
-        console.log(session);
-
         // If a session exists (Google or regular with token)
         if (session?.user) {
-            console.log("session?.user");
-
             // Try to fetch by email first (for Google auth)
             if (session.user.email) {
                 try {
@@ -52,30 +45,25 @@ export const getMyDetails = async () => {
                             'Content-Type': 'application/json',
                         },
                     });
-                    console.log('User (Google/Token Auth):', response.data.user);
                     return response.data;
                 } catch (emailError) {
                     console.warn('Error fetching by email:', emailError);
                 }
             }
         }
-        console.log("! session");
 
-        // Fallback to cookie-based username retrieval
         if (typeof window !== 'undefined') {
             const cookies = document.cookie.split('; ');
             const usernameCookie = cookies.find(row => row.startsWith('userName='));
             if (usernameCookie) {
                 const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
                 console.log('Username from cookie:', myUserName);
-
                 const response = await axios.get(`${baseUrl}/api/users/get/username?username=${myUserName}`, {
                     withCredentials: true,
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log('User (Cookie Auth):', response.data);
                 return response.data;
             }
         }
@@ -103,22 +91,6 @@ export const getUserDetails = async (userName: string) => {
         throw error; // טיפול בשגיאות
     }
 };
-// export const getAllUsers = async (page: number = 1, limit: number = 10) => {
-//     try {
-     
-//         const response = await axios.get(`http://localhost:3000/api/users/get/?page=${page}&limit=${limit}`, {
-//             withCredentials: true,
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         });
-//         console.log('users:', response);
-//         return response.data;
-//     } catch (error) {
-//         console.error('Error fetching posts:', error);
-//         throw error;
-//     }
-// };
 export const getAllUsers = async (
     page: number = 1,
     limit: number = 10,

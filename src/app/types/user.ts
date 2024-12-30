@@ -142,9 +142,10 @@ export interface SearchBarProps {
     startDate: string,
     endDate: string,
     description: string,
-    userTitle: Title
+    // userTitle: Title
   ) => void;
 }
+
 
 export interface UserResponseData {
   firstName: string;
@@ -205,37 +206,6 @@ export interface ModalState {
 
 
 
-// export interface UserFormData {
-//   profileImage: string,
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   titles: (Title | "consumer")[]; // מערך של טיטלים
-//   phone: string;
-//   languages: Language[]; // מערך של שפות
-//   address: {
-//     zipCode: string;
-//     city: string;
-//     street: string;
-//     building: number;
-//   };
-//   description: string,
-
-//   supplierDetails?: {
-//     startingPrice: number;
-//     topPrice: number;
-//     eventList: string[];
-//     recommendation: string[];
-//     range: number;
-//     emptyDate: string[];
-//     images: string[];
-//     description: string;
-//   };
-// }
-
-// export interface Consumer {
-//   userName: string;
-//    // array of Usernames
-// }
+export interface UpdateUserPersonalDetailsProps {
+  user: UserFormData;
+}

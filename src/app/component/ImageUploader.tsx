@@ -4,16 +4,16 @@ import React from "react";
 import { CldUploadWidget } from 'next-cloudinary';
 import saveImageUrlToDatabase from '@/app/services/saveImageUrlToDatabase ';
 
-const NewPost = ({ postId }: { postId: string }) => {  
+const NewPost = ({ postId }: { postId: string }) => {
     const handleUploadSuccess = async (result: any) => {
         if (result.info && result.info.secure_url) {
-          const imageUrl = result.info.secure_url;
-          await saveImageUrlToDatabase(imageUrl, postId);  
+            const imageUrl = result.info.secure_url;
+            await saveImageUrlToDatabase(imageUrl, postId);
         }
     };
 
     return (
-        <CldUploadWidget 
+        <CldUploadWidget
             uploadPreset="appOrganizerEvent"
             onSuccess={handleUploadSuccess}
             options={{

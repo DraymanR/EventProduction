@@ -1,8 +1,6 @@
 import axios from "axios";
 import { getMyDetails, getUserDetails } from "../user/getDetails";
-import { ObjectId } from "mongoose";
 import { getBaseUrl } from "../config/axios";
-import useUserStore from "@/app/store/userModel";
 import { EventCategory, Post, PostCardProps } from "@/app/types/post";
 const baseUrl = getBaseUrl()
 
@@ -22,7 +20,7 @@ export const addRecommendation = async (postId: string, text: string, rate: numb
             },
         });
 
-        console.log('Recommendation added:', response.data.recommendation);
+        console.log('Recommendation added:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error adding recommendation:', error);
@@ -40,15 +38,27 @@ export const getMyEvents = async () => {
         throw error; // טיפול בשגיאות
     }
 };
-// export const getMyFavoriteEvents = async () => {
-//     try {
-//         const userDetails = await getMyDetails()
-//         return userDetails.user.likedPostsArr
-//     } catch (error) {
-//         console.error('Error registering user:', error);
-//         throw error; // טיפול בשגיאות
-//     }
-// };
+export const addImageToPost = async (imageUrl: string, postId: string) => {
+    try {
+        const data = {
+            imageUrl,
+            postId,
+        };
+
+        const response = await axios.post(`${baseUrl}/api/posts/save-image`, data, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        console.log('Image added to post:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding image to post:', error);
+        throw error;
+    }
+};
 export const getUserEvents = async (userName: string) => {
     try {
         const userDetails = await getUserDetails(userName)
@@ -107,8 +117,6 @@ export const addingMyPost = async (newPost: object) => {
 
 export const addingMyFavoritePost = async (post_id: string) => {
     try {
-        console.log(post_id);
-
         const newPost = { "favoritePostID": post_id }
         const response = await axios.put(`${baseUrl}/api/users/favorites`, newPost, {
             withCredentials: true,
@@ -116,35 +124,9 @@ export const addingMyFavoritePost = async (post_id: string) => {
                 'Content-Type': 'application/json',
             },
         });
-        console.log(response.data);
         return response.data
     } catch (error) {
         console.error('Error registering user:', error);
         throw error; // טיפול בשגיאות
     }
-};
-//צריך שינוי- התאמה למה שמקבלים מהשרת
-// פונקציה להמרת פוסט ל-PostCardProps
-export const mapPostToPostCardProps = (post: Post): PostCardProps => {
-    return {
-        postId: {
-            budget: 1,
-            eventCategory: EventCategory.Other,
-            supplierNameArr: ['']
-            // supplierNameArr: [post.postId.toString()]
-        },
-        _id: post.postId.toString(), // התאמה לדרישת PostCardProps
-        userName: post.userName,
-        createDate: post.createDate,
-        album: post.album.map(img => ({ imgUrl: img.toString() })),
-        title: post.title,
-        description: post.description,
-        recommendations: post.recommendations.map(rec => ({
-            // _id: "rec",
-            userName: "userName",
-            text: "rec.text",
-            rate: 4,
-        })),
-        userDetails: { titles: [""] },
-    };
 };

@@ -4,7 +4,7 @@ import PostList from "@/app/component/posts/PostList";
 import UserList from "@/app/component/users/UserList";
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState("users");
+  const [activeTab, setActiveTab] = useState("posts");
 
   return (
     <div className="container mx-auto p-4">

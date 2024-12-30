@@ -1,12 +1,8 @@
 import { getAllUsers } from "@/app/services/user/getDetails";
 import { Language, Title } from "@/app/types/user";
 import React, { useState } from "react";
-import Select, { MultiValue, ActionMeta } from "react-select";
+import { SortFilterProps } from '@/app/types/post'
 
-interface SortFilterProps {
-    onFilterChange: (filters: { language?: string[]; title?: string[]; city?: string[] }) => void;
-    setFilteredUsers: (users: any[]) => void;
-}
 
 interface Option {
     value: string;
@@ -29,44 +25,12 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
         { value: Language.Yiddish, label: "אידיש" },
     ];
 
-    const titleOptions: Option[] = Object.values(Title).map((title) => ({
-        value: title,
-        label: title,
-    }));
+        console.log("uu", data.users);
+        if (data.users.length > 0) {
 
-    const handleLanguageChange = (
-        selectedOptions: MultiValue<Option | undefined>,
-        actionMeta: ActionMeta<Option | undefined>
-    ) => {
-        const selectedLanguages = selectedOptions
-            .filter((option): option is Option => option !== undefined) // סינון undefined
-            .map((option) => option.value);
-        const updatedFilters = { ...filters, language: selectedLanguages };
-        updateFilters(updatedFilters);
-    };
-
-    const handleTitleChange = (
-        selectedOptions: MultiValue<Option | undefined>,
-        actionMeta: ActionMeta<Option | undefined>
-    ) => {
-        const selectedTitles = selectedOptions
-            .filter((option): option is Option => option !== undefined) // סינון undefined
-            .map((option) => option.value);
-        const updatedFilters = { ...filters, title: selectedTitles };
-        updateFilters(updatedFilters);
-    };
-
-    const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        const updatedFilters = { ...filters, city: [value] };
-        updateFilters(updatedFilters);
-    };
-
-    const updateFilters = async (updatedFilters: typeof filters) => {
-        setFilters(updatedFilters);
-        const data = await getAllUsers(1, 10, updatedFilters); // Get filtered users
+        }  // שלח את הסטייט המעודכן
         setFilteredUsers(data.users);
-        onFilterChange(updatedFilters); // Notify parent of filter change
+        onFilterChange(updatedFilters); // Update filters in the parent
     };
 
     return (
@@ -104,5 +68,4 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
         </div>
     );
 };
-
 export default SortFilter;

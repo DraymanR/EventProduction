@@ -9,9 +9,7 @@ const LoginBtn = () => {
     return (
       <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-md">
         <p className="mb-2 text-lg font-semibold text-gray-800">
-
           Signed in as <span className="text-blue-600">{session.user.name || session.user.email}</span>
-
         </p>
         <button
           className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-200"

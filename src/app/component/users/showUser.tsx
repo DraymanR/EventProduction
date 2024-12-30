@@ -4,23 +4,20 @@ import React, { useEffect, useState } from 'react';
 import { getUserDetails } from '@/app/services/user/getDetails';
 import '@/app/css/users/showUser.css';
 import '@/app/globals.css';
-import {  UserResponseData } from '@/app/types/user';
 import PostCard from '../posts/PostCard';
 import useUserStore from '@/app/store/userModel';
 import { PostCardProps } from '@/app/types/post';
 
 const ShowUser = ({ userName }: { userName: string }) => {
-    // Get values and actions from the store
-    const { 
-        user, 
+    const {
+        user,
         postArr,
         setUser,
         setPostArr
 
     } = useUserStore();
-    
+
     const [error, setError] = useState<string | null>(null);
-    const [isFavorite, setIsFavorite] = useState<boolean>(false);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
 
@@ -57,10 +54,6 @@ const ShowUser = ({ userName }: { userName: string }) => {
         checkIfLoggedIn();
     }, [userName, setUser, setError, setPostArr]);
 
-    const toggleFavorite = () => {
-        setIsFavorite((prev) => !prev);
-    };
-
     if (error) {
         return <div className="error-message">{error}</div>;
     }
@@ -72,7 +65,7 @@ const ShowUser = ({ userName }: { userName: string }) => {
     return (
         <div className="userDetails">
             {/* Previous user details code remains the same */}
-            
+
             {/* Updated posts section using store data */}
             {postArr && postArr.length > 0 ? (
                 <div className="postsContainer">
