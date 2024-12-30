@@ -44,8 +44,7 @@ export default async function RootLayout({
         <Script
           src="https://cdn.enable.co.il/licenses/enable-L35466r8t1ik9ew4-1224-66980/init.js"
           strategy="afterInteractive"
-        >
-        </Script>
+        />
       </body>
     </html>
   );
