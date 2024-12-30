@@ -36,7 +36,7 @@ const TimerComponent = () => {
         }, 120000); // 2 minutes
 
         return () => clearInterval(intervalId); // Cleanup interval
-    }, [status, isModalOpen, openModal, closeModal, router]);
+    }, [status, router]);
 
     if (!isModalOpen) return null;
 

@@ -2,7 +2,7 @@
 import PostList from '@/app/component/posts/PostList';
 import UserList from '@/app/component/users/UserList';
 import { getMyDetails } from '@/app/services/user/getDetails';
-import { updateUserStore, useUpdateUserStore } from '@/app/services/user/registerUser';
+import { useUpdateUserStore } from '@/app/services/user/registerUser';
 import useUserStore from '@/app/store/userModel';
 import { UserFormData } from '@/app/types/user';
 import { useEffect, useState } from 'react';
@@ -18,6 +18,7 @@ const Home = () => {
     useEffect(() => {
         const getMyPersonalDetails = async () => {
             if (useUserStore.getState().isReady) return; // הימנע משאילתת נתונים כפולה
+            if(storeUser)return;
             try {
                 const userDetails = await getMyDetails();
                 const user: UserFormData = {
@@ -53,8 +54,8 @@ const Home = () => {
                     <div className="flex space-x-4">
                         <button
                             className={`py-2 px-4 ${activeTab === "users"
-                                    ? "border-b-2 border-blue-500 text-blue-600"
-                                    : "text-gray-500 hover:text-gray-700"
+                                ? "border-b-2 border-blue-500 text-blue-600"
+                                : "text-gray-500 hover:text-gray-700"
                                 }`}
                             onClick={() => setActiveTab("users")}
                         >
@@ -62,8 +63,8 @@ const Home = () => {
                         </button>
                         <button
                             className={`py-2 px-4 ${activeTab === "posts"
-                                    ? "border-b-2 border-blue-500 text-blue-600"
-                                    : "text-gray-500 hover:text-gray-700"
+                                ? "border-b-2 border-blue-500 text-blue-600"
+                                : "text-gray-500 hover:text-gray-700"
                                 }`}
                             onClick={() => setActiveTab("posts")}
                         >

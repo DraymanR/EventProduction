@@ -6,7 +6,7 @@ interface NavbarState {
 }
 
 const useNavbarStore = create<NavbarState>((set) => ({
-  isOpen: false, // מצב התחלתי: סגור
+  isOpen: true, // מצב התחלתי: סגור
   toggleNavbar: (open:boolean) => set((state) => ({ isOpen: open })), // פעולה להחלפת מצב
 }));
 
