@@ -27,8 +27,8 @@ export default async function RootLayout({
     <html lang="en" dir="rtl">
       <body className="flex flex-col h-screen overflow-hidden">
         <SessionWrapper session={session}>
+          <Navbar />  
           <TimerComponent></TimerComponent>
-          <Navbar />
           <div className="flex flex-1 overflow-hidden">
             {/* תפריט צד ימני */}
             <ClientSideLayout />
@@ -40,6 +40,7 @@ export default async function RootLayout({
           <Footer />
 
         </SessionWrapper>
+        <script src="https://cdn.enable.co.il/licenses/enable-L35466r8t1ik9ew4-1224-66980/init.js"></script>
       </body>
     </html>
   );
