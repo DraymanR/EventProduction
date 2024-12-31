@@ -5,8 +5,6 @@ import TimerComponent from "./component/timerComponent";
 import SessionWrapper from "@/app/component/SessionProvider"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import PostList from "./component/posts/PostList";
-import useNavbarStore from "./store/navbarStore";
 import ClientSideLayout from "./component/users/ClientSideLayout";
 import Footer from "./component/Footer";
 import Script from "next/script";

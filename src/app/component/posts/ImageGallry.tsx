@@ -3,20 +3,29 @@ import { CldUploadWidget } from 'next-cloudinary';
 import React, { useState } from 'react';
 
 interface ImageGalleryProps {
-  postUsername:string;
-   postId:string;
+  postUsername: string;
+  postId: string;
   images: string[];
 
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images,postId ,postUsername}) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsername }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
   const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
   const userNameFromCookie = decodeURIComponent(document.cookie);
   console.log(userNameFromCookie);
-  const userName = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName=')).split('=')[1];
+
+  const userNameCookie = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName='));
+  if (userNameCookie) {
+    setUserName(userNameCookie.split('=')[1]);
+    console.log(userName);
+  } else {
+    console.error('userName cookie not found');
+  }
+
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     setIsModalOpen(true);

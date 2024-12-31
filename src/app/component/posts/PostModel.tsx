@@ -12,7 +12,7 @@ import { CldUploadWidget } from 'next-cloudinary';
 const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const { likedPostsArr, setLikedPostsArr } = useUserStore();
   const userNameFromCookie = decodeURIComponent(document.cookie);
- 
+
 
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(decodeURIComponent(document.cookie) ? true : false);
@@ -107,8 +107,14 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
         <p className="text-gray-700 mb-6">{post.description}</p>
 
         {/* גלריית תמונות */}
-       
-        {post.album?.length > 0 && <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
+        {/* {post.album?.length > 0 && (
+          <ImageGallery
+            postUsername={post.userName}
+            postId={post._id}
+            images={post.album.map((img) => img.imgUrl)} // מיפוי לערכים של imgUrl
+          />
+        )} */}
+        {/* {post.album?.length > 0 && <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />} */}
 
         {/* פרטי פוסט של צרכן */}
         {post.postId && (
