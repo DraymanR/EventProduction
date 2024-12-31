@@ -12,33 +12,31 @@ const ShowUserPersonalDetails: React.FC<ShowUserPersonalDetailsProps> = ({ user 
           {user?.firstName} {user?.lastName}
         </h1>
         <p className="text-gray-600 mb-2">
-          <strong className="font-semibold">Username:</strong> {user?.userName}
+          <strong className="font-semibold">שם משתמש:</strong> {user?.userName}
         </p>
         <p className="text-gray-600 mb-2">
-          <strong className="font-semibold">Email:</strong> {user?.email}
+          <strong className="font-semibold">אימייל:</strong> {user?.email}
         </p>
         <p className="text-gray-600 mb-2">
-          <strong className="font-semibold">Phone:</strong> {user?.phone}
+          <strong className="font-semibold">טלפון:</strong> {user?.phone}
         </p>
         <p className="text-gray-600 mb-2">
-          <strong className="font-semibold">Language:</strong> {user?.languages.filter(Boolean).join(", ") || "No language available"}
+          <strong className="font-semibold">שפות:</strong> {user?.languages.filter(Boolean).join(", ") || "אין שפה זמינה"}
         </p>
         <p className="text-gray-600">
-          <strong className="font-semibold">Titles:</strong> {user?.titles.filter(Boolean).join(", ") || "No titles available"}
+          <strong className="font-semibold">תארים:</strong> {user?.titles.filter(Boolean).join(", ") || "אין תארים זמינים"}
         </p>
-
         <p className="text-gray-600 mb-2">
-          <strong className="font-semibold">Description:</strong> {user?.description}
+          <strong className="font-semibold">תיאור:</strong> {user?.description}
         </p>
-
-        <h3 className="text-xl font-semibold text-gray-800 mt-6">Address:</h3>
+        <h3 className="text-xl font-semibold text-gray-800 mt-6">כתובת:</h3>
         <p className="text-gray-600 mb-2">
           {user?.address?.street}, {user?.address?.building}, {user?.address?.city}, {user?.address?.zipCode}
         </p>
-
       </div>
     </div>
   );
+  
 };
 
 export default ShowUserPersonalDetails;

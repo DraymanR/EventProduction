@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 const TermsPage = () => {
 
     return (
-        <div>
+        <div className="overflow-y-auto">
             <h1 className="text-2xl font-bold">תקנון האתר</h1>
             <p>
                 <strong>תקנון שימוש באתר</strong><br />

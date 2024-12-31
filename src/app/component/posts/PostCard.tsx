@@ -66,7 +66,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
 
       {showPostModal && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="modal-content bg-white p-6 rounded-md max-w-xl shadow-lg overflow-y-auto max-h-[80vh]">
+          <div className="modal-content bg-white p-6 rounded-md max-w-xl shadow-2xl overflow-y-auto max-h-[80vh]">
           <button onClick={closePostModal} className="text-red-500">
               X
             </button>

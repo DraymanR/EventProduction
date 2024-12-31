@@ -5,7 +5,7 @@ import "@/app/css/posts/customStyles.css";
 import { getAllUsers } from "@/app/services/user/getDetails";
 import "@/app/globals.css";
 import UserCard from "./UserCard";
-import SortFilter from "@/app/component/users/SortUser";
+// import SortFilter from "@/app/component/users/SortUser";
 
 const UserList = () => {
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
@@ -41,7 +41,7 @@ const UserList = () => {
   };
   // Function to update filters
   const handleFilterChange = (newFilters: { language?: string; title?: string; city?: string }) => {
-    setFilters(newFilters);
+    // setFilters(newFilters);
     console.log("jj", filteredUsers);
     loadUsers();  // טען מחדש את היוזרים עם המסננים החדשים
   };
@@ -68,10 +68,10 @@ useEffect(() => {
 
   return (
     <div className="posts-container">
-      <h1 className="posts-title">יוזרים</h1>
+      <h1 className="posts-title">משתמשים</h1>
       <div className="search-bar-container">
         {/* Sort and Filter Component */}
-        <SortFilter setFilteredUsers={setFilteredUsers} onFilterChange={handleFilterChange} />
+        {/* <SortFilter setFilteredUsers={setFilteredUsers} onFilterChange={handleFilterChange} /> */}
 
       </div>
       <div className="posts-list">

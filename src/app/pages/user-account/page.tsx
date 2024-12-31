@@ -62,7 +62,7 @@ const Home = () => {
                                 }`}
                             onClick={() => setActiveTab("users")}
                         >
-                            Users
+                            משתמשים
                         </button>
                         <button
                             className={`py-2 px-4 ${activeTab === "posts"
@@ -71,7 +71,7 @@ const Home = () => {
                                 }`}
                             onClick={() => setActiveTab("posts")}
                         >
-                            Posts
+                            פוסטים
                         </button>
                     </div>
                 </div>

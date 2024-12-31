@@ -224,8 +224,8 @@ const AddPost: React.FC = () => {
       </label>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-4/5 max-w-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+          <div className="bg-white p-6 rounded shadow-lg w-4/5 max-w-2xl overflow-y-auto">
             <TermsPage />
             <button
               className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
