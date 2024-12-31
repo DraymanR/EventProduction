@@ -79,7 +79,7 @@ export async function GET(req: NextRequest) {
             // const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
             // console.log(":user",filteredUser,"supplierDetails:",supplierDetails)//),"consumerDetails",consumerDetails);
 
-            const { firstName, lastName, phone, email, addressId, likedPeople, likedPostsArr, ...filteredUser } = user;
+            const { firstName, lastName, addressId, likedPeople, likedPostsArr, ...filteredUser } = user;
             return NextResponse.json(
                 {
                     message: 'User retrieved successfully',
