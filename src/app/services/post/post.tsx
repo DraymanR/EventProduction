@@ -38,6 +38,23 @@ export const getMyEvents = async () => {
         throw error; // טיפול בשגיאות
     }
 };
+
+export const getPostDetails = async (postId: string) => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/posts/get/postId?postId=${postId}`, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log('post :', response.data.post);
+        return response.data
+    } catch (error) {
+        console.error('Error registering post:', error);
+        throw error; // טיפול בשגיאות
+    }
+};
+
 export const addImageToPost = async (imageUrl: string, postId: string) => {
     try {
         const data = {
