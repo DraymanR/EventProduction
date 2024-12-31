@@ -27,13 +27,22 @@ export type Img = {
   imgUrl: string;
 }
 
+// export enum Language {
+//   Hebrew = 'Hebrew',
+//   English = 'English',
+//   French = 'French',
+//   Yiddish = 'Yiddish',
+//   Spanish = 'Spanish',
+//   Russian = 'Russian',
+//   // תוסיפי עוד שפות לפי הצורך
+// }
 export enum Language {
-  Hebrew = 'Hebrew',
+  Hebrew = 'עברית',
   English = 'English',
-  French = 'French',
-  Yiddish = 'Yiddish',
-  Spanish = 'Spanish',
-  Russian = 'Russian',
+  French = 'Français',
+  Yiddish = 'יידיש',
+  Spanish = 'Español',
+  Russian = 'русский',
   // תוסיפי עוד שפות לפי הצורך
 }
 
