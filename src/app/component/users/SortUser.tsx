@@ -103,14 +103,14 @@
 // export default SortFilter;
 
 // SortFilter.tsx
-import { Language, Title } from "@/app/types/user";
+import { Language, Option, Title } from "@/app/types/user";
 import React, { useState } from "react";
 import Select, { MultiValue } from "react-select";
 
-interface Option {
-    value: string;
-    label: string;
-}
+// interface Option {
+//     value: string;
+//     label: string;
+// }
 
 export interface SortFilterProps {
     onFilterChange: (filters: { language?: string[]; title?: string[]; city?: string[] }) => void;

@@ -46,16 +46,30 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         profileImage: profileImage
     });
 
+    // const language: Option[] = [
+    //     { value: Language.English, label: "אנגלית" },
+    //     { value: Language.French, label: "צרפתית" },
+    //     { value: Language.Hebrew, label: "עברית" },
+    //     { value: Language.Russian, label: "רוסית" },
+    //     { value: Language.Spanish, label: "ספרדית" },
+    //     { value: Language.Yiddish, label: "אידייש" },
+
+    // ];
     const language: Option[] = [
-        { value: Language.English, label: "אנגלית" },
-        { value: Language.French, label: "צרפתית" },
-        { value: Language.Hebrew, label: "עיברית" },
-        { value: Language.Russian, label: "רוסית" },
-        { value: Language.Spanish, label: "ספרדית" },
-        { value: Language.Yiddish, label: "אידייש" },
+        { value: Language.English, label: "English" },
+        { value: Language.French, label: "Français" },
+        { value: Language.Hebrew, label: "עברית" },
+        { value: Language.Russian, label: "русский" },
+        { value: Language.Spanish, label: "Español" },
+        { value: Language.Yiddish, label: "יידיש" },
 
     ];
 
+    const allowedLanguages = Object.values(Language);
+    const userLanguages = formData.languages.filter(lang => allowedLanguages.includes(lang));
+    formData.languages = userLanguages;
+    console.log("userLanguages",userLanguages);
+    
     const titleOptions: Option[] = Object.keys(Title).map(key => ({
         value: Title[key as keyof typeof Title],
         label: Title[key as keyof typeof Title],
@@ -435,9 +449,9 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 )}
 
                 <div className="flex justify-between">
-                    {currentStep > 1 && <button type="button" onClick={handleBackStep} className="bg-gray-500 text-white py-2 px-4 rounded-md">Back</button>}
+                    {currentStep > 1 && <button type="button" onClick={handleBackStep} className="bg-gray-500 text-white py-2 px-4 rounded-md">הקודם</button>}
                     {currentStep < 4 ? (
-                        <button type="button" onClick={handleNextStep} className="bg-red-400 text-white py-2 px-4 rounded-md">Next</button>
+                        <button type="button" onClick={handleNextStep} className="bg-red-400 text-white py-2 px-4 rounded-md">הבא</button>
                     ) : (
                         <button type="submit" className={`${!isSubmitting ? 'bg-red-400 text-white' : 'text-red-400 bg-white'} py-2 px-4 rounded-md`}>הירשם</button>
                     )}

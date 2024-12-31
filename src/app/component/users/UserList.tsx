@@ -7,7 +7,8 @@ import "@/app/css/posts/customStyles.css";
 import { getAllUsers } from "@/app/services/user/getDetails";
 import "@/app/globals.css";
 import UserCard from "./UserCard";
-import SortFilter from "@/app/component/users/SortUser";
+import SortFilter from "./SortUser";
+// import SortFilter from "@/app/component/users/SortUser";
 
 const UserList = () => {
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
@@ -82,7 +83,7 @@ const UserList = () => {
   
   return (
     <div className="posts-container">
-      <h1 className="posts-title">יוזרים</h1>
+      <h1 className="posts-title">משתמשים</h1>
       <div className="search-bar-container">
         {/* Sort and Filter Component */}
         <SortFilter onFilterChange={handleFilterChange} setFilteredUsers={setFilteredUsers} />

@@ -25,7 +25,6 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1); // כל כוכב יקבל דירוג בין 1 ל-5
   };
-
   const addComment = async () => {
     if (!isAuthenticated) {
       setShowLoginModal(true);

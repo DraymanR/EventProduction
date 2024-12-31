@@ -31,7 +31,7 @@ const NewPost = ({ postId }: { postId: string }) => {
                     onClick={() => open()}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
-                    Upload an Image
+                    העלה תמונה
                 </button>
             )}
         </CldUploadWidget>

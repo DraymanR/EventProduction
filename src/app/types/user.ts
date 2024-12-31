@@ -45,7 +45,15 @@ export enum Language {
   Russian = 'русский',
   // תוסיפי עוד שפות לפי הצורך
 }
-
+// export enum Language {
+//   Hebrew = 'עברית',
+//   English = 'English',
+//   French = 'Français',
+//   Yiddish = 'יידיש',
+//   Spanish = 'Español',
+//   Russian = 'русский',
+//   // תוסיפי עוד שפות לפי הצורך
+// }
 
 
 export interface PostCardProps {

@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
             .populate('addressId')
             .populate({
                 path: 'postArr',
-                populate:[
+                populate: [
                     {
                         path: 'recommendations',
                         model: 'Recommendation',
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
                 populate: [{
                     path: 'recommendations',
                     model: 'Recommendation',
-                },  {
+                }, {
                     path: 'postId',
                     model: 'ConsumerPost',
                 }]
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
             .lean<User>();
 
 
-        console.log("user",user);
+        console.log("user", user);
 
 
         if (!user) {
@@ -87,10 +87,11 @@ export async function GET(req: NextRequest) {
                     supplierDetails,
 
                 },
-                { status: 200 ,
+                {
+                    status: 200,
                     headers: {
                         'Access-Control-Allow-Credentials': 'true',
-                        'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                        'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                             ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
                             : 'http://localhost:3000',
                         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -106,10 +107,11 @@ export async function GET(req: NextRequest) {
                 user,
 
             },
-            { status: 200 ,
+            {
+                status: 200,
                 headers: {
                     'Access-Control-Allow-Credentials': 'true',
-                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production' 
+                    'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                         ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
                         : 'http://localhost:3000',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
