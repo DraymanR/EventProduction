@@ -1,10 +1,7 @@
 import { getAllUsers } from "@/app/services/user/getDetails";
 import React, { useState } from "react";
+import { SortFilterProps } from '@/app/types/post'
 
-interface SortFilterProps {
-    onFilterChange: (filters: { language?: string; title?: string; city?: string }) => void;
-    setFilteredUsers: (users: any[]) => void;
-}
 
 const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUsers }) => {
     const [filters, setFilters] = useState({ language: "", title: "", city: "" });
@@ -17,12 +14,11 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
 
         console.log("uu", data.users);
         if (data.users.length > 0) {
-            
+
         }  // שלח את הסטייט המעודכן
         setFilteredUsers(data.users);
         onFilterChange(updatedFilters); // Update filters in the parent
     };
-
 
     return (
         <div className="filter-container">

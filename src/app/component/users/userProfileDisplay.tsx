@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { getUserByUsername } from '@/app/services/user/getDetails';  // נניח שזו פונקציה ששולחת בקשה ל-API
 import { Post } from '@/app/types/post';  // נניח שיש לך טיפוס כזה
-// import { useUserStore } from '@/app/store/userModel';
 import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
-
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
@@ -13,12 +11,6 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
   const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);  // האם המשתמש מחובר
   const [isSupplier, setIsSupplier] = useState<boolean>(false);  // האם המשתמש הוא ספק
-
-  //   const { userData, likedPostsArr, likedPeople } = useUserStore(state => ({
-  //     userData: state.userData,
-  //     likedPostsArr: state.likedPostsArr,
-  //     likedPeople: state.likedPeople
-  //   }));
 
   useEffect(() => {
     // שליחת בקשה לקבלת פרטי המשתמש
