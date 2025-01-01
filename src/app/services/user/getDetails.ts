@@ -8,13 +8,18 @@ const baseUrl = getBaseUrl();
 
 export const getUserByUsername = async (username: string) => {
     try {
+      console.log("1",username);
+      
       const response = await axios.get(`${baseUrl}/api/users/get/username?username=${username}`, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      console.log("2",response);
+
       // קבלת נתוני המשתמש מהתגובה
       const user = response.data.user;
+      console.log("3",user);
   
       // שמירת נתוני המשתמש בסטור
       const setUser = useUserStore.getState().setUser;

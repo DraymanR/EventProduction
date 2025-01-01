@@ -1,10 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { getUserByUsername } from '@/app/services/user/getDetails';  // נניח שזו פונקציה ששולחת בקשה ל-API
-import { Post } from '@/app/types/post';  // נניח שיש לך טיפוס כזה
+import { getUserByUsername } from '@/app/services/user/getDetails';  
+import { Post } from '@/app/types/post';  
 import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
@@ -17,7 +16,11 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
     // שליחת בקשה לקבלת פרטי המשתמש
     const fetchUserData = async () => {
       try {
+        console.log("datadata:",username);
+
         const data = await getUserByUsername(username);
+        console.log("datadata:",data);
+
         setUser(data);
         setPosts(data.postArr);
         setIsLoggedIn(data.isLoggedIn);
