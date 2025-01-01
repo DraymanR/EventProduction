@@ -16,8 +16,6 @@ const ConsumerNavbar: React.FC = () => {
   const { isOpen } = useNavbarStore(); // גישה ל-store
   const { toggleNavbar } = useNavbarStore(); // גישה ל-store
 
-  if (!isOpen) return null; // אם ה-navbar סגור, לא להציג כלום
-
   const exite = async () => {
     if (session?.user) {
       await signOut({ redirect: false });
@@ -32,6 +30,7 @@ const ConsumerNavbar: React.FC = () => {
     clearUser();
     router.push('/');
   };
+  if (!isOpen) return null; // אם ה-navbar סגור, לא להציג כלום
 
   return (
     <div className="consumer-navbar">
@@ -39,7 +38,7 @@ const ConsumerNavbar: React.FC = () => {
         יציאה
       </button>
       <Link href="/pages/user-account" className="consumer-navbar-link">
-         דף הבית
+        דף הבית
       </Link>
       <Link href="/pages/user-account/personal-details" className="consumer-navbar-link">
         פרטים אישיים

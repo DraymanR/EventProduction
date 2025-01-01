@@ -17,8 +17,6 @@ export const singIn = async (
 ) => {
   const data = { email: email, password: password, userName: userName };
   try {
-    console.log("data", data);
-
     const response = await axios.post(
       `${baseUrl}/api/users/register`,
       data,
@@ -31,6 +29,8 @@ export const singIn = async (
     console.log(response);
     getUserByUsername(userName);
     // החזרת התשובה מהשרת
+    console.log(response);
+
     return response;
   } catch (error) {
     console.error("Error registering user:", error);
@@ -39,11 +39,7 @@ export const singIn = async (
 };
 
 export const addUser = async (data: UserFormData) => {
-  console.log("data,", data);
-
   try {
-    console.log("data,", data);
-
     const response = await axios.post(
       `${baseUrl}/api/users/post`,
       data,
@@ -96,11 +92,8 @@ export const newPassword = async (
       otp: otp,
       newPassword: newPassword,
     };
-    console.log(data);
-
-    const response = await axios.post(`${baseUrl}/api/users/register/newPassword`,// data,
+    const response = await axios.post(`${baseUrl}/api/users/register/newPassword`,
       {
-        // withCredentials: true,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -125,13 +118,10 @@ export const logout = async () => {
         },
       }
     );
-    console.log(response);
-
-    // Simultaneously sign out from NextAuth
     await signOut({
       redirect: false, // Prevent automatic redirection
     });
-
+    console.log(response);
     // החזרת התשובה מהשרת
     return response.data;
   } catch (error) {
@@ -167,22 +157,12 @@ export const useUpdateUserStore = () => {
     postArr: PostCardProps[]
   ) => {
     setUser(userData);
-    console.log(userData);
-
     setPosts(postArr);
     setLikedPeople(likedPeople);
     setLikedPostsArr(likedPostsArr);
   };
 };
 
-// export const getCookie = (name: string): string | undefined => {
-//   const value = `; ${document.cookie}`;
-//   const parts = value.split(`; ${name}=`);
-//   if (parts.length === 2) {
-//     return parts.pop()?.split(';').shift();
-//   }
-//   return undefined;
-// };
 export const checkIfLoggedIn = () => {
   if (typeof window !== 'undefined') {
     const cookies = document.cookie.split('; ');

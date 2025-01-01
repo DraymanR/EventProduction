@@ -1,16 +1,5 @@
 import React from 'react';
 
-interface User {
-  userName: string;
-  email: string;
-  phone: string;
-  titles: string[];
-  languages: string[];
-  addressId: {
-    city: string;
-  };
-}
-
 const UserCard: React.FC<{ user: any }> = ({ user }) => {
   const defaultProfileImage = (
     <svg
@@ -50,16 +39,19 @@ const UserCard: React.FC<{ user: any }> = ({ user }) => {
 
       <div className="details mb-4">
         <p className="text-gray-700">
-          <strong>Email:</strong> {user.email}
+          <strong>מייל:</strong> {user.email}
+        </p>
+       { user?.addressId?.city&&<p className="text-gray-700">
+          <strong>city:</strong> {user?.addressId?.city}
+        </p>}
+        <p className="text-gray-700">
+          <strong>מספר טלפון:</strong> {user.phone}
         </p>
         <p className="text-gray-700">
-          <strong>Phone:</strong> {user.phone}
+          <strong>תפקידים:</strong> {user.titles.join(', ')}
         </p>
         <p className="text-gray-700">
-          <strong>Titles:</strong> {user.titles.join(', ')}
-        </p>
-        <p className="text-gray-700">
-          <strong>Languages:</strong> {user.languages.join(', ')}
+          <strong>שפות:</strong> {user.languages.join(', ')}
         </p>
         <p className="text-gray-700">
           {/* <strong>City:</strong> {user.addressId.city} */}

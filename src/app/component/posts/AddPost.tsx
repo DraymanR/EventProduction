@@ -7,9 +7,8 @@ import useModalStore from "@/app/store/modelStore";
 import useUserStore from "@/app/store/userModel";
 import '@/app/globals.css';
 import { getAllUsers } from "@/app/services/user/getDetails";
-import connectDb from "@/app/lib/db/connectDb";
-import { UserModel } from "@/app/lib/models/user";
-import { User } from "@/app/types/user";
+import { CldUploadWidget } from 'next-cloudinary';
+import TermsPage from "../terms";
 
 
 
@@ -23,22 +22,11 @@ const AddPost: React.FC = () => {
   const [supplierNameArr, setSupplierNameArr] = useState<MultiValue<string>>([]);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
   const [suppliers, setSuppliers] = useState<{ value: string; label: string }[]>([]); // סטייט עבור הספקים
+  const [showModal, setShowModal] = useState(false);
 
   const closeModal = useModalStore((state) => state.closeModal);
   const setPostArr = useUserStore((state) => state.setPostArr);
-  // async function getUsers(): Promise<User[]> {
-  //   try {
-  //     await connectDb();
-  //     const users = await UserModel.find().lean<User[]>();
-  
-  //     return users.map(user => ({
-  //       ...user,
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error in getUsers:', error);
-  //     return [];
-  //   }
-  // }
+
   useEffect(() => {
     const fetchSuppliers = async () => {
       try {
@@ -46,14 +34,14 @@ const AddPost: React.FC = () => {
         const filteredSuppliers = data.users
           .filter((user: any) => user.titles.includes('consumer') && user.titles.length > 1) // בדוק שיש title נוסף חוץ מ־consumer
           .map((user: any) => user.userName); // הוצאת userName בלבד
-          console.log("filteredSuppliers",filteredSuppliers);
-          
-        const supplierOptions = filteredSuppliers.map((user:string) => ({
+        console.log("filteredSuppliers", filteredSuppliers);
+
+        const supplierOptions = filteredSuppliers.map((user: string) => ({
           value: user,
           label: user,
         }));
-        console.log("supplierOptions",supplierOptions);
-        
+        console.log("supplierOptions", supplierOptions);
+
         setSuppliers(supplierOptions);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -62,19 +50,33 @@ const AddPost: React.FC = () => {
     fetchSuppliers();
   }, []); // פועל רק פעם אחת בזמן טעינת הקומפוננטה
 
+
+  const handleUploadSuccess = async (result: any) => {
+    if (result.info && result.info.secure_url) {
+      const secureUrl = result.info.secure_url;
+      setAlbum((prev) => [...prev, secureUrl]); // שומר את הקישור המלא במערך
+    }
+  };
+  
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
       const fileReaders = files.map((file) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
+        console.log(file);
         return new Promise<string>((resolve) => {
+          console.log(reader.onload = () => resolve(reader.result as string));
+
           reader.onload = () => resolve(reader.result as string);
+
         });
       });
 
       Promise.all(fileReaders).then((uploadedImages) => {
         setAlbum((prev) => [...prev, ...uploadedImages]);
+        console.log(album);
+
       });
     }
   };
@@ -147,7 +149,6 @@ const AddPost: React.FC = () => {
         הספקים שלי:
         <Select
           options={suppliers}
-          // options={suppliers.map((supplier) => ({ value: supplier, label: supplier }))} // מיפוי לערכים ש-React-Select מבין
           isMulti // מאפשר בחירה מרובה
           placeholder="בחר ספקים..."
           onChange={(selectedOptions) => setSupplierNameArr(selectedOptions.map((option) => option.value))}
@@ -173,7 +174,7 @@ const AddPost: React.FC = () => {
         />
       </label>
 
-      <label>
+      {/* <label>
         העלאת תמונות:
         <input
           type="file"
@@ -181,17 +182,59 @@ const AddPost: React.FC = () => {
           accept="image/*"
           onChange={handleImageUpload}
         />
+      </label> */}
+      <label>העלאת תמונות
+        <CldUploadWidget
+          uploadPreset="appOrganizerEvent"
+          onSuccess={handleUploadSuccess}
+          options={{
+            sources: [
+              'local',
+              'camera',
+              'google_drive',
+              'url'
+            ],
+            maxFiles: 35,
+          }}
+        >
+          {({ open }) => (
+            <button
+              onClick={() => open()}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              Upload an Image
+            </button>
+          )}
+        </CldUploadWidget>
       </label>
-      <label>
+      <label className="flex items-center space-x-2 rtl:space-x-reverse">
+        <span
+          className="text-blue-500 cursor-pointer hover:underline"
+          onClick={() => setShowModal(true)}
+        >
+          אני מאשרת את התנאים
+        </span>
         <input
           type="checkbox"
           checked={acceptedTerms}
           onChange={() => setAcceptedTerms(!acceptedTerms)}
           required
         />
-        אני מאשרת את התנאים
       </label>
 
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+          <div className="bg-white p-6 rounded shadow-lg w-4/5 max-w-2xl overflow-y-auto">
+            <TermsPage />
+            <button
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+              onClick={() => setShowModal(false)}
+            >
+              סגור
+            </button>
+          </div>
+        </div>
+      )}
       <button type="submit" className="button-primary">הוספת פוסט</button>
     </form>
   );

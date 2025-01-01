@@ -13,7 +13,6 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     const [errorMessage, setErrorMessage] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
     const [showPassword, setshowPassword] = useState(false);
-
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,9 +36,8 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     };
 
     return (
-        <div className="main-content">
+        <div>
             <h2 className="page-title">התחבר לחשבון שלך</h2>
-
             <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                     <label htmlFor="userName" className="block font-medium">שם משתמש</label>
