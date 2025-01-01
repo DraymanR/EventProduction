@@ -4,8 +4,11 @@ import { getUserByUsername } from '@/app/services/user/getDetails';  // נניח
 import { Post } from '@/app/types/post';  // נניח שיש לך טיפוס כזה
 import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
+import {removeUserFromFavorites,addUserToFavorites} from '@/app/services/user/updateDetails'
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
+  const userNameFromCookie = decodeURIComponent(document.cookie);
   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
   const [isFavorite, setIsFavorite] = useState<boolean>(false);  // מצב האם המשתמש ברשימת האהובים
   const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש
@@ -30,18 +33,19 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
     };
     fetchUserData();
   }, [username]);
+   const toggleFavorite = async () => {
+      if (isFavorite) {
+        // אם הפוסט במועדפים - נסיר אותו
+        await removeUserFromFavorites(user.userNam);
+        setIsFavorite(false); // עדכון המשתנה המקומי ל- false
+      } else {
+        // אם הפוסט לא במועדפים - נוסיף אותו
+        await addUserToFavorites(user.userName);
+        // setLikedPeople([...setLikedPeople, user]); // מוסיף את הפוסט למועדפים
+        setIsFavorite(true); // עדכון המשתנה המקומי ל- true
+      }
+    };
 
-  const toggleFavorite = () => {
-    // הפונקציה שמבצעת הוספה/מחיקה מרשימת האהובים
-    if (isFavorite) {
-      // מחיקת אהוב
-      // יש להוסיף את הקוד למחיקת המשתמש מרשימת האהובים
-    } else {
-      // הוספת אהוב
-      // יש להוסיף את הקוד להוספת המשתמש לרשימת האהובים
-    }
-    setIsFavorite(!isFavorite);
-  };
   return (
     <div className="user-profile bg-gradient-to-b from-gray-100 to-blue-50 p-6">
       {user ? (
@@ -135,6 +139,11 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
       ) : (
         <p className="text-center text-gray-500">טוען נתוני משתמש...</p>
       )}
+        {userNameFromCookie && <div className="favorite mt-6">
+                <button onClick={toggleFavorite} className={`text-2xl ${isFavorite ? "text-red-500" : "text-gray-400"}`}>
+                  {isFavorite ? <FaHeart /> : <FaRegHeart />}
+                </button>
+              </div>}
     </div>
   );
 
