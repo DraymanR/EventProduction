@@ -34,14 +34,11 @@ export async function POST(req: NextRequest) {
         }
 
         // יצירת התמונה החדשה ושמירתה
-        const newImg = new ImgModel({
-            imgUrl: imageUrl,
-        });
-        await newImg.save();
+       
         console.log(`Image saved with URL: ${imageUrl}`);
 
         // עדכון מערך album בפוסט
-        post.album.push(newImg.imgUrl);
+        post.album.push(imageUrl);
         await post.save();
         console.log(`Post with ID ${postId} updated with new image.`);
 

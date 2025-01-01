@@ -19,12 +19,12 @@ const Home: React.FC = () => {
 
 
     return (
-        <div dir="ltr">
+        <div dir="rtl">
             {userDetails ? (
                 <div>
                     <ShowUserPersonalDetails user={userDetails} />
                     <button onClick={() => setShowUpdateForm((prev) => !prev)} className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
-                        {showUpdateForm ? "Hide Update Form" : "Update Details"}
+                    {showUpdateForm ? "הסתר טופס עדכון" : "עדכן פרטים"}
                     </button>
                     {showUpdateForm && (
                         <div>
@@ -33,7 +33,7 @@ const Home: React.FC = () => {
                     )}
                 </div>
             ) : (
-                <p>No user data found , please log in</p>
+                <p>לא נמצאו נתונים של משתמש, אנא התחבר לחשבון משתמש</p>
             )}
         </div>
     );

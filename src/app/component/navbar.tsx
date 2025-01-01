@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { checkIfLoggedIn } from '@/app/services/user/registerUser';
 import useNavbarStore from '../store/navbarStore';
 import useUserStore from '../store/userModel';
-import { UserFormData } from '../types/user';
 import useModalStore from '../store/modelStore';
 import Logo from '@/app/assets/images/logo.png';
 import { useState } from 'react';

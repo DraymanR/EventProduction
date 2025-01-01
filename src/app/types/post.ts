@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 import { Img } from "./user";
 
 export interface Post {
+  _id:ObjectId;
   createDate: Date;
   userName: string;
   album: string[];
@@ -50,19 +51,10 @@ export interface PostModalProps {
   onClose: () => void;
 }
 
-// export interface PostEventProps {
-//   createDate: Date;
-//   userName: string;
-//   album: string[];
-//   title: string;
-//   description: string;
-//   recommendations: ObjectId[];
-//   eventCategory: EventCategory;
-//   supplierNameArr: string[];
-//   budget: number;
-// }
-
-
+export interface SortFilterProps {
+    onFilterChange: (filters: { language?: string; title?: string; city?: string }) => void;
+    setFilteredUsers: (users: any[]) => void;
+}
 
 export enum EventCategory {
   Barmitzva = "barmitzva",

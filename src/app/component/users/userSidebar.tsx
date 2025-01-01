@@ -32,8 +32,11 @@ const ConsumerNavbar: React.FC = () => {
       await signOut({ redirect: false });
       await logout();
       toggleNavbar(false)
+      toggleNavbar(false)
     } else {
       await logout();
+      toggleNavbar(false)
+
       toggleNavbar(false)
 
     }

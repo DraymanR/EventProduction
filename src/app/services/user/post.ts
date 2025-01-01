@@ -9,8 +9,6 @@ export const addPostToUser = async (post: object) => {
   try {
     // שליפת שם המשתמש מהעוגיות
     const username = decodeURIComponent(document.cookie.split("=")[1]);
-    console.log(username);
-
     // שליחת בקשה לשרת
     const response = await axios.post(
       `${baseUrl}/api/posts/post/username?username=${username}`,
@@ -37,7 +35,6 @@ export const getUserPosts = async () => {
   try {
     // שליפת שם המשתמש מהעוגיות
     const username = decodeURIComponent(document.cookie.split("=")[1]);
-    console.log(username);
 
     // קריאה לשרת לקבלת נתוני המשתמש
     const response = await axios.get(
@@ -57,11 +54,11 @@ export const getUserPosts = async () => {
 export const addPostToFavorites = async (favoritePostID: string) => {
   try {
     // יצירת גוף הבקשה
-    const data={"favoritePostID":favoritePostID};
+    const data = { "favoritePostID": favoritePostID };
 
     // שליחת הבקשה לשרת
     const response = await axios.put(
-     
+
       `${baseUrl}/api/users/favorites`,
       data,
       {
@@ -88,12 +85,12 @@ export const addPostToFavorites = async (favoritePostID: string) => {
 export const removePostToFavorites = async (favoritePostID: string) => {
   try {
     // יצירת גוף הבקשה
-    const data={"favoritePostID":favoritePostID};
+    const data = { "favoritePostID": favoritePostID };
 
     // שליחת הבקשה לשרת
     const response = await axios.put(
-     
-     `${baseUrl}/api/users/favorites/delete`,
+
+      `${baseUrl}/api/users/favorites/delete`,
       data,
       {
         headers: {
@@ -106,7 +103,7 @@ export const removePostToFavorites = async (favoritePostID: string) => {
     const setLikedPostsArr = useUserStore.getState().setLikedPostsArr;
     const updatedLikedPostsArr = useUserStore.getState().likedPostsArr.filter(
       (post: any) => post._id !== favoritePostID
-    ); 
+    );
     setLikedPostsArr(updatedLikedPostsArr)
 
     return response;

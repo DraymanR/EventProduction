@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation"; // for client-side navigation
 import { useSession } from "next-auth/react"; // for authentication state
 import PopUpWindow from "./pop-upWindow";
@@ -18,7 +18,7 @@ const TimerComponent = () => {
         // Redirect if user is authenticated
         if (status === "authenticated") {
             if (isModalOpen) closeModal(); // Close modal if open
-            router.push("/pages/user-account"); // Redirect to user account
+            // router.push("/pages/user-account"); // Redirect to user account
             return; // Exit effect after redirect
         }
 
@@ -36,7 +36,7 @@ const TimerComponent = () => {
         }, 120000); // 2 minutes
 
         return () => clearInterval(intervalId); // Cleanup interval
-    }, [status, isModalOpen, openModal, closeModal, router]);
+    }, [status, router]);
 
     if (!isModalOpen) return null;
 

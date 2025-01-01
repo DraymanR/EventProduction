@@ -1,24 +1,20 @@
 'use client';
 
 import Select, { MultiValue } from "react-select";
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import useModalStore from '@/app/store/modelStore';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { UserFormData, Language, SupplierDetails, Title, Option } from '@/app/types/user';
 import { addUser } from '@/app/services/user/registerUser';
 import { CldUploadWidget } from 'next-cloudinary';
-import router from "next/router";
+// import router from "next/router";
+import { useRouter } from 'next/navigation';
+
 // בתוך הקומפוננטה Register
 const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
-
-    let profileImage = '';
-    const handleUploadSuccess = async (result: any) => {
-        if (result.info && result.info.secure_url) {
-            profileImage = result.info.secure_url;
-        }
-    };
+    const router = useRouter();
+    const [profileImage, setProfileImage] = useState(null);
     const [showconfirmPassword, setshowconfirmPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const closeModal = useModalStore((state) => state.closeModal);
@@ -47,14 +43,55 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             building: 0,
         },
         supplierDetails: { startingPrice: 0, topPrice: 0 },
-        profileImage: ''
+        profileImage: profileImage
+    });
+
+    // const language: Option[] = [
+    //     { value: Language.English, label: "אנגלית" },
+    //     { value: Language.French, label: "צרפתית" },
+    //     { value: Language.Hebrew, label: "עברית" },
+    //     { value: Language.Russian, label: "רוסית" },
+    //     { value: Language.Spanish, label: "ספרדית" },
+    //     { value: Language.Yiddish, label: "אידייש" },
+
+    // ];
+    const language: Option[] = [
+        { value: Language.English, label: "English" },
+        { value: Language.French, label: "Français" },
+        { value: Language.Hebrew, label: "עברית" },
+        { value: Language.Russian, label: "русский" },
+        { value: Language.Spanish, label: "Español" },
+        { value: Language.Yiddish, label: "יידיש" },
+
+    ];
+
+    const allowedLanguages = Object.values(Language);
+    const userLanguages = formData.languages.filter(lang => allowedLanguages.includes(lang));
+    formData.languages = userLanguages;
+    console.log("userLanguages",userLanguages);
+    
+    const titleOptions: Option[] = Object.keys(Title).map(key => ({
+        value: Title[key as keyof typeof Title],
+        label: Title[key as keyof typeof Title],
+    }));
+    titleOptions.push({
+        value: 'consumer',
+        label: 'צרכן',
     });
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        console.log(formData);
+
         e.preventDefault();
         setIsSubmitting(true);
-
-        if (formData.password !== confirmPassword) {
+        // בדיקה אם התמונה לא הועלתה
+        if (!profileImage) {
+            setError('יש להעלות תמונה לפני ההרשמה.');
+            setIsSubmitting(false);
+            return;
+        }
+        if (formData.password != confirmPassword) {
             setError('הסיסמאות אינן תואמות');
+            console.error(error);
             setIsSubmitting(false);
             return;
         }
@@ -66,35 +103,24 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             console.log('Sending request...');
             const result = await addUser(formData);
             console.log(result);
-           
+
             router.push('/pages/user-account');
             closeModal();
         } catch (err: any) {
-            setError(err.message || 'An error occurred');
-        } finally {
+            const errorMessage = err.response?.data?.message || err.message || 'An error occurred';
+            console.error('Registration error:', errorMessage);
+            setError(errorMessage);
+        }
+        finally {
             setIsSubmitting(false);
         }
     };
 
-    const language: Option[] = [
-        { value: Language.English, label: "אנגלית" },
-        { value: Language.French, label: "צרפתית" },
-        { value: Language.Hebrew, label: "עיברית" },
-        { value: Language.Russian, label: "רוסית" },
-        { value: Language.Spanish, label: "ספרדית" },
-        { value: Language.Yiddish, label: "אידייש" },
-
-    ];
-
-    const titleOptions: Option[] = Object.keys(Title).map(key => ({
-        value: Title[key as keyof typeof Title],
-        label: Title[key as keyof typeof Title],
-    }));
-    titleOptions.push({
-        value: 'consumer',
-        label: 'צרכן',
-    });
-
+    const handleUploadSuccess = async (result: any) => {
+        if (result.info && result.info.secure_url) {
+            setProfileImage(result.info.secure_url);
+        }
+    };
     const mySetSelectedLanguages = (selectedOptions: MultiValue<Option>) => {
         setSelectedLanguages(selectedOptions);
         // עדכון formData.languages עם ערכים כמחרוזות
@@ -117,13 +143,14 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
     const mySetSelectedTitles = (selectedOptions: MultiValue<Option>) => {
         setSelectedTitles(selectedOptions);
-
-        const titleArray = selectedOptions.map((option) => { option.value as Title || 'consumer'; (option.value != 'consumer') ? setIsSupplier(true) : setIsSupplier(false); });
-        setFormData((prevFormData: any) => ({
+        const titleArray = selectedOptions.map(option => option.value as Title);
+        setIsSupplier(titleArray.includes(Title.Supplier)); // דוגמה לבדיקת סטטוס ספק
+        setFormData(prevFormData => ({
             ...prevFormData,
             titles: titleArray,
         }));
     };
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -138,23 +165,28 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         ...prevState,
                         [parent]: {
                             ...parentValue,
-                            [child]: value,
+                            [child]: value//isNaN(Number(value)) ? value : Number(value), // המרת ערכים מספריים
                         },
                     };
                 } else {
                     console.error(`Expected ${parent} to be an object, but got:`, parentValue);
-                    return prevState; // לא מבצע עדכון אם השדה אינו אובייקט
+                    return prevState;
                 }
             });
-        }
-
-        else {
+        } else {
             setFormData(prevState => ({
                 ...prevState,
-                [name]: value,
+                [name]: value//isNaN(Number(value)) ? value : Number(value), // המרת ערכים מספריים
             }));
         }
     };
+
+    useEffect(() => {
+        setFormData((prev) => ({
+            ...prev,
+            profileImage,
+        }));
+    }, [profileImage]);
 
     return (
         <div className="text-center w-[80vh] mx-auto mb-10 max-h-[80vh] p-6">
@@ -359,7 +391,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                             <label htmlFor="minPrice" className="block font-medium">מחיר מינימלי</label>
                                             <input
                                                 id="minPrice"
-                                                name="minPrice"
+                                                name="supplierDetails.minPrice"
                                                 type="number"
                                                 value={formData.supplierDetails?.startingPrice}
                                                 onChange={handleInputChange}
@@ -371,7 +403,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                             <label htmlFor="maxPrice" className="block font-medium">מחיר מקסימלי</label>
                                             <input
                                                 id="maxPrice"
-                                                name="maxPrice"
+                                                name="supplierDetails.maxPrice"
                                                 type="number"
                                                 value={formData.supplierDetails?.topPrice}
                                                 onChange={handleInputChange}
@@ -381,53 +413,50 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                                         </div>
                                     </>
                                 )}
-                       </div> </>
+                        </div> </>
                 )}
 
-                        {/* שלב של תמונת פרופיל */}
-                        {currentStep === 4 && (
-                            <>
-
-                                {/* אם יש טיטל "ספק" נוסיף שדות של מחיר */}
-
-                                <div className="border p-2 rounded">
-                                    <label>העלאת תמונת פרופיל</label>
-
-                                    <CldUploadWidget
-                                        uploadPreset="appOrganizerEvent"
-                                        onSuccess={handleUploadSuccess}
-                                        options={{
-                                            sources: [
-                                                'local',
-                                                'camera',
-                                                'google_drive',
-                                                'url'
-                                            ],
-                                            maxFiles: 35,
-                                        }}
+                {/* שלב של תמונת פרופיל */}
+                {currentStep === 4 && (
+                    <>
+                        {/* אם יש טיטל "ספק" נוסיף שדות של מחיר */}
+                        <div className="border p-2 rounded">
+                            <label>העלאת תמונת פרופיל</label>
+                            <CldUploadWidget
+                                uploadPreset="appOrganizerEvent"
+                                onSuccess={handleUploadSuccess}
+                                options={{
+                                    sources: [
+                                        'local',
+                                        'camera',
+                                        'google_drive',
+                                        'url'
+                                    ],
+                                    maxFiles: 35,
+                                }}
+                            >
+                                {({ open }) => (
+                                    <button
+                                        onClick={() => open()}
+                                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                                     >
-                                        {({ open }) => (
-                                            <button
-                                                onClick={() => open()}
-                                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                                            >
-                                                Upload an Image
-                                            </button>
-                                        )}
-                                    </CldUploadWidget>
-                                </div>
-                            </>
-                        )}
-
-                        <div className="flex justify-between">
-                            {currentStep > 1 && <button type="button" onClick={handleBackStep} className="bg-gray-500 text-white py-2 px-4 rounded-md">Back</button>}
-                            {currentStep < 4 ? (
-                                <button type="button" onClick={handleNextStep} className="bg-red-400 text-white py-2 px-4 rounded-md">Next</button>
-                            ) : (
-                                <button type="submit" className="bg-red-400 text-white py-2 px-4 rounded-md">הירשם</button>
-                            )}
+                                        Upload an Image
+                                    </button>
+                                )}
+                            </CldUploadWidget>
                         </div>
-                    </form>
+                    </>
+                )}
+
+                <div className="flex justify-between">
+                    {currentStep > 1 && <button type="button" onClick={handleBackStep} className="bg-gray-500 text-white py-2 px-4 rounded-md">הקודם</button>}
+                    {currentStep < 4 ? (
+                        <button type="button" onClick={handleNextStep} className="bg-red-400 text-white py-2 px-4 rounded-md">הבא</button>
+                    ) : (
+                        <button type="submit" className={`${!isSubmitting ? 'bg-red-400 text-white' : 'text-red-400 bg-white'} py-2 px-4 rounded-md`}>הירשם</button>
+                    )}
+                </div>
+            </form>
         </div>
     );
 };

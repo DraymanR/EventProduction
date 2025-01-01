@@ -1,12 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { UserFormData, Title, Language } from '@/app/types/user';
+import { UserFormData, Title, Language, UpdateUserPersonalDetailsProps } from '@/app/types/user';
 import useUserStore from '@/app/store/userModel';
-
-interface UpdateUserPersonalDetailsProps {
-  user: UserFormData;
-}
 
 const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ user }) => {
   const setUser = useUserStore((state) => state.setUser);
@@ -86,28 +82,26 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
       });
 
       const data = await response.json();
-
       if (response.ok) {
-        setMessage('Profile updated successfully!');
+        setMessage('הפרופיל עודכן בהצלחה!');
         setUser(data.user);
       } else {
-        setMessage(data.error || 'Failed to update profile');
+        setMessage(data.error || 'עדכון הפרופיל נכשל');
       }
     } catch (error) {
-      setMessage('An error occurred while updating profile');
+      setMessage('אירעה שגיאה בעת עדכון הפרופיל');
     }
-  };
-
-  if (!user) return <div>Loading...</div>;
+  }
+  if (!user) return <div>טוען...</div>;
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Personal Details</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">עדכון פרטים אישיים</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Basic Details */}
+        {/* פרטים בסיסיים */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-600">First Name</label>
+            <label className="block text-sm font-medium text-gray-600">שם פרטי</label>
             <input
               type="text"
               name="firstName"
@@ -117,7 +111,7 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600">Last Name</label>
+            <label className="block text-sm font-medium text-gray-600">שם משפחה</label>
             <input
               type="text"
               name="lastName"
@@ -129,7 +123,7 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Phone</label>
+          <label className="block text-sm font-medium text-gray-700">טלפון</label>
           <input
             type="text"
             name="phone"
@@ -140,7 +134,7 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">תיאור</label>
           <textarea
             name="description"
             value={formData.description}
@@ -150,10 +144,10 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
           />
         </div>
 
-        {/* Address fields */}
+        {/* שדות כתובת */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700">City</label>
+            <label className="block text-sm font-medium text-gray-700">עיר</label>
             <input
               type="text"
               name="address.city"
@@ -162,9 +156,9 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          
+
           <div>
-            <label className="block text-sm font-medium text-gray-700">Street</label>
+            <label className="block text-sm font-medium text-gray-700">רחוב</label>
             <input
               type="text"
               name="address.street"
@@ -174,18 +168,18 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
             />
           </div>
         </div>
-        
-        {/* Titles and Languages */}
+
+        {/* תארים ושפות */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-600">Add Title</label>
+            <label className="block text-sm font-medium text-gray-600">הוספת תואר</label>
             <div className="flex items-center gap-3">
               <select
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
                 className="flex-1 border rounded-lg p-3 focus:outline-none focus:ring focus:ring-blue-200"
               >
-                <option value="">Select Title</option>
+                <option value="">בחר תואר</option>
                 {Object.values(Title).map((title) => (
                   <option key={title} value={title}>
                     {title}
@@ -197,23 +191,23 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
                 onClick={handleTitleAdd}
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
               >
-                Add
+                הוסף
               </button>
             </div>
             <div className="mt-2 text-sm text-gray-600">
-              <span className="font-medium">Current Titles:</span> {formData.titles.join(', ')}
+              <span className="font-medium">תארים נוכחיים:</span> {formData.titles.join(', ')}
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600">Add Language</label>
+            <label className="block text-sm font-medium text-gray-600">הוספת שפה</label>
             <div className="flex items-center gap-3">
               <select
                 value={newLanguage}
                 onChange={(e) => setNewLanguage(e.target.value)}
                 className="flex-1 border rounded-lg p-3 focus:outline-none focus:ring focus:ring-blue-200"
               >
-                <option value="">Select Language</option>
+                <option value="">בחר שפה</option>
                 {Object.values(Language).map((lang) => (
                   <option key={lang} value={lang}>
                     {lang}
@@ -225,23 +219,22 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
                 onClick={handleLanguageAdd}
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
               >
-                Add
+                הוסף
               </button>
             </div>
             <div className="mt-2 text-sm text-gray-600">
-              <span className="font-medium">Current Languages:</span> {formData.languages.join(', ')}
+              <span className="font-medium">שפות נוכחיות:</span> {formData.languages.join(', ')}
             </div>
           </div>
         </div>
 
-        {/* Message */}
+        {/* הודעה */}
         {message && (
           <div
-            className={`p-4 rounded-lg ${
-              message.includes('success')
-                ? 'bg-green-100 text-green-800'
-                : 'bg-red-100 text-red-800'
-            }`}
+            className={`p-4 rounded-lg ${message.includes('בהצלחה')
+              ? 'bg-green-100 text-green-800'
+              : 'bg-red-100 text-red-800'
+              }`}
           >
             {message}
           </div>
@@ -251,7 +244,7 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
           type="submit"
           className="w-full bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-600 transition-colors"
         >
-          Update Profile
+          עדכון פרופיל
         </button>
       </form>
     </div>

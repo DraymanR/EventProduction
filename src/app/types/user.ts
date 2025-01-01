@@ -22,16 +22,38 @@ export type Option = {
   value: string;
   label: string;
 };
-export enum Language {
-  Hebrew = 'Hebrew',
-  English = 'English',
-  French = 'French',
-  Yiddish = 'Yiddish',
-  Spanish = 'Spanish',
-  Russian = 'Russian',
-  // תוסיפי עוד שפות לפי הצורך
+
+export type Img = {
+  imgUrl: string;
 }
 
+// export enum Language {
+//   Hebrew = 'Hebrew',
+//   English = 'English',
+//   French = 'French',
+//   Yiddish = 'Yiddish',
+//   Spanish = 'Spanish',
+//   Russian = 'Russian',
+//   // תוסיפי עוד שפות לפי הצורך
+// }
+export enum Language {
+  Hebrew = 'עברית',
+  English = 'English',
+  French = 'Français',
+  Yiddish = 'יידיש',
+  Spanish = 'Español',
+  Russian = 'русский',
+  // תוסיפי עוד שפות לפי הצורך
+}
+// export enum Language {
+//   Hebrew = 'עברית',
+//   English = 'English',
+//   French = 'Français',
+//   Yiddish = 'יידיש',
+//   Spanish = 'Español',
+//   Russian = 'русский',
+//   // תוסיפי עוד שפות לפי הצורך
+// }
 
 
 export interface PostCardProps {
@@ -64,7 +86,7 @@ export interface User {
   postArr: ObjectId[];
   likedPostsArr: ObjectId[]; // array of Post ObjectIds
   likedPeople: string[];
-  profileImage: string; // מערך של פוסטים
+  profileImage: Img; // מערך של פוסטים
 }
 
 export interface Auth {
@@ -137,30 +159,11 @@ export interface SearchBarProps {
     startDate: string,
     endDate: string,
     description: string,
-    userTitle: Title
+    // userTitle: Title
   ) => void;
 }
 
-export interface UserFormData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  password: string;
-  titles: (Title | "consumer")[]; //string[];
-  phone: string;
-  description: string;
-  languages: Language[];
-  // address: Address
-  address: {
-    zipCode: string;
-    city: string;
-    street: string;
-    building: number;
-  };
-  supplierDetails?: SupplierDetails;
-  profileImage: string | null;
-}
+
 export interface UserResponseData {
   firstName: string;
   lastName: string;
@@ -198,7 +201,7 @@ export interface UserStore {
 
 
 export interface CustomRequest extends NextRequest {
-    userName?: string;
+  userName?: string;
 }
 
 
@@ -212,10 +215,6 @@ export interface ShowUserPersonalDetailsProps {
   user: UserFormData;
 }
 
-export interface Img {
-  imgUrl: string;
-}
-
 export interface ModalState {
   isModalOpen: boolean;
   openModal: () => void;
@@ -224,37 +223,6 @@ export interface ModalState {
 
 
 
-// export interface UserFormData {
-//   profileImage: string,
-//   firstName: string;
-//   lastName: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   titles: (Title | "consumer")[]; // מערך של טיטלים
-//   phone: string;
-//   languages: Language[]; // מערך של שפות
-//   address: {
-//     zipCode: string;
-//     city: string;
-//     street: string;
-//     building: number;
-//   };
-//   description: string,
-
-//   supplierDetails?: {
-//     startingPrice: number;
-//     topPrice: number;
-//     eventList: string[];
-//     recommendation: string[];
-//     range: number;
-//     emptyDate: string[];
-//     images: string[];
-//     description: string;
-//   };
-// }
-
-// export interface Consumer {
-//   userName: string;
-//    // array of Usernames
-// }
+export interface UpdateUserPersonalDetailsProps {
+  user: UserFormData;
+}

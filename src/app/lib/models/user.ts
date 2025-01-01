@@ -16,7 +16,7 @@ const userSchema = new Schema<User>({
   phone: { type: String },
   languages: { 
     type: [String], 
-    enum: Object.values(Language)||"Hebrew",
+    enum: Object.values(Language),
     required: true 
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
@@ -65,7 +65,7 @@ const supplierSchema = new Schema<Supplier>({
 const postSchema = new Schema<Post>({
   userName: { type: String, ref: 'User', required: true },
   createDate: { type: Date, required: true },
-  album: [{ type: String, required: true }],
+  album: [{type: String, default: null}],
   title: { type: String, required: true },
   description: { type: String, required: true },
   recommendations: [{ type: Schema.Types.ObjectId, ref: 'Recommendation' }],
