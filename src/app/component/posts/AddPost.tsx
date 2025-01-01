@@ -29,6 +29,7 @@ const AddPost: React.FC = () => {
     const fetchSuppliers = async () => {
       try {
         const data = await getAllUsers();
+        
         const filteredSuppliers = data.users
           .filter((user: any) => user.titles.includes('consumer') && user.titles.length > 1) // בדוק שיש title נוסף חוץ מ־consumer
           .map((user: any) => user.userName); // הוצאת userName בלבד
