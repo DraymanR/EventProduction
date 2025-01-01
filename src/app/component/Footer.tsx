@@ -6,7 +6,7 @@ import { Home, Info, Book, LogIn, Heart, Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
   const openModal = useModalStore((state) => state.openModal);
-    
+
   const handleLoginClick = () => {
     if (checkIfLoggedIn()) {
       alert("אתה כבר מחובר לחשבון משתמש, לאחר יציאה ניתן להתחבר שוב.")
@@ -35,12 +35,9 @@ const Footer = () => {
                 אודות האתר
                 <Info className="h-4 w-4" />
               </Link>
-              <Link href="/pages/terms" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
-                תקנון האתר
-                <Book className="h-4 w-4" />
-              </Link>
-              <button 
-                onClick={handleLoginClick} 
+
+              <button
+                onClick={handleLoginClick}
                 className="flex items-center gap-2 hover:text-pink-600 transition-colors"
               >
                 התחברות
@@ -64,16 +61,15 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Media Links */}
-          {/* <div className="flex flex-col items-center space-y-4">
-            <h3 className="text-lg font-bold mb-4">עקבו אחרינו</h3>
-            <div className="flex space-x-4"> */}
-              {/* Using emojis as placeholders - you can replace these with actual social media icons */}
-              {/* <a href="#" className="hover:text-pink-600 transition-colors text-2xl">📱</a>
-              <a href="#" className="hover:text-pink-600 transition-colors text-2xl">📸</a>
-              <a href="#" className="hover:text-pink-600 transition-colors text-2xl">👥</a>
-            </div>
-          </div> */}
+          {/* Privacy Policy and Terms of Service Links */}
+
+          <div className="flex flex-col items-center space-y-4">
+            <h3 className="text-lg font-bold mb-4">מדיניות פרטיות </h3>
+            <Link href="/pages/terms" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
+              תקנון האתר
+              <Book className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
 
         {/* Bottom Bar */}
