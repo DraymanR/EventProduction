@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import jwt from 'jsonwebtoken';
+
 import {  SupplierModel,UserModel } from '@/app/lib/models/user'; 
 import connectDb from '@/app/lib/db/connectDb'; 
 import { Title } from '@/app/types/user';

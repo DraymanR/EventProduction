@@ -24,9 +24,8 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
     <div className="relative">
       {/* כרטיס הפוסט */}
       <div
-        className={`post-card bg-white rounded-lg shadow-md p-6 max-w-xl mx-auto mb-6 ${
-          showPostModal ? "filter blur-sm" : ""
-        }`}
+        className={`post-card bg-white rounded-lg shadow-md p-6 max-w-xl mx-auto mb-6 ${showPostModal ? "filter blur-sm" : ""
+          }`}
       >
         <div className="header flex items-center justify-between mb-4">
           <h2 className="text-2xl font-semibold text-gray-800">{post.title}</h2>
@@ -49,32 +48,18 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
         </div>
         <p className="description text-gray-700 mb-4">{post.description}</p>
 
-        <div
-          className="comments-toggle flex items-center text-blue-500 cursor-pointer"
-          onClick={openPostModal}
-        >
+        
           <span> הראה פוסט מלא</span>
           <span
-            className={`ml-2 transform ${showPostModal ? "rotate-180" : ""}`}
           >
+             <a href={`/pages/posts/${post._id.toString()}`} className="text-blue-500 hover:underline">
+              {post.title}
+            </a>
             ➔
           </span>
-        </div>
       </div>
 
-      {/* מודל להצגת פוסט מלא */}
-
-      {showPostModal && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="modal-content bg-white p-6 rounded-md max-w-xl shadow-lg overflow-y-auto max-h-[80vh]">
-          <button onClick={closePostModal} className="text-red-500">
-              X
-            </button>
-
-            <PostModal post={post} />
-          </div>
-        </div>
-      )}
+   
     </div>
   );
 };

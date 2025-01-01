@@ -30,7 +30,7 @@ export default function ChatPage() {
   return (
     <div>
       <h1>צ&apos;אט עם Abli</h1>
-      <Chat courseId={""} />
+      <Chat />
     </div>
   );
 }

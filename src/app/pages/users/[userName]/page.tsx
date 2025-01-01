@@ -11,9 +11,8 @@ const Page = () => {
   // בצע פירוש URL כדי להמיר את הקידוד
   const decodedUserName = decodeURIComponent(userName as string);
 
-  if (!decodedUserName) return <div>Loading...</div>; // אם עדיין לא קיבלנו את שם המשתמש
+  if (!decodedUserName) return <div>טוען...</div>; // אם עדיין לא קיבלנו את שם המשתמש
 
-  console.log(decodedUserName);  // אמור להדפיס את שם המשתמש המפורש
 
   return (
     <div className='centered'>

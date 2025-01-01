@@ -8,6 +8,7 @@ import useUserStore from "@/app/store/userModel";
 import '@/app/globals.css';
 import { getAllUsers } from "@/app/services/user/getDetails";
 import { CldUploadWidget } from 'next-cloudinary';
+import TermsPage from "../terms";
 
 
 
@@ -21,6 +22,7 @@ const AddPost: React.FC = () => {
   const [supplierNameArr, setSupplierNameArr] = useState<MultiValue<string>>([]);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
   const [suppliers, setSuppliers] = useState<{ value: string; label: string }[]>([]); // סטייט עבור הספקים
+  const [showModal, setShowModal] = useState(false);
 
   const closeModal = useModalStore((state) => state.closeModal);
   const setPostArr = useUserStore((state) => state.setPostArr);
@@ -49,13 +51,14 @@ const AddPost: React.FC = () => {
     fetchSuppliers();
   }, []); // פועל רק פעם אחת בזמן טעינת הקומפוננטה
 
-  
+
   const handleUploadSuccess = async (result: any) => {
     if (result.info && result.info.secure_url) {
-      setAlbum((prev) => [...prev, ...result.info.secure_url]);
-        // setProfileImage(result.info.secure_url);
+      const secureUrl = result.info.secure_url;
+      setAlbum((prev) => [...prev, secureUrl]); // שומר את הקישור המלא במערך
     }
-};
+  };
+  
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
@@ -182,7 +185,7 @@ const AddPost: React.FC = () => {
           onChange={handleImageUpload}
         />
       </label> */}
-      <label>העלאת תמונות 
+      <label>העלאת תמונות
         <CldUploadWidget
           uploadPreset="appOrganizerEvent"
           onSuccess={handleUploadSuccess}
@@ -206,16 +209,34 @@ const AddPost: React.FC = () => {
           )}
         </CldUploadWidget>
       </label>
-      <label>
+      <label className="flex items-center space-x-2 rtl:space-x-reverse">
+        <span
+          className="text-blue-500 cursor-pointer hover:underline"
+          onClick={() => setShowModal(true)}
+        >
+          אני מאשרת את התנאים
+        </span>
         <input
           type="checkbox"
           checked={acceptedTerms}
           onChange={() => setAcceptedTerms(!acceptedTerms)}
           required
         />
-        אני מאשרת את התנאים
       </label>
 
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-hidden">
+          <div className="bg-white p-6 rounded shadow-lg w-4/5 max-w-2xl overflow-y-auto">
+            <TermsPage />
+            <button
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+              onClick={() => setShowModal(false)}
+            >
+              סגור
+            </button>
+          </div>
+        </div>
+      )}
       <button type="submit" className="button-primary">הוספת פוסט</button>
     </form>
   );

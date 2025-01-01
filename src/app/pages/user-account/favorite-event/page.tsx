@@ -41,7 +41,7 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div dir="ltr">
+    <div dir="rtl">
       <div className="space-y-6 mt-4">
         <h2 className="page-title">: האירועים שאהבתי</h2>
         {myEvents.length > 0 ? (

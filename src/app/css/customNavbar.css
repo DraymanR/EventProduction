@@ -1,84 +1,85 @@
-/* customNavbar.css */
-.navbar {
-    @apply fixed top-0 left-0 right-0 z-50 shadow-md bg-gray-900;
-  }
-  
-  .navbar-container {
-    @apply max-w-7xl mx-auto flex justify-between items-center px-4 py-2;
-  }
-  
-  .navbar-title {
-    @apply text-red-400 text-lg font-bold whitespace-nowrap;
-  }
-  
-  .profile-section {
-    @apply flex items-center space-x-4;
-  }
-  
-  .profile-image-container {
-    @apply flex flex-col items-center cursor-pointer;
-  }
-  
-  .profile-image {
-    @apply rounded-full border object-cover;
-  }
-  
-  .profile-text {
-    @apply mt-1 text-center text-sm font-medium text-red-400;
-  }
-  
-  .main-content {
-    @apply mt-16; /* Adjust margin for content below the navbar */
-  }
-  /* מחלקה כללית למעטפת */
-.consumer-navbar {
+/* General Navbar Container */
+.navbar-container {
   position: fixed;
   right: 0;
-  top: 90px;
-  height: calc(100vh - 84px);
+  top: 0;
+  height: 100vh;
   width: 16rem; /* 64px */
-  background-color: #1f2937; /* bg-gray-800 */
+  background-color: #FFFDEC;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
-  border-left: 1px solid #374151; /* border-gray-700 */
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* כפתור יציאה */
-.consumer-navbar-button {
-  color: #f87171; /* text-red-300 */
-  text-decoration: underline;
-  background-color: transparent;
-  border-top: 1px solid #374151; /* border-t border-gray-700 */
-  border-bottom: 1px solid #374151; /* border-b border-gray-700 */
+/* Header Section */
+.navbar-header {
+  padding: 1.5rem;
+  background-color: #86A788;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.navbar-menu-icon {
   cursor: pointer;
-  padding: 1rem 0; /* py-4 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
 }
 
-.consumer-navbar-button:hover {
-  color: #ef4444; /* hover:text-red-500 */
-  border-color: #ef4444; /* hover:border-red-500 */
+/* Links Section */
+.navbar-links {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
 }
 
-/* לינקים */
-.consumer-navbar-link {
-  color: #f87171; /* text-red-400 */
+.navbar-link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  border-top: 1px solid #374151; /* border-t border-gray-700 */
-  border-bottom: 1px solid #374151; /* border-b border-gray-700 */
+  justify-content: flex-end;
+  padding: 0.75rem 1rem;
+  color: #4B5563; /* text-gray-700 */
   text-decoration: none;
-  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s, color 0.2s;
+  gap: 0.75rem;
 }
 
-.consumer-navbar-link:hover {
-  color: #ffffff; /* hover:text-white */
-  border-color: #ef4444; /* hover:border-red-500 */
+.navbar-link:hover {
+  background-color: #FFE2E2;
+  color: #1F2937; /* hover:text-black */
+}
+
+.navbar-icon {
+  color: #86A788;
+}
+
+/* Footer Section */
+.navbar-footer {
+  padding: 1rem;
+  border-top: 1px solid #FFCFCF;
+}
+
+.navbar-logout {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem;
+  background-color: #86A788;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  gap: 0.75rem;
+  transition: background-color 0.2s;
+}
+
+.navbar-logout:hover {
+  background-color: #748e76;
 }

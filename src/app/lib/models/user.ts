@@ -16,7 +16,7 @@ const userSchema = new Schema<User>({
   phone: { type: String },
   languages: { 
     type: [String], 
-    enum: Object.values(Language)||"Hebrew",
+    enum: Object.values(Language),
     required: true 
   },
   addressId: { type: Schema.Types.ObjectId, ref: 'Address'},
@@ -24,15 +24,7 @@ const userSchema = new Schema<User>({
   postArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   likedPostsArr: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // הפניה לפוסטים שאהב
   likedPeople: [{ type: String }], // שמ  
-  // profileImage: { type: Img, default: null },
-  // profileImage: { 
-  //   type: { imgUrl: String }, // אובייקט מותאם
-  //   default: null 
-  // },
-  // profileImage: { type: Schema.Types.ObjectId, ref: 'Img' },
   profileImage: { type: String, default: null },
-
-
 });
 
 // הסכמה למודל כתובת

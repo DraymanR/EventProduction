@@ -18,7 +18,7 @@ const TimerComponent = () => {
         // Redirect if user is authenticated
         if (status === "authenticated") {
             if (isModalOpen) closeModal(); // Close modal if open
-            router.push("/pages/user-account"); // Redirect to user account
+            // router.push("/pages/user-account"); // Redirect to user account
             return; // Exit effect after redirect
         }
 

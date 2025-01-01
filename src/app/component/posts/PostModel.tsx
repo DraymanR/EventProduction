@@ -6,6 +6,7 @@ import { Recommendation } from '@/app/types/post';
 import useUserStore from '@/app/store/userModel';
 import { addPostToFavorites, removePostToFavorites } from '@/app/services/user/post';
 import { addRecommendation } from '@/app/services/post/post';
+import ImageGallery from './ImageGallry';
 
 const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const { likedPostsArr, setLikedPostsArr } = useUserStore();
@@ -24,7 +25,6 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const handleStarClick = (starIndex: number) => {
     setRating(starIndex + 1); // כל כוכב יקבל דירוג בין 1 ל-5
   };
-
   const addComment = async () => {
     if (!isAuthenticated) {
       setShowLoginModal(true);
@@ -97,22 +97,9 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
         {/* תיאור */}
         <p className="text-gray-700 mb-6">{post.description}</p>
 
-        {/* גלריית תמונות */}
-        {post.album?.length > 0 && (
-          <div className="image-gallery mb-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">תמונות:</h2>
-            <div className="flex gap-4 overflow-x-auto">
-              {post.album.map((image, index) => (
-                <img
-                  src={image.imgUrl}
-                  key={index}
-                  alt={`image-${index}`}
-                  className="w-32 h-32 object-cover rounded-md"
-                />
-              ))}
-            </div>
-          </div>
-        )}
+{/* גלריית תמונות */}
+       
+        {post.album?.length > 0 && <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
 
         {/* פרטי פוסט של צרכן */}
         {post.postId && (

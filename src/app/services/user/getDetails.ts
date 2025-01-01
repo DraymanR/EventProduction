@@ -17,8 +17,7 @@ export const getUserByUsername = async (username: string) => {
       const user = response.data.user;
   
       // שמירת נתוני המשתמש בסטור
-      const setUser = useUserStore.getState().setUser;
-      setUser(user);
+    
   
       console.log("User successfully stored in Zustand:", user);
   
@@ -84,6 +83,9 @@ export const getUserDetails = async (userName: string) => {
                 'Content-Type': 'application/json',
             },
         });
+        const setUser = useUserStore.getState().setUser;
+        const user = response.data.user;
+        setUser(user);
         console.log('User :', response.data.user);
         return response.data
     } catch (error) {
@@ -95,18 +97,18 @@ export const getAllUsers = async (
     page: number = 1,
     limit: number = 10,
     filters: {
-      title?: string;
-      language?: string;
-      city?: string;
+      title?: string[]; // תמיכה במערך של טייטלים
+      language?: string[]; // תמיכה במערך של שפות
+      city?: string[]; // תמיכה במערך של ערים
     } = {}
   ) => {
     try {
       const queryParams = new URLSearchParams({
         page: page.toString(),
         limit: limit.toString(),
-        ...(filters.title && { title: filters.title }),
-        ...(filters.language && { language: filters.language }),
-        ...(filters.city && { city: filters.city }),
+        ...(filters.title && { title: filters.title.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
+        ...(filters.language && { language: filters.language.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
+        ...(filters.city && { city: filters.city.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
       }).toString();
   
       const response = await axios.get(
