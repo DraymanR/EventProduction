@@ -63,10 +63,12 @@
 }
 
 /* עיצוב חלון פופאפ */
+/* עיצוב חלון פופאפ */
+/* עיצוב חלון פופאפ */
 .modal-bg {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* רקע חצי שקוף */
@@ -78,15 +80,24 @@
 
 .popup-content {
   background-color: white;
-  padding: 0.5rem; /* צמצום הריווח הפנימי */
+  padding: 1rem; /* הוספתי ריווח פנימי יותר */
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 70%; /* הקטנת הרוחב ל-70% */
-  max-width: 400px; /* מגבלת רוחב מקסימלית */
+  width: 100%; /* הפכתי את הרוחב ל-100% */
+  max-width: 600px; /* שמרתי על מגבלת רוחב מקסימלית */
   height: auto; /* התאמת גובה לתוכן */
   max-height: 90vh; /* מגבלת גובה יחסית */
   overflow-y: auto; /* גלילה פנימית במקרה של תוכן רב */
   z-index: 1000; /* תוכן הפופאפ */
+  text-align: right;
+  
+}
+
+.login-container {
+  width: 100%; /* הרחבתי את רוחב הקונטיינר ל-100% */
+  display: flex; /* הופך את ה-popup לתצורת flex */
+  justify-content: flex-start; /* ממקם את התוכן בצד השמאלי */
+
 }
 
 /* עיצוב לוגין */
@@ -101,7 +112,7 @@
 
 .login-container {
   width: 100%;
-  max-width: 360px; /* הגבלת רוחב */
+  max-width: 100%; /* הגבלת רוחב */
   padding: 1rem;
   background-color: white;
   border-radius: 0.5rem;
