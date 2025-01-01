@@ -41,6 +41,9 @@ const UserCard: React.FC<{ user: any }> = ({ user }) => {
         <p className="text-gray-700">
           <strong>מייל:</strong> {user.email}
         </p>
+       { user?.addressId?.city&&<p className="text-gray-700">
+          <strong>city:</strong> {user?.addressId?.city}
+        </p>}
         <p className="text-gray-700">
           <strong>מספר טלפון:</strong> {user.phone}
         </p>

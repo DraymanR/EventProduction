@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import PostModel from '@/app/component/posts/PostModel';
 import { useParams } from 'next/navigation';
-import { getPost } from '@/app/services/post/post';
+import { getPostDetails } from '@/app/services/post/post';
 
 const Page = () => {
   const { postId } = useParams();
@@ -20,10 +20,13 @@ const Page = () => {
         // const decodedPostId = decodeURIComponent(postId as string); // פענוח המזהה
         // console.log(decodedPostId);
         
-        const fetchedPost = await getPost(1, 10, postId as string);
-        console.log("fetchedPost: ",fetchedPost);
+        // const fetchedPost = await getPost(1, 10, postId as string);
+        // console.log("fetchedPost: ",fetchedPost);
         
-        setPost(fetchedPost);
+        // setPost(fetchedPost);
+        const decodedPostId = decodeURIComponent(postId as string); // פענוח המזהה
+        const fetchedPost = await getPostDetails(decodedPostId);
+        setPost(fetchedPost.post);
       } catch (error) {
         console.error('Error fetching post:', error);
       } finally {
