@@ -114,6 +114,7 @@ import axios from "axios";
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import useUserStore from "@/app/store/userModel";
+import { getBaseUrl } from "@/app/services/config/axios";
 
 // Initialize Ably client
 const ably = new Realtime({
@@ -133,8 +134,9 @@ const Chat = () => {
 
   const username = useUserStore((st) => st.user?.userName) || "xxx";
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const audio = new Audio("@/app/assests/newmessage.wav");
-
+  const audio = new Audio("/assets/adio/newmessage.wav");
+  const baseUrl = getBaseUrl();
+  
   useEffect(() => {
     // Fetch all users to display in the user list
     const fetchUsers = async () => {
@@ -142,8 +144,8 @@ const Chat = () => {
         const data = await getAllUsers();
         console.log(data.users);
         const supplierOptions = data.users.map((user: any) => user.userName);
-       console.log(supplierOptions);
-       
+        console.log(supplierOptions);
+
         setUserList(supplierOptions);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -175,7 +177,7 @@ const Chat = () => {
     // Fetch initial messages from the server
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`/api/chatMessages/${channelName}`);
+        const response = await axios.get(`${baseUrl}/api/chat/${channelName}`);
         setMessages(response.data.messages);
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -198,10 +200,14 @@ const Chat = () => {
     if (isSending || !message.trim()) return;
     setIsSending(true);
     try {
+      console.log("otherUser", otherUser);
+      console.log("username", username);
+
       const channelName = getChannelName(username, otherUser);
+      console.log("channelName", channelName);
 
       // Send message to the server
-      await axios.post("/api/chatMessages", {
+      await axios.post(`${baseUrl}/api/chat`, {
         username,
         text: message,
         channelName,
@@ -233,7 +239,7 @@ const Chat = () => {
       return;
     }
     try {
-      await axios.put("/api/chatMessages", {
+      await axios.put(`${baseUrl}/api/chat`, {
         messageId: editingMessageId,
         newText: editingText,
       });
