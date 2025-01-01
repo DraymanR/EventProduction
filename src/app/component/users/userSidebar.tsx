@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -31,59 +30,74 @@ const ConsumerNavbar: React.FC = () => {
     if (session?.user) {
       await signOut({ redirect: false });
       await logout();
-      toggleNavbar(false)
-      toggleNavbar(false)
+      toggleNavbar(false);
+      toggleNavbar(false);
     } else {
       await logout();
-      toggleNavbar(false)
-
-      toggleNavbar(false)
-
+      toggleNavbar(false);
+      toggleNavbar(false);
     }
 
     clearUser();
     router.push('/');
   };
 
-  if (!isOpen) return null; // אם ה-navbar סגור, לא להציג כלום
+  if (!isOpen) return null;
 
   return (
-    <div className="navbar-container">
-      <div className="navbar-header">
-        <Menu className="navbar-menu-icon" size={24} />
-        <h2 className="navbar-title">תפריט ניווט</h2>
+    <div className="fixed right-0 top-0 h-full w-64 shadow-lg z-50 flex flex-col" style={{ backgroundColor: '#86A788' }}>
+      {/* Header */}
+      <div className="flex items-center gap-3 p-4 border-b border-white/20">
+        <Menu className="h-6 w-6 text-white" />
+        <h2 className="text-xl font-semibold text-white">תפריט ניווט</h2>
       </div>
-      <nav className="navbar-links">
 
-        <Link href="/pages/user-account" className="navbar-link">
-          דף הבית
-          <Home size={20} className="navbar-icon" />
+      {/* Navigation Links - Added top padding to prevent navbar overlap */}
+      <nav className="flex-1 pt-16 px-4 space-y-4 overflow-y-auto">
+        <Link href="/pages/user-account" 
+          className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">דף הבית</span>
+          <Home className="h-6 w-6" />
         </Link>
-        <Link href="/pages/user-account/personal-details" className="navbar-link">
-          פרטים אישיים
-          <User size={20} className="navbar-icon" />
+
+        <Link href="/pages/user-account/personal-details"
+          className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">פרטים אישיים</span>
+          <User className="h-6 w-6" />
         </Link>
-        <Link href="/pages/user-account/my-events" className="navbar-link">
-          האירועים שלי
-          <Calendar size={20} className="navbar-icon" />
+
+        <Link href="/pages/user-account/my-events"
+          className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">האירועים שלי</span>
+          <Calendar className="h-6 w-6" />
         </Link>
-        <Link href="/pages/user-account/favorite-event" className="navbar-link">
-          האירועים שאהבתי
-          <Heart size={20} className="navbar-icon" />
+
+        <Link href="/pages/user-account/favorite-event"
+          className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">האירועים שאהבתי</span>
+          <Heart className="h-6 w-6" />
         </Link>
-        <Link href="/pages/user-account/reminders" className="navbar-link">
-          התזכורות שלי
-          <Bell size={20} className="navbar-icon" />
+
+        <Link href="/pages/user-account/reminders"
+          className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">התזכורות שלי</span>
+          <Bell className="h-6 w-6" />
         </Link>
-        <Link href="/pages/user-account/message-box" className="navbar-link">
-          תיבת הודעות
-          <MessageSquare size={20} className="navbar-icon" />
+
+        <Link href="/pages/user-account/message-box"
+          className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">תיבת הודעות</span>
+          <MessageSquare className="h-6 w-6" />
         </Link>
       </nav>
-      <div className="navbar-footer">
-        <button onClick={exite} className="navbar-logout">
-          יציאה
-          <LogOut size={20} />
+
+      {/* Footer */}
+      <div className="border-t border-white/20 p-4">
+        <button 
+          onClick={exite}
+          className="flex items-center justify-end gap-3 w-full p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
+          <span className="text-lg">יציאה</span>
+          <LogOut className="h-6 w-6" />
         </button>
       </div>
     </div>
