@@ -22,7 +22,6 @@ const useUserStore = create<UserStore>((set) => ({
     likedPeople: [],
     postArr: [],
     setUser: (newUser: UserFormData) => {
-        console.log("Setting user:", newUser);
         set({ user: newUser })
     },
     setLikedPostsArr: (newPosts: PostCardProps | PostCardProps[]) =>

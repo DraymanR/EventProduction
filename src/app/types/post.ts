@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 import { Img } from "./user";
 
 export interface Post {
+  _id:ObjectId;
   createDate: Date;
   userName: string;
   album: string[];

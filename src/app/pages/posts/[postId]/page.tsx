@@ -10,8 +10,20 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("postId:", postId);
+    if (!postId) {
+      console.error("postId is undefined");
+      return;
+    }
     const fetchPost = async () => {
       try {
+        // const decodedPostId = decodeURIComponent(postId as string); // פענוח המזהה
+        // console.log(decodedPostId);
+        
+        // const fetchedPost = await getPost(1, 10, postId as string);
+        // console.log("fetchedPost: ",fetchedPost);
+        
+        // setPost(fetchedPost);
         const decodedPostId = decodeURIComponent(postId as string); // פענוח המזהה
         const fetchedPost = await getPostDetails(decodedPostId);
         setPost(fetchedPost.post);
@@ -25,7 +37,7 @@ const Page = () => {
     if (postId) {
       fetchPost();
     }
-  }, [postId]);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;

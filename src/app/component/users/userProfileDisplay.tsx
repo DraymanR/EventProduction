@@ -20,7 +20,6 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
     const fetchUserData = async () => {
       try {
         const data = await getUserByUsername(username);
-        console.log(data)
         setUser(data);
         setPosts(data.postArr);
         setIsLoggedIn(data.isLoggedIn);
@@ -74,10 +73,9 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
 
             <div className="user-info text-gray-800">
               <div className="mb-2">
-                <strong className="text-blue-600">תוארים:</strong> {user.titles}
-              </div>
+                <strong className="text-blue-600">תוארים:</strong> {user?.titles.filter(Boolean).join(", ") || "אין תארים זמינים"}              </div>
               <div className="mb-2">
-                <strong className="text-blue-600">שפות:</strong> {user.languages}
+                <strong className="text-blue-600">שפות:</strong> {user?.languages.filter(Boolean).join(", ") || "אין שפה זמינה"}
               </div>
               <div className="mb-2">
                 <strong className="text-blue-600">תיאור:</strong> {user.description}
@@ -113,7 +111,17 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
                 <div
                   key={i}
                   className="post border-b last:border-b-0 py-4 text-gray-800"
-                >
+                ><div className="mr-4">
+                    {/* <a href={`/pages/posts/${post.postId.toString()}`} className="text-blue-500 hover:underline">
+                      {post.title}
+                    </a> */}
+
+                    <a href={`/pages/posts/${post._id.toString()}`} className="text-blue-500 hover:underline">
+                      {post.title}
+                    </a>
+
+                  </div>
+                  <p>{post.postId.toString()}</p>
                   <h4 className="text-lg font-semibold">{post.title}</h4>
                   <p className="text-gray-600">{post.description}</p>
                   <p className="text-sm text-gray-500">
