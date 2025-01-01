@@ -8,7 +8,6 @@ import useModalStore from '../store/modelStore';
 import Logo from '@/app/assets/images/logo.png';
 import { useState } from 'react';
 
-
 const Navbar = () => {
   const openModal = useModalStore((state) => state.openModal);
   const userDetails = useUserStore((state) => state.user);
@@ -26,10 +25,10 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-0 left-0 right-0 w-full bg-[#FFFDEC] shadow-md z-50">
-      <nav className="flex justify-between items-center p-4 max-w-screen-2xl mx-auto">
-        {/* Profile Section */}
+      <nav className="flex justify-between items-center p-4 max-w-screen-2xl mx-auto relative">
+        {/* Profile Section - Positioned absolutely */}
         <div
-          className="flex flex-col items-center cursor-pointer"
+          className="absolute right-25 transform translate-x-1/2 flex flex-col items-center cursor-pointer"
           onClick={handleProfileClick}
         >
           {checkIfLoggedIn() && userDetails?.profileImage ? (
@@ -58,8 +57,8 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Logo */}
-        <div>
+        {/* Logo - Centered */}
+        <div className="mx-auto ">
           <Image
             src={Logo}
             alt="חגיגה מושלמת Logo"
@@ -73,4 +72,5 @@ const Navbar = () => {
     </div>
   );
 };
-export default Navbar ;
+
+export default Navbar;
