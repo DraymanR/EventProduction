@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 // טיפול בבקשת GET: שליפת כל ההודעות
 export async function GET(req: NextRequest, { params }: { params: { otheruser: string } }) {
     const { otheruser } = params;
+    // const { otheruser} = await req.json();
+
     console.log(otheruser);
     
     if (!otheruser) {
@@ -16,6 +18,7 @@ export async function GET(req: NextRequest, { params }: { params: { otheruser: s
         
         // שליפה של ההודעות לפי otheruser
         const messages = await MessageChat.find({ otheruser }).sort({ timestamp: 1 });
+        console.log(messages);
 
         if (messages.length === 0) {
             return NextResponse.json({ message: "No messages found for this otheruser" }, { status: 404 });

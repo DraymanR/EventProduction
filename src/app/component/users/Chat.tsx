@@ -69,13 +69,13 @@ const Chat = () => {
     const fetchMessages = async () => {
       try {
         console.log("71");
+        console.log("otherUserotherUser",otherUser);
         
-        // const response = await axios.get(`${baseUrl}/api/chat/${otherUser}`);
-        const response = await axios.get(`${baseUrl}/api/chat/otheruser?otheruser=${otherUser}`);
+        const response = await axios.get(`${baseUrl}/api/chat/${otherUser}`);
+        // const response = await axios.get(`${baseUrl}/api/chat/otheruser?otheruser=${otherUser}`);
         console.log(response.data);
         
         setMessages(response.data.messages);
-        console.log(messages);
 
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -103,9 +103,6 @@ const Chat = () => {
 
       const channelName = getChannelName(username, otherUser);
       console.log("channelName", channelName);
-      console.log("channelName", channelName);
-
-      console.log("otherUser", otherUser);
 
       // Send message to the server
       await axios.post(`${baseUrl}/api/chat`, {
@@ -114,7 +111,6 @@ const Chat = () => {
         otheruser: otherUser,
         // channelName,
       });
-console.log("aaaaaaaaaa");
 
       // Publish message to Ably
       const channel = ably.channels.get(channelName);
@@ -180,8 +176,6 @@ console.log("aaaaaaaaaa");
 
   // Auto scroll to bottom
   useEffect(() => {
-    console.log(username);
-
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
