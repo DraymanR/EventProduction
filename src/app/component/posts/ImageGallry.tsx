@@ -17,6 +17,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
   const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
   const userNameFromCookie = decodeURIComponent(document.cookie);
   console.log(userNameFromCookie);
+<<<<<<< HEAD
 
   const userNameCookie = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName='));
   if (userNameCookie) {
@@ -26,6 +27,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
     console.error('userName cookie not found');
   }
 
+=======
+  const userName = userNameFromCookie&&userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName=')).split('=')[1];
+>>>>>>> newshoshana
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     setIsModalOpen(true);

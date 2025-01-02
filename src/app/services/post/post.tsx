@@ -101,21 +101,7 @@ export const getAllPosts = async (page: number = 1, limit: number = 10) => {
         throw error;
     }
 };
-export const getPost = async (page: number = 1, limit: number = 10, postId: string) => {
-    try {
-        const response = await axios.get(`${baseUrl}/api/posts/get?page=${page}&limit=${limit}&postId=${postId}`, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        console.log('Post:', response.data.posts[0]);
-        return response.data.posts[0];
-    } catch (error) {
-        console.error('Error fetching posts:', error);
-        throw error;
-    }
-};
+
 export const addingMyPost = async (newPost: object) => {
     try {
         const response = await axios.post(`${baseUrl}/api/posts/post`, newPost, {

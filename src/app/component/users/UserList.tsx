@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -16,86 +14,87 @@ const UserList = () => {
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [noMoreUsers, setNoMoreUsers] = useState<boolean>(false);
-  const [filters, setFilters] = useState<{ language?: string[]; title?: string[]; city?: string[] }>(
-    {
-      language: [],
-      title: [],
-      city: [],
-    }
-  );
+  const [filters, setFilters] = useState<{ language?: string[]; title?: string[]; city?: string[] }>({
+    language: [],
+    title: [],
+    city: [],
+  });
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const loadUsers = async () => {
-    if (loading || noMoreUsers) return; // אם יש טעינה או אין יותר משתמשים, לא נטען שוב
+    if (loading || noMoreUsers) return;
     setLoading(true);
-    
+
     try {
-      const data = await getAllUsers(page, 10, filters); // שולח את הדף הנוכחי
+      console.log("page to get", page);
+      const data = await getAllUsers(page, 10, filters);
       console.log("Fetched users:", data.users);
-  
+
       if (data.users.length === 0) {
-        setNoMoreUsers(true); // אם אין עוד משתמשים, הגדר את הדגל
+        setNoMoreUsers(true);
         return;
       }
-  
-      setFilteredUsers((prevUsers) => [...prevUsers, ...data.users]); // מוסיף את המשתמשים החדשים
-      setPage((prevPage) => prevPage + 1); // עדכון הדף הנוכחי
+
+      setFilteredUsers(data.users);
+      setTotalPages(data.totalPages);
     } catch (err) {
       setError("Failed to fetch users. Please try again later.");
       console.error("Error loading users:", err);
     } finally {
-      setLoading(false); // תמיד מסיים את מצב הטעינה
+      setLoading(false);
     }
   };
-  
 
-  // Function to update filters
   const handleFilterChange = (newFilters: { language?: string[]; title?: string[]; city?: string[] }) => {
     setFilters(newFilters);
-    setFilteredUsers([]); // Reset the user list
-    setPage(1); // Reset to the first page
-    setNoMoreUsers(false); // Allow reloading
+    setFilteredUsers([]);
+    setPage(1);
+    setNoMoreUsers(false);
   };
 
-  // Scroll event to load more users
-  const handleScroll = () => {
-    const bottom =
-      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
-    if (bottom && !loading && !noMoreUsers) {
-      loadUsers();  // Load more users when reaching the bottom
-    }
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPage(newPage);
   };
-  
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll, loading, noMoreUsers]);
+    loadUsers();
+  }, [page, filters]);
 
-
-  useEffect(() => {
-    setFilteredUsers([]); // Reset the list to ensure we start from the first page
-    setPage(1); // Reset to the first page when filters change
-    setNoMoreUsers(false); // Allow reloading with new filters
-    loadUsers(); // Load users for the first page with new filters
-  }, [filters]); // Reload users when filters change
-  
   return (
     <div className="posts-container">
       <h1 className="posts-title">משתמשים</h1>
       <div className="search-bar-container">
-        {/* Sort and Filter Component */}
         <SortFilter onFilterChange={handleFilterChange} setFilteredUsers={setFilteredUsers} />
       </div>
       <div className="posts-list">
-        {/* Render users */}
         {filteredUsers.map((user: any, index: number) => (
           <UserCard key={index} user={user} />
         ))}
       </div>
       {loading && <div className="loading-text">טוען...</div>}
       {noMoreUsers && <div className="no-more-posts-text">אין יותר יוזרים לטעון</div>}
+      <div className="pagination flex justify-center items-center gap-4 mt-6">
+      
+        <button
+          className="pagination-arrow text-xl p-2 rounded-full hover:bg-gray-200 disabled:text-gray-400 disabled:hover:bg-transparent"
+          onClick={() => handlePageChange(page - 1)}
+          disabled={page === 1}
+        >
+          ↑
+        </button>
+        <span className="font-semibold text-lg">
+          עמוד {page} מתוך {totalPages}
+        </span>
+      
+        <button
+          className="pagination-arrow text-xl p-2 rounded-full hover:bg-gray-200 disabled:text-gray-400 disabled:hover:bg-transparent"
+          onClick={() => handlePageChange(page + 1)}
+          disabled={page === totalPages}
+        >
+          ↓
+        </button>
+      </div>
     </div>
   );
 };
