@@ -68,6 +68,8 @@ export const getMyDetails = async () => {
                         'Content-Type': 'application/json',
                     },
                 });
+                console.log(response.data);
+                
                 return response.data;
             }
         }
