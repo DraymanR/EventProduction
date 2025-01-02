@@ -89,17 +89,14 @@ const ConsumerNavbar: React.FC = () => {
           <span className="text-lg">תיבת הודעות</span>
           <MessageSquare className="h-6 w-6" />
         </Link>
-      </nav>
-
-      {/* Footer */}
-      <div className="border-t border-white/20 p-4">
         <button 
           onClick={exite}
           className="flex items-center justify-end gap-3 w-full p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
           <span className="text-lg">יציאה</span>
           <LogOut className="h-6 w-6" />
         </button>
-      </div>
+      </nav>
+
     </div>
   );
 };

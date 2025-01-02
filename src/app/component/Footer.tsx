@@ -3,21 +3,28 @@ import Link from "next/link";
 import { checkIfLoggedIn } from "../services/user/registerUser";
 import useModalStore from "../store/modelStore";
 import { Home, Info, Book, LogIn, Heart, Mail, Phone } from 'lucide-react';
+import '@/app/css/footer.css'
+import Swal from 'sweetalert2'
 
 const Footer = () => {
   const openModal = useModalStore((state) => state.openModal);
 
   const handleLoginClick = () => {
     if (checkIfLoggedIn()) {
-      alert("אתה כבר מחובר לחשבון משתמש, לאחר יציאה ניתן להתחבר שוב.")
+      Swal.fire({
+        title: 'כבר מחובר',
+        text: 'אתה כבר מחובר לחשבון משתמש, לאחר יציאה ניתן להתחבר שוב.',
+        icon: 'info',
+        confirmButtonText: 'הבנתי'
+      });
     } else {
       openModal();
     }
   };
 
   return (
-    <footer className="bg-[#FFE2E2] text-gray-700">
-      <div className="container mx-auto py-8 px-4">
+    <footer className="footer">
+      <div className="footer-content">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {/* Navigation Links */}
@@ -35,7 +42,6 @@ const Footer = () => {
                 אודות האתר
                 <Info className="h-4 w-4" />
               </Link>
-
               <button
                 onClick={handleLoginClick}
                 className="flex items-center gap-2 hover:text-pink-600 transition-colors"
@@ -45,7 +51,6 @@ const Footer = () => {
               </button>
             </div>
           </div>
-
           {/* Contact Information */}
           <div className="flex flex-col items-center space-y-4">
             <h3 className="text-lg font-bold mb-4">צור קשר</h3>
@@ -56,13 +61,11 @@ const Footer = () => {
               </a>
               <a href="tel:+972556611170" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
                 <Phone className="h-4 w-4" />
-                556-611-170
+                972-556-611-170+
               </a>
             </div>
           </div>
-
           {/* Privacy Policy and Terms of Service Links */}
-
           <div className="flex flex-col items-center space-y-4">
             <h3 className="text-lg font-bold mb-4">מדיניות פרטיות </h3>
             <Link href="/pages/terms" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
@@ -71,16 +74,15 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-300 pt-6 mt-6">
-          <div className="flex flex-col items-center">
-            <p className="text-sm text-center">
-              © 2024 חגיגה מושלמת. כל הזכויות שמורות.
-            </p>
-            <div className="flex items-center mt-2">
-              <Heart className="h-4 w-4 text-pink-500 animate-pulse" />
-            </div>
+      </div>
+      {/* Bottom Bar */}
+      <div className="bottom-bar">
+        <div className="flex flex-col items-center">
+          <p className="accentuated-text">
+            eventPlaning כל הזכויות שמורות ©
+          </p>
+          <div className="flex items-center mt-2">
+            <Heart className="h-4 w-4 text-pink-500 animate-pulse" />
           </div>
         </div>
       </div>
