@@ -1,39 +1,41 @@
-"use client";
+'use client';
 
 import ShowUserPersonalDetails from "@/app/component/users/showUserPersonalDetails";
+import UpdateUserPersonalDetails from "@/app/component/users/updateUserPersonalDetails";
 import useUserStore from "@/app/store/userModel";
 import { useEffect, useState } from "react";
-import UpdateUserPersonalDetails from "@/app/component/users/updateUserPersonalDetails";
-import { UserFormData } from "@/app/types/user";
 
 const Home: React.FC = () => {
     console.log("page personal details");
     const userDetails = useUserStore((state) => state.user);
 
-    // State to toggle the update form
     const [showUpdateForm, setShowUpdateForm] = useState(false);
 
     useEffect(() => {
         console.log("Updated userDetails:", userDetails);
     }, [userDetails]);
 
-
     return (
-        <div dir="rtl">
+        <div dir="rtl" className="bg-gradient-to-br from-[#C68FE6] to-[#FFF7F7] min-h-screen flex justify-center items-center py-6">
             {userDetails ? (
-                <div>
+                <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl border border-[#6C48C5]">
                     <ShowUserPersonalDetails user={userDetails} />
-                    <button onClick={() => setShowUpdateForm((prev) => !prev)} className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
-                    {showUpdateForm ? "הסתר טופס עדכון" : "עדכן פרטים"}
-                    </button>
+                    <div className="mt-6 flex justify-center">
+                        <button 
+                            onClick={() => setShowUpdateForm((prev) => !prev)} 
+                            className="w-full bg-[#6C48C5] text-white py-2 px-6 rounded-md shadow-md hover:bg-[#1230AE] focus:outline-none focus:ring-2 focus:ring-[#1230AE] focus:ring-offset-2 text-lg font-semibold transition duration-300">
+                            {showUpdateForm ? "הסתר טופס עדכון" : "עדכן פרטים"}
+                        </button>
+                    </div>
+
                     {showUpdateForm && (
-                        <div>
+                        <div className="mt-6">
                             <UpdateUserPersonalDetails user={userDetails} />
                         </div>
                     )}
                 </div>
             ) : (
-                <p>לא נמצאו נתונים של משתמש, אנא התחבר לחשבון משתמש</p>
+                <p className="text-[#1230AE] text-xl text-center">לא נמצאו נתונים של משתמש, אנא התחבר לחשבון משתמש</p>
             )}
         </div>
     );

@@ -33,10 +33,7 @@ const Chat = () => {
     const fetchUsers = async () => {
       try {
         const data = await getAllUsers();
-        console.log(data.users);
         const supplierOptions = data.users.map((user: any) => user.userName);
-        console.log(supplierOptions);
-
         setUserList(supplierOptions);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -56,27 +53,15 @@ const Chat = () => {
     channel.subscribe("newMessage", (msg: Types.Message) => {
       setMessages((prev) => [...prev, msg.data]);
       if (msg.data.username !== username) {
-        audio
-          .play()
-          .then(() => console.log("Sound played successfully"))
-          .catch((error) => {
-            console.error("Failed to play sound:", error);
-          });
+        audio.play().catch((error) => console.error("Failed to play sound:", error));
       }
     });
 
     // Fetch initial messages from the server
     const fetchMessages = async () => {
       try {
-        console.log("71");
-        console.log("otherUserotherUser",otherUser);
-        
         const response = await axios.get(`${baseUrl}/api/chat/${otherUser}`);
-        // const response = await axios.get(`${baseUrl}/api/chat/otheruser?otheruser=${otherUser}`);
-        console.log(response.data);
-        
         setMessages(response.data.messages);
-
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -98,18 +83,13 @@ const Chat = () => {
     if (isSending || !message.trim()) return;
     setIsSending(true);
     try {
-      console.log("otherUser", otherUser);
-      console.log("username", username);
-
       const channelName = getChannelName(username, otherUser);
-      console.log("channelName", channelName);
 
       // Send message to the server
       await axios.post(`${baseUrl}/api/chat`, {
         username,
         text: message,
         otheruser: otherUser,
-        // channelName,
       });
 
       // Publish message to Ably
@@ -123,20 +103,8 @@ const Chat = () => {
     }
   };
 
-  // const handleDeleteMessage = async (messageId: string) => {
-  //     try {
-  //         await deleteMessage(messageId);
-  //         setMessages((prev) => prev.filter((msg) => msg._id !== messageId)); // Update state
-  //     } catch (error) {
-  //         console.error("Error deleting message:", error);
-  //     }
-  // };
-
   const handleEditMessage = async () => {
-    if (!editingMessageId) {
-      console.log("no message id");
-      return;
-    }
+    if (!editingMessageId) return;
     try {
       await axios.put(`${baseUrl}/api/chat`, {
         messageId: editingMessageId,
@@ -187,14 +155,14 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-[600px] w-[1000px] mx-auto bg-gray-50 shadow-md rounded-lg">
+    <div className="flex flex-col h-[400px] w-[600px] mx-auto bg-[#FFF7F7] shadow-lg rounded-lg border border-[#6C48C5]">
       {/* User selection */}
-      <div className="bg-blue-200 text-blue-900 py-3 px-4 flex items-center justify-between shadow-sm rounded-t-lg">
-        <h2 className="text-lg font-medium">Select User to Chat</h2>
+      <div className="bg-[#1230AE] text-[#FFF7F7] py-4 px-6 flex items-center justify-between shadow-sm rounded-t-lg">
+        <h2 className="text-lg font-semibold">Select User to Chat</h2>
         <select
           value={otherUser}
           onChange={(e) => handleSelectUser(e.target.value)}
-          className="border border-gray-300 rounded-lg p-2"
+          className="border border-[#6C48C5] rounded-lg p-2 text-[#1230AE] focus:outline-none"
         >
           <option value="">Select a user</option>
           {userList.map((user) => (
@@ -207,43 +175,37 @@ const Chat = () => {
 
       {/* Chat Header */}
       {otherUser && (
-        <div className="bg-blue-200 text-blue-900 py-3 px-4 flex items-center justify-between shadow-sm rounded-t-lg">
-          <h2 className="text-lg font-medium">Chat with {otherUser}</h2>
+        <div className="bg-[#1230AE] text-[#FFF7F7] py-4 px-6 flex items-center justify-between shadow-sm rounded-t-lg">
+          <h2 className="text-lg font-semibold">Chat with {otherUser}</h2>
         </div>
       )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto bg-white p-4 space-y-3">
-        {messages.map((msg , index) => (
+      <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FFF7F7]">
+        {messages.map((msg, index) => (
           <div
             key={index}
-            className={`group flex items-center gap-2 ${msg.username === username ? "justify-end" : "justify-start"
-              }`}
+            className={`group flex items-center gap-2 ${msg.username === username ? "justify-end" : "justify-start"}`}
           >
             <div
-              key={index}
-              className={`relative max-w-[75%] px-4 py-2 rounded-lg shadow-sm ${msg.username === username
-                ? "bg-blue-100 text-blue-900"
-                : "bg-gray-200 text-gray-800"
-                }`}
+              className={`relative max-w-[75%] px-4 py-3 rounded-xl shadow-md ${
+                msg.username === username ? "bg-[#6C48C5] text-[#6C48C5]" : "bg-[#1230AE] text-[#FFF7F7]"
+              }`}
             >
               {editingMessageId === msg._id ? (
-                <div key={index}>
+                <div>
                   <input
                     type="text"
                     value={editingText}
                     onChange={(e) => setEditingText(e.target.value)}
-                    className="w-full border rounded p-1"
+                    className="w-full border rounded p-2"
                     onKeyDown={handleKeyDown}
                   />
-                  <div className="flex justify-end gap-2 mt-1">
-                    <button
-                      onClick={handleEditMessage}
-                      className="text-blue-500"
-                    >
+                  <div className="flex justify-end gap-2 mt-2">
+                    <button onClick={handleEditMessage} className="text-[#68FE6F]">
                       Save
                     </button>
-                    <button onClick={cancelEditing} className="text-red-500">
+                    <button onClick={cancelEditing} className="text-[#FF2C2C]">
                       Cancel
                     </button>
                   </div>
@@ -251,22 +213,14 @@ const Chat = () => {
               ) : (
                 <>
                   <p>{msg.text}</p>
-                  <div className="absolute top-0 right-0 hidden group-hover:flex gap-1 m-4 ml-36">
+                  <div className="absolute top-0 right-0 hidden group-hover:flex gap-2 m-4">
                     {msg.username === username && (
-                      <div className="flex gap-2 mr-6">
-                        <button
-                          onClick={() => startEditing(msg._id, msg.text)}
-                          className="text-blue-500"
-                        >
-                          <MdModeEdit />
-                        </button>
-                        {/* <button
-                                                    // onClick={() => handleDeleteMessage(msg._id)}
-                                                    className="text-red-500"
-                                                >
-                                                    <MdDelete />
-                                                </button> */}
-                      </div>
+                      <button
+                        onClick={() => startEditing(msg._id, msg.text)}
+                        className="text-[#68FE6F] text-xl"
+                      >
+                        <MdModeEdit />
+                      </button>
                     )}
                   </div>
                 </>
@@ -278,19 +232,19 @@ const Chat = () => {
       </div>
 
       {/* Input */}
-      <div className="bg-gray-100 p-3 flex items-center gap-2 rounded-b-lg">
+      <div className="bg-[#FFF7F7] p-4 flex items-center gap-4 rounded-b-lg">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type a message..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+          className="flex-1 px-4 py-2 border border-[#6C48C5] rounded-lg focus:outline-none focus:ring focus:ring-[#6C48C5]"
         />
         <button
           onClick={handleSendMessage}
           disabled={isSending}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-400 disabled:opacity-50"
+          className="bg-[#6C48C5] text-[#FFF7F7] px-6 py-2 rounded-lg shadow-md hover:bg-[#6C48C5] disabled:opacity-50"
         >
           {isSending ? "Sending..." : "Send"}
         </button>

@@ -11,7 +11,10 @@
 .main-content {
   @apply pt-16;
 }
-
+label {
+  color: #1230AE; /* כחול כהה */
+  font-weight: bold;
+}
 /* עיצוב מרכזי */
 .centered {
   display: flex;
