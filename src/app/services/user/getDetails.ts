@@ -119,7 +119,7 @@ export const getAllUsers = async (
       }).toString();
   
       const response = await axios.get(
-        `http://localhost:3000/api/users/get/?${queryParams}`,
+        `${baseUrl}/api/users/get/?${queryParams}`,
         {
           withCredentials: true,
           headers: {
