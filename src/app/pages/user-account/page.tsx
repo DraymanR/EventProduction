@@ -9,10 +9,10 @@ import { UserFormData } from '@/app/types/user';
 import { useEffect, useState } from 'react';
 const Home = () => {
     const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
-    const [isReady, setIsReady] = useState(false);
-    const storpostArr = useUserStore((state) => state.postArr);
-    const storlikedPeople = useUserStore((state) => state.likedPeople);
-    const storlikedPostsArr = useUserStore((state) => state.likedPostsArr);
+    // const [isReady, setIsReady] = useState(false);
+    // const storpostArr = useUserStore((state) => state.postArr);
+    // const storlikedPeople = useUserStore((state) => state.likedPeople);
+    // const storlikedPostsArr = useUserStore((state) => state.likedPostsArr);
     const storeUser = useUserStore((state) => state.user);
     const toggleNavbar = useNavbarStore((state) => state.toggleNavbar);
     const [activeTab, setActiveTab] = useState("users");

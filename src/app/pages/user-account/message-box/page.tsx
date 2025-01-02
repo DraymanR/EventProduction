@@ -23,6 +23,7 @@
 //   )
 // }
 "use client";
+
 import Chat from "@/app/component/users/Chat";
 
 export default function ChatPage() {
