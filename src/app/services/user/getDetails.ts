@@ -36,83 +36,50 @@ export const getUserByUsername = async (username: string) => {
 
 export const getMyDetails = async () => {
   try {
-      // Log the base URL being used
-      console.log('Base URL:', baseUrl);
-      
-      const session = await getSession();
-      console.log('Session:', session); // Log session data
-      
-      if (session?.user?.email) {
-          console.log('Attempting email-based authentication');
-          try {
-              const encodedEmail = encodeURIComponent(session.user.email);
-              console.log('Encoded email:', encodedEmail);
-              
-              const emailUrl = `${baseUrl}/api/users/get/username?email=${encodedEmail}`;
-              console.log('Making request to:', emailUrl);
-              
-              const response = await axios.get(emailUrl, {
-                  withCredentials: true,
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-              });
-              return response.data;
-          } catch (emailError: any) {
-              console.warn('Email auth failed:', emailError.response?.data || emailError.message);
-          }
-      }
+    // First, check if there's a NextAuth session
+    const session = await getSession();
+    // If a session exists (Google or regular with token)
 
-      // Try username from cookie
-      if (typeof window !== 'undefined') {
-          console.log('Attempting cookie-based authentication');
-          const cookies = document.cookie.split('; ');
-          console.log('All cookies:', cookies);
-          
-          const usernameCookie = cookies.find(row => row.startsWith('userName='));
-          console.log('Username cookie found:', usernameCookie);
-          
-          if (usernameCookie) {
-              const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
-              console.log('Decoded username:', myUserName);
-              
-              const encodedUsername = encodeURIComponent(myUserName);
-              console.log('Encoded username:', encodedUsername);
-              
-              const usernameUrl = `${baseUrl}/api/users/get/username?username=${encodedUsername}`;
-              console.log('Making request to:', usernameUrl);
-              
-              try {
-                  const response = await axios.get(usernameUrl, {
-                      withCredentials: true,
-                      headers: {
-                          'Content-Type': 'application/json',
-                      },
-                  });
-                  
-                  console.log('Response received:', response.data);
-                  return response.data;
-              } catch (error: any) {
-                  console.error('Request failed:', {
-                      status: error.response?.status,
-                      data: error.response?.data,
-                      headers: error.response?.headers,
-                  });
-                  throw error;
-              }
-          } else {
-              console.warn('No username cookie found');
-          }
+    // Try to fetch by email first (for Google auth)
+    if (session?.user?.email) {
+      try {
+        const response = await axios.get(`${baseUrl}/api/users/get/username?email=${session.user.email}`, {
+  
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        return response.data;
+      } catch (emailError) {
+        console.warn('Error fetching by email:', emailError);
       }
+    }
 
-      throw new Error('No authentication method available');
-  } catch (error: any) {
-      console.error('getMyDetails error:', {
-          message: error.message,
-          response: error.response?.data,
-          status: error.response?.status,
-      });
-      throw error;
+
+    if (typeof window !== 'undefined') {
+      const cookies = document.cookie.split('; ');
+      const usernameCookie = cookies.find(row => row.startsWith('userName='));
+      if (usernameCookie) {
+        const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
+        console.log('Username from cookie:', myUserName);
+        const response = await axios.get(`${baseUrl}/api/users/get/username?username=${myUserName}`, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log(response.data);
+
+        return response.data;
+      }
+    }
+
+    // If no authentication method found
+    throw new Error('No authenticated user found');
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    throw error;
   }
 };
 
