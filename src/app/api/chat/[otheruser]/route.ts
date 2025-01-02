@@ -1,11 +1,11 @@
 import MessageChat from '@/app/lib/models/chatmessage';
 import connectDb from '../../../lib/db/connectDb'
 import { NextRequest, NextResponse } from "next/server";
-import ChatMessage from '@/app/lib/models/chatmessage';
 
 // טיפול בבקשת GET: שליפת כל ההודעות
 export async function GET(req: NextRequest, { params }: { params: { otheruser: string } }) {
     const { otheruser } = params;
+    console.log(otheruser);
     
     if (!otheruser) {
         return NextResponse.json({ message: "otheruser is required" }, { status: 400 });
@@ -15,7 +15,7 @@ export async function GET(req: NextRequest, { params }: { params: { otheruser: s
         await connectDb();
         
         // שליפה של ההודעות לפי otheruser
-        const messages = await ChatMessage.find({ otheruser }).sort({ timestamp: 1 });
+        const messages = await MessageChat.find({ otheruser }).sort({ timestamp: 1 });
 
         if (messages.length === 0) {
             return NextResponse.json({ message: "No messages found for this otheruser" }, { status: 404 });

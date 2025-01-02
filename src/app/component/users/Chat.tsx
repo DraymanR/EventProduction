@@ -5,9 +5,7 @@ import { getAllUsers } from "@/app/services/user/getDetails";
 import Types from "ably";
 import { Realtime } from "ably";
 import axios from "axios";
-// import { deleteMessage } from "../actions/chatActions";
 import { MdModeEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
 import useUserStore from "@/app/store/userModel";
 import { getBaseUrl } from "@/app/services/config/axios";
 
@@ -70,7 +68,12 @@ const Chat = () => {
     // Fetch initial messages from the server
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/api/chat/${channelName}`);
+        console.log("71");
+        
+        // const response = await axios.get(`${baseUrl}/api/chat/${otherUser}`);
+        const response = await axios.get(`${baseUrl}/api/chat/otheruser?otheruser=${otherUser}`);
+        console.log(response.data);
+        
         setMessages(response.data.messages);
         console.log(messages);
 
@@ -100,13 +103,18 @@ const Chat = () => {
 
       const channelName = getChannelName(username, otherUser);
       console.log("channelName", channelName);
+      console.log("channelName", channelName);
+
+      console.log("otherUser", otherUser);
 
       // Send message to the server
       await axios.post(`${baseUrl}/api/chat`, {
         username,
         text: message,
-        channelName,
+        otheruser: otherUser,
+        // channelName,
       });
+console.log("aaaaaaaaaa");
 
       // Publish message to Ably
       const channel = ably.channels.get(channelName);

@@ -1,6 +1,6 @@
 import connectDb from "@/app/lib/db/connectDb";
 import { NextRequest, NextResponse } from "next/server";
-import ChatMessage from '@/app/lib/models/chatmessage';
+import MessageChat from '@/app/lib/models/chatmessage';
 
 // טיפול בבקשת DELETE
 export async function DELETE(req: NextRequest, { params }: { params: { messageId: string } }) {
@@ -14,7 +14,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { messageId
         await connectDb();
         
         // מחיקת ההודעה לפי מזהה
-        const deletedMessage = await ChatMessage.findByIdAndDelete(messageId);
+        const deletedMessage = await MessageChat.findByIdAndDelete(messageId);
 
         if (!deletedMessage) {
             return NextResponse.json({ message: "Message not found" }, { status: 404 });
