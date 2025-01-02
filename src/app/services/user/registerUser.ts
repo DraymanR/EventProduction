@@ -3,7 +3,7 @@ import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getBaseUrl } from "../config/axios";
-import { getUserByUsername } from '@/app/services/user/getDetails'
+import { getUserDetails } from '@/app/services/user/getDetails'
 import { PostCardProps } from "@/app/types/post";
 import useNavbarStore from "@/app/store/navbarStore";
 
@@ -27,7 +27,7 @@ export const singIn = async (
       }
     );
     console.log(response);
-    getUserByUsername(userName);
+    getUserDetails(userName);
     // החזרת התשובה מהשרת
     console.log(response);
 
@@ -99,7 +99,7 @@ export const newPassword = async (
         },
       });
     console.log(response);
-
+    // getUserDetails(userName);
     // החזרת התשובה מהשרת
     return response.data;
   } catch (error) {

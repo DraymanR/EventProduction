@@ -22,8 +22,7 @@ export const getUserByUsername = async (username: string) => {
       console.log("3",user);
   
       // שמירת נתוני המשתמש בסטור
-      const setUser = useUserStore.getState().setUser;
-      setUser(user);
+    
   
       console.log("User successfully stored in Zustand:", user);
   
@@ -89,6 +88,9 @@ export const getUserDetails = async (userName: string) => {
                 'Content-Type': 'application/json',
             },
         });
+        const setUser = useUserStore.getState().setUser;
+        const user = response.data.user;
+        setUser(user);
         console.log('User :', response.data.user);
         return response.data
     } catch (error) {
