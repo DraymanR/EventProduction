@@ -13,6 +13,7 @@
         "ably": "^2.6.0",
         "axios": "^1.7.9",
         "bcryptjs": "^2.4.3",
+        "bufferutil": "^4.0.9",
         "cloudinary": "^2.5.1",
         "cloudinary-react": "^1.8.1",
         "formidable": "^3.5.2",
@@ -30,6 +31,7 @@
         "react-router-dom": "^7.0.2",
         "react-select": "^5.8.3",
         "sweetalert2": "^11.15.3",
+        "utf-8-validate": "^6.0.5",
         "zustand": "^5.0.2"
     },
     "devDependencies": {
