@@ -16,7 +16,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images,postId ,postUsername
   const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
   const userNameFromCookie = decodeURIComponent(document.cookie);
   console.log(userNameFromCookie);
-  const userName = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName=')).split('=')[1];
+  const userName = userNameFromCookie&&userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName=')).split('=')[1];
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     setIsModalOpen(true);

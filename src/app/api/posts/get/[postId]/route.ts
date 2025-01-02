@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
 
     // אם לא קיים userName, המערכת תבדוק אם למשתמש יש כותרות מסוימות
     if (userName) {
-      const user = await UserModel.findOne({ userName }).lean();
+      const user = await UserModel.findOne({ userName });
       if (
         user?.titles &&
         user.titles.some((title: Title) => Object.values(Title).includes(title as Title))
