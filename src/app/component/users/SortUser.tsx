@@ -147,11 +147,7 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
         onFilterChange({ language: undefined, title: titles, city: undefined });
     };
 
-    const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const city = event.target.value ? [event.target.value] : [];
-        onFilterChange({ language: undefined, title: undefined, city });
-    };
-
+  
     return (
         <div className="filter-container">
             <label>
@@ -172,14 +168,6 @@ const SortFilter: React.FC<SortFilterProps> = ({ onFilterChange, setFilteredUser
                     placeholder="בחר תפקידים..."
                     value={selectedTitles}
                     onChange={handleTitleChange}
-                />
-            </label>
-            <label>
-                עיר:
-                <input
-                    type="text"
-                    placeholder="הכנס עיר"
-                    onChange={handleCityChange}
                 />
             </label>
         </div>

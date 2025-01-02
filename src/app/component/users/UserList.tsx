@@ -74,7 +74,7 @@ const UserList = () => {
       {loading && <div className="loading-text">טוען...</div>}
       {noMoreUsers && <div className="no-more-posts-text">אין יותר יוזרים לטעון</div>}
       <div className="pagination flex justify-center items-center gap-4 mt-6">
-        {/* Arrow Up for Previous Page */}
+      
         <button
           className="pagination-arrow text-xl p-2 rounded-full hover:bg-gray-200 disabled:text-gray-400 disabled:hover:bg-transparent"
           onClick={() => handlePageChange(page - 1)}
@@ -85,7 +85,7 @@ const UserList = () => {
         <span className="font-semibold text-lg">
           עמוד {page} מתוך {totalPages}
         </span>
-        {/* Arrow Down for Next Page */}
+      
         <button
           className="pagination-arrow text-xl p-2 rounded-full hover:bg-gray-200 disabled:text-gray-400 disabled:hover:bg-transparent"
           onClick={() => handlePageChange(page + 1)}
