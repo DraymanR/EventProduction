@@ -1,3 +1,4 @@
+import MessageChat from '@/app/lib/models/chatmessage';
 import connectDb from '../../../lib/db/connectDb'
 import { NextRequest, NextResponse } from "next/server";
 import ChatMessage from '@/app/lib/models/chatmessage';
