@@ -226,3 +226,9 @@ export interface ModalState {
 export interface UpdateUserPersonalDetailsProps {
   user: UserFormData;
 }
+export interface MessageChat{
+  username:string;
+  text:string;
+  otheruser:string;
+  timestamp:Date;
+}

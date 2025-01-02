@@ -1,108 +1,3 @@
-// import { useState, useEffect } from "react";
-
-// interface Message {
-//   userId: string;
-//   user: string;
-//   bot: string;
-// }
-
-// export default function Chat() {
-//   const [messages, setMessages] = useState<Message[]>([]); // הודעות בשיחה
-//   const [input, setInput] = useState(""); // הודעה נוכחית של המשתמש
-//   const [userId, setUserId] = useState<string>(""); // מזהה המשתמש
-
-//   // קריאת usernameId מה-cookies
-//   useEffect(() => {
-//     const cookies = document.cookie.split("; ");
-//     const userCookie = cookies.find((row) => row.startsWith("usernameId="));
-//     if (userCookie) {
-//       setUserId(userCookie.split("=")[1]);
-//     }
-//   }, []);
-
-//   const sendMessage = async () => {
-//     if (!input.trim() || !userId) {
-//       alert("User ID or message is missing.");
-//       return;
-//     }
-
-//     try {
-//       const res = await fetch("/api/chat", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ message: input, userId }), // שליחת הודעה עם מזהה המשתמש
-//       });
-
-//       if (!res.ok) {
-//         throw new Error(`HTTP error! status: ${res.status}`);
-//       }
-
-//       const data = await res.json();
-//       setMessages((prev) => [
-//         ...prev,
-//         { userId, user: input, bot: data.response },
-//       ]);
-//       setInput(""); // איפוס שדה הקלט
-//     } catch (error) {
-//       console.error("Error sending message:", error);
-//     }
-//   };
-
-//   return (
-//     <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
-//       <h2>Chat</h2>
-//       <div
-//         style={{
-//           border: "1px solid #ccc",
-//           padding: "10px",
-//           marginBottom: "10px",
-//           height: "300px",
-//           overflowY: "auto",
-//         }}
-//       >
-//         {messages.map((msg, index) => (
-//           <div key={index} style={{ marginBottom: "10px" }}>
-//             <p>
-//               <strong>{msg.userId}:</strong> {msg.user}
-//             </p>
-//             <p>
-//               <strong>Bot:</strong> {msg.bot}
-//             </p>
-//           </div>
-//         ))}
-//       </div>
-//       <input
-//         type="text"
-//         value={input}
-//         onChange={(e) => setInput(e.target.value)}
-//         placeholder="Type your message..."
-//         style={{
-//           width: "80%",
-//           padding: "10px",
-//           marginRight: "10px",
-//           border: "1px solid #ccc",
-//           borderRadius: "5px",
-//         }}
-//       />
-//       <button
-//         onClick={sendMessage}
-//         style={{
-//           padding: "10px 15px",
-//           backgroundColor: "#007BFF",
-//           color: "#fff",
-//           border: "none",
-//           borderRadius: "5px",
-//           cursor: "pointer",
-//         }}
-//       >
-//         Send
-//       </button>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -122,9 +17,7 @@ const ably = new Realtime({
 });
 
 const Chat = () => {
-  const [messages, setMessages] = useState<
-    { _id: string; username: string; text: string }[]
-  >([]);
+  const [messages, setMessages] = useState<{ _id: string; username: string; text: string }[]>([]);
   const [message, setMessage] = useState("");
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState("");
@@ -136,7 +29,7 @@ const Chat = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const audio = new Audio("/assets/adio/newmessage.wav");
   const baseUrl = getBaseUrl();
-  
+
   useEffect(() => {
     // Fetch all users to display in the user list
     const fetchUsers = async () => {
@@ -179,6 +72,8 @@ const Chat = () => {
       try {
         const response = await axios.get(`${baseUrl}/api/chat/${channelName}`);
         setMessages(response.data.messages);
+        console.log(messages);
+
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -317,22 +212,21 @@ const Chat = () => {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto bg-white p-4 space-y-3">
-        {messages.map((msg) => (
+        {messages.map((msg , index) => (
           <div
-            key={msg._id}
-            className={`group flex items-center gap-2 ${
-              msg.username === username ? "justify-end" : "justify-start"
-            }`}
+            key={index}
+            className={`group flex items-center gap-2 ${msg.username === username ? "justify-end" : "justify-start"
+              }`}
           >
             <div
-              className={`relative max-w-[75%] px-4 py-2 rounded-lg shadow-sm ${
-                msg.username === username
-                  ? "bg-blue-100 text-blue-900"
-                  : "bg-gray-200 text-gray-800"
-              }`}
+              key={index}
+              className={`relative max-w-[75%] px-4 py-2 rounded-lg shadow-sm ${msg.username === username
+                ? "bg-blue-100 text-blue-900"
+                : "bg-gray-200 text-gray-800"
+                }`}
             >
               {editingMessageId === msg._id ? (
-                <div>
+                <div key={index}>
                   <input
                     type="text"
                     value={editingText}

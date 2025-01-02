@@ -1,6 +1,6 @@
-import ChatMessage from '@/app/lib/models/chatmessage';
 import connectDb from "@/app/lib/db/connectDb";
 import { NextRequest, NextResponse } from "next/server";
+import ChatMessage from '@/app/lib/models/chatmessage';
 
 // טיפול בבקשת DELETE
 export async function DELETE(req: NextRequest, { params }: { params: { messageId: string } }) {

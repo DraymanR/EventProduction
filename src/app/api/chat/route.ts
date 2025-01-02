@@ -29,7 +29,7 @@
 //   }
 // }
 
-import ChatMessage from '@/app/lib/models/chatmessage';
+import MessageChat from '@/app/lib/models/chatmessage';
 import connectDb from "@/app/lib/db/connectDb";
 import { NextRequest, NextResponse } from "next/server";
 
