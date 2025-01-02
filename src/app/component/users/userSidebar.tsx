@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import useNavbarStore from '@/app/store/navbarStore';
 import useUserStore from '@/app/store/userModel';
 import { logout } from '@/app/services/user/registerUser';
-import "@/app/css/customNavbar.css";
+
 import {
   Home,
   User,
@@ -15,8 +15,7 @@ import {
   Heart,
   Bell,
   MessageSquare,
-  LogOut,
-  Menu
+  LogOut
 } from 'lucide-react';
 
 const ConsumerNavbar: React.FC = () => {
@@ -45,58 +44,51 @@ const ConsumerNavbar: React.FC = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed right-0 top-0 h-full w-64 shadow-lg z-50 flex flex-col" style={{ backgroundColor: '#86A788' }}>
-      {/* Header */}
-      <div className="flex items-center gap-3 p-4 border-b border-white/20">
-        <Menu className="h-6 w-6 text-white" />
-        <h2 className="text-xl font-semibold text-white">תפריט ניווט</h2>
-      </div>
-
-      {/* Navigation Links - Added top padding to prevent navbar overlap */}
-      <nav className="flex-1 pt-16 px-4 space-y-4 overflow-y-auto">
-        <Link href="/pages/user-account" 
+    <div>
+      <nav className="flex-1 px-4 pt-0 space-y-4 overflow-y-auto">
+        <Link href="/pages/user-account"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">דף הבית</span>
+          <span className="text-lg font-bold">דף הבית</span>
           <Home className="h-6 w-6" />
         </Link>
 
         <Link href="/pages/user-account/personal-details"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">פרטים אישיים</span>
+          <span className="text-lg font-bold">פרטים אישיים</span>
           <User className="h-6 w-6" />
         </Link>
 
         <Link href="/pages/user-account/my-events"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">האירועים שלי</span>
+          <span className="text-lg font-bold">האירועים שלי</span>
           <Calendar className="h-6 w-6" />
         </Link>
 
         <Link href="/pages/user-account/favorite-event"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">האירועים שאהבתי</span>
+          <span className="text-lg font-bold">האירועים שאהבתי</span>
           <Heart className="h-6 w-6" />
         </Link>
 
         <Link href="/pages/user-account/reminders"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">התזכורות שלי</span>
+          <span className="text-lg font-bold">התזכורות שלי</span>
           <Bell className="h-6 w-6" />
         </Link>
 
         <Link href="/pages/user-account/message-box"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">תיבת הודעות</span>
+          <span className="text-lg font-bold">תיבת הודעות</span>
           <MessageSquare className="h-6 w-6" />
         </Link>
-        <button 
+        <button
           onClick={exite}
           className="flex items-center justify-end gap-3 w-full p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
-          <span className="text-lg">יציאה</span>
+          <span className="text-lg font-bold">יציאה</span>
           <LogOut className="h-6 w-6" />
         </button>
       </nav>
-
+      <div className="h-[50px] transition-colors"></div>
     </div>
   );
 };

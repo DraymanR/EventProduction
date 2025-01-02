@@ -23,6 +23,7 @@ const Footer = () => {
   };
 
   return (
+    
     <footer className="footer">
       <div className="footer-content">
         {/* Main Footer Content */}
@@ -31,7 +32,6 @@ const Footer = () => {
           <div className="flex flex-col items-center md:items-end space-y-4">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               ניווט מהיר
-              <Heart className="h-5 w-5 text-pink-500" />
             </h3>
             <div className="flex flex-col items-end space-y-3">
               <Link href="/" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
@@ -82,7 +82,6 @@ const Footer = () => {
             eventPlaning כל הזכויות שמורות ©
           </p>
           <div className="flex items-center mt-2">
-            <Heart className="h-4 w-4 text-pink-500 animate-pulse" />
           </div>
         </div>
       </div>

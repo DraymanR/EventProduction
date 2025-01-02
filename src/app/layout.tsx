@@ -24,20 +24,19 @@ export default async function RootLayout({
 
   return (
     <html lang="he" dir="rtl">
-      <body className="flex flex-col h-screen overflow-hidden">
+      <body className="flex flex-col min-h-screen bg-write">
         <SessionWrapper session={session}>
           <Navbar />
-          <TimerComponent></TimerComponent>
-          <div className="flex flex-1 overflow-hidden">
-            {/* תפריט צד ימני */}
+          <TimerComponent />
+          <div className="flex flex-1 pt-[105px] pb-[50px]">
+            {/* Sidebar */}
             <ClientSideLayout />
-            {/* תוכן ראשי */}
-            <main className="flex-1 bg-gray-50 overflow-y-auto p-4 pt-[120px]">
+            {/* Main content */}
+            <main className="flex-1 overflow-y-auto p-4 mr-64 mb-[50px]">
               {children}
             </main>
           </div>
           <Footer />
-
         </SessionWrapper>
         <Script
           src="https://cdn.enable.co.il/licenses/enable-L35466r8t1ik9ew4-1224-66980/init.js"

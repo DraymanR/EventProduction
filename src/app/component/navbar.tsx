@@ -6,6 +6,7 @@ import useNavbarStore from '../store/navbarStore';
 import useUserStore from '../store/userModel';
 import useModalStore from '../store/modelStore';
 import Logo from '@/app/assets/images/logo.png';
+
 import { useState } from 'react';
 
 const Navbar = () => {
@@ -24,11 +25,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 w-full bg-[#FFFDEC] shadow-md z-50">
-      <nav className="flex justify-between items-center p-4 max-w-screen-2xl mx-auto relative">
-        {/* Profile Section - Positioned absolutely */}
+    <div className="fixed top-0 left-0 right-0 w-full bg-[#6C48C5] shadow-md z-50 h-[105px]">
+      <nav className="flex justify-between items-center p-4 max-w-screen-2xl mx-auto relative h-full">
+        {/* Profile Section - Right aligned but vertically centered */}
         <div
-          className="absolute right-25 transform translate-x-1/2 flex flex-col items-center cursor-pointer"
+          className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer"
           onClick={handleProfileClick}
         >
           {checkIfLoggedIn() && userDetails?.profileImage ? (
@@ -37,7 +38,7 @@ const Navbar = () => {
               alt="Profile"
               width={50}
               height={50}
-              className="rounded-full border-2 border-[#86A788] mb-2"
+              className="rounded-full border-2 border-[#101f61] mb-2"
             />
           ) : (
             <Image
@@ -45,28 +46,16 @@ const Navbar = () => {
               alt="Profile"
               width={50}
               height={50}
-              className="rounded-full border-2 border-[#86A788] mb-2"
+              className="rounded-full border-2 border-[#101f61] mb-2"
             />
           )}
           <div className="text-center">
             {checkIfLoggedIn() && userDetails ? (
-              <span className="text-gray-700 text-sm font-medium">{userDetails.firstName} {userDetails.lastName}</span>
+              <span className="text-[#101f61] text-sm font-medium font-bold" >{userDetails.firstName} {userDetails.lastName}</span>
             ) : (
-              <span className="text-gray-700 text-sm font-medium">הפרופיל שלי</span>
+              <span className="text-[#101f61] text-sm font-medium font-bold">הפרופיל שלי</span>
             )}
           </div>
-        </div>
-
-        {/* Logo - Centered */}
-        <div className="mx-auto ">
-          <Image
-            src={Logo}
-            alt="חגיגה מושלמת Logo"
-            height={48}
-            width={150}
-            priority
-            className="hover:opacity-90 transition-opacity"
-          />
         </div>
       </nav>
     </div>
