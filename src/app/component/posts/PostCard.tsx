@@ -48,10 +48,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
         </div>
         <p className="description text-gray-700 mb-4">{post.description}</p>
 
-        <div
-          className="comments-toggle flex items-center text-blue-500 cursor-pointer"
-          onClick={openPostModal}
-        >
+        
           <span> הראה פוסט מלא</span>
           <span
           >
@@ -60,7 +57,6 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
             </a>
             ➔
           </span>
-        </div>
       </div>
 
    
