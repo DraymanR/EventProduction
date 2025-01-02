@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from "react";
 import "@/app/css/posts/customStyles.css";
@@ -63,7 +63,7 @@ const UserList = () => {
 
   return (
     <div className="posts-container">
-      <h1 className="posts-title">משתמשים</h1>
+      <h1 className="posts-title text-[#1230AE]">משתמשים</h1>
       <div className="search-bar-container">
         <SortFilter onFilterChange={handleFilterChange} setFilteredUsers={setFilteredUsers} />
       </div>
@@ -72,23 +72,21 @@ const UserList = () => {
           <UserCard key={index} user={user} />
         ))}
       </div>
-      {loading && <div className="loading-text">טוען...</div>}
-      {noMoreUsers && <div className="no-more-posts-text">אין יותר יוזרים לטעון</div>}
+      {loading && <div className="loading-text text-[#6C48C5]">טוען...</div>}
+      {noMoreUsers && <div className="no-more-posts-text text-[#6C48C5]">אין יותר יוזרים לטעון</div>}
       <div className="pagination flex justify-center items-center gap-4 mt-6">
-      
         <button
-          className="pagination-arrow text-xl p-2 rounded-full hover:bg-gray-200 disabled:text-gray-400 disabled:hover:bg-transparent"
+          className="pagination-arrow text-[#1230AE] text-xl p-3 rounded-full hover:bg-[#C68FE6] disabled:text-[#6C48C5] disabled:bg-transparent"
           onClick={() => handlePageChange(page - 1)}
           disabled={page === 1}
         >
           ↑
         </button>
-        <span className="font-semibold text-lg">
+        <span className="font-semibold text-[#1230AE] text-lg">
           עמוד {page} מתוך {totalPages}
         </span>
-      
         <button
-          className="pagination-arrow text-xl p-2 rounded-full hover:bg-gray-200 disabled:text-gray-400 disabled:hover:bg-transparent"
+          className="pagination-arrow text-[#1230AE] text-xl p-3 rounded-full hover:bg-[#C68FE6] disabled:text-[#6C48C5] disabled:bg-transparent"
           onClick={() => handlePageChange(page + 1)}
           disabled={page === totalPages}
         >

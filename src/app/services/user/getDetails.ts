@@ -8,25 +8,12 @@ const baseUrl = getBaseUrl();
 
 export const getUserByUsername = async (username: string) => {
   try {
-    console.log("1", username);
 
     const response = await axios.get(`${baseUrl}/api/users/get/username?username=${username}`, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    console.log("2", response);
-
-    // קבלת נתוני המשתמש מהתגובה
-    const user = response.data.user;
-    console.log("3", user);
-
-    // שמירת נתוני המשתמש בסטור
-
-
-    console.log("User successfully stored in Zustand:", user);
-
-    // החזרת נתוני המשתמש
     return response.data.user;
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -36,11 +23,9 @@ export const getUserByUsername = async (username: string) => {
 
 export const getMyDetails = async () => {
   try {
-    // First, check if there's a NextAuth session
+    
     const session = await getSession();
-    // If a session exists (Google or regular with token)
 
-    // Try to fetch by email first (for Google auth)
     if (session?.user?.email) {
       try {
         const response = await axios.get(`${baseUrl}/api/users/get/username?email=${session.user.email}`, {

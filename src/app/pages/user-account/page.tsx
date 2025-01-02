@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import PostList from '@/app/component/posts/PostList';
 import UserList from '@/app/component/users/UserList';
 import { getMyDetails } from '@/app/services/user/getDetails';
@@ -7,12 +7,9 @@ import useNavbarStore from '@/app/store/navbarStore';
 import useUserStore from '@/app/store/userModel';
 import { UserFormData } from '@/app/types/user';
 import { useEffect, useState } from 'react';
+
 const Home = () => {
     const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
-    // const [isReady, setIsReady] = useState(false);
-    // const storpostArr = useUserStore((state) => state.postArr);
-    // const storlikedPeople = useUserStore((state) => state.likedPeople);
-    // const storlikedPostsArr = useUserStore((state) => state.likedPostsArr);
     const storeUser = useUserStore((state) => state.user);
     const toggleNavbar = useNavbarStore((state) => state.toggleNavbar);
     const [activeTab, setActiveTab] = useState("users");
@@ -21,7 +18,7 @@ const Home = () => {
         const getMyPersonalDetails = async () => {
             toggleNavbar(true)
             if (useUserStore.getState().isReady) return; // הימנע משאילתת נתונים כפולה
-            if(storeUser)return;
+            if(storeUser) return;
             try {
                 const userDetails = await getMyDetails();
                 const user: UserFormData = {
@@ -51,24 +48,24 @@ const Home = () => {
     }, [])
 
     return (
-        <div>
-            <div className="container mx-auto p-4">
-                <div className="border-b border-gray-200">
-                    <div className="flex space-x-4">
+        <div className="bg-[#FFF7F7] min-h-screen">
+            <div className="container mx-auto p-6">
+                <div className="border-b border-gray-300">
+                    <div className="flex space-x-6">
                         <button
-                            className={`py-2 px-4 ${activeTab === "users"
-                                ? "border-b-2 border-blue-500 text-blue-600"
-                                : "text-gray-500 hover:text-gray-700"
-                                }`}
+                            className={`py-3 px-6 ${activeTab === "users"
+                                ? "border-b-4 border-[#1230AE] text-[#1230AE] font-semibold"
+                                : "text-[#6C48C5] hover:text-[#1230AE]"} 
+                            transition duration-300 ease-in-out`}
                             onClick={() => setActiveTab("users")}
                         >
                             משתמשים
                         </button>
                         <button
-                            className={`py-2 px-4 ${activeTab === "posts"
-                                ? "border-b-2 border-blue-500 text-blue-600"
-                                : "text-gray-500 hover:text-gray-700"
-                                }`}
+                            className={`py-3 px-6 ${activeTab === "posts"
+                                ? "border-b-4 border-[#1230AE] text-[#1230AE] font-semibold"
+                                : "text-[#6C48C5] hover:text-[#1230AE]"} 
+                            transition duration-300 ease-in-out`}
                             onClick={() => setActiveTab("posts")}
                         >
                             פוסטים
@@ -80,10 +77,9 @@ const Home = () => {
                     {activeTab === "users" && <UserList />}
                     {activeTab === "posts" && <PostList />}
                 </div>
-
             </div>
         </div>
+    );
+};
 
-    )
-}
 export default Home;
