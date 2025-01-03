@@ -72,11 +72,11 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
     <div className="container mx-auto p-6">
       <div className="bg-white shadow-lg rounded-lg p-6">
         {/* כותרת הפוסט */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">{post.title}</h1>
+        <h1 className="text-3xl font-bold text-[#1230AE] mb-4">{post.title}</h1>
 
         {/* תאריך יצירת הפוסט */}
         {post.createDate && (
-          <p className="text-sm text-gray-500 mb-4">
+          <p className="text-sm text-[#6C48C5] mb-4">
             נוצר בתאריך: {formatDate(post.createDate.toString())}
           </p>
         )}
@@ -86,32 +86,31 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
           <div className="mr-4">
             <Link
               href={`/pages/users/${post.userName}`}
-              className="text-blue-500 hover:underline"
+              className="text-[#1230AE] hover:underline"
             >
               {post.userName}
             </Link>
           </div>
-          <div className="text-sm text-gray-500">({post.userDetails?.titles?.join(', ')})</div>
+          <div className="text-sm text-[#6C48C5]">({post.userDetails?.titles?.join(', ')})</div>
         </div>
 
         {/* תיאור */}
-        <p className="text-gray-700 mb-6">{post.description}</p>
+        <p className="text-[#1230AE] mb-6">{post.description}</p>
 
-{/* גלריית תמונות */}
-       
-        { <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
+        {/* גלריית תמונות */}
+        {<ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
 
         {/* פרטי פוסט של צרכן */}
         {post.postId && (
           <div className="consumer-details mb-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">פרטי הפוסט:</h2>
-            <p className="text-sm text-gray-600">קטגוריה: {post.postId.eventCategory}</p>
-            <p className="text-sm text-gray-600">תקציב: {post.postId.budget} ₪</p>
-            <h3 className="text-md font-semibold text-gray-800 mt-4">ספקים:</h3>
+            <h2 className="text-lg font-semibold text-[#1230AE] mb-2">פרטי הפוסט:</h2>
+            <p className="text-sm text-[#6C48C5]">קטגוריה: {post.postId.eventCategory}</p>
+            <p className="text-sm text-[#6C48C5]">תקציב: {post.postId.budget} ₪</p>
+            <h3 className="text-md font-semibold text-[#1230AE] mt-4">ספקים:</h3>
             <ul>
               {post.postId.supplierNameArr?.map((supplier: string, index: number) => (
-                <li key={index} className="text-sm text-gray-600">
-                  <Link href={`/pages/users/${supplier}`} className="text-blue-500 hover:underline">
+                <li key={index} className="text-sm text-[#6C48C5]">
+                  <Link href={`/pages/users/${supplier}`} className="text-[#1230AE] hover:underline">
                     {supplier}
                   </Link>
                 </li>
@@ -122,10 +121,10 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
 
         {/* תגובות */}
         <div className="comments mb-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">תגובות והמלצות</h2>
+          <h2 className="text-lg font-semibold text-[#1230AE] mb-2">תגובות והמלצות</h2>
           <button
             onClick={() => setShowComments((prev) => !prev)}
-            className="text-blue-500 flex items-center gap-2 mb-4"
+            className="text-[#1230AE] flex items-center gap-2 mb-4"
           >
             {showComments ? (
               <>
@@ -143,16 +142,16 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
                 comments.map((comment, index) => (
                   <li key={index} className="border-b pb-2">
                     <div className="flex items-center gap-2">
-                      <Link href={`/pages/users/${comment.userName}`} className="text-blue-500 hover:underline">
+                      <Link href={`/pages/users/${comment.userName}`} className="text-[#1230AE] hover:underline">
                         {comment.userName}
                       </Link>
-                      <span className="text-sm text-gray-500">⭐ {comment.rate}/5</span>
+                      <span className="text-sm text-[#6C48C5]">⭐ {comment.rate}/5</span>
                     </div>
-                    <p className="text-gray-700 mt-1">{comment.text}</p>
+                    <p className="text-[#1230AE] mt-1">{comment.text}</p>
                   </li>
                 ))
               ) : (
-                <p className="text-sm text-gray-500">אין תגובות עדיין.</p>
+                <p className="text-sm text-[#6C48C5]">אין תגובות עדיין.</p>
               )}
             </ul>
           )}
@@ -160,7 +159,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
           {/* כפתור הוספת תגובה */}
           <button
             onClick={() => setShowAddComment((prev) => !prev)}
-            className="mt-4 text-blue-500 flex items-center gap-2"
+            className="mt-4 text-[#1230AE] flex items-center gap-2"
           >
             {showAddComment ? (
               <FaChevronUp /> // אם התגובה פתוחה, החץ למעלה
@@ -180,7 +179,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
                       type="text"
                       value={commentText}
                       onChange={handleCommentChange}
-                      className="w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1230AE]"
                       placeholder="הוסף תגובה"
                     />
                     <div className="rating flex gap-1">
@@ -188,7 +187,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
                         <span
                           key={index}
                           onClick={() => handleStarClick(index)}
-                          className={`cursor-pointer text-2xl ${rating > index ? "text-yellow-400" : "text-gray-400"}`}
+                          className={`cursor-pointer text-2xl ${rating > index ? "text-yellow-400" : "text-[#6C48C5]"}`}
                         >
                           ★
                         </span>
@@ -197,7 +196,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
                   </div>
                   <button
                     onClick={addComment}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
+                    className="px-4 py-2 bg-[#1230AE] text-white rounded-md shadow-md"
                   >
                     הוסף תגובה
                   </button>
@@ -205,7 +204,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
               ) : (
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
+                  className="mt-2 px-4 py-2 bg-[#1230AE] text-white rounded-md"
                 >
                   התחבר להוספת תגובה
                 </button>
@@ -213,14 +212,14 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
             </div>
           )}
         </div>
-
-        {/* כפתור מועדפים */}
-        {userNameFromCookie && <div className="favorite mt-6">
-          <button onClick={toggleFavorite} className={`text-2xl ${isFavorite ? "text-red-500" : "text-gray-400"}`}>
-            {isFavorite ? <FaHeart /> : <FaRegHeart />}
-          </button>
-        </div>}
       </div>
+
+      {/* כפתור מועדפים */}
+      {userNameFromCookie && <div className="favorite mt-6">
+        <button onClick={toggleFavorite} className={`text-2xl ${isFavorite ? "text-red-500" : "text-gray-400"}`}>
+          {isFavorite ? <FaHeart /> : <FaRegHeart />}
+        </button>
+      </div>}
     </div>
   );
 };
