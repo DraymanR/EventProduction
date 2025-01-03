@@ -59,7 +59,7 @@ export enum Language {
 export interface PostCardProps {
   _id: string,
   recommendations: Recommendation[];
-  album: Img[];
+  album: string[];
   createDate: Date;
   title: string;
   description: string;

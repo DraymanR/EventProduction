@@ -99,7 +99,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
 
 {/* גלריית תמונות */}
        
-        {/* {post.album?.length > 0 && <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />} */}
+        { <ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
 
         {/* פרטי פוסט של צרכן */}
         {post.postId && (
