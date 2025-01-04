@@ -167,6 +167,8 @@ export const checkIfLoggedIn = () => {
   if (typeof window !== 'undefined') {
     const cookies = document.cookie.split('; ');
     const usernameCookie = cookies.find(row => row.startsWith('userName='));
+    
     return usernameCookie
   }
+
 };
