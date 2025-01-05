@@ -189,100 +189,80 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     }, [profileImage]);
 
     return (
-        <div className="text-center w-[80vh] mx-auto mb-10 max-h-[80vh] p-6">
-            <h2 className="text-red-400 text-2xl font-bold text-center mb-6">צור חשבון חדש</h2>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* שלב ראשון */}
-                {currentStep === 1 && (
-                    <>
-                        <div className="border p-2 rounded">
-                            <label htmlFor="firstName" className="block font-medium">שם פרטי</label>
-                            <input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
-                        </div>
-                        <div className="border p-2 rounded">
-                            <label htmlFor="lastName" className="block font-medium">שם משפחה</label>
-                            <input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
-                        </div>
-                        <div className="border p-2 rounded" >
-                            <label htmlFor="userName" className="block font-medium">
-                                שם משתמש
-                            </label>
-                            <input
-                                id="userName"
-                                name="userName"
-                                type="text"
-                                value={formData.userName}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-3 py-2 border rounded-md"
-                            />
-                        </div>
-                        <div className="border p-2 rounded">
-                            <label htmlFor="email" className="block font-medium">אימייל</label>
-                            <input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
-                        </div>
-                        <div className="relative border p-2 rounded" >
-                            <label htmlFor="password" className="block font-medium">
-                                סיסמה
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type={showPassword ? "text" : "password"}
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                required
-                                minLength={6}
-                                className="w-full px-3 py-2 border rounded-md"
-                                onPaste={(e) => e.preventDefault()} // מניעת הדבקה
-                                onCopy={(e) => e.preventDefault()} // מניעת העתקה
-                                onCut={(e) => e.preventDefault()}  // מניעת גזירה
-                            />
-                            <button
-                                type="button"
-                                onClick={() => { setshowPassword(!showPassword) }}
-                                className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
-
-                                {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
-
-                            </button>
-                        </div>
-                        <div className="relative border p-2 rounded" >
-                            <label htmlFor="confirmPassword" className="block font-medium">
-                                אשר סיסמה
-                            </label>
-                            <input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type={showconfirmPassword ? "text" : "password"}
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                                className="w-full px-3 py-2 border rounded-md"
-                                onPaste={(e) => e.preventDefault()} // מניעת הדבקה
-                                onCopy={(e) => e.preventDefault()} // מניעת העתקה
-                                onCut={(e) => e.preventDefault()}  // מניעת גזירה
-                            />
-                            <button
-                                type="button"
-                                onClick={() => { setshowconfirmPassword(!showconfirmPassword) }}
-                                className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
-
-                                {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
-                            </button>
-                        </div>
-
-                    </>
-                )}
-
-                {/* שלב שני */}
-                {currentStep === 2 && (
-
-                    <><h5 className="text-l font-bold mt-4">כתובת</h5><br></br><div className="border p-2 rounded">
-
-                        <label htmlFor="zipCode" className="block font-medium">
-                            מיקוד
-                        </label>
+        <div className="text-center mx-auto mb-10 max-h-[80vh] p-6">
+        <h2 className="text-[#1230AE] text-2xl font-bold text-center mb-6">צור חשבון חדש</h2>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
+            {/* שלב ראשון */}
+            {currentStep === 1 && (
+                <>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="firstName" className="block font-medium text-[#1230AE]">שם פרטי</label>
+                        <input id="firstName" name="firstName" type="text" value={formData.firstName} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="lastName" className="block font-medium text-[#1230AE]">שם משפחה</label>
+                        <input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="userName" className="block font-medium text-[#1230AE]">שם משתמש</label>
+                        <input id="userName" name="userName" type="text" value={formData.userName} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="email" className="block font-medium text-[#1230AE]">אימייל</label>
+                        <input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required className="w-full px-3 py-2 border rounded-md" />
+                    </div>
+                    <div className="relative border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="password" className="block font-medium text-[#1230AE]">סיסמה</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type={showPassword ? "text" : "password"}
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            required
+                            minLength={6}
+                            className="w-full px-3 py-2 border rounded-md"
+                            onPaste={(e) => e.preventDefault()}
+                            onCopy={(e) => e.preventDefault()}
+                            onCut={(e) => e.preventDefault()}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => { setshowPassword(!showPassword) }}
+                            className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-[#6C48C5]">
+                            {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />}
+                        </button>
+                    </div>
+                    <div className="relative border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="confirmPassword" className="block font-medium text-[#1230AE]">אשר סיסמה</label>
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type={showconfirmPassword ? "text" : "password"}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                            className="w-full px-3 py-2 border rounded-md"
+                            onPaste={(e) => e.preventDefault()}
+                            onCopy={(e) => e.preventDefault()}
+                            onCut={(e) => e.preventDefault()}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => { setshowconfirmPassword(!showconfirmPassword) }}
+                            className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-[#6C48C5]">
+                            {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />}
+                        </button>
+                    </div>
+                </>
+            )}
+    
+            {/* שלב שני */}
+            {currentStep === 2 && (
+                <>
+                    <h5 className="text-l font-bold mt-4 text-[#1230AE]">כתובת</h5>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="zipCode" className="block font-medium text-[#1230AE]">מיקוד</label>
                         <input
                             id="zipCode"
                             name="address.zipCode"
@@ -290,174 +270,172 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                             value={formData.address.zipCode || ''}
                             onChange={handleInputChange}
                             required
-                            className="w-full px-3 py-2 border rounded-md" />
-                    </div><div className="border p-2 rounded">
-                            <label htmlFor="city" className="block font-medium">
-                                עיר
-                            </label>
-                            <input
-                                id="city"
-                                name="address.city"
-                                type="text"
-                                value={formData.address.city || ''}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-3 py-2 border rounded-md" />
-                        </div><div className="border p-2 rounded">
-
-                            <label htmlFor="street" className="block font-medium">
-                                רחוב
-                            </label>
-                            <input
-                                id="street"
-                                name="address.street"
-                                type="text"
-                                value={formData.address.street || ''}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-3 py-2 border rounded-md" />
-                        </div><div className="border p-2 rounded">
-
-                            <label htmlFor="building" className="block font-medium">
-                                מספר בית
-                            </label>
-                            <input
-                                id="building"
-                                name="address.building"
-                                type="text"
-                                value={formData.address.building || ''}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-3 py-2 border rounded-md" />
-                        </div></>)}
-                {/* שלב של טיטלים */}
-                {currentStep === 3 && (
-                    <>
-                        <div className="border p-2 rounded" >
-
-                            <label htmlFor="phone" className="block font-medium">
-                                טלפון
-                            </label>
-                            <input
-                                id="phone"
-                                name="phone"
-                                type="text"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-3 py-2 border rounded-md"
-                            />
-                        </div>
-                        <div className="border p-2 rounded" >
-                            <label htmlFor="description" className="block font-medium">
-                                כמה מילים עלי
-                            </label>
-                            <input
-                                id="description"
-                                name="description"
-                                type="text"
-                                value={formData.description}
-                                onChange={handleInputChange}
-                                required
-                                className="w-full px-3 py-2 border rounded-md"
-                            />
-                            <div className="border p-2 rounded">
-                                <label>בחר סוג משתמש:</label>
-                                <Select
-                                    options={titleOptions}
-                                    isMulti
-                                    placeholder="בחר טיטל"
-                                    onChange={mySetSelectedTitles}
-                                    value={selectedTitles}
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="city" className="block font-medium text-[#1230AE]">עיר</label>
+                        <input
+                            id="city"
+                            name="address.city"
+                            type="text"
+                            value={formData.address.city || ''}
+                            onChange={handleInputChange}
+                            required
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="street" className="block font-medium text-[#1230AE]">רחוב</label>
+                        <input
+                            id="street"
+                            name="address.street"
+                            type="text"
+                            value={formData.address.street || ''}
+                            onChange={handleInputChange}
+                            required
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="building" className="block font-medium text-[#1230AE]">מספר בית</label>
+                        <input
+                            id="building"
+                            name="address.building"
+                            type="text"
+                            value={formData.address.building || ''}
+                            onChange={handleInputChange}
+                            required
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                </>
+            )}
+    
+            {/* שלב של טיטלים */}
+            {currentStep === 3 && (
+                <>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="phone" className="block font-medium text-[#1230AE]">טלפון</label>
+                        <input
+                            id="phone"
+                            name="phone"
+                            type="text"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            required
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label htmlFor="description" className="block font-medium text-[#1230AE]">כמה מילים עלי</label>
+                        <input
+                            id="description"
+                            name="description"
+                            type="text"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            required
+                            className="w-full px-3 py-2 border rounded-md"
+                        />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label className="text-[#1230AE]">בחר סוג משתמש:</label>
+                        <Select
+                            options={titleOptions}
+                            isMulti
+                            placeholder="בחר טיטל"
+                            onChange={mySetSelectedTitles}
+                            value={selectedTitles}
+                        />
+                    </div>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label className="text-[#1230AE]">השפות שלי:</label>
+                        <Select
+                            options={language}
+                            isMulti
+                            placeholder="בחר שפות..."
+                            onChange={mySetSelectedLanguages}
+                            value={selectedLanguages}
+                        />
+                    </div>
+                    {isSupplier && (
+                        <>
+                            <div className="border p-2 rounded bg-[#FFF7F7]">
+                                <label htmlFor="minPrice" className="block font-medium text-[#1230AE]">מחיר מינימלי</label>
+                                <input
+                                    id="minPrice"
+                                    name="supplierDetails.minPrice"
+                                    type="number"
+                                    value={formData.supplierDetails?.startingPrice}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="w-full px-3 py-2 border rounded-md"
                                 />
                             </div>
-                            <div className="border p-2 rounded">
-                                <label>
-                                    השפות שלי:
-                                    <Select
-                                        options={language}
-                                        isMulti
-                                        placeholder="בחר שפות..."
-                                        onChange={mySetSelectedLanguages}
-
-                                        value={selectedLanguages}
-                                    />
-                                </label>
+                            <div className="border p-2 rounded bg-[#FFF7F7]">
+                                <label htmlFor="maxPrice" className="block font-medium text-[#1230AE]">מחיר מקסימלי</label>
+                                <input
+                                    id="maxPrice"
+                                    name="supplierDetails.maxPrice"
+                                    type="number"
+                                    value={formData.supplierDetails?.topPrice}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="w-full px-3 py-2 border rounded-md"
+                                />
                             </div>
-                            {isSupplier
-                                && (
-                                    <>
-                                        <div className="border p-2 rounded">
-                                            <label htmlFor="minPrice" className="block font-medium">מחיר מינימלי</label>
-                                            <input
-                                                id="minPrice"
-                                                name="supplierDetails.minPrice"
-                                                type="number"
-                                                value={formData.supplierDetails?.startingPrice}
-                                                onChange={handleInputChange}
-                                                required
-                                                className="w-full px-3 py-2 border rounded-md"
-                                            />
-                                        </div>
-                                        <div className="border p-2 rounded">
-                                            <label htmlFor="maxPrice" className="block font-medium">מחיר מקסימלי</label>
-                                            <input
-                                                id="maxPrice"
-                                                name="supplierDetails.maxPrice"
-                                                type="number"
-                                                value={formData.supplierDetails?.topPrice}
-                                                onChange={handleInputChange}
-                                                required
-                                                className="w-full px-3 py-2 border rounded-md"
-                                            />
-                                        </div>
-                                    </>
-                                )}
-                        </div> </>
-                )}
-
-                {/* שלב של תמונת פרופיל */}
-                {currentStep === 4 && (
-                    <>
-                        {/* אם יש טיטל "ספק" נוסיף שדות של מחיר */}
-                        <div className="border p-2 rounded">
-                            <label>העלאת תמונת פרופיל</label>
-                            <CldUploadWidget
-                                uploadPreset="appOrganizerEvent"
-                                onSuccess={handleUploadSuccess}
-                                options={{
-                                    sources: [
-                                        'local',
-                                        'camera',
-                                        'google_drive',
-                                        'url'
-                                    ],
-                                    maxFiles: 35,
-                                }}
-                            >
-                                {({ open }) => (
-                                    <button
-                                        onClick={() => open()}
-                                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                                    >
-                                        Upload an Image
-                                    </button>
-                                )}
-                            </CldUploadWidget>
-                        </div>
-                    </>
-                )}
-
-                <div className="flex justify-between">
-                    {currentStep > 1 && <button type="button" onClick={handleBackStep} className="bg-gray-500 text-white py-2 px-4 rounded-md">הקודם</button>}
-                    {currentStep < 4 ? (
-                        <button type="button" onClick={handleNextStep} className="bg-red-400 text-white py-2 px-4 rounded-md">הבא</button>
-                    ) : (
-                        <button type="submit" className={`${!isSubmitting ? 'bg-red-400 text-white' : 'text-red-400 bg-white'} py-2 px-4 rounded-md`}>הירשם</button>
+                        </>
                     )}
-                </div>
-            </form>
-        </div>
+                </>
+            )}
+    
+            {/* שלב של תמונת פרופיל */}
+            {currentStep === 4 && (
+                <>
+                    <div className="border p-2 rounded bg-[#FFF7F7]">
+                        <label className="text-[#1230AE]">העלאת תמונת פרופיל</label>
+                        <CldUploadWidget
+                            uploadPreset="appOrganizerEvent"
+                            onSuccess={handleUploadSuccess}
+                            options={{
+                                sources: [
+                                    'local',
+                                    'camera',
+                                    'google_drive',
+                                    'url'
+                                ],
+                                maxFiles: 35,
+                            }}
+                        >
+                            {({ open }) => (
+                                <button
+                                    onClick={() => open()}
+                                    className="bg-[#6C48C5] hover:bg-[#C68FE6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#1230AE] focus:ring-opacity-50"
+                                >
+                                    Upload an Image
+                                </button>
+                            )}
+                        </CldUploadWidget>
+                    </div>
+                </>
+            )}
+    
+            <div className="flex justify-between mt-6">
+                {currentStep > 1 && (
+                    <button type="button" onClick={handleBackStep} className="bg-[#6C48C5] text-white py-2 px-4 rounded-md">הקודם</button>
+                )}
+                {currentStep < 4 ? (
+                    <button type="button" onClick={handleNextStep} className="bg-[#1230AE] text-white py-2 px-4 rounded-md">הבא</button>
+                ) : (
+                    <button type="submit" className={`${!isSubmitting ? 'bg-[#1230AE]' : 'bg-gray-400'} text-white py-2 px-4 rounded-md`} disabled={isSubmitting}>
+                        {isSubmitting ? 'אנא המתן...' : 'שלח'}
+                    </button>
+                )}
+            </div>
+        </form>
+    </div>
+    
     );
 };
 export default Register;

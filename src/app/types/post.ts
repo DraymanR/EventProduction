@@ -2,6 +2,7 @@ import { ObjectId } from "mongoose";
 import { Img } from "./user";
 
 export interface Post {
+  _id:ObjectId;
   createDate: Date;
   userName: string;
   album: string[];
@@ -15,7 +16,7 @@ export interface Post {
 export interface PostCardProps {
   _id: string,
   recommendations: Recommendation[];
-  album: Img[];
+  album: string[];
   createDate: Date;
   title: string;
   description: string;

@@ -1,10 +1,9 @@
-
-import NextAuth, { AuthOptions } from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
-import connectDb from '../../../lib/db/connectDb'
-import { UserModel } from '../../../lib/models/user'
-import { cookies } from 'next/headers'
-import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware'
+import NextAuth, { AuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import connectDb from '../../../lib/db/connectDb';
+import { UserModel } from '../../../lib/models/user';
+import { cookies } from 'next/headers';
+import { generateToken, setAuthCookies } from '@/middlewares/authMiddleware';
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -27,9 +26,8 @@ export const authOptions: AuthOptions = {
         // Generate token using your existing utility
         const token = generateToken({
           userName: existingUser.userName,
-          email: existingUser.email
+          email: existingUser.email,
         });
-
 
         const cookieStore = cookies();
         setAuthCookies(
@@ -37,7 +35,7 @@ export const authOptions: AuthOptions = {
           existingUser.userName,
           token
         );
-    
+
         return true;
       } catch (error) {
         console.error("User validation error:", error);
@@ -60,17 +58,20 @@ export const authOptions: AuthOptions = {
         }
       }
       return session;
-    }
+    },
+
+    async redirect() {
+      // Redirect to /user-account after sign-in
+      return `/pages/user-account`;
+    },
   },
 
-  // Adding JWT configuration
   session: {
     strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24 hours
   },
-}
+};
 
-const handler = NextAuth(authOptions)
+const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST }
-
+export { handler as GET, handler as POST };

@@ -1,52 +1,52 @@
 import { addImageToPost } from '@/app/services/post/post';
 import { CldUploadWidget } from 'next-cloudinary';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface ImageGalleryProps {
-  postUsername:string;
-   postId:string;
+  postUsername: string;
+  postId: string;
   images: string[];
-
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images,postId ,postUsername}) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsername }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
-  const [isImageSelected, setIsImageSelected] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
-  const userNameFromCookie = decodeURIComponent(document.cookie);
-  console.log(userNameFromCookie);
-  const userName = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName=')).split('=')[1];
+  const [userName, setUserName] = useState<string>('');
+
+  // שימוש ב-useEffect לטעינת שם המשתמש מתוך עוגייה
+  useEffect(() => {
+    const userNameFromCookie = decodeURIComponent(document.cookie);
+    const userNameCookie = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName='));
+    if (userNameCookie) {
+      setUserName(userNameCookie.split('=')[1]);
+    } else {
+      console.error('userName cookie not found');
+    }
+  }, []);
+
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     setIsModalOpen(true);
-    setIsImageSelected(true);
   };
+
   const handleUploadSuccess = async (result: any) => {
     if (result.info && result.info.secure_url) {
       const secureUrl = result.info.secure_url;
-      addImageToPost(postId, secureUrl); // שומר את הקישור המלא במערך
+      await addImageToPost(postId, secureUrl); // שומר את הקישור המלא במערך
     }
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
-    setIsImageSelected(false);
   };
 
   const nextImage = () => {
-    if (selectedImageIndex < images.length - 1) {
-      setSelectedImageIndex(selectedImageIndex + 1);
-    } else {
-      setSelectedImageIndex(0);
-    }
+    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const prevImage = () => {
-    if (selectedImageIndex > 0) {
-      setSelectedImageIndex(selectedImageIndex - 1);
-    } else {
-      setSelectedImageIndex(images.length - 1);
-    }
+    setSelectedImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
   const toggleExpand = () => {
@@ -76,45 +76,37 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images,postId ,postUsername
       </div>
 
       {/* כפתור להתרחבות */}
-      {images.length > 2 && !isExpanded && (
+      {images.length > 2 && (
         <button
           onClick={toggleExpand}
           className="mt-4 text-blue-600 font-semibold"
         >
-          הצג עוד
+          {isExpanded ? 'הסתר' : 'הצג עוד'}
         </button>
       )}
 
-      {isExpanded && images.length > 2 && (
-        <button
-          onClick={toggleExpand}
-          className="mt-4 text-blue-600 font-semibold"
+      {/* ווידג'ט העלאה */}
+      {postUsername === userName && (
+        <CldUploadWidget
+          uploadPreset="appOrganizerEvent"
+          onSuccess={handleUploadSuccess}
+          options={{
+            sources: ['local', 'camera', 'google_drive', 'url'],
+            maxFiles: 35,
+          }}
         >
-          הסתר
-        </button>
+          {({ open }) => (
+            <button
+              onClick={() => open()}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            >
+              +
+            </button>
+          )}
+        </CldUploadWidget>
       )}
-      {(postUsername == userName) && <CldUploadWidget
-        uploadPreset="appOrganizerEvent"
-        onSuccess={handleUploadSuccess}
-        options={{
-          sources: [
-            'local',
-            'camera',
-            'google_drive',
-            'url'
-          ],
-          maxFiles: 35,
-        }}
-      >
-        {({ open }) => (
-          <button
-            onClick={() => open()}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 ease-in-out shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            +
-          </button>
-        )}
-      </CldUploadWidget>}
+
+      {/* מודל הצגת תמונה */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="relative bg-white p-6 rounded-lg max-w-4xl shadow-lg">

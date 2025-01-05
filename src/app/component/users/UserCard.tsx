@@ -10,7 +10,7 @@ const UserCard: React.FC<{ user: any }> = ({ user }) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="w-12 h-12 text-gray-500"
+      className="w-16 h-16 text-[#6C48C5]"
     >
       <circle cx="12" cy="7" r="4" />
       <path d="M12 14c-4 0-6 2-6 6" />
@@ -18,44 +18,49 @@ const UserCard: React.FC<{ user: any }> = ({ user }) => {
   );
 
   return (
-    <div className="user-card bg-white rounded-lg shadow-md p-6 max-w-xl mx-auto mb-6">
-      <div className="header mb-4 flex items-center">
-        {/* אם אין תמונת פרופיל, מציגים אייקון ברירת מחדל */}
-        <div className="w-12 h-12 rounded-full mr-4 flex items-center justify-center bg-gray-200">
+    <div className="user-card bg-white rounded-lg shadow-lg p-6 max-w-lg mx-auto mb-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+      <div className="header mb-6 flex items-center">
+        {/* תמונת פרופיל או אייקון */}
+        <div className="w-16 h-16 rounded-full overflow-hidden mr-6 flex items-center justify-center bg-[#C68FE6]">
           {user.profileImage ? (
             <img
               src={user.profileImage}
               alt={user.userName}
-              className="w-full h-full rounded-full"
+              className="w-full h-full object-cover rounded-full"
             />
           ) : (
             defaultProfileImage // הצגת אייקון אם אין תמונת פרופיל
           )}
         </div>
-        <h2 className="text-2xl font-semibold text-gray-800"><a href={`/pages/users/${user.userName}`} className="text-gray-600 hover:text-red-400">
-
-          {user.userName}  </a></h2>
+        <div>
+          <h2 className="text-3xl font-semibold text-[#1230AE] hover:text-[#6C48C5] transition-colors duration-300">
+            <a href={`/pages/users/${user.userName}`}>
+              {user.userName}
+            </a>
+          </h2>
+          <p className="text-[#6C48C5] font-medium">{user.email}</p>
+        </div>
       </div>
 
-      <div className="details mb-4">
-        <p className="text-gray-700">
-          <strong>מייל:</strong> {user.email}
-        </p>
-       { user?.addressId?.city&&<p className="text-gray-700">
-          <strong>city:</strong> {user?.addressId?.city}
-        </p>}
-        <p className="text-gray-700">
-          <strong>מספר טלפון:</strong> {user.phone}
-        </p>
-        <p className="text-gray-700">
-          <strong>תפקידים:</strong> {user.titles.join(', ')}
-        </p>
-        <p className="text-gray-700">
-          <strong>שפות:</strong> {user.languages.join(', ')}
-        </p>
-        <p className="text-gray-700">
-          {/* <strong>City:</strong> {user.addressId.city} */}
-        </p>
+      <div className="details space-y-4 text-[#1230AE]">
+        <div className="flex justify-between items-center">
+          <strong>מספר טלפון:</strong>
+          <span>{user.phone}</span>
+        </div>
+        {user?.addressId?.city && (
+          <div className="flex justify-between items-center">
+            <strong>עיר:</strong>
+            <span>{user?.addressId?.city}</span>
+          </div>
+        )}
+        <div className="flex justify-between items-center">
+          <strong>תפקידים:</strong>
+          <span>{user.titles.join(', ')}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <strong>שפות:</strong>
+          <span>{user.languages.join(', ')}</span>
+        </div>
       </div>
     </div>
   );

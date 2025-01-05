@@ -59,7 +59,7 @@ export enum Language {
 export interface PostCardProps {
   _id: string,
   recommendations: Recommendation[];
-  album: Img[];
+  album: string[];
   createDate: Date;
   title: string;
   description: string;
@@ -225,4 +225,10 @@ export interface ModalState {
 
 export interface UpdateUserPersonalDetailsProps {
   user: UserFormData;
+}
+export interface MessageChat{
+  username:string;
+  text:string;
+  otheruser:string;
+  timestamp:Date;
 }

@@ -1,29 +1,170 @@
-'use client'
+// 'use client'
+// import React, { useEffect, useState } from 'react';
+// import { getUserByUsername } from '@/app/services/user/getDetails';  
+// import { Post } from '@/app/types/post';  
+// import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png';
+// import Image from 'next/image';
+// import { removeUserFromFavorites, addUserToFavorites } from '@/app/services/user/updateDetails';
+// import { FaHeart, FaRegHeart } from 'react-icons/fa';
+
+// const UserProfileDisplay = ({ username }: { username: string }) => {
+//   const userNameFromCookie = decodeURIComponent(document.cookie);
+//   const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
+//   const [isFavorite, setIsFavorite] = useState<boolean>(false);  // מצב האם המשתמש ברשימת האהובים
+//   const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש
+//   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);  // האם המשתמש מחובר
+//   const [isSupplier, setIsSupplier] = useState<boolean>(false);  // האם המשתמש הוא ספק
+
+//   useEffect(() => {
+//     const fetchUserData = async () => {
+//       try {
+//         console.log("datadata:", username);
+//         const data = await getUserByUsername(username);
+//         console.log("datadata:", data);
+//         setUser(data);
+//         setPosts(data.postArr);
+//         setIsLoggedIn(data.isLoggedIn);
+//         setIsSupplier(data.isSupplier);
+//       } catch (error) {
+//         console.error("Error fetching user data", error);
+//       }
+//     };
+//     fetchUserData();
+//   }, [username]);
+
+//   const toggleFavorite = async () => {
+//     if (isFavorite) {
+//       await removeUserFromFavorites(user.userNam);
+//       setIsFavorite(false); 
+//     } else {
+//       await addUserToFavorites(user.userName);
+//       setIsFavorite(true); 
+//     }
+//   };
+
+//   return (
+//     <div className="user-profile bg-gradient-to-b from-blue-50 to-gray-100 p-8">
+//       {user ? (
+//         <>
+//           <div className="profile-header bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mb-8">
+//             <h2 className="text-4xl font-bold text-center text-blue-700 mb-6">
+//               פרופיל משתמש: {user.userName}
+//             </h2>
+//             <div className="flex flex-col items-center mb-6">
+//               {user.profileImage ? (
+//                 <Image
+//                   src={defaulPprofileImage}
+//                   alt="תמונת פרופיל"
+//                   width={120}
+//                   height={120}
+//                   className="rounded-full border-4 border-blue-300 shadow-xl"
+//                 />
+//               ) : (
+//                 <img
+//                   src={user.profileImage}
+//                   alt="תמונת פרופיל"
+//                   className="rounded-full border-4 border-blue-300 shadow-xl"
+//                 />
+//               )}
+//             </div>
+
+//             <div className="user-info text-gray-800">
+//               <div className="mb-3">
+//                 <strong className="text-blue-600">תוארים:</strong> {user?.titles.filter(Boolean).join(", ") || "אין תארים זמינים"}              
+//               </div>
+//               <div className="mb-3">
+//                 <strong className="text-blue-600">שפות:</strong> {user?.languages.filter(Boolean).join(", ") || "אין שפה זמינה"}
+//               </div>
+//               <div className="mb-3">
+//                 <strong className="text-blue-600">תיאור:</strong> {user.description}
+//               </div>
+//               {isSupplier && (
+//                 <div className="mb-3">
+//                   <strong className="text-blue-600">טווח מחירים:</strong> {user.priceRange}
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+
+//           <div className="posts bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mb-8">
+//             <h3 className="text-3xl font-bold text-blue-700 mb-6">
+//               פוסטים של {user.userName}
+//             </h3>
+//             {posts.length > 0 ? (
+//               posts.map((post, i) => (
+//                 <div
+//                   key={i}
+//                   className="post border-b py-6 last:border-b-0 text-gray-800"
+//                 >
+//                   <a href={`/pages/posts/${post._id.toString()}`} className="text-xl font-semibold text-blue-500 hover:underline mb-2 block">
+//                     {post.title}
+//                   </a>
+//                   <p className="text-gray-600 mb-2">{post.description}</p>
+//                   <p className="text-sm text-gray-500">
+//                     <strong>נוצר בתאריך:</strong>{' '}
+//                     {new Date(post.createDate).toLocaleDateString()}
+//                   </p>
+//                 </div>
+//               ))
+//             ) : (
+//               <p className="text-gray-500">אין פוסטים עדיין</p>
+//             )}
+//           </div>
+
+//           <div className="contact bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto">
+//             <h3 className="text-3xl font-bold text-blue-700 mb-6">פרטי קשר</h3>
+//             <div className="mb-3">
+//               <strong className="text-blue-600">מייל:</strong> {user.email}
+//             </div>
+//             <div className="mb-3">
+//               <strong className="text-blue-600">טלפון:</strong> {user.phone}
+//             </div>
+//           </div>
+//         </>
+//       ) : (
+//         <p className="text-center text-gray-500">טוען נתוני משתמש...</p>
+//       )}
+
+//       {userNameFromCookie && (
+//         <div className="favorite mt-6 flex justify-center">
+//           <button onClick={toggleFavorite} className={`text-4xl ${isFavorite ? "text-red-600" : "text-gray-400"}`}>
+//             {isFavorite ? <FaHeart /> : <FaRegHeart />}
+//           </button>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default UserProfileDisplay;
+
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { getUserByUsername } from '@/app/services/user/getDetails';  // נניח שזו פונקציה ששולחת בקשה ל-API
-import { Post } from '@/app/types/post';  // נניח שיש לך טיפוס כזה
+import { getUserByUsername } from '@/app/services/user/getDetails';
+import { Post } from '@/app/types/post';
 import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
+import { removeUserFromFavorites, addUserToFavorites } from '@/app/services/user/updateDetails';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import Chat from './Chat'; // Import Chat component
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
-  const [user, setUser] = useState<any>(null);  // הנתונים של המשתמש
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);  // מצב האם המשתמש ברשימת האהובים
-  const [posts, setPosts] = useState<Post[]>([]);  // רשימת הפוסטים של המשתמש
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);  // האם המשתמש מחובר
-  const [isSupplier, setIsSupplier] = useState<boolean>(false);  // האם המשתמש הוא ספק
+  const userNameFromCookie = decodeURIComponent(document.cookie);
+  const [user, setUser] = useState<any>(null);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isSupplier, setIsSupplier] = useState<boolean>(false);
 
   useEffect(() => {
-    // שליחת בקשה לקבלת פרטי המשתמש
     const fetchUserData = async () => {
       try {
         const data = await getUserByUsername(username);
-        console.log(data)
         setUser(data);
         setPosts(data.postArr);
         setIsLoggedIn(data.isLoggedIn);
         setIsSupplier(data.isSupplier);
-
-        // setIsFavorite(likedPeople.includes(data.userName));  // בדוק אם המשתמש נמצא ברשימת האהובים
       } catch (error) {
         console.error("Error fetching user data", error);
       }
@@ -31,23 +172,22 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
     fetchUserData();
   }, [username]);
 
-  const toggleFavorite = () => {
-    // הפונקציה שמבצעת הוספה/מחיקה מרשימת האהובים
+  const toggleFavorite = async () => {
     if (isFavorite) {
-      // מחיקת אהוב
-      // יש להוסיף את הקוד למחיקת המשתמש מרשימת האהובים
+      await removeUserFromFavorites(user.userName);
+      setIsFavorite(false);
     } else {
-      // הוספת אהוב
-      // יש להוסיף את הקוד להוספת המשתמש לרשימת האהובים
+      await addUserToFavorites(user.userName);
+      setIsFavorite(true);
     }
-    setIsFavorite(!isFavorite);
   };
+
   return (
-    <div className="user-profile bg-gradient-to-b from-gray-100 to-blue-50 p-6">
+    <div className="user-profile bg-gradient-to-b from-blue-50 to-gray-100 p-8">
       {user ? (
         <>
-          <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-blue-700 mb-4">
+          <div className="profile-header bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mb-8">
+            <h2 className="text-4xl font-bold text-center text-blue-700 mb-6">
               פרופיל משתמש: {user.userName}
             </h2>
             <div className="flex flex-col items-center mb-6">
@@ -55,63 +195,51 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
                 <Image
                   src={defaulPprofileImage}
                   alt="תמונת פרופיל"
-                  width={80}
-                  height={80}
-                  className="rounded-full border-2 border-blue-300"
+                  width={120}
+                  height={120}
+                  className="rounded-full border-4 border-blue-300 shadow-xl"
                 />
               ) : (
                 <img
                   src={user.profileImage}
                   alt="תמונת פרופיל"
-                  className="rounded-full border-2 border-blue-300"
+                  className="rounded-full border-4 border-blue-300 shadow-xl"
                 />
               )}
             </div>
 
             <div className="user-info text-gray-800">
-              <div className="mb-2">
-                <strong className="text-blue-600">תוארים:</strong> {user.titles}
+              <div className="mb-3">
+                <strong className="text-blue-600">תוארים:</strong> {user?.titles.filter(Boolean).join(", ") || "אין תארים זמינים"}
               </div>
-              <div className="mb-2">
-                <strong className="text-blue-600">שפות:</strong> {user.languages}
+              <div className="mb-3">
+                <strong className="text-blue-600">שפות:</strong> {user?.languages.filter(Boolean).join(", ") || "אין שפה זמינה"}
               </div>
-              <div className="mb-2">
+              <div className="mb-3">
                 <strong className="text-blue-600">תיאור:</strong> {user.description}
               </div>
               {isSupplier && (
-                <div className="mb-2">
+                <div className="mb-3">
                   <strong className="text-blue-600">טווח מחירים:</strong> {user.priceRange}
                 </div>
               )}
-              <div className="mb-4">
-                {isLoggedIn ? (
-                  <span className="text-green-600 font-semibold">🟢 מחובר</span>
-                ) : (
-                  <span className="text-red-600 font-semibold">🔴 לא מחובר</span>
-                )}
-              </div>
-              {/* <button
-                onClick={toggleFavorite}
-                className={`px-4 py-2 rounded-lg text-white font-semibold ${isFavorite ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'
-                  }`}
-              >
-                {isFavorite ? 'הסר מהמועדפים' : 'הוסף למועדפים'}
-              </button> */}
             </div>
           </div>
 
-          <div className="posts bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto mt-8">
-            <h3 className="text-2xl font-bold text-blue-700 mb-4">
+          <div className="posts bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mb-8">
+            <h3 className="text-3xl font-bold text-blue-700 mb-6">
               פוסטים של {user.userName}
             </h3>
             {posts.length > 0 ? (
               posts.map((post, i) => (
                 <div
                   key={i}
-                  className="post border-b last:border-b-0 py-4 text-gray-800"
+                  className="post border-b py-6 last:border-b-0 text-gray-800"
                 >
-                  <h4 className="text-lg font-semibold">{post.title}</h4>
-                  <p className="text-gray-600">{post.description}</p>
+                  <a href={`/pages/posts/${post._id.toString()}`} className="text-xl font-semibold text-blue-500 hover:underline mb-2 block">
+                    {post.title}
+                  </a>
+                  <p className="text-gray-600 mb-2">{post.description}</p>
                   <p className="text-sm text-gray-500">
                     <strong>נוצר בתאריך:</strong>{' '}
                     {new Date(post.createDate).toLocaleDateString()}
@@ -123,22 +251,35 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
             )}
           </div>
 
-          <div className="contact bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto mt-8">
-            <h3 className="text-2xl font-bold text-blue-700 mb-4">פרטי קשר</h3>
-            <div className="mb-2">
+          <div className="contact bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto">
+            <h3 className="text-3xl font-bold text-blue-700 mb-6">פרטי קשר</h3>
+            <div className="mb-3">
               <strong className="text-blue-600">מייל:</strong> {user.email}
-            </div><div className="mb-2">
+            </div>
+            <div className="mb-3">
               <strong className="text-blue-600">טלפון:</strong> {user.phone}
             </div>
+          </div>
+
+          {/* Chat Section */}
+          <div className="chat-section bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mt-8">
+            <h3 className="text-3xl font-bold text-blue-700 mb-6">צ&quot;אט עם {user.userName}</h3>
+            <Chat />
           </div>
         </>
       ) : (
         <p className="text-center text-gray-500">טוען נתוני משתמש...</p>
       )}
+
+      {userNameFromCookie && (
+        <div className="favorite mt-6 flex justify-center">
+          <button onClick={toggleFavorite} className={`text-4xl ${isFavorite ? "text-red-600" : "text-gray-400"}`}>
+            {isFavorite ? <FaHeart /> : <FaRegHeart />}
+          </button>
+        </div>
+      )}
     </div>
   );
-
-
 };
 
 export default UserProfileDisplay;

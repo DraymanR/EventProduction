@@ -11,13 +11,14 @@ export async function GET(req: NextRequest) {
         await connectDb();
         let userName: string | undefined;
 
-        // השתמש במידלוואר
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
             userName = (req as any).userName; // קבלת userName ממידלוואר
         });
+       
 
         const { searchParams } = new URL(req.url);
-        const userNameFromQuery = searchParams.get('username');
+        // const userNameFromQuery = searchParams.get('username');
+        const userNameFromQuery = req.nextUrl.searchParams.get('username');
 
         if (!userNameFromQuery) {
             return NextResponse.json(
@@ -37,8 +38,8 @@ export async function GET(req: NextRequest) {
                         model: 'Recommendation',
                     },
                     {
-                        path: 'postId', // זה ה-ID של ה-ConsumerPost
-                        model: 'ConsumerPost', // הכוונה היא לפופל את ה-ID של ה-ConsumerPost
+                        path: 'postId', 
+                        model: 'ConsumerPost', 
                     },
                 ]
             }).populate({
@@ -75,10 +76,6 @@ export async function GET(req: NextRequest) {
 
         if (user.userName !== userName) {
 
-
-            // const { firstName, lastName, phone, email, addressId, ...filteredUser } = user;
-            // console.log(":user",filteredUser,"supplierDetails:",supplierDetails)//),"consumerDetails",consumerDetails);
-
             const { firstName, lastName, addressId, likedPeople, likedPostsArr, ...filteredUser } = user;
             return NextResponse.json(
                 {
@@ -92,7 +89,7 @@ export async function GET(req: NextRequest) {
                     headers: {
                         'Access-Control-Allow-Credentials': 'true',
                         'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
-                            ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
+                            ? 'https://event-production-fawn.vercel.app'
                             : 'http://localhost:3000',
                         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -112,7 +109,7 @@ export async function GET(req: NextRequest) {
                 headers: {
                     'Access-Control-Allow-Credentials': 'true',
                     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
-                        ? 'https://event-production-git-main-riva-draimans-projects.vercel.app'
+                        ? 'https://event-production-fawn.vercel.app'
                         : 'http://localhost:3000',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
