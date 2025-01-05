@@ -11,7 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
-  const [isOpen, setIsOpen] = useState(true);  // State to control showing/hiding the form
+  const [isOpen, setIsOpen] = useState(false);  // State to control showing/hiding the form
 
   const handleSearch = () => {
     onSearch(userName, eventTitle, eventType as EventCategory, startDate, endDate, description);
