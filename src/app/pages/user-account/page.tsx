@@ -48,7 +48,7 @@ const Home = () => {
     }, [])
 
     return (
-        <div className="bg-[#FFF7F7] min-h-screen">
+        <div className=" min-h-screen">
             <div className="container mx-auto p-6">
                 <div className="border-b border-gray-300">
                     <div className="flex space-x-6">

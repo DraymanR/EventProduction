@@ -19,14 +19,14 @@ const UserList = () => {
     title: [],
     city: [],
     userName: "",
-});
+  });
 
-const handleFilterChange = (newFilters: { language?: string[]; title?: string[]; city?: string[]; userName?: string }) => {
+  const handleFilterChange = (newFilters: { language?: string[]; title?: string[]; city?: string[]; userName?: string }) => {
     setFilters(newFilters);
     setFilteredUsers([]);
     setPage(1);
     setNoMoreUsers(false);
-};
+  };
 
   const [totalPages, setTotalPages] = useState<number>(1);
 
@@ -54,7 +54,7 @@ const handleFilterChange = (newFilters: { language?: string[]; title?: string[];
     }
   };
 
- 
+
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
     setPage(newPage);
@@ -65,18 +65,23 @@ const handleFilterChange = (newFilters: { language?: string[]; title?: string[];
   }, [page, filters]);
 
   return (
-    <div className="posts-container">
-      <h1 className="posts-title text-[#1230AE]">משתמשים</h1>
-      <div className="search-bar-container">
+    <div className="posts-container relative">
+
+      <h1 className="posts-title text-[#1230AE] text-center">משתמשים</h1>
+
+      <div className="search-bar-container absolute top-0 right-0 p-4 transform translate-x-1/2">
         <SortFilter onFilterChange={handleFilterChange} setFilteredUsers={setFilteredUsers} />
       </div>
-      <div className="posts-list">
+
+      <div className="posts-list mt-8">
         {filteredUsers.map((user: any, index: number) => (
           <UserCard key={index} user={user} />
         ))}
       </div>
+
       {loading && <div className="loading-text text-[#6C48C5]">טוען...</div>}
       {noMoreUsers && <div className="no-more-posts-text text-[#6C48C5]">אין יותר יוזרים לטעון</div>}
+
       <div className="pagination flex justify-center items-center gap-4 mt-6">
         <button
           className="pagination-arrow text-[#1230AE] text-xl p-3 rounded-full hover:bg-[#C68FE6] disabled:text-[#6C48C5] disabled:bg-transparent"
@@ -97,6 +102,7 @@ const handleFilterChange = (newFilters: { language?: string[]; title?: string[];
         </button>
       </div>
     </div>
+
   );
 };
 

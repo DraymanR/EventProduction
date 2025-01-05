@@ -16,9 +16,9 @@ const Home: React.FC = () => {
     }, [userDetails]);
 
     return (
-        <div dir="rtl" className="bg-gradient-to-br from-[#C68FE6] to-[#FFF7F7] min-h-screen flex justify-center items-center py-6">
+        <div dir="rtl" className=" min-h-screen flex justify-center items-center py-6">
             {userDetails ? (
-                <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl border border-[#6C48C5]">
+                <div className="bg-[FFF7F7] p-8 rounded-lg shadow-lg w-full max-w-3xl border border-[#6C48C5]">
                     <ShowUserPersonalDetails user={userDetails} />
                     <div className="mt-6 flex justify-center">
                         <button 
