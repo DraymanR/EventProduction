@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { PostCardProps } from "@/app/types/post";
 
@@ -12,42 +10,47 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   };
 
   return (
-    <div className="relative">
-      {/* כרטיס הפוסט */}
-      <div
-        className={`post-card bg-gradient-to-r from-[#1230AE] to-[#6C48C5] rounded-lg shadow-lg p-6 max-w-xl mx-auto mb-6 text-[#FFF7F7] ${
-          showPostModal ? "filter blur-sm" : ""
-        }`}
-      >
-        <div className="header flex items-center justify-between mb-4">
-          <h2 className="text-3xl font-semibold">{post.title}</h2>
-          {/* תאריך יצירת הפוסט */}
-          {post.createDate && (
-            <p className="text-sm text-[#C68FE6]">
-              נוצר בתאריך: {formatDate(post.createDate.toString())}
-            </p>
-          )}
+    <div className="post-card bg-white rounded-lg shadow-lg p-6 max-w-lg mx-auto mb-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+      <div className="header mb-6 flex items-center justify-between">
+        {/* כותרת הפוסט */}
+        <div>
+          <h2 className="text-3xl font-semibold text-[#1230AE] hover:text-[#6C48C5] transition-colors duration-300">
+            <a href={`/pages/posts/${post._id.toString()}`}>{post.title}</a>
+          </h2>
         </div>
+      </div>
 
-        {/* פרטי הכותב */}
-        <div className="flex items-center mb-4">
-          <div className="mr-4">
-            <a
-              href={`/pages/users/${post.userName}`}
-              className="text-[#FFF7F7] hover:text-[#C68FE6]"
-            >
-              {post.userName}
-            </a>
+      <div className="details space-y-4 text-[#1230AE]">
+        {/* כותרת לתאריך יצירת הפוסט */}
+        {post.createDate && (
+          <div className="flex justify-between items-center">
+            <strong>נוצר בתאריך:</strong>
+            <span>{formatDate(post.createDate.toString())}</span>
           </div>
-          <div className="text-sm text-[#FFF7F7]">({post.userDetails?.titles?.join(", ")})</div>
+        )}
+
+        {/* כותרת לכותב הפוסט */}
+        <div className="flex justify-between items-center">
+          <strong>נוצר על ידי:</strong>
+          <a
+            href={`/pages/users/${post.userName}`}
+            className="text-[#1230AE] hover:text-[#6C48C5] transition-colors duration-300"
+          >
+            {post.userName}
+          </a>
         </div>
 
-        <p className="description text-lg mb-4">{post.description}</p>
+        {/* כותרת לתיאור הפוסט */}
+        <div className="flex justify-between items-center">
+          <strong>תיאור הפוסט:</strong>
+          <span className="text-lg">{post.description}</span>
+        </div>
 
+        {/* קישור לפוסט מלא */}
         <div className="flex items-center justify-end">
           <a
             href={`/pages/posts/${post._id.toString()}`}
-            className="text-lg text-[#FFF7F7] hover:text-[#C68FE6] flex items-center"
+            className="text-lg text-[#1230AE] hover:text-[#6C48C5] flex items-center"
           >
             הראה פוסט מלא
             <span className="ml-2">➔</span>
