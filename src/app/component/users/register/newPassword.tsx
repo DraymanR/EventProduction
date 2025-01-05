@@ -24,7 +24,6 @@ const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email })
         }
 
         try {
-            // כאן נבצע את קריאת ה-API לשינוי הסיסמה
             console.log('סיסמה חדשה:', myNewPassword);
             const result = await newPassword(email, otp, myNewPassword)
             console.log(result);
