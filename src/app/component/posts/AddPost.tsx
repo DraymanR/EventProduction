@@ -146,7 +146,6 @@ const AddPost: React.FC = () => {
         </select>
       </label>
 
-      {/* <div style={{ width: "300px" }}> */}
       <label>
         הספקים שלי:
         <Select
@@ -167,7 +166,7 @@ const AddPost: React.FC = () => {
       </label>
 
       <label>
-        תקציב האירוע:
+        תקציב האירוע:  
         <input
           type="number"
           value={budget}
