@@ -147,7 +147,7 @@ import defaulPprofileImage from '@/app/assets/images/defaultConsumerProfile.png'
 import Image from 'next/image';
 import { removeUserFromFavorites, addUserToFavorites } from '@/app/services/user/updateDetails';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import Chat from './Chat'; // Import Chat component
+import ChatWithUser from './chatWithUser';
 
 const UserProfileDisplay = ({ username }: { username: string }) => {
   const userNameFromCookie = decodeURIComponent(document.cookie);
@@ -264,7 +264,7 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
           {/* Chat Section */}
           <div className="chat-section bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mt-8">
             <h3 className="text-3xl font-bold text-blue-700 mb-6">צ&quot;אט עם {user.userName}</h3>
-            <Chat />
+            <ChatWithUser otherUser={user.userName} />
           </div>
         </>
       ) : (
