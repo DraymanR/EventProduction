@@ -9,10 +9,9 @@ import useUserStore from '../store/userModel';
 import useModalStore from '../store/modelStore';
 import Logo from '@/app/assets/images/logo.png';
 import { useEffect, useState } from 'react';
-import Swal from 'sweetalert2';
-import { getMyDetails, getUserDetails } from '@/app/services/user/getDetails';
-import { Home, Info, LogIn } from 'lucide-react';
+import { getMyDetails } from '@/app/services/user/getDetails';
 import { UserFormData } from '../types/user';
+import { Home } from "lucide-react";
 
 const Navbar = () => {
   let userDet = useUserStore((state) => state.user);
@@ -57,48 +56,10 @@ const Navbar = () => {
       console.log("before", userDet);
       getMyPersonalDetails()
     }
-
-    console.log("hbh", userDet);
-  }, [userDet])
-  // const handleLoginClick = async () => {
-  //   const cookies = document.cookie.split('; ');
-  //   const token = cookies.find((row) => row.startsWith('token='))?.split('=')[1];
-  //   const userName = cookies.find((row) => row.startsWith('username='))?.split('=')[1];
-
-  //   if (checkIfLoggedIn()) {
-  //     if (!userDetails && token && userName) {
-  //       try {
-  //         // שליפת פרטי המשתמש באמצעות הפונקציה שלך
-  //         const userData = await getUserDetails(userName);
-  //         if (userData) {
-  //           Swal.fire({
-  //             title: 'ברוך הבא',
-  //             text: `שלום ${userData.user.firstName}, פרטי המשתמש שלך עודכנו!`,
-  //             icon: 'success',
-  //             confirmButtonText: 'הבנתי',
-  //           });
-  //         }
-  //       } catch (error) {
-  //         console.error('Error fetching user details:', error);
-  //         Swal.fire({
-  //           title: 'שגיאה',
-  //           text: 'לא הצלחנו לעדכן את פרטי המשתמש. נסה שוב מאוחר יותר.',
-  //           icon: 'error',
-  //           confirmButtonText: 'סגור',
-  //         });
-  //       }
-  //     } else {
-  //       Swal.fire({
-  //         title: 'כבר מחובר',
-  //         text: 'אתה כבר מחובר לחשבון משתמש, לאחר יציאה ניתן להתחבר שוב.',
-  //         icon: 'info',
-  //         confirmButtonText: 'הבנתי',
-  //       });
-  //     }
-  //   } else {
-  //     openModal();
-  //   }
-  // };
+ 
+    console.log("hbh",userDet);
+    }, [userDet])
+  
 
   const handleProfileClick = () => {
     if (checkIfLoggedIn()) {

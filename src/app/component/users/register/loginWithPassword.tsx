@@ -36,73 +36,80 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     };
 
     return (
-        <div>
-            <h2 className="page-title">התחבר לחשבון שלך</h2>
-            <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                    <label htmlFor="userName" className="block font-medium">שם משתמש</label>
-                    <input id="userName" name="userName" type="text" required className="w-full px-3 py-2 border rounded-md" />
-                </div>
-                <div>
-                    <label htmlFor="email" className="block font-medium">אימייל</label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        className="w-full px-3 py-2 border rounded-md"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="relative">
-                    <label htmlFor="password" className="block font-medium">
-                        סיסמה
-                    </label>
+        <div className="bg-[#FFF7F7] p-6 min-h-screen flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <h2 className="page-title text-center text-[#1230AE] text-2xl font-semibold mb-6">התחבר לחשבון שלך</h2>
+                <form onSubmit={handleLogin} className="space-y-4">
+                    <div>
+                        <label htmlFor="userName" className="block font-medium text-[#1230AE]">שם משתמש</label>
+                        <input
+                            id="userName"
+                            name="userName"
+                            type="text"
+                            required
+                            className="w-full px-3 py-2 border rounded-md border-[#C68FE6] focus:ring-[#6C48C5] focus:border-[#6C48C5]"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block font-medium text-[#1230AE]">אימייל</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            className="w-full px-3 py-2 border rounded-md border-[#C68FE6] focus:ring-[#6C48C5] focus:border-[#6C48C5]"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="relative">
+                        <label htmlFor="password" className="block font-medium text-[#1230AE]">סיסמה</label>
+                        <button
+                            type="button"
+                            onClick={() => { setshowPassword(!showPassword) }}
+                            className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-[#6C48C5]"
+                        >
+                            {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />}
+                        </button>
+                        <input
+                            id="password"
+                            name="password"
+                            type={showPassword ? "text" : "password"}
+                            required
+                            className="w-full px-3 py-2 border rounded-md border-[#C68FE6] focus:ring-[#6C48C5] focus:border-[#6C48C5]"
+                            onPaste={(e) => e.preventDefault()} // מניעת הדבקה
+                            onCopy={(e) => e.preventDefault()} // מניעת העתקה
+                            onCut={(e) => e.preventDefault()}  // מניעת גזירה
+                        />
+                    </div>
+                    {errorMessage && <p className="text-red-500 text-center mt-2">{errorMessage}</p>}
+                    <button type="submit" className="w-full py-2 bg-[#1230AE] text-white rounded-md hover:bg-[#6C48C5]">
+                        התחבר
+                    </button>
+                    <LoginWithGoogle />
+                </form>
+                <p className="text-center mt-4 text-[#1230AE]">
+                    שכחת סיסמה?{' '}
                     <button
                         type="button"
-                        onClick={() => { setshowPassword(!showPassword) }}
-                        className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
-
-                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
+                        onClick={() => onForgetPassword(email)}
+                        className="text-[#6C48C5] hover:underline"
+                    >
+                        איפוס סיסמה
                     </button>
-                    <input
-                        id="password"
-                        name="password"
-                        type={showPassword ? "text" : "password"}
-                        required
-                        className="w-full px-3 py-2 border rounded-md"
-                        onPaste={(e) => e.preventDefault()} // מניעת הדבקה
-                        onCopy={(e) => e.preventDefault()} // מניעת העתקה
-                        onCut={(e) => e.preventDefault()}  // מניעת גזירה
-                    />
-
-                </div>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                <button type="submit" className="button-primary">התחבר</button>
-                <LoginWithGoogle></LoginWithGoogle>
-
-            </form>
-            <p className="text-center mt-4">
-                שכחת סיסמה?{' '}
-                <button
-                    type="button"
-                    onClick={() => onForgetPassword(email)}
-                    className="button-link"
-                >
-                    איפוס סיסמה
-                </button>
-            </p>
-            <p className="text-center">
-                אין לך חשבון?{' '}
-                <button
-                    type="button"
-                    onClick={onNewUser} // לוחץ על כפתור זה יעביר לשלב הרשמה
-                    className="button-link"
-                >
-                    הירשם כאן
-                </button>
-            </p>
+                </p>
+                <p className="text-center text-[#1230AE]">
+                    אין לך חשבון?{' '}
+                    <button
+                        type="button"
+                        onClick={onNewUser} // לוחץ על כפתור זה יעביר לשלב הרשמה
+                        className="text-[#6C48C5] hover:underline"
+                    >
+                        הירשם כאן
+                    </button>
+                </p>
+            </div>
         </div>
+
     );
 };
 

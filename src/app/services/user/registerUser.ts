@@ -1,11 +1,11 @@
-import { Address, UserFormData } from "@/app/types/user";
+import {  UserFormData } from "@/app/types/user";
 import { signOut } from "next-auth/react";
 import useUserStore from "@/app/store/userModel";
 import axios from "axios";
 import { getBaseUrl } from "../config/axios";
 import { getUserDetails } from '@/app/services/user/getDetails'
 import { PostCardProps } from "@/app/types/post";
-import useNavbarStore from "@/app/store/navbarStore";
+
 
 
 const baseUrl = getBaseUrl();
@@ -26,15 +26,12 @@ export const singIn = async (
         },
       }
     );
-    console.log(response);
     getUserDetails(userName);
-    // החזרת התשובה מהשרת
-    console.log(response);
 
     return response;
   } catch (error) {
     console.error("Error registering user:", error);
-    throw error; // טיפול בשגיאות
+    throw error;
   }
 };
 
@@ -51,11 +48,10 @@ export const addUser = async (data: UserFormData) => {
     );
     console.log(response);
 
-    // החזרת התשובה מהשרת
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error);
-    throw error; // טיפול בשגיאות
+    throw error;
   }
 };
 
@@ -72,13 +68,10 @@ export const forgetPassword = async (data: string) => {
         },
       }
     );
-    console.log(response);
-
-    // החזרת התשובה מהשרת
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error);
-    throw error; // טיפול בשגיאות
+    throw error; 
   }
 };
 export const newPassword = async (
@@ -92,19 +85,16 @@ export const newPassword = async (
       otp: otp,
       newPassword: newPassword,
     };
-    const response = await axios.post(`${baseUrl}/api/users/register/newPassword`,
+    const response = await axios.post(`${baseUrl}/api/users/register/newPassword`,data,
       {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-    console.log(response);
-    // getUserDetails(userName);
-    // החזרת התשובה מהשרת
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error);
-    throw error; // טיפול בשגיאות
+    throw error;
   }
 };
 
@@ -119,14 +109,13 @@ export const logout = async () => {
       }
     );
     await signOut({
-      redirect: false, // Prevent automatic redirection
+      redirect: false, 
     });
-    console.log(response);
-    // החזרת התשובה מהשרת
+   
     return response.data;
   } catch (error) {
     console.error("Error registering user:", error);
-    throw error; // טיפול בשגיאות
+    throw error; 
   }
 };
 
