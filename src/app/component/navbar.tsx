@@ -1,4 +1,5 @@
 'use client';
+import Link from "next/link";
 
 import profileImage from '@/app/assets/images/defaultConsumerProfile.png';
 import Image from 'next/image';
@@ -10,6 +11,7 @@ import Logo from '@/app/assets/images/logo.png';
 import { useEffect, useState } from 'react';
 import { getMyDetails } from '@/app/services/user/getDetails';
 import { UserFormData } from '../types/user';
+import { Home } from "lucide-react";
 
 const Navbar = () => {
   let userDet = useUserStore((state) => state.user);
@@ -43,7 +45,7 @@ const Navbar = () => {
           userDetails.user.likedPeople,
           userDetails.user.postArr
         );
-        userDet=userDetails.user;
+        userDet = userDetails.user;
       } catch (error) {
         console.error('Failed to fetch user details:', error);
       }
@@ -51,7 +53,7 @@ const Navbar = () => {
 
     const userName = checkIfLoggedIn();
     if (!userDet && userName) {
-      console.log("before",userDet);
+      console.log("before", userDet);
       getMyPersonalDetails()
     }
  
@@ -83,40 +85,51 @@ const Navbar = () => {
             className="hover:opacity-90 transition-opacity"
           />
         </div>
-
-
-        {/* Profile Section - Remains on the right */}
-        <div
-          className="order-1 flex flex-col items-center cursor-pointer"
-          onClick={handleProfileClick}
-        >
-          {checkIfLoggedIn() && userDet?.profileImage ? (
-            <img
-              src={userDet.profileImage}
-              alt="Profile"
-              width={50}
-              height={50}
-              className="rounded-full border-2 border-[#101f61] mb-2"
-            />
-          ) : (
-            <Image
-              src={profileImage}
-              alt="Profile"
-              width={50}
-              height={50}
-              className="rounded-full border-2 border-[#101f61] mb-2"
-            />
-          )}
-          <div className="text-center">
-            {checkIfLoggedIn() && userDet ? (
-              <span className="text-[#101f61] text-sm font-medium font-bold">
-                {userDet.firstName} {userDet.lastName}
-              </span>
+        <div className="order-1 flex items-center gap-4 cursor-pointer">
+          {/* Profile Section */}
+          <div className="flex flex-col items-center" onClick={handleProfileClick}>
+            {checkIfLoggedIn() && userDet?.profileImage ? (
+              <img
+                src={userDet.profileImage}
+                alt="Profile"
+                width={50}
+                height={50}
+                className="rounded-full border-2 border-[#101f61] mb-2"
+              />
             ) : (
-              <span className="text-[#101f61] text-sm font-medium font-bold">הפרופיל שלי</span>
+              <Image
+                src={profileImage}
+                alt="Profile"
+                width={50}
+                height={50}
+                className="rounded-full border-2 border-[#101f61] mb-2"
+              />
             )}
+            <div className="text-center">
+              {checkIfLoggedIn() && userDet ? (
+                <span className="text-[#101f61] text-sm font-medium font-bold">
+                  {userDet.firstName} {userDet.lastName}
+                </span>
+              ) : (
+                <span className="text-[#101f61] text-sm font-medium font-bold">הפרופיל שלי</span>
+              )}
+            </div>
           </div>
+
+          {/* Home Link */}
+          <Link
+            href="/"
+            className="flex items-center gap-1 hover:text-white transition-colors"
+            style={{ alignSelf: 'flex-end', marginBottom: '15px' }}
+          >
+            דף הבית
+            <Home className="h-4 w-4" />
+          </Link>
         </div>
+
+
+
+
       </nav>
     </div>
   );

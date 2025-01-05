@@ -263,7 +263,7 @@ const UserProfileDisplay = ({ username }: { username: string }) => {
 
           {/* Chat Section */}
           <div className="chat-section bg-white shadow-xl rounded-lg p-8 max-w-3xl mx-auto mt-8">
-            <h3 className="text-3xl font-bold text-blue-700 mb-6">צ'אט עם {user.userName}</h3>
+            <h3 className="text-3xl font-bold text-blue-700 mb-6">צ&quot;אט עם {user.userName}</h3>
             <Chat />
           </div>
         </>
