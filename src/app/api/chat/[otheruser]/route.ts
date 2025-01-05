@@ -3,14 +3,12 @@ import connectDb from '../../../lib/db/connectDb';
 import { NextRequest, NextResponse } from "next/server";
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 
-// טיפול בבקשת GET: שליפת כל ההודעות
 export async function GET(req: NextRequest, { params }: { params: { otheruser: string } }) {
     const { otheruser } = params;
     let username: string | undefined;
 
-    // אימות הטוקן וקבלת שם המשתמש מהמיידלוור
     await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-        username = (req as any).userName; // קבלת userName מהמיידלוור
+        username = (req as any).userName; 
     });
 
     if (!otheruser) {
@@ -23,10 +21,9 @@ export async function GET(req: NextRequest, { params }: { params: { otheruser: s
         console.log("שליפת הודעות עבור:");
         console.log(`username: ${username}, otheruser: ${otheruser}`);
 
-        // שליפה עם תנאים הפוכים
         const messages = await MessageChat.find({
             $or: [
-                { username, otheruser }, // תנאי ראשון: username === username ו-otheruser === otheruser
+                { username, otheruser }, 
                 { username: otheruser, otheruser: username } 
             ]
         }).sort({ timestamp: 1 });
