@@ -1,16 +1,16 @@
 import MessageChat from '@/app/lib/models/chatmessage';
-import connectDb from '../../../lib/db/connectDb'
+import connectDb from '../../../lib/db/connectDb';
 import { NextRequest, NextResponse } from "next/server";
-import { checkIfLoggedIn } from '@/app/services/user/registerUser';
 import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 
 // טיפול בבקשת GET: שליפת כל ההודעות
-export async function GET(req: NextRequest, { params }: { params: { otheruser: string} }) {
+export async function GET(req: NextRequest, { params }: { params: { otheruser: string } }) {
     const { otheruser } = params;
     let username: string | undefined;
 
+    // אימות הטוקן וקבלת שם המשתמש מהמיידלוור
     await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-        username  = (req as any).userName; // קבלת userName ממידלוואר
+        username = (req as any).userName; // קבלת userName מהמיידלוור
     });
 
     if (!otheruser) {
@@ -18,15 +18,21 @@ export async function GET(req: NextRequest, { params }: { params: { otheruser: s
     }
 
     try {
-        console.log("!!!!!!!!!!!!!!");
+        await connectDb();
 
-        console.log(username, otheruser);
+        console.log("שליפת הודעות עבור:");
+        console.log(`username: ${username}, otheruser: ${otheruser}`);
 
-        const messages = await MessageChat.find({ username, otheruser }).sort({ timestamp: 1 });
-        console.log(messages);
+        // שליפה עם תנאים הפוכים
+        const messages = await MessageChat.find({
+            $or: [
+                { username, otheruser }, // תנאי ראשון: username === username ו-otheruser === otheruser
+                { username: otheruser, otheruser: username } 
+            ]
+        }).sort({ timestamp: 1 });
 
         if (messages.length === 0) {
-            return NextResponse.json({ message: "No messages found for this otheruser" }, { status: 404 });
+            return NextResponse.json({ message: "No messages found for the specified users" }, { status: 404 });
         }
 
         return NextResponse.json({ messages }, { status: 200 });
