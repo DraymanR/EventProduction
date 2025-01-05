@@ -11,7 +11,8 @@ import Logo from '@/app/assets/images/logo.png';
 import { useEffect, useState } from 'react';
 import { getMyDetails } from '@/app/services/user/getDetails';
 import { UserFormData } from '../types/user';
-import { Home, Info } from "lucide-react";
+import { Home, Info, LogIn } from "lucide-react";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   let userDet = useUserStore((state) => state.user);
@@ -19,10 +20,11 @@ const Navbar = () => {
   const [openSideBar, setOpenSideBar] = useState<boolean>(true);
   const openModal = useModalStore((state) => state.openModal);
   const storeUser = useUserStore((state) => state.user);
+
   useEffect(() => {
     const getMyPersonalDetails = async () => {
-      toggleNavbar(true)
-      if (useUserStore.getState().isReady) return; // הימנע משאילתת נתונים כפולה
+      toggleNavbar(true);
+      if (useUserStore.getState().isReady) return;
       if (storeUser) return;
       try {
         const userDetails = await getMyDetails();
@@ -49,17 +51,13 @@ const Navbar = () => {
       } catch (error) {
         console.error('Failed to fetch user details:', error);
       }
-    }
+    };
 
     const userName = checkIfLoggedIn();
     if (!userDet && userName) {
-      console.log("before", userDet);
-      getMyPersonalDetails()
+      getMyPersonalDetails();
     }
- 
-    console.log("hbh",userDet);
-    }, [userDet])
-  
+  }, [userDet]);
 
   const handleProfileClick = () => {
     if (checkIfLoggedIn()) {
@@ -70,81 +68,94 @@ const Navbar = () => {
     }
   };
 
+  const handleLoginClick = () => {
+    if (checkIfLoggedIn()) {
+      Swal.fire({
+        title: 'כבר מחובר',
+        text: 'אתה כבר מחובר לחשבון משתמש, לאחר יציאה ניתן להתחבר שוב.',
+        icon: 'info',
+        confirmButtonText: 'הבנתי',
+      });
+    } else {
+      openModal();
+    }
+  };
 
   return (
+  
     <div className="fixed top-0 left-0 right-0 w-full bg-[#6C48C5] shadow-md z-50 h-[105px]">
-      <nav className="flex justify-between items-center p-4 max-w-screen-2xl mx-auto relative h-full">
-        {/* Logo - Now positioned on the left */}
-        <div className="order-2">
-          <Image
-            src={Logo}
-            alt="חגיגה מושלמת Logo"
-            height={48}
-            width={130}
-            priority
-            className="hover:opacity-90 transition-opacity"
+  <nav className="flex justify-between items-center p-4 max-w-screen-2xl mx-auto relative h-full">
+    {/* Profile Section */}
+    <div className="order-1 flex items-center gap-4 cursor-pointer">
+      <div className="flex flex-col items-center" onClick={handleProfileClick}>
+        {checkIfLoggedIn() && userDet?.profileImage ? (
+          <img
+            src={userDet.profileImage}
+            alt="Profile"
+            width={50}
+            height={50}
+            className="rounded-full border-2 border-[#101f61] mb-2"
           />
+        ) : (
+          <Image
+            src={profileImage}
+            alt="Profile"
+            width={50}
+            height={50}
+            className="rounded-full border-2 border-[#101f61] mb-2"
+          />
+        )}
+        <div className="text-center">
+          {checkIfLoggedIn() && userDet ? (
+            <span className="text-[#101f61] text-sm font-medium font-bold">
+              {userDet.firstName} {userDet.lastName}
+            </span>
+          ) : (
+            <span className="text-[#101f61] text-sm font-medium font-bold">הפרופיל שלי</span>
+          )}
         </div>
-        <div className="order-1 flex items-center gap-4 cursor-pointer">
-          {/* Profile Section */}
-          <div className="flex flex-col items-center" onClick={handleProfileClick}>
-            {checkIfLoggedIn() && userDet?.profileImage ? (
-              <img
-                src={userDet.profileImage}
-                alt="Profile"
-                width={50}
-                height={50}
-                className="rounded-full border-2 border-[#101f61] mb-2"
-              />
-            ) : (
-              <Image
-                src={profileImage}
-                alt="Profile"
-                width={50}
-                height={50}
-                className="rounded-full border-2 border-[#101f61] mb-2"
-              />
-            )}
-            <div className="text-center">
-              {checkIfLoggedIn() && userDet ? (
-                <span className="text-[#101f61] text-sm font-medium font-bold">
-                  {userDet.firstName} {userDet.lastName}
-                </span>
-              ) : (
-                <span className="text-[#101f61] text-sm font-medium font-bold">הפרופיל שלי</span>
-              )}
-            </div>
-          </div>
-
-          {/* Links Section */}
-          <div className="flex items-center gap-6">
-            <Link
-              href="/"
-              className="flex items-center gap-1 hover:text-white transition-colors"
-            >
-              דף הבית
-              <Home className="h-4 w-4" />
-            </Link>
-
-            <Link
-              href="/pages/about"
-              className="flex items-center gap-2 hover:text-white transition-colors"
-            >
-              אודות האתר
-              <Info className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-
-
-
-
-
-      </nav>
+      </div>
     </div>
+
+    {/* Center Links */}
+    <div className="absolute inset-x-0 text-center">
+      <div className="flex items-center justify-center gap-6">
+        <Link href="/" className="flex items-center gap-1 hover:text-white transition-colors">
+          דף הבית
+          <Home className="h-4 w-4" />
+        </Link>
+        <Link
+          href="/pages/about"
+          className="flex items-center gap-2 hover:text-white transition-colors"
+        >
+          אודות האתר
+          <Info className="h-4 w-4" />
+        </Link>
+        <button
+          onClick={handleLoginClick}
+          className="flex items-center gap-2 hover:text-white transition-colors"
+        >
+          התחברות
+          <LogIn className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+
+    {/* Logo */}
+    <div className="order-2">
+      <Image
+        src={Logo}
+        alt="חגיגה מושלמת Logo"
+        height={48}
+        width={130}
+        priority
+        className="hover:opacity-90 transition-opacity"
+      />
+    </div>
+  </nav>
+</div>
+
   );
 };
 
-
 export default Navbar;
-
