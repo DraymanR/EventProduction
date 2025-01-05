@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
             userName = (req as any).userName; // קבלת userName ממידלוואר
         });
-
+        console.log("Request URL:", req.url);
         const { searchParams } = new URL(req.url);
         const userNameFromQuery = searchParams.get('username');
 
@@ -36,8 +36,8 @@ export async function GET(req: NextRequest) {
                         model: 'Recommendation',
                     },
                     {
-                        path: 'postId', // זה ה-ID של ה-ConsumerPost
-                        model: 'ConsumerPost', // הכוונה היא לפופל את ה-ID של ה-ConsumerPost
+                        path: 'postId', 
+                        model: 'ConsumerPost', 
                     },
                 ]
             }).populate({
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
                         'Access-Control-Allow-Credentials': 'true',
                         'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                             ? 'https://event-production-fawn.vercel.app'
-                            : 'https://event-production-fawn.vercel.app',
+                            : 'http://localhost:3000',
                         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                     }
@@ -108,7 +108,7 @@ export async function GET(req: NextRequest) {
                     'Access-Control-Allow-Credentials': 'true',
                     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                         ? 'https://event-production-fawn.vercel.app'
-                        : 'https://event-production-fawn.vercel.app',
+                        : 'http://localhost:3000',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 }
