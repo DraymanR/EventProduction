@@ -9,65 +9,66 @@ import ResetPassword from "@/app/component/users/register/newPassword";
 import "@/app/globals.css";
 
 const Login: React.FC = () => {
-  const [currentStep, setCurrentStep] = useState<
-    "LoginWithPassword" | "newPassword" | "EnterCodeFromEmail" | "newUser"
-  >("LoginWithPassword");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [codeFromEmail, setCodeFromEmail] = useState("");
-  const [userEmail, setUserFromEmail] = useState("");
+    const [currentStep, setCurrentStep] = useState<
+        "LoginWithPassword" | "newPassword" | "EnterCodeFromEmail" | "newUser"
+    >("LoginWithPassword");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [codeFromEmail, setCodeFromEmail] = useState("");
+    const [userEmail, setUserFromEmail] = useState("");
 
-  const handleForgetPassword = async (email: string) => {
-    try {
-      const result = await forgetPassword(email);
-      setUserFromEmail(email);
-      console.log(result);
-      setErrorMessage("");
-      setCurrentStep("EnterCodeFromEmail");
-    } catch (error) {
-      setErrorMessage("Failed to send the code.");
-      console.error(error);
-    }
-  };
+    const handleForgetPassword = async (email: string) => {
+        try {
+            const result = await forgetPassword(email);
+            setUserFromEmail(email);
+            console.log(result);
+            setErrorMessage("");
+            setCurrentStep("EnterCodeFromEmail");
+        } catch (error) {
+            setErrorMessage("Failed to send the code.");
+            console.error(error);
+        }
+    };
 
-  return (
-    <div className="login-wrapper">
-      <div className="login-container">
-        {currentStep === "LoginWithPassword" && (
-          <LoginWithPassword
-            onForgetPassword={handleForgetPassword}
-            onNewUser={() => {
-              setErrorMessage("");
-              setCurrentStep("newUser");
-            }}
-          />
-        )}
-        {currentStep === "EnterCodeFromEmail" && (
-          <EnterCodeFromEmail
-            onBack={(
-              currentStep: "LoginWithPassword" | "newPassword",
-              myCodeFromEmail: string
-            ) => {
-              setCodeFromEmail(myCodeFromEmail);
-              setErrorMessage("");
-              setCurrentStep(currentStep);
-            }}
-          />
-        )}
-        {currentStep === "newPassword" && (
-          <ResetPassword otp={codeFromEmail} email={userEmail} />
-        )}
-        {currentStep === "newUser" && (
-          <Register
-            onBack={() => {
-              setErrorMessage("");
-              setCurrentStep("LoginWithPassword");
-            }}
-          />
-        )}
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
-      </div>
-    </div>
-  );
+    return (
+        <div className="login-wrapper bg-[#FFF7F7] min-h-screen flex items-center justify-center p-6">
+            <div className="login-container bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                {currentStep === "LoginWithPassword" && (
+                    <LoginWithPassword
+                        onForgetPassword={handleForgetPassword}
+                        onNewUser={() => {
+                            setErrorMessage("");
+                            setCurrentStep("newUser");
+                        }}
+                    />
+                )}
+                {currentStep === "EnterCodeFromEmail" && (
+                    <EnterCodeFromEmail
+                        onBack={(
+                            currentStep: "LoginWithPassword" | "newPassword",
+                            myCodeFromEmail: string
+                        ) => {
+                            setCodeFromEmail(myCodeFromEmail);
+                            setErrorMessage("");
+                            setCurrentStep(currentStep);
+                        }}
+                    />
+                )}
+                {currentStep === "newPassword" && (
+                    <ResetPassword otp={codeFromEmail} email={userEmail} />
+                )}
+                {currentStep === "newUser" && (
+                    <Register
+                        onBack={() => {
+                            setErrorMessage("");
+                            setCurrentStep("LoginWithPassword");
+                        }}
+                    />
+                )}
+                {errorMessage && <p className="error-message text-red-500 text-center mt-4">{errorMessage}</p>}
+            </div>
+        </div>
+
+    );
 };
 
 export default Login;
