@@ -11,7 +11,6 @@ export async function GET(req: NextRequest) {
         await connectDb();
         let userName: string | undefined;
 
-        // השתמש במידלוואר
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
             userName = (req as any).userName; // קבלת userName ממידלוואר
         });
@@ -89,7 +88,7 @@ export async function GET(req: NextRequest) {
                         'Access-Control-Allow-Credentials': 'true',
                         'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
                             ? 'https://event-production-fawn.vercel.app'
-                            : 'http://localhost:3000',
+                            : 'https://event-production-fawn.vercel.app',
                         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                     }
@@ -108,8 +107,8 @@ export async function GET(req: NextRequest) {
                 headers: {
                     'Access-Control-Allow-Credentials': 'true',
                     'Access-Control-Allow-Origin': process.env.NODE_ENV === 'production'
-                        ? 'https://event-https://event-production-fawn.vercel.app-git-main-riva-draimans-projects.vercel.app'
-                        : 'http://localhost:3000',
+                        ? 'https://event-production-fawn.vercel.app'
+                        : 'https://event-production-fawn.vercel.app',
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
                 }
