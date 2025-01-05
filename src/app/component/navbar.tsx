@@ -155,16 +155,26 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Home Link */}
-          <Link
-            href="/"
-            className="flex items-center gap-1 hover:text-white transition-colors"
-            style={{ alignSelf: 'flex-end', marginBottom: '15px' }}
-          >
-            דף הבית
-            <Home className="h-4 w-4" />
-          </Link>
+          {/* Links Section */}
+          <div className="flex items-center gap-6">
+            <Link
+              href="/"
+              className="flex items-center gap-1 hover:text-white transition-colors"
+            >
+              דף הבית
+              <Home className="h-4 w-4" />
+            </Link>
+
+            <Link
+              href="/pages/about"
+              className="flex items-center gap-2 hover:text-pink-600 transition-colors"
+            >
+              אודות האתר
+              <Info className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
+
 
 
 
