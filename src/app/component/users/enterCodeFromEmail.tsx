@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const EnterCodeFromEmail: React.FC<{ onBack: (currentStep: 'LoginWithPassword' | 'newPassword', myCodeFromEmail: string) => void }> = ({ onBack }) => {
   const [code, setCode] = useState('');
@@ -8,7 +9,26 @@ const EnterCodeFromEmail: React.FC<{ onBack: (currentStep: 'LoginWithPassword' |
     e.preventDefault();
     setErrorMessage('')
     onBack('newPassword', code)
-    alert('Code verified! Redirecting to reset password form.');
+    Swal.fire({
+      title: 'אימות הצליח!',
+      text: 'מעביר אותך לטופס איפוס הסיסמה...',
+      icon: 'success',
+      confirmButtonText: 'אישור',
+      customClass: {
+        popup: 'swal2-rtl'
+      },
+      timer: 2000, 
+      timerProgressBar: true,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      },
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
   };
 
   return (

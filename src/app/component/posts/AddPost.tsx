@@ -9,6 +9,7 @@ import '@/app/globals.css';
 import { getAllUsers } from "@/app/services/user/getDetails";
 import { CldUploadWidget } from 'next-cloudinary';
 import TermsPage from "../terms";
+import Swal from "sweetalert2";
 
 
 
@@ -21,7 +22,7 @@ const AddPost: React.FC = () => {
   const [isConsumer, setIsConsumer] = useState<boolean>(true);
   const [supplierNameArr, setSupplierNameArr] = useState<MultiValue<string>>([]);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
-  const [suppliers, setSuppliers] = useState<{ value: string; label: string }[]>([]); // סטייט עבור הספקים
+  const [suppliers, setSuppliers] = useState<{ value: string; label: string }[]>([]);
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = useModalStore((state) => state.closeModal);
@@ -31,10 +32,10 @@ const AddPost: React.FC = () => {
     const fetchSuppliers = async () => {
       try {
         const data = await getAllUsers();
-        
+
         const filteredSuppliers = data.users
-          .filter((user: any) => user.titles.includes('consumer') && user.titles.length > 1) // בדוק שיש title נוסף חוץ מ־consumer
-          .map((user: any) => user.userName); // הוצאת userName בלבד
+          .filter((user: any) => user.titles.includes('consumer') && user.titles.length > 1)
+          .map((user: any) => user.userName);
         console.log("filteredSuppliers", filteredSuppliers);
 
         const supplierOptions = filteredSuppliers.map((user: string) => ({
@@ -49,16 +50,16 @@ const AddPost: React.FC = () => {
       }
     };
     fetchSuppliers();
-  }, []); // פועל רק פעם אחת בזמן טעינת הקומפוננטה
+  }, []);
 
 
   const handleUploadSuccess = async (result: any) => {
     if (result.info && result.info.secure_url) {
       const secureUrl = result.info.secure_url;
-      setAlbum((prev) => [...prev, secureUrl]); // שומר את הקישור המלא במערך
+      setAlbum((prev) => [...prev, secureUrl]);
     }
   };
-  
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const files = Array.from(e.target.files);
@@ -86,7 +87,15 @@ const AddPost: React.FC = () => {
     e.preventDefault();
 
     if (!acceptedTerms) {
-      alert("יש לאשר את התנאים לפני המשך");
+      Swal.fire({
+        title: 'שגיאה',
+        text: 'יש לאשר את התנאים לפני המשך',
+        icon: 'warning',
+        confirmButtonText: 'אישור',
+        customClass: {
+          popup: 'swal2-rtl'
+        }
+      });
       return;
     }
 
@@ -104,7 +113,24 @@ const AddPost: React.FC = () => {
     const pp = await addingMyPost(newPost)
     closeModal()
     setPostArr(pp.post)
-    alert("הפוסט נוסף בהצלחה!");
+    Swal.fire({
+      title: 'בוצע בהצלחה!',
+      text: 'הפוסט נוסף בהצלחה!',
+      icon: 'success',
+      confirmButtonText: 'אישור',
+      customClass: {
+        popup: 'swal2-rtl'
+      },
+      showConfirmButton: true,
+      timer: 3000, 
+      timerProgressBar: true,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    });
     setTitle("");
     setDescription("");
     setEventCategory("barmitzva");
@@ -150,7 +176,7 @@ const AddPost: React.FC = () => {
         הספקים שלי:
         <Select
           options={suppliers}
-          isMulti // מאפשר בחירה מרובה
+          isMulti
           placeholder="בחר ספקים..."
           onChange={(selectedOptions) => setSupplierNameArr(selectedOptions.map((option) => option.value))}
           value={supplierNameArr.map((supplier) => ({ value: supplier, label: supplier }))}
@@ -166,7 +192,7 @@ const AddPost: React.FC = () => {
       </label>
 
       <label>
-        תקציב האירוע:  
+        תקציב האירוע:
         <input
           type="number"
           value={budget}
@@ -175,15 +201,6 @@ const AddPost: React.FC = () => {
         />
       </label>
 
-      {/* <label>
-        העלאת תמונות:
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-      </label> */}
       <label>העלאת תמונות
         <CldUploadWidget
           uploadPreset="appOrganizerEvent"
