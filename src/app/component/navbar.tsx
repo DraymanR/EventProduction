@@ -128,7 +128,7 @@ const Navbar = () => {
 
             <Link
               href="/pages/about"
-              className="flex items-center gap-2 hover:text-pink-600 transition-colors"
+              className="flex items-center gap-2 hover:text-white transition-colors"
             >
               אודות האתר
               <Info className="h-4 w-4" />
