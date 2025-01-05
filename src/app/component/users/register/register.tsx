@@ -189,9 +189,9 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     }, [profileImage]);
 
     return (
-        <div className="text-center w-[80vh] mx-auto mb-10 max-h-[80vh] p-6">
+        <div className="text-center mx-auto mb-10 max-h-[80vh] p-6">
         <h2 className="text-[#1230AE] text-2xl font-bold text-center mb-6">צור חשבון חדש</h2>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
             {/* שלב ראשון */}
             {currentStep === 1 && (
                 <>

@@ -36,9 +36,9 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
     };
 
     return (
-        <div className="bg-[#FFF7F7] p-6 min-h-screen flex items-center justify-center">
+        <div className="bg-[#FFF7F7] p-6 flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="page-title text-center text-[#1230AE] text-2xl font-semibold mb-6">התחבר לחשבון שלך</h2>
+                <h2 className="text-center text-[#1230AE] text-2xl font-semibold mb-6">התחבר לחשבון שלך</h2>
                 <form onSubmit={handleLogin} className="space-y-4">
                     <div>
                         <label htmlFor="userName" className="block font-medium text-[#1230AE]">שם משתמש</label>

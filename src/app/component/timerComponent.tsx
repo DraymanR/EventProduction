@@ -42,9 +42,9 @@ const TimerComponent = () => {
 
     return (
         <div>
-            <PopUpWindow>
+            {/* <PopUpWindow> */}
                 <Login />
-            </PopUpWindow>
+            {/* </PopUpWindow> */}
         </div>
     );
 };

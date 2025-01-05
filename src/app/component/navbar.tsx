@@ -11,7 +11,7 @@ import Logo from '@/app/assets/images/logo.png';
 import { useEffect, useState } from 'react';
 import { getMyDetails } from '@/app/services/user/getDetails';
 import { UserFormData } from '../types/user';
-import { Home } from "lucide-react";
+import { Home,Info } from "lucide-react";
 
 const Navbar = () => {
   let userDet = useUserStore((state) => state.user);
