@@ -15,10 +15,11 @@ export async function GET(req: NextRequest) {
             userName = (req as any).userName; // קבלת userName ממידלוואר
         });
        
-
+        const urlParams = new URLSearchParams(req.url);
+        const userNameFromQuery = urlParams.get('username');
+        
         // const { searchParams } = new URL(req.url);
         // const userNameFromQuery = searchParams.get('username');
-        const userNameFromQuery = req.nextUrl.searchParams.get('username');
 
         if (!userNameFromQuery) {
             return NextResponse.json(
