@@ -9,7 +9,7 @@ import { UserFormData } from '@/app/types/user';
 import { useEffect, useState } from 'react';
 
 const Home = () => {
-    const updateUserStore = useUpdateUserStore(); // קריאה ל-Hook מחוץ לפונקציה הפנימית
+    const updateUserStore = useUpdateUserStore();
     const storeUser = useUserStore((state) => state.user);
     const toggleNavbar = useNavbarStore((state) => state.toggleNavbar);
     const [activeTab, setActiveTab] = useState("users");
@@ -17,7 +17,7 @@ const Home = () => {
     useEffect(() => {
         const getMyPersonalDetails = async () => {
             toggleNavbar(true)
-            if (useUserStore.getState().isReady) return; // הימנע משאילתת נתונים כפולה
+            if (useUserStore.getState().isReady) return;
             if(storeUser) return;
             try {
                 const userDetails = await getMyDetails();

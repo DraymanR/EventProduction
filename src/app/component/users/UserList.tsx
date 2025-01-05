@@ -6,7 +6,6 @@ import { getAllUsers } from "@/app/services/user/getDetails";
 import "@/app/globals.css";
 import UserCard from "./UserCard";
 import SortFilter from "./SortUser";
-// import SortFilter from "@/app/component/users/SortUser";
 
 const UserList = () => {
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
@@ -14,11 +13,21 @@ const UserList = () => {
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [noMoreUsers, setNoMoreUsers] = useState<boolean>(false);
-  const [filters, setFilters] = useState<{ language?: string[]; title?: string[]; city?: string[] }>({
+
+  const [filters, setFilters] = useState<{ language?: string[]; title?: string[]; city?: string[]; userName?: string }>({
     language: [],
     title: [],
     city: [],
-  });
+    userName: "",
+});
+
+const handleFilterChange = (newFilters: { language?: string[]; title?: string[]; city?: string[]; userName?: string }) => {
+    setFilters(newFilters);
+    setFilteredUsers([]);
+    setPage(1);
+    setNoMoreUsers(false);
+};
+
   const [totalPages, setTotalPages] = useState<number>(1);
 
   const loadUsers = async () => {
@@ -45,13 +54,7 @@ const UserList = () => {
     }
   };
 
-  const handleFilterChange = (newFilters: { language?: string[]; title?: string[]; city?: string[] }) => {
-    setFilters(newFilters);
-    setFilteredUsers([]);
-    setPage(1);
-    setNoMoreUsers(false);
-  };
-
+ 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
     setPage(newPage);
