@@ -44,8 +44,6 @@ const Home: React.FC = () => {
       <div className="space-y-6 mt-4">
         <h2 className="page-title">:האירועים שלי</h2>
         {MyEvents.map((post: PostCardProps, index: number) => {
-          // המרת הפוסט
-
           return <PostCard key={index} post={post} />;
         })}
       </div>
