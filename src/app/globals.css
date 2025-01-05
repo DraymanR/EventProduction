@@ -4,7 +4,7 @@
 
 /* עיצוב להודעות שגיאה */
 .error-message {
-  @apply text-red-600 font-bold text-center mt-4;
+  @apply text-[#101f61] font-bold text-center mt-4;
 }
 
 /* עיצוב תוכן ראשי */
@@ -26,14 +26,14 @@ label {
 /* עיצוב כותרת עמוד */
 .page-title {
   text-align: center;
-  color: #f87171;
+  color: #1230AE;
   font-size: 1.125rem;
   font-weight: bold;
 }
 
 /* כפתור ראשי */
 .button-primary {
-  background-color: #f87171;
+  background-color: #1230AE;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.75rem;
@@ -47,7 +47,7 @@ label {
 }
 
 .button-primary:hover {
-  background-color: #f43f5e;
+  background-color: #1230AE;
 }
 
 /* כפתור קישור */

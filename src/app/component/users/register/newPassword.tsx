@@ -41,7 +41,7 @@ const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email })
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-lg">
-            <h2 className="text-red-400 text-2xl font-bold text-center mb-6">שנה את הסיסמה שלך</h2>
+            <h2 className="text-center text-[#1230AE] text-2xl font-semibold mb-6">שנה את הסיסמה שלך</h2>
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
                 <div className="relative">
                     <label htmlFor="newPassword" className="block font-medium">
@@ -93,7 +93,7 @@ const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email })
                 {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
                 <button
                     type="submit"
-                    className="w-full bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-600 transition"
+                    className="w-full py-2 bg-[#1230AE] text-white rounded-md hover:bg-[#6C48C5]"
                 >
                     עדכן סיסמה
                 </button>
