@@ -14,9 +14,11 @@ export async function GET(req: NextRequest) {
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
             userName = (req as any).userName; // קבלת userName ממידלוואר
         });
-        console.log("Request URL:", req.url);
+       
+
         const { searchParams } = new URL(req.url);
-        const userNameFromQuery = searchParams.get('username');
+        // const userNameFromQuery = searchParams.get('username');
+        const userNameFromQuery = req.nextUrl.searchParams.get('username');
 
         if (!userNameFromQuery) {
             return NextResponse.json(
