@@ -1,23 +1,28 @@
 import MessageChat from '@/app/lib/models/chatmessage';
 import connectDb from '../../../lib/db/connectDb'
 import { NextRequest, NextResponse } from "next/server";
+import { checkIfLoggedIn } from '@/app/services/user/registerUser';
+import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 
 // טיפול בבקשת GET: שליפת כל ההודעות
-export async function GET(req: NextRequest, { params }: { params: { otheruser: string } }) {
+export async function GET(req: NextRequest, { params }: { params: { otheruser: string} }) {
     const { otheruser } = params;
-    // const { otheruser} = await req.json();
+    let username: string | undefined;
 
-    console.log(otheruser);
-    
+    await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
+        username  = (req as any).userName; // קבלת userName ממידלוואר
+    });
+
     if (!otheruser) {
         return NextResponse.json({ message: "otheruser is required" }, { status: 400 });
     }
 
     try {
-        await connectDb();
-        
-        // שליפה של ההודעות לפי otheruser
-        const messages = await MessageChat.find({ otheruser }).sort({ timestamp: 1 });
+        console.log("!!!!!!!!!!!!!!");
+
+        console.log(username, otheruser);
+
+        const messages = await MessageChat.find({ username, otheruser }).sort({ timestamp: 1 });
         console.log(messages);
 
         if (messages.length === 0) {
