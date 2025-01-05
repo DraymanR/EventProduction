@@ -45,7 +45,7 @@ const ConsumerNavbar: React.FC = () => {
 
   return (
     <div>
-      <nav className="flex-1 px-4 pt-0 space-y-4 overflow-y-auto">
+      <nav className="flex-1 px-4 pt-0 space-y-4 overflow-y-auto bg-[#6C48C5]">
         <Link href="/pages/user-account"
           className="flex items-center justify-end gap-3 p-3 text-white hover:bg-white/10 rounded-lg transition-colors">
           <span className="text-lg font-bold">דף הבית</span>

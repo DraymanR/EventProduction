@@ -10,7 +10,7 @@ const ClientSideLayout = () => {
     return (
         <div>
             {isOpen &&
-                <aside className='fixed right-0 top-[105px] h-[calc(100vh-155px)] w-64 shadow-lg z-40 flex flex-col bg-[#C68FE6] '>
+                <aside className='fixed right-0 top-[105px] h-[calc(100vh-155px)] w-64 shadow-lg z-40 flex flex-col bg-[#6C48C5]'>
                     <ConsumerSidebar />
                 </aside>
             }
