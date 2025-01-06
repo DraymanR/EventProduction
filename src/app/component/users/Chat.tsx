@@ -9,7 +9,6 @@ import { MdModeEdit } from "react-icons/md";
 import useUserStore from "@/app/store/userModel";
 import { getBaseUrl } from "@/app/services/config/axios";
 
-// Initialize Ably client
 const ably = new Realtime({
   key: "1jLHPA.p9RW9g:MVb0GFzKUviMVC1i5vyIGPqIX4XyGj1Dg_762-7Mw4c",
 });
@@ -19,8 +18,8 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState("");
-  const [otherUser, setOtherUser] = useState<string>(""); // Store the other user's username
-  const [userList, setUserList] = useState<string[]>([]); // Store the list of users
+  const [otherUser, setOtherUser] = useState<string>(""); 
+  const [userList, setUserList] = useState<string[]>([]); 
   const [isSending, setIsSending] = useState(false);
 
   const username = useUserStore((st) => st.user?.userName) || "xxx";
@@ -29,7 +28,7 @@ const Chat = () => {
   const baseUrl = getBaseUrl();
 
   useEffect(() => {
-    // Fetch all users to display in the user list
+
     const fetchUsers = async () => {
       try {
         const data = await getAllUsers();
@@ -49,7 +48,7 @@ const Chat = () => {
     const channelName = getChannelName(username, otherUser);
     const channel = ably.channels.get(channelName);
 
-    // Subscribe to messages on the channel
+  
     channel.subscribe("newMessage", (msg: Types.Message) => {
       setMessages((prev) => [...prev, msg.data]);
       if (msg.data.username !== username) {
@@ -57,7 +56,6 @@ const Chat = () => {
       }
     });
 
-    // Fetch initial messages from the server
     const fetchMessages = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/chat/${otherUser}`);
@@ -76,7 +74,7 @@ const Chat = () => {
 
   const getChannelName = (user1: string, user2: string) => {
     const sortedUsers = [user1, user2].sort();
-    return sortedUsers.join("_"); // Channel name based on sorted usernames
+    return sortedUsers.join("_"); 
   };
 
   const handleSendMessage = async () => {
@@ -85,21 +83,21 @@ const Chat = () => {
     try {
       const channelName = getChannelName(username, otherUser);
 
-      // Send message to the server
+   
       await axios.post(`${baseUrl}/api/chat`, {
         username,
         text: message,
         otheruser: otherUser,
       });
 
-      // Publish message to Ably
+      
       const channel = ably.channels.get(channelName);
       channel.publish("newMessage", { username, text: message });
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
-      setIsSending(false); // Release the lock after sending
+      setIsSending(false);
     }
   };
 
@@ -142,7 +140,6 @@ const Chat = () => {
     }
   };
 
-  // Auto scroll to bottom
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -151,12 +148,12 @@ const Chat = () => {
 
   const handleSelectUser = (selectedUser: string) => {
     setOtherUser(selectedUser);
-    setMessages([]); // Clear previous messages when switching users
+    setMessages([]); 
   };
 
   return (
     <div className="flex flex-col h-[400px] w-[600px] mx-auto bg-[#FFF7F7] shadow-lg rounded-lg border border-[#6C48C5]">
-      {/* User selection */}
+
       <div className="bg-[#1230AE] text-[#FFF7F7] py-4 px-6 flex items-center justify-between shadow-sm rounded-t-lg">
         <h2 className="text-lg font-semibold">Select User to Chat</h2>
         <select
@@ -173,14 +170,14 @@ const Chat = () => {
         </select>
       </div>
 
-      {/* Chat Header */}
+      
       {otherUser && (
         <div className="bg-[#1230AE] text-[#FFF7F7] py-4 px-6 flex items-center justify-between shadow-sm rounded-t-lg">
           <h2 className="text-lg font-semibold">Chat with {otherUser}</h2>
         </div>
       )}
 
-      {/* Messages */}
+     
       <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FFF7F7]">
         {messages.map((msg, index) => (
           <div
@@ -231,7 +228,7 @@ const Chat = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
+   
       <div className="bg-[#FFF7F7] p-4 flex items-center gap-4 rounded-b-lg">
         <input
           type="text"

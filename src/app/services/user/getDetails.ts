@@ -86,42 +86,7 @@ export const getUserDetails = async (userName: string) => {
     throw error; 
   }
 };
-
-// export const getAllUsers = async (
-//   page: number = 1,
-//   limit: number = 10,
-//   filters: {
-//     title?: string[]; // תמיכה במערך של טייטלים
-//     language?: string[]; // תמיכה במערך של שפות
-//     city?: string[]; // תמיכה במערך של ערים
-//   } = {}
-// ) => {
-//   try {
-//     const queryParams = new URLSearchParams({
-//       page: page.toString(),
-//       limit: limit.toString(),
-//       ...(filters.title && { title: filters.title.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
-//       ...(filters.language && { language: filters.language.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
-//       ...(filters.city && { city: filters.city.join(',') }), // הפוך את המערך למחרוזת מופרדת בפסיקים
-//     }).toString();
-
-//     const response = await axios.get(
-//       `${baseUrl}/api/users/get/?${queryParams}`,
-//       {
-//         withCredentials: true,
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//       }
-//     );
-
-//     console.log('users:', response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching users:', error);
-//     throw error;
-//   }
-// };
+;
 
 export const getAllUsers = async (
     page: number = 1,

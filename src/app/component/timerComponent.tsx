@@ -8,43 +8,41 @@ import Login from "./users/register/login";
 import useModalStore from "../store/modelStore";
 
 const TimerComponent = () => {
-    const { data: session, status } = useSession(); // Get session and status
+    const { data: session, status } = useSession(); 
     const isModalOpen = useModalStore((state) => state.isModalOpen);
     const openModal = useModalStore((state) => state.openModal);
     const closeModal = useModalStore((state) => state.closeModal);
-    const router = useRouter(); // Use router for navigation
-
+    const router = useRouter(); 
     useEffect(() => {
-        // Redirect if user is authenticated
+       
         if (status === "authenticated") {
-            if (isModalOpen) closeModal(); // Close modal if open
-            // router.push("/pages/user-account"); // Redirect to user account
-            return; // Exit effect after redirect
+            if (isModalOpen) closeModal(); 
+            return;
         }
 
-        // Handle modal visibility based on cookie
+    
         const userNameFromCookie = decodeURIComponent(document.cookie || "");
         if (!userNameFromCookie && !isModalOpen) {
-            openModal(); // Open modal if user is not logged in
+            openModal();
         }
 
         const intervalId = setInterval(() => {
             const userNameFromCookie = decodeURIComponent(document.cookie || "");
             if (!userNameFromCookie) {
-                openModal(); // Re-open modal if user is logged out
+                openModal(); 
             }
-        }, 120000); // 2 minutes
+        }, 120000); 
 
-        return () => clearInterval(intervalId); // Cleanup interval
+        return () => clearInterval(intervalId); 
     }, [status, router]);
 
     if (!isModalOpen) return null;
 
     return (
         <div>
-            {/* <PopUpWindow> */}
+           
                 <Login />
-            {/* </PopUpWindow> */}
+            
         </div>
     );
 };

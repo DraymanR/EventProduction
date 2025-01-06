@@ -26,9 +26,9 @@ const Footer = () => {
     
     <footer className="footer">
       <div className="footer-content">
-        {/* Main Footer Content */}
+       
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-          {/* Navigation Links */}
+       
           <div className="flex flex-col items-center md:items-end space-y-4">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               ניווט מהיר
@@ -51,7 +51,7 @@ const Footer = () => {
               </button>
             </div>
           </div>
-          {/* Contact Information */}
+      
           <div className="flex flex-col items-center space-y-4">
             <h3 className="text-lg font-bold mb-4">צור קשר</h3>
             <div className="flex flex-col items-center space-y-3">
@@ -65,7 +65,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          {/* Privacy Policy and Terms of Service Links */}
+        
           <div className="flex flex-col items-center space-y-4">
             <h3 className="text-lg font-bold mb-4">מדיניות פרטיות </h3>
             <Link href="/pages/terms" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
@@ -75,7 +75,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      {/* Bottom Bar */}
+    
       <div className="bottom-bar">
         <div className="flex flex-col items-center">
           <p className="accentuated-text">

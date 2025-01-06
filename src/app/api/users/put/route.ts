@@ -54,8 +54,6 @@ export async function PUT(req: NextRequest) {
         }
 
         const decodedUserName = decoded.userName;
-      
-        // חיפוש המשתמש
         const user = await UserModel.findOne({ userName: decodedUserName }).populate('addressId').lean<User>();
 
         if (!user) {
@@ -67,12 +65,10 @@ export async function PUT(req: NextRequest) {
 
         const updateFields: any = {}; 
 
-        // עדכון השם הפרטי או המשפחה אם יש צורך
         if (firstName) updateFields.firstName = firstName;
         if (lastName) updateFields.lastName = lastName;
         if (description) updateFields.description = description;
         
-        // עדכון כתובת אם נשלחה
         if (address) {
             const addressUpdateFields: any = {};
 
@@ -89,7 +85,6 @@ export async function PUT(req: NextRequest) {
             }
         }
 
-        // אם נשלחו טיטלים חדשים, נוסיף אותם
         if (title) {
             if (Array.isArray(title)) {
                 updateFields.titles = title; 
@@ -101,16 +96,16 @@ export async function PUT(req: NextRequest) {
             
         }
 
-        // אם נשלחו שפות חדשות, נוסיף אותן
+      
         if (language) {
             if (Array.isArray(language)) {
-                updateFields.language = language; // אם נשלח מערך חדש של שפות, נעדכן את המערך
+                updateFields.language = language; 
             } else if (!user.languages.includes(language)) {
-                updateFields.language = [...user.languages, language]; // אם לא קיימת כבר, נוסיף שפה חדשה
+                updateFields.language = [...user.languages, language]; 
             }
         }
 
-        // עדכון המשתמש במסד הנתונים
+   
         const updatedUser = await UserModel.findOneAndUpdate({userName:decodedUserName}, updateFields, { new: true });
 
         if (!updatedUser) {

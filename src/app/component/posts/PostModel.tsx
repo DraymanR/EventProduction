@@ -14,16 +14,16 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(decodeURIComponent(document.cookie) ? true : false);
   const [comments, setComments] = useState<Recommendation[]>(post.recommendations || []);
-  const [rating, setRating] = useState<number>(0); // משתנה חדש לשמירת הדירוג
+  const [rating, setRating] = useState<number>(0); 
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [isFavorite, setIsFavorite] = useState(
     likedPostsArr.some((favoritePost) => favoritePost._id === post._id)
   );
-  const [showAddComment, setShowAddComment] = useState(false); // מצב עבור פתיחה/סגירה של שדה הוספת תגובה
+  const [showAddComment, setShowAddComment] = useState(false); 
 
   const handleStarClick = (starIndex: number) => {
-    setRating(starIndex + 1); // כל כוכב יקבל דירוג בין 1 ל-5
+    setRating(starIndex + 1); 
   };
   const addComment = async () => {
     if (!isAuthenticated) {
@@ -32,8 +32,8 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
       try {
         const newComment = await addRecommendation(post._id, commentText, rating);
         setComments((prevComments) => [...prevComments, newComment.recommendation]);
-        setCommentText(""); // איפוס שדה התגובה
-        setRating(0); // איפוס הדירוג אחרי הוספת התגובה
+        setCommentText(""); 
+        setRating(0); 
       } catch (error) {
         console.error("Error adding comment:", error);
       }
@@ -48,18 +48,18 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
     setCommentText(e.target.value);
   };
 
-  // פונקציה להוספה או הסרה של פוסט ממועדפים
+ 
   const toggleFavorite = async () => {
     if (isFavorite) {
-      // אם הפוסט במועדפים - נסיר אותו
+     
       await removePostToFavorites(post._id);
-      setLikedPostsArr(likedPostsArr.filter((favoritePost) => favoritePost._id !== post._id)); // מסנן את הפוסט מהמועדפים
-      setIsFavorite(false); // עדכון המשתנה המקומי ל- false
+      setLikedPostsArr(likedPostsArr.filter((favoritePost) => favoritePost._id !== post._id));
+      setIsFavorite(false); 
     } else {
-      // אם הפוסט לא במועדפים - נוסיף אותו
+      
       await addPostToFavorites(post._id);
-      setLikedPostsArr([...likedPostsArr, post]); // מוסיף את הפוסט למועדפים
-      setIsFavorite(true); // עדכון המשתנה המקומי ל- true
+      setLikedPostsArr([...likedPostsArr, post]); 
+      setIsFavorite(true); 
     }
   };
 
@@ -71,17 +71,16 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
   return (
     <div className="container mx-auto p-6">
       <div className="bg-white shadow-lg rounded-lg p-6">
-        {/* כותרת הפוסט */}
+   
         <h1 className="text-3xl font-bold text-[#1230AE] mb-4">{post.title}</h1>
 
-        {/* תאריך יצירת הפוסט */}
         {post.createDate && (
           <p className="text-sm text-[#6C48C5] mb-4">
             נוצר בתאריך: {formatDate(post.createDate.toString())}
           </p>
         )}
 
-        {/* פרטי הכותב */}
+    
         <div className="flex items-center mb-4">
           <div className="mr-4">
             <Link
@@ -94,13 +93,12 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
           <div className="text-sm text-[#6C48C5]">({post.userDetails?.titles?.join(', ')})</div>
         </div>
 
-        {/* תיאור */}
+    
         <p className="text-[#1230AE] mb-6">{post.description}</p>
 
-        {/* גלריית תמונות */}
+        
         {<ImageGallery postUsername={post.userName} postId={post._id} images={post.album} />}
 
-        {/* פרטי פוסט של צרכן */}
         {post.postId && (
           <div className="consumer-details mb-6">
             <h2 className="text-lg font-semibold text-[#1230AE] mb-2">פרטי הפוסט:</h2>
@@ -119,7 +117,7 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
           </div>
         )}
 
-        {/* תגובות */}
+       
         <div className="comments mb-6">
           <h2 className="text-lg font-semibold text-[#1230AE] mb-2">תגובות והמלצות</h2>
           <button
@@ -156,20 +154,19 @@ const PostView: React.FC<{ post: PostCardProps }> = ({ post }) => {
             </ul>
           )}
 
-          {/* כפתור הוספת תגובה */}
           <button
             onClick={() => setShowAddComment((prev) => !prev)}
             className="mt-4 text-[#1230AE] flex items-center gap-2"
           >
             {showAddComment ? (
-              <FaChevronUp /> // אם התגובה פתוחה, החץ למעלה
+              <FaChevronUp /> 
             ) : (
-              <FaChevronDown /> // אם התגובה סגורה, החץ למטה
+              <FaChevronDown /> 
             )}
             הוסף תגובה
           </button>
 
-          {/* שדה הוספת תגובה */}
+         
           {showAddComment && (
             <div className="add-comment mt-4">
               {isAuthenticated ? (

@@ -29,9 +29,9 @@ export default async function RootLayout({
           <Navbar />
           <TimerComponent />
           <div className="flex flex-1 pt-[105px] pb-[50px]">
-            {/* Sidebar */}
+        
             <ClientSideLayout />
-            {/* Main content */}
+        
             <main className="flex-1 overflow-y-auto p-4 mr-64 mb-[50px]">
               {children}
             </main>

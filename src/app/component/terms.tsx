@@ -4,7 +4,7 @@ import { Scroll, Shield } from 'lucide-react';
 const TermsPage = () => {
     return (
         <div className="relative min-h-screen bg-[#FFF7F7]">
-            {/* Decorative elements */}
+          
             <div className="absolute top-0 left-0 w-32 h-32 rounded-full bg-[#C68FE6] opacity-20 blur-xl"></div>
             <div className="absolute bottom-0 right-0 w-40 h-40 rounded-full bg-[#6C48C5] opacity-20 blur-xl"></div>
 

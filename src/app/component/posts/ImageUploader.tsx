@@ -18,12 +18,12 @@ const NewPhoto = ({ postId }: { postId: string }) => {
             onSuccess={handleUploadSuccess}
             options={{
                 sources: [
-                    'local', // Local files
-                    'camera', // Camera capture
-                    'google_drive', // Google Drive
-                    'url' // Web URL
+                    'local',
+                    'camera', 
+                    'google_drive', 
+                    'url' 
                 ],
-                maxFiles: 35, // limit to 35 file
+                maxFiles: 35,
             }}
         >
             {({ open }) => (

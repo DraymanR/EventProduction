@@ -23,7 +23,6 @@ export const authOptions: AuthOptions = {
           throw new Error('User not found');
         }
 
-        // Generate token using your existing utility
         const token = generateToken({
           userName: existingUser.userName,
           email: existingUser.email,
@@ -45,10 +44,7 @@ export const authOptions: AuthOptions = {
 
     async session({ session, token }) {
       if (session.user) {
-        // Add user ID from token to session
         session.user.id = token.sub || '';
-
-        // Fetch additional user details from MongoDB
         await connectDb();
         const dbUser = await UserModel.findOne({ email: session.user.email });
 

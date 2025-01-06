@@ -20,7 +20,7 @@ const UserCard: React.FC<{ user: any }> = ({ user }) => {
   return (
     <div className="user-card bg-white rounded-lg shadow-lg p-6 max-w-lg mx-auto mb-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <div className="header mb-6 flex items-center">
-        {/* תמונת פרופיל או אייקון */}
+
         <div className="w-16 h-16 rounded-full overflow-hidden mr-6 flex items-center justify-center bg-[#C68FE6]">
           {user.profileImage ? (
             <img
@@ -29,7 +29,7 @@ const UserCard: React.FC<{ user: any }> = ({ user }) => {
               className="w-full h-full object-cover rounded-full"
             />
           ) : (
-            defaultProfileImage // הצגת אייקון אם אין תמונת פרופיל
+            defaultProfileImage 
           )}
         </div>
         <div>

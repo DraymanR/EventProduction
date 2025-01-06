@@ -5,7 +5,6 @@ import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 import { PostModel, RecommendationModel } from '@/app/lib/models/user';
 import connectDb from '@/app/lib/db/connectDb';
 
-// תפקוד POST
 
 
 
@@ -15,9 +14,9 @@ export async function POST(req: NextRequest) {
 
     let userName: string | undefined;
 
-    // קריאה למידלוואר
+
     await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-      userName = (req as any).userName; // קבלת userName ממידלוואר
+      userName = (req as any).userName; 
     });
 
     const body = await req.json();
@@ -38,7 +37,7 @@ export async function POST(req: NextRequest) {
     }
 
     const recommendation = new RecommendationModel({
-      userName, // הוספת userName כאן
+      userName,
       text,
       rate,
     });

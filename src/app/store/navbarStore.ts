@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
 interface NavbarState {
-  isOpen: boolean; // מצב האם ה-navbar פתוח
-  toggleNavbar: (open:boolean) => void; // פעולה להחלפת המצב (פתיחה/סגירה)
+  isOpen: boolean;
+  toggleNavbar: (open:boolean) => void; 
 }
 
 const useNavbarStore = create<NavbarState>((set) => ({
-  isOpen: false, // מצב התחלתי: סגור
-  toggleNavbar: (open:boolean) => set((state) => ({ isOpen: open })), // פעולה להחלפת מצב
+  isOpen: false, 
+  toggleNavbar: (open:boolean) => set((state) => ({ isOpen: open })), 
 }));
 
 export default useNavbarStore;

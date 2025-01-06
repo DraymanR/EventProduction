@@ -8,21 +8,17 @@ export async function POST(req: NextRequest) {
     try {
         await connectDb();
 
-        // קריאה למידלוואר לאימות הטוקן
         let userName: string | undefined;
 
-        // קריאה למידלוואר
+       
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-            userName = (req as any).userName; // קבלת userName ממידלוואר
+            userName = (req as any).userName;
         });
 
         const body = await req.json();
 
-        // const { title, description, album, recommendations, eventCategory, budget, supplierNameArr,isConsumer } = body;
+     
         const { title, description, album, recommendations, eventCategory, budget, supplierNameArr, isConsumer } = body;
-
-        console.log("album", typeof(album));
-        console.log("album", album);
 
         if (!title || !description) {
             return NextResponse.json(

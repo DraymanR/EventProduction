@@ -94,7 +94,7 @@ const Navbar = () => {
             alt="Profile"
             width={50}
             height={50}
-            className="rounded-full border-2 border-[#101f61] mb-2"
+            className="rounded-full border-2 border-white mb-2"
           />
         ) : (
           <Image
@@ -102,38 +102,37 @@ const Navbar = () => {
             alt="Profile"
             width={50}
             height={50}
-            className="rounded-full border-2 border-[#101f61] mb-2"
+            className="rounded-full border-2 border-white mb-2"
           />
         )}
         <div className="text-center">
           {checkIfLoggedIn() && userDet ? (
-            <span className="text-[#101f61] text-sm font-medium font-bold">
+            <span className="text-white text-sm font-medium font-bold">
               {userDet.firstName} {userDet.lastName}
             </span>
           ) : (
-            <span className="text-[#101f61] text-sm font-medium font-bold">הפרופיל שלי</span>
+            <span className="text-white text-sm font-medium font-bold">הפרופיל שלי</span>
           )}
         </div>
       </div>
     </div>
 
-    {/* Center Links */}
     <div className="absolute inset-x-0 text-center">
       <div className="flex items-center justify-center gap-6">
-        <Link href="/" className="flex items-center gap-1 hover:text-white transition-colors">
+        <Link href="/" className="flex items-center gap-1 text-white hover:text-[#101f61] transition-colors">
           דף הבית
           <Home className="h-4 w-4" />
         </Link>
         <Link
           href="/pages/about"
-          className="flex items-center gap-2 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-white hover:text-[#101f61] transition-colors"
         >
           אודות האתר
           <Info className="h-4 w-4" />
         </Link>
         <button
           onClick={handleLoginClick}
-          className="flex items-center gap-2 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-white hover:text-[#101f61] transition-colors"
         >
           התחברות
           <LogIn className="h-4 w-4" />

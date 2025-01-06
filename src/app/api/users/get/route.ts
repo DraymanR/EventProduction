@@ -13,29 +13,29 @@ export async function GET(req: Request) {
         const skip = (page - 1) * limit;
 
         const city = searchParams.get('city');
-        const titles = searchParams.get('title')?.split(','); // תמיכה ברשימה של טייטלים
-        const languages = searchParams.get('language')?.split(','); // תמיכה ברשימה של שפות
-        const userName = searchParams.get('userName'); // חיפוש לפי שם משתמש
+        const titles = searchParams.get('title')?.split(','); 
+        const languages = searchParams.get('language')?.split(','); 
+        const userName = searchParams.get('userName'); 
 
         let query: any = {};
 
       
         if (city) {
-            query['addressId.city'] = { $regex: city, $options: 'i' }; // חיפוש בעיר
-            console.log('City query:', query['addressId.city']);  // הדפסת השאילתא
+            query['addressId.city'] = { $regex: city, $options: 'i' };
+            console.log('City query:', query['addressId.city']);  
         }
         
 
         if (titles && titles.length > 0) {
-            query.titles = { $in: titles.map(title => new RegExp(title, 'i')) }; // חיפוש לפי טייטלים
+            query.titles = { $in: titles.map(title => new RegExp(title, 'i')) }; 
         }
 
         if (languages && languages.length > 0) {
-            query.languages = { $in: languages.map(language => new RegExp(language, 'i')) }; // חיפוש לפי שפות
+            query.languages = { $in: languages.map(language => new RegExp(language, 'i')) }; 
         }
 
         if (userName) {
-            query.userName = { $regex: userName, $options: 'i' }; // חיפוש לפי שם משתמש
+            query.userName = { $regex: userName, $options: 'i' }; 
         }
 
         console.log('Query:', query);

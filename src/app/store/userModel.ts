@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import {  UserFormData } from "@/app/types/user"; // נעדכן בהתאם למיקום ה-Types שלך
+import {  UserFormData } from "@/app/types/user"; 
 import { PostCardProps } from '../types/post';
 
 interface UserStore {

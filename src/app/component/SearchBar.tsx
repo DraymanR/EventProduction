@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { EventCategory } from "@/app/types/post";
 import { SearchBarProps } from "../types/user";
-import Select from "react-select";  // Import Select for category dropdown
+import Select from "react-select";  
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [userName, setUserName] = useState("");
@@ -11,17 +11,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
-  const [isOpen, setIsOpen] = useState(false);  // State to control showing/hiding the form
+  const [isOpen, setIsOpen] = useState(false);  
 
   const handleSearch = () => {
     onSearch(userName, eventTitle, eventType as EventCategory, startDate, endDate, description);
   };
 
   const toggleForm = () => {
-    setIsOpen((prev) => !prev);  // Toggle visibility of the form
+    setIsOpen((prev) => !prev); 
   };
 
-  // Prepare options for event categories
   const eventCategoryOptions = Object.values(EventCategory).map((type) => ({
     value: type,
     label: type,
@@ -29,7 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   return (
     <div className="p-4 bg-[#FFF7F7] rounded-lg shadow-md w-full max-w-md mx-auto space-y-4">
-      {/* כפתור לפתיחה/סגירה */}
+   
       <button
         onClick={toggleForm}
         className="flex items-center justify-between w-full text-[#1230AE] font-semibold text-lg focus:outline-none"

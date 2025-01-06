@@ -10,13 +10,13 @@ import useUserStore from "@/app/store/userModel";
 import { getBaseUrl } from "@/app/services/config/axios";
 import { checkIfLoggedIn } from "@/app/services/user/registerUser";
 
-// Initialize Ably client
+
 const ably = new Realtime({
     key: "1jLHPA.p9RW9g:MVb0GFzKUviMVC1i5vyIGPqIX4XyGj1Dg_762-7Mw4c",
 });
 
 interface ChatWithUserProps {
-    otherUser: string; // Prop for the other user
+    otherUser: string; 
 }
 
 const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
@@ -38,7 +38,7 @@ const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
         const channelName = getChannelName(username, otherUser);
         const channel = ably.channels.get(channelName);
 
-        // Subscribe to messages on the channel
+      
         channel.subscribe("newMessage", (msg: Types.Message) => {
             setMessages((prev) => [...prev, msg.data]);
             if (msg.data.username !== username) {
@@ -46,11 +46,11 @@ const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
             }
         });
 
-        // Fetch initial messages from the server
+        
         const fetchMessages = async () => {
             try {
                 const response = await axios.get(`${baseUrl}/api/chat/${otherUser}`);
-                // const response = await axios.get(`${baseUrl}/api/chat/otheruser=${otherUser}&username=${username}`);
+              
                 setMessages(response.data.messages);
             } catch (error) {
                 console.error("Error fetching messages:", error);
@@ -66,7 +66,7 @@ const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
 
     const getChannelName = (user1: string, user2: string) => {
         const sortedUsers = [user1, user2].sort();
-        return sortedUsers.join("_"); // Channel name based on sorted usernames
+        return sortedUsers.join("_");
     };
 
     const handleSendMessage = async () => {
@@ -75,21 +75,20 @@ const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
         try {
             const channelName = getChannelName(username, otherUser);
 
-            // Send message to the server
+        
             await axios.post(`${baseUrl}/api/chat`, {
                 username,
                 text: message,
                 otheruser: otherUser,
             });
 
-            // Publish message to Ably
             const channel = ably.channels.get(channelName);
             channel.publish("newMessage", { username, text: message });
             setMessage("");
         } catch (error) {
             console.error("Error sending message:", error);
         } finally {
-            setIsSending(false); // Release the lock after sending
+            setIsSending(false); 
         }
     };
 
@@ -132,7 +131,7 @@ const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
         }
     };
 
-    // Auto scroll to bottom
+ 
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -141,14 +140,14 @@ const ChatWithUser: React.FC<ChatWithUserProps> = ({ otherUser }) => {
 
     return (
         <div className="flex flex-col h-[400px] w-[600px] mx-auto bg-[#FFF7F7] shadow-lg rounded-lg border border-[#6C48C5]">
-            {/* Chat Header */}
+          
             {otherUser && (
                 <div className="bg-[#1230AE] text-[#FFF7F7] py-4 px-6 flex items-center justify-between shadow-sm rounded-t-lg">
                     <h2 className="text-lg font-semibold">צאט עם {otherUser}</h2>
                 </div>
             )}
 
-            {/* Messages */}
+        
             <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FFF7F7]">
                 {messages.map((msg, index) => (
                     <div

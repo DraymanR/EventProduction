@@ -2,17 +2,14 @@ import MessageChat from '@/app/lib/models/chatmessage';
 import connectDb from "@/app/lib/db/connectDb";
 import { NextRequest, NextResponse } from "next/server";
 
-// טיפול בבקשת POST: שמירת הודעה חדשה
 export async function POST(req: NextRequest) {
     console.log("post");
     
     try {
-        console.log("ssssss");
         
         const { username, text ,otheruser} = await req.json();
         console.log(username, text ,otheruser);
         
-         // בדיקה אם השדה otheruser קיים
          if (!otheruser) {
             return NextResponse.json({ message: "Field 'otheruser' is required" }, { status: 400 });
         }

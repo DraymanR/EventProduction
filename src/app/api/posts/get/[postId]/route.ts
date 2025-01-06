@@ -2,16 +2,15 @@ import { NextResponse, NextRequest } from 'next/server';
 import { PostModel, SupplierModel, UserModel } from '@/app/lib/models/user';
 import { Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
-import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נניח שהמיקום של ה-middleware
+import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; 
 
 export async function GET(req: NextRequest) {
   try {
     await connectDb();
     let userName: string | undefined;
 
-    // השתמש במידלוואר
     await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-      userName = (req as any).userName; // קבלת userName ממידלוואר
+      userName = (req as any).userName;
     });
 
     const { searchParams } = new URL(req.url);
@@ -26,7 +25,7 @@ export async function GET(req: NextRequest) {
 
     console.log(postIdFromQuery);
 
-    // חפש את הפוסט על פי ה-ID
+    
     const post = await PostModel.findById(postIdFromQuery)
       .populate({
         path: 'recommendations',
@@ -38,7 +37,7 @@ export async function GET(req: NextRequest) {
       })
       .populate({
         path: 'userDetails',
-        select: 'titles', // מחזיר רק את שדה titles
+        select: 'titles', 
       })
       .lean();
 
@@ -53,7 +52,6 @@ export async function GET(req: NextRequest) {
 
     let supplierDetails;
 
-    // אם לא קיים userName, המערכת תבדוק אם למשתמש יש כותרות מסוימות
     if (userName) {
       const user = await UserModel.findOne({ userName });
       if (
@@ -68,7 +66,7 @@ export async function GET(req: NextRequest) {
       {
         message: 'Post retrieved successfully',
         post,
-        supplierDetails, // אם יש, הוסף פרטי ספק
+        supplierDetails, 
       },
       {
         status: 200,

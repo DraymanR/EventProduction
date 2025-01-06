@@ -170,7 +170,6 @@ const UpdateUserPersonalDetails: React.FC<UpdateUserPersonalDetailsProps> = ({ u
           </div>
         </div>
 
-        {/* תארים ושפות */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-600">הוספת תואר</label>

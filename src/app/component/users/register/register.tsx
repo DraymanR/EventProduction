@@ -8,10 +8,9 @@ import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { UserFormData, Language, SupplierDetails, Title, Option } from '@/app/types/user';
 import { addUser } from '@/app/services/user/registerUser';
 import { CldUploadWidget } from 'next-cloudinary';
-// import router from "next/router";
 import { useRouter } from 'next/navigation';
 
-// בתוך הקומפוננטה Register
+
 const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const router = useRouter();
     const [profileImage, setProfileImage] = useState(null);
@@ -46,15 +45,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         profileImage: profileImage
     });
 
-    // const language: Option[] = [
-    //     { value: Language.English, label: "אנגלית" },
-    //     { value: Language.French, label: "צרפתית" },
-    //     { value: Language.Hebrew, label: "עברית" },
-    //     { value: Language.Russian, label: "רוסית" },
-    //     { value: Language.Spanish, label: "ספרדית" },
-    //     { value: Language.Yiddish, label: "אידייש" },
 
-    // ];
     const language: Option[] = [
         { value: Language.English, label: "English" },
         { value: Language.French, label: "Français" },
@@ -123,7 +114,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     };
     const mySetSelectedLanguages = (selectedOptions: MultiValue<Option>) => {
         setSelectedLanguages(selectedOptions);
-        // עדכון formData.languages עם ערכים כמחרוזות
+      
         const languagesArray = selectedOptions.map((option) => option.value as Language);
         console.log(languagesArray);
 
@@ -144,7 +135,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     const mySetSelectedTitles = (selectedOptions: MultiValue<Option>) => {
         setSelectedTitles(selectedOptions);
         const titleArray = selectedOptions.map(option => option.value as Title);
-        setIsSupplier(titleArray.includes(Title.Supplier)); // דוגמה לבדיקת סטטוס ספק
+        setIsSupplier(titleArray.includes(Title.Supplier)); 
         setFormData(prevFormData => ({
             ...prevFormData,
             titles: titleArray,
@@ -165,7 +156,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                         ...prevState,
                         [parent]: {
                             ...parentValue,
-                            [child]: value//isNaN(Number(value)) ? value : Number(value), // המרת ערכים מספריים
+                            [child]: value
                         },
                     };
                 } else {
@@ -176,7 +167,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         } else {
             setFormData(prevState => ({
                 ...prevState,
-                [name]: value//isNaN(Number(value)) ? value : Number(value), // המרת ערכים מספריים
+                [name]: value
             }));
         }
     };
@@ -192,7 +183,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         <div className="text-center mx-auto mb-10 max-h-[80vh] p-6">
         <h2 className="text-[#1230AE] text-2xl font-bold text-center mb-6">צור חשבון חדש</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
-            {/* שלב ראשון */}
+     
             {currentStep === 1 && (
                 <>
                     <div className="border p-2 rounded bg-[#FFF7F7]">
@@ -257,7 +248,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 </>
             )}
     
-            {/* שלב שני */}
+       
             {currentStep === 2 && (
                 <>
                     <h5 className="text-l font-bold mt-4 text-[#1230AE]">כתובת</h5>
@@ -312,7 +303,7 @@ const Register: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 </>
             )}
     
-            {/* שלב של טיטלים */}
+         
             {currentStep === 3 && (
                 <>
                     <div className="border p-2 rounded bg-[#FFF7F7]">

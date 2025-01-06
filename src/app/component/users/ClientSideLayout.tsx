@@ -1,11 +1,11 @@
-'use client';  // זה מציין שזו קומפוננטת צד לקוח
+'use client';  
 
-import useNavbarStore from '@/app/store/navbarStore'; // גישה ל-store
-import ConsumerSidebar from '@/app/component/users/userSidebar'; // תפריט צד
+import useNavbarStore from '@/app/store/navbarStore'; 
+import ConsumerSidebar from '@/app/component/users/userSidebar'; 
 import "@/app/globals.css";
 
 const ClientSideLayout = () => {
-    const { isOpen } = useNavbarStore(); // גישה ל-store
+    const { isOpen } = useNavbarStore(); 
 
     return (
         <div>

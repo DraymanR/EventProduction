@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { UserModel, SupplierModel } from '@/app/lib/models/user';
 import { User, Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
-import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; // נניח שהמיקום של ה-middleware
+import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; 
 
 
 
@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
         let userName: string | undefined;
 
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-            userName = (req as any).userName; // קבלת userName ממידלוואר
+            userName = (req as any).userName; 
         });
        
 

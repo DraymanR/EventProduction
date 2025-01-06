@@ -11,10 +11,9 @@ interface ImageGalleryProps {
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsername }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
-  const [isExpanded, setIsExpanded] = useState(false); // מצב אם להציג את כל התמונות או לא
+  const [isExpanded, setIsExpanded] = useState(false); 
   const [userName, setUserName] = useState<string>('');
 
-  // שימוש ב-useEffect לטעינת שם המשתמש מתוך עוגייה
   useEffect(() => {
     const userNameFromCookie = decodeURIComponent(document.cookie);
     const userNameCookie = userNameFromCookie.split('; ').find(cookie => cookie.startsWith('userName='));
@@ -33,7 +32,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
   const handleUploadSuccess = async (result: any) => {
     if (result.info && result.info.secure_url) {
       const secureUrl = result.info.secure_url;
-      await addImageToPost(postId, secureUrl); // שומר את הקישור המלא במערך
+      await addImageToPost(postId, secureUrl); 
     }
   };
 
@@ -50,10 +49,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
   };
 
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded); // משנה את המצב של ההתרחבות
+    setIsExpanded(!isExpanded); 
   };
 
-  // הצגת רק 2 תמונות אם לא מורחב
   const displayedImages = isExpanded ? images : images.slice(0, 2);
 
   return (
@@ -75,7 +73,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
         ))}
       </div>
 
-      {/* כפתור להתרחבות */}
       {images.length > 2 && (
         <button
           onClick={toggleExpand}
@@ -85,7 +82,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
         </button>
       )}
 
-      {/* ווידג'ט העלאה */}
       {postUsername === userName && (
         <CldUploadWidget
           uploadPreset="appOrganizerEvent"
@@ -106,7 +102,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsernam
         </CldUploadWidget>
       )}
 
-      {/* מודל הצגת תמונה */}
+   
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="relative bg-white p-6 rounded-lg max-w-4xl shadow-lg">

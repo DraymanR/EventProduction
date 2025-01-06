@@ -40,9 +40,6 @@ export async function POST(req: Request) {
 
         await connectDb();
 
-
-
-        // Create Auth document
         const newAuth = new AuthModel({
             userName,
             email: normalizedEmail,
@@ -50,13 +47,13 @@ export async function POST(req: Request) {
         });
         await newAuth.save();
 
-        // Create Address document
+    
         const updatedAddress = { userName, ...address };
 
         const newAddress = new AddressModel(updatedAddress);
         await newAddress.save();
 
-        // Create User document
+       
         const profileImg = new ImgModel({
             imgUrl: profileImage,
         });

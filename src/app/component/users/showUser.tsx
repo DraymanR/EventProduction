@@ -64,9 +64,7 @@ const ShowUser = ({ userName }: { userName: string }) => {
 
     return (
         <div className="userDetails">
-            {/* Previous user details code remains the same */}
-
-            {/* Updated posts section using store data */}
+     
             {postArr && postArr.length > 0 ? (
                 <div className="postsContainer">
                     <h2 className="postsHeader">פוסטים:</h2>

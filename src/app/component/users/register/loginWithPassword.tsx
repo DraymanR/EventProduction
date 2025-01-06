@@ -6,7 +6,7 @@ import LoginWithGoogle from '@/app/component/users/register/loginWithGoogle';
 import axios from 'axios';
 import { IoEyeOffOutline } from 'react-icons/io5';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
-import '@/app/globals.css'; // וודא שאתה מייבא את ה־CSS
+import '@/app/globals.css'; 
 
 const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; onNewUser: () => void }> = ({ onForgetPassword, onNewUser }) => {
     const [email, setEmail] = useState('');
@@ -76,9 +76,9 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                             type={showPassword ? "text" : "password"}
                             required
                             className="w-full px-3 py-2 border rounded-md border-[#C68FE6] focus:ring-[#6C48C5] focus:border-[#6C48C5]"
-                            onPaste={(e) => e.preventDefault()} // מניעת הדבקה
-                            onCopy={(e) => e.preventDefault()} // מניעת העתקה
-                            onCut={(e) => e.preventDefault()}  // מניעת גזירה
+                            onPaste={(e) => e.preventDefault()} 
+                            onCopy={(e) => e.preventDefault()} 
+                            onCut={(e) => e.preventDefault()}  
                         />
                     </div>
                     {errorMessage && <p className="text-red-500 text-center mt-2">{errorMessage}</p>}
@@ -101,7 +101,7 @@ const LoginWithPassword: React.FC<{ onForgetPassword: (email: string) => void; o
                     אין לך חשבון?{' '}
                     <button
                         type="button"
-                        onClick={onNewUser} // לוחץ על כפתור זה יעביר לשלב הרשמה
+                        onClick={onNewUser} 
                         className="text-[#6C48C5] hover:underline"
                     >
                         הירשם כאן

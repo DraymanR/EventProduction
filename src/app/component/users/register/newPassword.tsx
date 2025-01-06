@@ -27,8 +27,6 @@ const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email })
             console.log('סיסמה חדשה:', myNewPassword);
             const result = await newPassword(email, otp, myNewPassword)
             console.log(result);
-
-            // לאחר שינוי הסיסמה נוכל להפנות את המשתמש למסך התחברות
             router.push('/pages/consumer-account');
             closeModal()
 
@@ -54,16 +52,16 @@ const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email })
                         onChange={(e) => setMyNewPassword(e.target.value)}
                         required
                         className="w-full px-3 py-2 border rounded-md"
-                        onPaste={(e) => e.preventDefault()} // מניעת הדבקה
-                        onCopy={(e) => e.preventDefault()} // מניעת העתקה
-                        onCut={(e) => e.preventDefault()}  // מניעת גזירה
+                        onPaste={(e) => e.preventDefault()} 
+                        onCopy={(e) => e.preventDefault()} 
+                        onCut={(e) => e.preventDefault()}  
                     />
                     <button
                         type="button"
                         onClick={() => { setshowPassword(!showPassword) }}
                         className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
 
-                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
+                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} 
                     </button>
                 </div>
                 <div className="relative">
@@ -78,15 +76,15 @@ const ResetPassword: React.FC<{ otp: string; email: string }> = ({ otp, email })
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="w-full px-3 py-2 border rounded-md"
-                        onPaste={(e) => e.preventDefault()} // מניעת הדבקה
-                        onCopy={(e) => e.preventDefault()} // מניעת העתקה
-                        onCut={(e) => e.preventDefault()}  // מניעת גזירה
+                        onPaste={(e) => e.preventDefault()} 
+                        onCopy={(e) => e.preventDefault()} 
+                        onCut={(e) => e.preventDefault()}  
                     />
                     <button
                         type="button"
                         onClick={() => { setshowconfirmPassword(!showconfirmPassword) }}
                         className="absolute top-2/3 left-3 -translate-y-1/2 flex items-center text-gray-500">
-                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} {/* טקסט הכפתור משתנה לפי המצב */}
+                        {showPassword ? <IoEyeOffOutline /> : <MdOutlineRemoveRedEye />} 
                     </button>
                 </div>
                 {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}

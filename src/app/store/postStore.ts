@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { PostCardProps } from '../types/user';
 
-// פונקציה שמביאה את הפוסטים מהסרבר
+
 const fetchPostsFromServer = async (): Promise<PostCardProps[]> => {
   const response = await fetch('/api/posts');
   const data = await response.json();
@@ -12,7 +12,7 @@ interface PostStore {
   posts: PostCardProps[];
   setPosts: (posts: PostCardProps[]) => void;
   getPostByIndex: (selectIndexPost: number) => PostCardProps | null;
-  loadPostsIfEmpty: () => Promise<void>; // פונקציה שתטען פוסטים אם הרשימה ריקה
+  loadPostsIfEmpty: () => Promise<void>; 
 }
 
 const usePostStore = create<PostStore>((set, get) => ({
@@ -30,9 +30,8 @@ const usePostStore = create<PostStore>((set, get) => ({
   loadPostsIfEmpty: async () => {
     const { posts, setPosts } = get();
     if (posts.length === 0) {
-      // אם אין פוסטים, נביא אותם מהסרבר
       const newPosts = await fetchPostsFromServer();
-      setPosts(newPosts); // נאכסן את הפוסטים בסטור
+      setPosts(newPosts);
     }
   },
 }));

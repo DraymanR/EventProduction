@@ -2,7 +2,7 @@ import connectDb from "@/app/lib/db/connectDb";
 import { NextRequest, NextResponse } from "next/server";
 import MessageChat from '@/app/lib/models/chatmessage';
 
-// טיפול בבקשת DELETE
+
 export async function DELETE(req: NextRequest, { params }: { params: { messageId: string } }) {
     const { messageId } = params;
 
@@ -13,7 +13,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { messageId
     try {
         await connectDb();
         
-        // מחיקת ההודעה לפי מזהה
         const deletedMessage = await MessageChat.findByIdAndDelete(messageId);
 
         if (!deletedMessage) {

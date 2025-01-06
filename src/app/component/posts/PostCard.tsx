@@ -12,7 +12,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
   return (
     <div className="post-card bg-white rounded-lg shadow-lg p-6 max-w-lg mx-auto mb-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <div className="header mb-6 flex items-center justify-between">
-        {/* כותרת הפוסט */}
+  
         <div>
           <h2 className="text-3xl font-semibold text-[#1230AE] hover:text-[#6C48C5] transition-colors duration-300">
             <a href={`/pages/posts/${post._id.toString()}`}>{post.title}</a>
@@ -21,7 +21,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
       </div>
 
       <div className="details space-y-4 text-[#1230AE]">
-        {/* כותרת לתאריך יצירת הפוסט */}
+  
         {post.createDate && (
           <div className="flex justify-between items-center">
             <strong>נוצר בתאריך:</strong>
@@ -29,7 +29,7 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
           </div>
         )}
 
-        {/* כותרת לכותב הפוסט */}
+      
         <div className="flex justify-between items-center">
           <strong>נוצר על ידי:</strong>
           <a
@@ -40,13 +40,13 @@ const PostCard: React.FC<{ post: PostCardProps }> = ({ post }) => {
           </a>
         </div>
 
-        {/* כותרת לתיאור הפוסט */}
+       
         <div className="flex justify-between items-center">
           <strong>תיאור הפוסט:</strong>
           <span className="text-lg">{post.description}</span>
         </div>
 
-        {/* קישור לפוסט מלא */}
+    
         <div className="flex items-center justify-end">
           <a
             href={`/pages/posts/${post._id.toString()}`}
