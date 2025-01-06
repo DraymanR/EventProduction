@@ -10,9 +10,9 @@ const EnterCodeFromEmail: React.FC<{ onBack: (currentStep: 'LoginWithPassword' |
     onBack('newPassword', code)
     Swal.fire({
       title: 'קוד אומת בהצלחה!', 
-      text: 'מעביר אותך לטופס איפוס הסיסמה...',
-      icon: 'success',
-      confirmButtonText: 'אישור',
+      text: 'מעביר אותך לטופס איפוס הסיסמה...', 
+      icon: 'success', 
+      confirmButtonText: 'אישור', 
       customClass: {
         popup: 'swal2-rtl'
       },
