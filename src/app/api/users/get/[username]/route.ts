@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { UserModel, SupplierModel } from '@/app/lib/models/user';
 import { User, Title } from '@/app/types/user';
 import connectDb from '@/app/lib/db/connectDb';
-import { verifyTokenMiddleware } from '@/middlewares/middlewareToken'; 
+import { verifyTokenMiddleware } from '@/middlewares/middlewareToken';
 
 
 
@@ -12,16 +12,17 @@ export async function GET(req: NextRequest) {
         let userName: string | undefined;
 
         await verifyTokenMiddleware(req as any, {} as NextResponse, () => {
-            userName = (req as any).userName; 
+            userName = (req as any).userName;
         });
-       
+
 
         const { searchParams } = new URL(req.url);
+        const a = new URL(req.url)
         const userNameFromQuery = searchParams.get('username');
 
         if (!userNameFromQuery) {
             return NextResponse.json(
-                { error: 'Missing username',searchParams },
+                { error: 'Missing username', a },
                 { status: 400 }
             );
         }
@@ -37,8 +38,8 @@ export async function GET(req: NextRequest) {
                         model: 'Recommendation',
                     },
                     {
-                        path: 'postId', 
-                        model: 'ConsumerPost', 
+                        path: 'postId',
+                        model: 'ConsumerPost',
                     },
                 ]
             }).populate({
