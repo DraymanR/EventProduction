@@ -18,17 +18,17 @@ export async function GET(req: NextRequest) {
 
         const { searchParams } = new URL(req.url);
         const a = (req as any).userName
-        const userNameFromQuery = searchParams.get('username');
+        // const userNameFromQuery = searchParams.get('username');
 
-        if (!userNameFromQuery) {
+        if (!a) {
             return NextResponse.json(
                 { error: 'Missing username', a },
                 { status: 400 }
             );
         }
-        console.log(userNameFromQuery);
+        // console.log(userNameFromQuery);
 
-        const user = await UserModel.findOne({ userName: userNameFromQuery })
+        const user = await UserModel.findOne({ userName: a })
             .populate('addressId')
             .populate({
                 path: 'postArr',
@@ -71,7 +71,7 @@ export async function GET(req: NextRequest) {
                 Object.values(Title).includes(title as Title)
             )
         ) {
-            supplierDetails = await SupplierModel.findOne({ userName: userNameFromQuery }).lean();
+            supplierDetails = await SupplierModel.findOne({ userName: a }).lean();
         }
 
         if (user.userName !== userName) {
