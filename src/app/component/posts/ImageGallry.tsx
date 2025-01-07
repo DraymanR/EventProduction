@@ -8,7 +8,7 @@ interface ImageGalleryProps {
   images: string[];
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images, postId, postUsername }) => {
+const ImageGallery: React.FC<ImageGalleryProps> = ({ postUsername , postId, images }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [isExpanded, setIsExpanded] = useState(false); 
