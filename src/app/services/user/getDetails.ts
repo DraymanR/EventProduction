@@ -48,7 +48,8 @@ export const getMyDetails = async () => {
       if (usernameCookie) {
         const myUserName = decodeURIComponent(usernameCookie.split('=')[1]);
         console.log('Username from cookie:', myUserName);
-        const response = await axios.get(`/api/users/get/username?username=${myUserName}`, {
+        const response = await axios.get(`/api/users/get/username?${myUserName}`, {
+        // const response = await axios.get(`/api/users/get/username?username=${myUserName}`, {
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
