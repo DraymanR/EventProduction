@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 
         if (!userNameFromQuery) {
             return NextResponse.json(
-                { error: 'Missing username',userNameFromQuery },
+                { error: 'Missing username',searchParams },
                 { status: 400 }
             );
         }
