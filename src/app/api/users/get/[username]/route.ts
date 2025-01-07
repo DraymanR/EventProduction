@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
 
         const { searchParams } = new URL(req.url);
-        const a = NextRequest.prototype
+        const a = (req as any).userName
         const userNameFromQuery = searchParams.get('username');
 
         if (!userNameFromQuery) {
