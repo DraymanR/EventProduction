@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import {  UserFormData } from "@/app/types/user"; 
+import { UserFormData } from "@/app/types/user";
 import { PostCardProps } from '../types/post';
 
 interface UserStore {
@@ -47,7 +47,7 @@ const useUserStore = create<UserStore>((set) => ({
         })),
     isReady: false,
     setReady: (ready: boolean) => set({ isReady: ready }),
-    clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [] , isReady: false,}),
+    clearUser: () => set({ user: null, likedPostsArr: [], likedPeople: [], postArr: [], isReady: false, }),
 }));
 
 export default useUserStore;
